@@ -1,0 +1,1 @@
+Pour tout les produits actifs (caméras, switchs...) vous devez renseigner l'adresse MAC ou IP utilisé avec ce produit, de même que l'identifiant et le mot de passe afin que nous puissions tester votre produit dans les mêmes conditions que lors de votre constat de panne.

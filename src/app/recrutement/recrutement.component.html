@@ -1,0 +1,107 @@
+<app-title-w-line title="Postes à pourvoir"></app-title-w-line>
+<div class="image">
+  <img loading="lazy" [src]="environment.img + 'recrutement-header.webp'" alt="bannière de recrutement" />
+</div>
+<div class="container">
+
+<div class="cadre">
+  <h3>Listes des postes à pourvoir</h3>
+  @if (postes ) {
+    @for (poste of postes; track poste.intitule) {
+      <h4>{{ poste.intitule }}</h4>
+      <ul>
+        @for (detail of poste.details; track $index) {
+          <li>{{ detail }}</li>
+        }
+      </ul>
+    }
+  }
+</div>
+<form [formGroup]="recrutementForm" class="forPhone">
+  <h3>Votre candidature</h3>
+  <div class="formulaire">
+    <label id="PhonePoste">Indiquez le poste pour lequel vous candidatez :</label>
+   <!--  <div class="form-group">
+      <label for="poste">Nom du poste</label>
+      <select class="form-control" id="poste" formControlName="poste" required>
+
+        <option *ngFor="let poste of postes" [value]="poste.intitule">{{poste.intitule}}</option>
+      </select> -->
+
+      <mat-form-field appearance="fill">
+        <mat-label>Nom du poste</mat-label>
+        <mat-select formControlName="poste" required>
+          <mat-option *ngFor="let poste of postes" [value]="poste.intitule">{{ poste.intitule }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+  <!--  </div>
+     <mat-form-field>
+      <mat-label>Select me</mat-label>
+      <mat-select>
+        <mat-option value="option">Option</mat-option>
+      </mat-select> 
+    </mat-form-field> -->
+    <label>Nom :</label>
+    <mat-form-field>
+      <mat-label>Nom</mat-label>
+      <input matInput formControlName="nom" autocomplete="family-name" required/>
+    </mat-form-field>
+    <label>Prénom :</label>
+    <mat-form-field>
+      <mat-label>Prénom</mat-label>
+      <input matInput formControlName="prenom" autocomplete="name" required/>
+    </mat-form-field>
+    <label>E-mail :</label>
+    <mat-form-field>
+      <mat-label>E-mail</mat-label>
+      <input matInput formControlName="email" autocomplete="email" required/>
+    </mat-form-field>
+    <label>Téléphone :</label>
+    <mat-form-field>
+      <mat-label>Téléphone</mat-label>
+      <input matInput formControlName="telephone" autocomplete="tel" required/>
+    </mat-form-field>
+    
+    <!-- <mat-form-field appearance="outline">
+      <mat-label>Votre CV</mat-label>
+      <ngx-mat-file-input class="input" formControlName="file" placeholder="Basic Input" required
+      accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.oasis.opendocument.text"></ngx-mat-file-input>
+      <mat-icon matSuffix>folder</mat-icon>
+    </mat-form-field> -->
+
+    <!-- <mat-form-field appearance="outline">
+    <div class="file-input-container">
+      <mat-label>Votre CV :</mat-label>
+      <input  formControlName="file" type="file" (change)="onFileSelected($event)" />
+    </div>
+  </mat-form-field> -->
+
+  <div class="file-input-container" (click)="fileInput.click()">
+    <input #fileInput type="file" formControlName="file" (change)="onFileSelected($event)" hidden>
+    <mat-form-field appearance="outline">
+      <mat-label>Votre CV :</mat-label>
+      <input matInput [value]="fileInput.value.split('\\').pop()" readonly placeholder="Aucun fichier choisi">
+      <mat-icon matSuffix>attach_file</mat-icon>
+    </mat-form-field>
+  </div>
+  
+  </div>
+  <button type="button" class="raised-button" (click)="onSubmit()" (tap)="onSubmit()">Envoyer ma candidature</button>
+  @if (erreur) {
+    <p class="red">Une erreur est survenue lors de la transmission de la requête.</p>
+  }
+</form>
+<p class="weight-bold center">Votre candidature sera étudiée dans les plus brefs délais. Nous vous recontacterons prochainement.</p>
+<div class="cadre">
+  <h4 class="blue">Informations légales</h4>
+  <p>
+    Les informations recueillies sur ce formulaire sont enregistrées dans un fichier informatisé par ACTN pour permettre le traitement des candidatures.
+    Les données collectées seront communiquées aux seuls destinataires suivants : M. Jean-Paul PENA en sa qualité de PDG et M. Jean-Christophe PENA, Directeur Général.
+    Les données sont conservées pendant 30 jours à compter de leur réception.
+    Vous pouvez accéder aux données vous concernant, les rectifier, demander leur effacement ou exercer votre droit à la limitation du traitement de vos données
+    en écrivant à <a href="mailto:recrutement@actn.fr">recrutement&#64;actn.fr</a> . Consultez le site <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer">cnil.fr</a> pour plus d’informations sur vos droits.
+  </p>
+</div>
+
+</div>

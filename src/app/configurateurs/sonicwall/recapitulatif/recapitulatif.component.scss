@@ -1,0 +1,94 @@
+@import "../sonicwall.scss";
+
+.options {
+    .titre {
+        display: flex;
+        flex-wrap: nowrap;
+        h1 {
+            width: fit-content;
+            font-size: 1.6rem;
+            font-weight: normal;
+        }
+
+        conf-chips-list {
+            width: fit-content;
+            margin: auto 0 auto auto;
+        }
+    }
+}
+
+.barre {
+    width: 100%;
+    height: 12px;
+    border: none;
+    background-color: $color-1;
+    margin-bottom: 0;
+}
+
+table.recap {
+    width: 100%;
+
+    tr {
+        display: grid;
+        grid-template-columns: minmax(0, 4fr) minmax(0, 2fr) minmax(0, 2fr) minmax(0, 2fr) minmax(0, 1fr);
+
+        &.pleine-ligne {
+            display: grid;
+            grid-template-columns: 100%;
+            overflow: hidden;
+
+            .liste-options {
+                justify-content: flex-end !important;
+            }
+        }
+    }
+
+    thead tr {
+        margin-top: 10px;
+        font-weight: bold;
+        font-size: 1.115rem;
+    }
+
+    tbody tr {
+        margin-top: 10px;
+    }
+
+    .description {
+        display: block;
+        text-align: left;
+
+        .red {
+            color: $color-2;
+            font-weight: bold;
+        }
+    }
+
+    .prix {
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: $color-2;
+    }
+
+    td {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .left {
+        justify-content: flex-start;
+    }
+
+    .stock {
+        color: var(--color-soft-warn);
+        &.en-stock {
+            color: var(--color-success);
+        }
+    }
+}
+
+.delete-icon {
+    cursor: pointer;
+    color: $color-2;
+    margin-left: 5px;
+}

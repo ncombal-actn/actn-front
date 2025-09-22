@@ -1,0 +1,53 @@
+@if (this.code) {
+  <div>
+    <h3 class="title failure">Échec du règlement</h3>
+    <p></p>
+    <div class="param-box">
+      @switch (type) {
+        @case ('CMD') {
+          <p>Le règlement de votre commande <strong>{{ncmd ? "n° "+ncmd : ''}}</strong> a échoué.</p>
+        }
+        @case ('DEV') {
+          <p>Le règlement de votre devis <strong>{{ncmd ? "n° "+ncmd : ''}}</strong> a échoué.</p>
+        }
+        @case ('LOC') {
+          <p>Le règlement de votre location <strong>{{ncmd ? "n° "+ncmd : ''}}</strong> a échoué.</p>
+        }
+        @default {
+          <p>Votre règlement <strong>{{ncmd ? "n° "+ncmd : ''}}</strong> a échoué.</p>
+        }
+      }
+      <!-- RAISON DE L'ECHEC -->
+      @if (this.msg1) {
+        <p> {{ this.msg1 }} </p>
+      }
+      @if (this.msg2) {
+        <p> {{ this.msg2 }} </p>
+      }
+    </div>
+    <div class="margin">
+      @switch (type) {
+        @case ('CMD') {
+          <button mat-raised-button class="raised-button" routerLink="/panier">Retour au panier</button>
+        }
+        @case ('DEV') {
+          <button mat-raised-button class="raised-button" routerLink="/espace-client/devis">Retour aux devis</button>
+        }
+        @case ('LOC') {
+          <button mat-raised-button class="raised-button" routerLink="/location">Retour au panier de location</button>
+        }
+        @default {
+          <button mat-raised-button class="raised-button" routerLink="/accueil">Retour à l'accueil</button>
+        }
+      }
+    </div>
+  </div>
+} @else {
+  <div>
+    <h3 class="title">Aucun échec de règlement</h3>
+    <div class="margin">
+      <button mat-raised-button class="raised-button" routerLink="/accueil"> Retour à l'accueil </button>
+    </div>
+  </div>
+}
+

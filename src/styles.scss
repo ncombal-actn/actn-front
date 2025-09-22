@@ -1,0 +1,24 @@
+// ...existing code...
+.snackbar-custom {
+  a {
+    color: #2196F3;
+    text-decoration: underline;
+  }
+  .mat-simple-snackbar {
+    white-space: pre-line;
+  }
+}
+
+.snackbar-alert {
+  background-color: white;
+  border: 2px solid red;
+  color: red;
+  a {
+    color: red;
+    text-decoration: underline;
+  }
+  .mat-simple-snackbar {
+    white-space: pre-line;
+  }
+}
+// ...existing code...

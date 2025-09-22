@@ -1,0 +1,48 @@
+@import "../zyxel.scss";
+
+.steps {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    padding: 0;
+
+    .step {
+        margin: 6px;
+        display: flex;
+        align-items: center;
+        padding-left: 8px;
+        padding-right: 12px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        border-radius: 360px;
+        background: $color-grey-2;
+
+        .number {
+            height: 2em;
+            width: 2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: white;
+            margin-right: 10px;
+        }
+
+        &--selected {
+            background: white;
+            color: $color-red-4;
+
+            .number {
+                color: white;
+                background: $color-red-4;
+            }
+        }
+
+        &--clickable {
+            cursor: pointer;
+        }
+    }
+}

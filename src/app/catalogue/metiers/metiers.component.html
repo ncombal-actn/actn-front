@@ -1,0 +1,33 @@
+<app-title-w-line title="Nos Métiers" size="small"></app-title-w-line>
+
+@if (isReady) {
+  <div class="container">
+    @for (item of categories  | keyvalue: compareFn.bind(this); track item.key) {
+      <div class="ligne raised-1">
+        <div class="case">
+          <img [src]="environment.img + categorie.get(item.key).code + '.webp'" alt="logo {{item.key}} " class="categorie-metiers" loading="lazy" />
+        </div>
+        <div class="marque">
+          @for (a of item.value; track $index; let i = $index) {
+            <span >
+              <a [routerLink]="['/catalogue/search']" [queryParams]="{ marque: item.value[i].marque, niv1: categorie.get(item.key).code }" >
+                <img [src]="environment.logoMarquesCouleurs200x80 + item.value[i].marque + '.gif'" alt="logo {{item.value[i].marque}}" class="logo" loading="lazy" />
+                <!--{{item.value[i].marquelib}}&nbsp;-->
+              </a>
+            </span>
+          }
+        </div>
+      </div>
+    }
+    <div class="raised-1">
+      <a [routerLink]="['/catalogue/search']" [queryParams]="{ marque: 'PRES', niv1: 'FOR' }" >
+        <img [src]="environment.img  + 'FOR.webp'" alt="logo formations" class="logo"  loading="lazy"/>
+      </a>
+      <br/>
+      <a [routerLink]="['/prestations']" >
+        <img [src]="environment.img  + 'PRE.webp'" alt="logo prestations" class="logo" loading="lazy" />
+      </a>
+    </div>
+   
+</div>
+}

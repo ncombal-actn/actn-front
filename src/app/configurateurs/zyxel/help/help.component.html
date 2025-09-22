@@ -1,0 +1,95 @@
+<div class="bloc">
+  <conf-chips-list>
+    <div class="chips chips--blue hover-bigger raised-1"
+      matTooltip="Besoin d'aide ? Cliquez ici pour demander plus d'informations."
+      matTooltipClass="tooltip"
+      [matTooltipShowDelay]="500"
+      [matTooltipHideDelay]="500"
+      (click)="showHelpPopup = true" (tap)="showHelpPopup = true"
+      >
+      Besoin d'aide ?
+    </div>
+  </conf-chips-list>
+</div>
+
+@if (showHelpPopup) {
+  <div class="popup" [ngClass]="{active: showHelpPopup}">
+    <div class="popup-background" (click)="onHideHelpPopup()" (tap)="onHideHelpPopup()"></div>
+    <div class="popup-window raised-3">
+      @if (!isMessageSent) {
+        <h3>Demande d'information</h3>
+        <hr/>
+        <form [formGroup]="helpForm">
+          <div class="raised-2">
+            <p>
+              <input formControlName="client" readonly/>
+              <label>Numéro de client</label>
+            </p>
+            <p>
+              <input formControlName="societe" id="societe" required [ngClass]="{ 'validated': formValidated }"/>
+              @if (formValidated && helpForm.get('societe').errors?.required) {
+                <span class="error size-smaller">Champ obligatoire</span>
+              }
+              <label for="societe">Société</label>
+            </p>
+            <p>
+              <input formControlName="nom" id="nom" required [ngClass]="{ 'validated': formValidated }"/>
+              @if (formValidated && helpForm.get('nom').errors?.required) {
+                <span class="error size-smaller">Champ obligatoire</span>
+              }
+              <label for="nom">Nom</label>
+            </p>
+            <p>
+              <input formControlName="email" id="email" required [ngClass]="{ 'validated': formValidated }"/>
+              @if (formValidated && helpForm.get('email').errors?.required) {
+                <span class="error size-smaller">Champ obligatoire</span>
+              }
+              @if (formValidated && !helpForm.get('email').errors?.required && helpForm.get('email').errors?.email) {
+                <span class="error size-smaller">La saisie ne correspond pas à un email</span>
+              }
+              <label for="email">Email</label>
+            </p>
+            <p>
+              <input formControlName="telephone" id="telephone" required [ngClass]="{ 'validated': formValidated }"/>
+              @if (formValidated && helpForm.get('telephone').errors?.required) {
+                <span class="error size-smaller">Champ obligatoire</span>
+              }
+              @if (formValidated && !helpForm.get('telephone').errors?.required && helpForm.get('telephone').errors?.pattern) {
+                <span class="error size-smaller">La saisie ne correspond pas à un numéro de téléphone</span>
+              }
+              <label for="telephone">Téléphone</label>
+            </p>
+          </div>
+          <div class="raised-2">
+            <p>
+              <input formControlName="objet" id="objet" />
+              <label for="objet">Objet</label>
+            </p>
+            <p class="l-2">
+              <textarea formControlName="message" id="message" rows="7"></textarea>
+              <label for="message">Message</label>
+            </p>
+          </div>
+        </form>
+        <div class="buttons">
+          <conf-chips-list>
+            <button class="chips chips--whited" (click)="onHideHelpPopup()" (tap)="onHideHelpPopup()">Fermer</button>
+            <button class="chips chips--selected" (click)="onAskForHelp()" (tap)="onAskForHelp()">Envoyer</button>
+          </conf-chips-list>
+        </div>
+        <p class="champs size-smaller">* Champs obligatoires.</p>
+      } @else {
+        <h3>Demande d'information</h3>
+        <hr/>
+        <p>
+          Votre message a bien été envoyé à notre équipe commerciale.<br/>
+        </p>
+        <div class="buttons">
+          <conf-chips-list>
+            <button class="chips chips--whited" (click)="onHideHelpPopup()" (tap)="onHideHelpPopup()">Fermer</button>
+          </conf-chips-list>
+        </div>
+      }
+    </div>
+  </div>
+}

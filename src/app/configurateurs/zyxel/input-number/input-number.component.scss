@@ -1,0 +1,58 @@
+@import "variables.scss";
+@import "../zyxel.scss";
+
+.container {
+    display: flex;
+    border-radius: 6px;
+    justify-content: space-between;
+    align-items: stretch;
+    margin: 0 auto !important;
+
+    > * {
+        border: none;
+        background: none;
+    }
+
+    input {
+        display: block;
+        text-align: center;
+        width: calc(100% - 4px - 2 * 32px);
+        font-size: 1rem;
+        border: 1px solid $color-red-4;
+    }
+
+    button {
+        display: block;
+        width: 32px;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        font-size: 1.7rem;
+        color: white;
+        border: 1px solid $color-red-4;
+        background: $color-red-4;
+
+        &:not(:disabled) {
+            cursor: pointer;
+        }
+
+        &:disabled {
+            filter: grayscale(100%);
+        }
+    }
+
+    &.small {
+        input {
+            width: calc(100% - 4px - 2 * 24px);
+        }
+
+        button {
+            width: 24px;
+            font-size: 1.4rem;
+        }
+    }
+
+    &.wrongValue {
+        border-color: var(--color-warn);
+    }
+}

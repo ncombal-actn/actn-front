@@ -1,0 +1,84 @@
+@if (!loadingCart) {
+  <h2 >Votre Panier</h2>
+  <div class="bar-prodression raised-1">
+    <app-stepper></app-stepper>
+  </div>
+  <div class="panier raised-1">
+    <app-labels-panier></app-labels-panier>
+    @if (cartService.cart.length == 0) {
+      <div class="size-big weight-bold">Le panier est vide</div>
+    } @else {
+      @for (cartItem of cartService.cart.items | keyvalue; track cartItem.value; let i = $index) {
+        <div>
+          <app-panier-row [cartItem]="cartItem.value" (error)="panierRowError(i, $event)" [displayFormationForm]="true"></app-panier-row>
+        </div>
+      }
+      <div class="total size-bigger weight-bold">
+        Total&nbsp;<p class="for-phone"> du Panier</p>
+        <div>{{ cartService.cart.total | currency:'EUR':'symbol':'1.2-2':'fr' }}<span class="size-smaller">&nbsp;HT</span></div>
+      </div>
+    }
+    <!-- <span class="error" *ngIf="user.TIERSETRANGER">
+    Pour valider votre commande, veuillez sauvegarder votre panier à l'aide du bouton "Sauvegarder le panier" ci-dessous. Un commercial vous recontactera afin de finaliser votre demande.
+  </span> -->
+</div>
+<br/>
+@if (cartService.hasCotation()) {
+  <p class="small-texte note">Impossible d'enregistrer un devis ou sauvegarder le panier avec une cotation active.</p>
+}
+@if (isErrorInPanier()) {
+  <p class="small-texte error">Certaines quantités de produit dans le panier sont invalides.</p>
+}
+<div>
+  <p>Etape 1/3</p>
+</div>
+<div class="action-row">
+  <div>
+    @if (savingCart) {
+      <mat-spinner [diameter]="50"></mat-spinner>
+    }
+  </div>
+  <!-- <div class="standalone-field-form">
+  <button class="raised-button" (click)="louerLePanier()" [disabled]="this.cartService.cart.length == 0 || locationState == 0" routerLink="/location" routerLinkActive="active">
+    Louer le panier<br>
+    <span *ngIf="locationState == 1" class="button-note">Tous les produits de ce panier ne sont pas éligibles à la location</span>
+  </button>
+</div>
+-->
+<div class="standalone-field-form">
+  <button class="raised-button" (click)="sauvegarderLePanier()" [disabled]="cartService.cart.length == 0 || cartService.hasCotation()">
+    Sauvegarder le panier
+  </button>
+</div>
+<button class="raised-button marge-phone" [disabled]="cartService.cart.length == 0 || isErrorInPanier() || disableValidation || cartService.hasCotation()" routerLink="/panier/commander/devis" routerLinkActive="active">
+  Enregistrer DEVIS / PROFORMA
+</button>
+<div>
+  <button class="raised-button" [disabled]="cartService.cart.length == 0 || isErrorInPanier() || disableValidation || cartService.checkQteCotation()" [routerLink]="['/panier/commander/valider']" routerLinkActive="active">
+    Valider la commande
+  </button>
+</div>
+</div>
+<div class="paniers-sauvegarde">
+  <div class="unrollPaniersContainer">
+    @if (!paniersDisplay) {
+      <mat-icon
+        class="unrollPaniers"
+      (click)="afficherPaniers()">keyboard_arrow_down</mat-icon>
+    }
+    @if (paniersDisplay) {
+      <mat-icon
+        class="unrollPaniers"
+      (click)="hidePaniers()">keyboard_arrow_up</mat-icon>
+    }
+    <span
+      class="unrollPaniersTitle"
+      (click)="togglePaniers()">Paniers Sauvegardés @if (listePanier) {
+      <span class="unrollPaniersTitle">({{ listePanier.length }})</span>
+    }</span>
+  </div>
+  @if (paniersDisplay) {
+    <app-paniers-enregistres [(paniersSauvegardes)]="listePanier"></app-paniers-enregistres>
+  }
+</div>
+}

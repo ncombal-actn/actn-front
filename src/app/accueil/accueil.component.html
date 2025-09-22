@@ -1,0 +1,48 @@
+@if (carouselData) {
+<!-- CARROUSEL HORIZONTAL -->
+@if (carouselData.displaymode == 'H') {
+<app-carousel [carouselData$]="carouselData$"></app-carousel>
+} @else {
+<!-- CARROUSEL VERTICAL -->
+<app-vertical-carousel [carouselData$]="carouselData$"></app-vertical-carousel>
+} }
+
+<!--
+<p style="font-size: 2.5rem;">
+  &Equilibrium;&Equilibrium;&Equilibrium;
+</p>
+-->
+@if (produits$ | async; as produits) {
+<app-title-w-line [title]="produits[0].libPromo"></app-title-w-line>
+<app-sliding-liste
+  [random]="true"
+  [nbProduits]="15"
+  [produits]="produits"
+  [croissant]="false"
+></app-sliding-liste>
+<div class="voir-tout">
+  <a class="raised-button" [routerLink]="['/catalogue', 'nouveautes']"
+    >Voir toutes les nouveautés</a
+  >
+</div>
+} @if (news$ | async; as news ) {
+  @if(news.length > 0) {
+
+  
+<app-title-w-line title="Actualités"></app-title-w-line>
+<app-sliding-liste
+  type="actu"
+  [news]="news"
+  [reload]="true"
+></app-sliding-liste>
+<div class="voir-tout">
+  <a
+    class="raised-button ghost-button"
+    href="https://blog.actn.fr/"
+    target="_blank"
+    rel="noopener"
+    >Voir toutes les actualités</a
+  >
+</div>
+  }
+}

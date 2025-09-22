@@ -1,0 +1,64 @@
+<form
+  class="catalogue-search-form"
+  [ngClass]="{ show: openSearch }"
+  (ngSubmit)="newSearch()"
+  >
+  <div class="search-bar">
+    <input
+      type="text"
+      [formControl]="searchInput"
+      placeholder="Rechercher un produit"
+      [matAutocomplete]="autoGroup"
+      (click)="autocomplete.openPanel()"
+      (tap)="autocomplete.openPanel()"
+      />
+      <button type="submit" class="text-button">
+        <mat-icon class="search-icon">search</mat-icon>
+      </button>
+    </div>
+    <mat-autocomplete  class="single-autocomplete" #autoGroup="matAutocomplete" classList="autocomplete" (optionSelected)="newSearch()">
+      @if (historique.length > 0) {
+        <mat-optgroup label="Historique">
+          @for (mot of historique; track $index) {
+            <mat-option [value]="mot">
+              {{ mot }}
+            </mat-option>
+          }
+        </mat-optgroup>
+      }
+      @if (autoCompleteOptions$ | async; as options) {
+        @if (options.marques.size) {
+          <mat-optgroup label="Marques">
+            @for (categorie of options.marques; track $index) {
+              <mat-option [value]="categorie">
+                <!-- la fonction start permet de ne renvoyer que le début de la requete contenant notre recherche -->
+                <!-- la fonction end permet de ne renvoyer que la fin de la requete contenant notre recherche -->
+                {{ start(categorie) }}@if (categorie.includes(searching)) {
+                <span style="font-weight: bold;">{{ searching }}</span>
+                }{{ end(categorie) }}
+              </mat-option>
+            }
+          </mat-optgroup>
+        }
+        @if (options.produits.length) {
+          <mat-optgroup label="Produits">
+            @for (produit of options.produits; track produit.reference) {
+              <mat-option
+                [value]="produit.reference"
+                >
+                <!-- <img src="{{ environment.logoMarquesUrl70x30center }}{{ produit.marque }}"> -->
+                <!-- etant donné que notre recherche peut se trouver dans la reference ou la designation du produit, le ngIf permet de verifier dans quel champ se trouve notre recherche et de n'en afficher qu'un seul -->
+                {{ start(produit.reference) }}@if (produit.reference.includes(searching)) {
+                <span style="font-weight: bold;">{{ searching }}</span>
+                }{{ end(produit.reference) }}
+                <br />
+                {{ start(produit.designation) }}@if (produit.designation.includes(searching)) {
+                <span style="font-weight: bold;">{{ searching }}</span>
+                }{{ end(produit.designation) }}
+              </mat-option>
+            }
+          </mat-optgroup>
+        }
+      }
+    </mat-autocomplete>
+  </form>

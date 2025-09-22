@@ -1,0 +1,31 @@
+<div
+  class="table-produit"
+  [ngClass]="{ vignettes: format === 'grid' }"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollUpDistance]="4"
+  [infiniteScrollThrottle]="20"
+
+  (scrolled)="onScrollDown()"
+  (scrolledUp)="onScrollUp()"
+  >
+@if (produits[0]?.erreur || produits.length === 0) {
+
+  <div class="no-result raised-1">
+    Aucun résultat ne correspond à votre recherche. <a [routerLink]="['/catalogue']">Retourner au catalogue</a>
+  </div>
+  
+} @else {
+  @for (produit of produits | slice: 0:toDisplay; track produit.reference; let i = $index) {
+    <app-produit-preview
+      [produit]="produit"
+      [format]="format"
+      [simple]="simple"
+      [displayRemoveProductFromFavorisButton]="isFavorisList"
+    ></app-produit-preview>
+    @if (i%25 === 0 && i !== 0 && format !=='grid') {
+      <app-banniere emplacement="middle" [listMarque]="listMarque"></app-banniere>
+    }
+  }
+}
+</div>

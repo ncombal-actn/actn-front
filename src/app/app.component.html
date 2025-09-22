@@ -1,0 +1,21 @@
+<app-header></app-header>
+<app-rolling-header></app-rolling-header>
+<app-side-nav [(currentMenu)]="selectedSideNavMenu"></app-side-nav>
+
+@if (show()) {
+  <app-spinner></app-spinner>
+}
+
+
+<div id="content" [ngClass]="{hide: !show()}">
+  <app-fil-d-arianne></app-fil-d-arianne>
+  <router-outlet ></router-outlet>
+</div>
+
+<app-back-to-top></app-back-to-top>
+
+<app-cookies [ngClass]="{hide: !show()}"></app-cookies>
+<app-heartbeat-sensor></app-heartbeat-sensor>
+
+<app-snackbar></app-snackbar>
+<app-footer [ngClass]="{hide: !show()}"></app-footer>

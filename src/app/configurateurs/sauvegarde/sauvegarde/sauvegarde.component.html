@@ -1,0 +1,28 @@
+@if (show) {
+  <div class="popup" [ngClass]="{active: show}">
+    <div class="popup-background" (click)="onClose()" (tap)="onClose()"></div>
+    <div class="popup-window raised-3">
+      <h3>Sauvegarder la configuration</h3>
+      <hr/>
+      <form [formGroup]="form">
+        <div class="raised-2">
+          <p class="l-2">
+            <input formControlName="nom" required/>
+            <label>Nom de votre configuration</label>
+          </p>
+          <p class="l-2">
+            <textarea formControlName="commentaires" id="commentaires" rows="7"></textarea>
+            <label for="commentaires">Commentaires</label>
+          </p>
+        </div>
+      </form>
+      <div class="buttons">
+        <conf-chips-list>
+          <button class="chips chips--whited" (click)="onClose()" (tap)="onClose()">Fermer</button>
+          <button class="chips chips--selected" (click)="onSave()" (tap)="onSave()">Sauvegarder</button>
+        </conf-chips-list>
+      </div>
+      <p class="champs size-smaller">* Champs obligatoires.</p>
+    </div>
+  </div>
+}

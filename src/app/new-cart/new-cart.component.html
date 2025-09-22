@@ -1,0 +1,37 @@
+<mat-stepper class="stepper mat-elevation-z1">
+  <mat-step><ng-template matStepLabel>Récapitulatif</ng-template></mat-step>
+  <mat-step><ng-template matStepLabel>Livraison & Paiement</ng-template></mat-step>
+  <mat-step><ng-template matStepLabel>Validation</ng-template></mat-step>
+</mat-stepper>
+<div class="overview">
+  <div class="recap-procut">
+    <mat-card class="header">
+      <p class="center-grid">Article</p>
+      <p></p>
+      <p class="center-grid">Prix unitaire</p>
+      <p class="center-grid">Quantité</p>
+    </mat-card>
+    @for(item of cartItems; track item.productName){
+      <app-cart-row [item]="item"></app-cart-row>
+    }
+  </div>
+  <div class="action-cart">
+    <mat-card class="card-recap">
+      <p class="montant-total">Montant total HT</p>
+      <p class="montant-euro">{{ totalAmount }} €</p>
+      <mat-radio-group aria-label="Choisir une option" class="radio" [formControl]="cmdOrDevis">
+        <mat-label>Souhaitez-vous passer commande ou obtenir un devis ? <span style="color: red">*</span></mat-label>
+        <mat-radio-button value="commande">Commander</mat-radio-button>
+        <mat-radio-button value="devis">Devis</mat-radio-button>
+      </mat-radio-group>
+      @if(cmdOrDevis.value == 'commande') {
+        <button mat-raised-button class="valider" [routerLink]="['/panier/commander/valider']">Valider la commande</button>
+      }@else if (cmdOrDevis.value == 'devis'){
+        <button mat-raised-button class="valider" [routerLink]="['/panier/commander/devis']">Enregistrer le devis</button>
+      }
+
+      <mat-divider class="divider"></mat-divider>
+      <button mat-raised-button>Sauvegarder le panier</button>
+    </mat-card>
+  </div>
+</div>

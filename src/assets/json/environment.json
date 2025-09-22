@@ -1,0 +1,17 @@
+[
+    {
+        "apiUrl": "http://www.actn.fr/backend/api/",
+        "photosUrl": "http://www.actn.fr/backend/photos/reel/",
+        "logoMarquesUrl": "http://www.actn.fr/backend/marque/",
+        "logoMarquesGrisUrl": "http://www.actn.fr/backend/marque/gris/200x80/",
+        "logoMarquesGrisUrlLabel": "http://www.actn.fr/backend/marque/gris/200x80long/",
+
+        "logoMarquesCouleurs200x80": "http://www.actn.fr/backend/marque/200x80/COULEUR/",
+
+        "carouselUrl": "http://www.actn.fr/backend/imgcarroussel/",
+        "produitDefautImgUrl": "http://www.actn.fr/backend/photos/reel/produit-dft.jpg",
+        "produitVirtuelDefautImgUrl": "http://www.actn.fr/backend/photos/reel/produit-dft-virtuel.jpg",
+        "pdfUrl": "http://www.actn.fr/backend/plaquettes/",
+        "captchaUrl": "http://www.actn.fr/backend/api/Captcha.php"
+    }
+]

@@ -1,0 +1,13 @@
+<div class="spinner-container">
+  @if (state) {
+    <mat-spinner diameter="100" class="spinner"></mat-spinner>
+  }
+  @if (loadingService.progressBarState$ | async; as pbs) {
+    <div class="progress-bar">
+      <p>{{ pbs.texte }}</p>
+      @if (pbs.isShowing) {
+        <mat-progress-bar mode="buffer" [bufferValue]="0" [value]="pbs.progression"></mat-progress-bar>
+      }
+    </div>
+  }
+</div>

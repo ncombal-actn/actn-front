@@ -1,0 +1,2 @@
+XG Firewall est doté de la toute dernière technologie de pare-feu de nouvelle génération. Il inclut toutes les fonctionnalités clés de SG UTM, plus : Pare-feu Next-Gen avec zones et règles unifiées - Fonctionnalités de la sécurité synchronisée de Sophos - Outils puissants de gestion centralisée dans Sophos Central.
+https://www.actn.fr/backend/aidechoix/SOPH-FIREWALLXGMATRIX.jpg

@@ -1,0 +1,1 @@
+Les firewalls Zyxel ATP (Advanced Threat Protection) offrent le niveau le plus élevé de protection de sécurité. Les firewalls ATP offrent toutes les fonctionnalités d’USG plus le Sandboxing, qui est un type de capacité de détection de malwares non identifiés précédemment, fondé sur « l’intelligence artificielle ».

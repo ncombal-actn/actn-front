@@ -1,0 +1,1 @@
+SG UTM est idéal pour ceux qui souhaitent développer leur réseau actuel protégé par Sophos UTM avec : Nouveaux pare-feu SG Series hautement performants (pouvant être mis à niveau vers le firmware de XG Firewall) - Technologie de sandboxing Sandstorm avec Deep Learning - Pare-feu d’applications Web (WAF) complet et protection des messageries.

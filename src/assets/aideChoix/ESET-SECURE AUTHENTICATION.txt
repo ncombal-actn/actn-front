@@ -1,0 +1,1 @@
+ESET Secure Authentication : Système d'authentification à deux facteurs avec utilisation de mots de passe à usage unique via application mobile ou SMS.

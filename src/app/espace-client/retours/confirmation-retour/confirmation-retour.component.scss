@@ -1,0 +1,290 @@
+@import "variables.scss";
+
+.cadreProduit {
+  background-color: white;
+  border-radius: 15px;
+  //box-shadow: 0 2px 3px 1px rgba(0, 0, 0, 0.2);
+}
+
+.titreRMA {
+  display: flex;
+  font-weight: 550;
+  justify-content: space-between;
+  padding: 15px 5px;
+  margin: 10px 0;
+}
+
+.descriptionRMA {
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 5px 15px 5px;
+  margin: 10px 0;
+}
+
+.grow1 {
+  flex-grow: 1;
+  flex-basis: 0;
+  padding: 0 5px;
+  align-self: center;
+}
+
+.grow2 {
+  flex-grow: 2;
+  flex-basis: 0;
+  padding: 0 5px;
+  align-self: center;
+}
+
+.grow3 {
+  flex-grow: 3;
+  flex-basis: 0;
+  padding: 0 5px;
+  align-self: center;
+}
+
+.grow1C {
+  flex-grow: 1;
+  flex-basis: 0;
+  padding: 0 5px;
+  align-self: center;
+  text-align: center;
+}
+
+.grow1F {
+  flex-grow: 1;
+  flex-basis: 0;
+  padding: 0 5px;
+  display: flex;
+  align-self: center;
+}
+
+.grow1CG {
+  flex-grow: 1;
+  flex-basis: 0;
+  padding: 0 5px;
+  color: grey;
+  align-self: center;
+  text-align: center;
+}
+
+.autresInfo {
+  display: flex;
+  justify-content: space-between;
+}
+
+.colonne {
+  flex-grow: 1;
+  flex-basis: 0;
+  margin-right: 20px;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: white;
+}
+
+.titres {
+  display: flex;
+  align-items: baseline;
+}
+
+.contenant {
+  display: block;
+}
+
+.icon {
+  margin: 10px;
+}
+
+.example-radio-group {
+  display: grid;
+  margin-bottom: 15px;
+}
+
+.example-radio-button {
+  padding: 10px 0;
+}
+
+.adresse {
+  background-color: white;
+  box-shadow: 0 2px 3px 1px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  margin: 10px 0;
+  display: inline-block;
+}
+
+.listAdresse {
+  align-items: center;
+}
+
+.ligneAdresse {
+  display: block;
+}
+
+.addBtn {
+  margin: 5px 0px;
+  max-width: 220px;
+  margin-right: 20px;
+}
+
+.longText {
+  margin: 5px 0px;
+  width: 100%;
+}
+
+.longText2 {
+  display: block;
+  width: 50%;
+}
+
+.file {
+  display: block;
+  margin: 10px 0;
+  color: grey;
+}
+
+.contenant2 {
+  display: block;
+  margin: 10px 0;
+}
+
+.flex {
+  display: flex;
+}
+
+.miniLabel {
+  width: 45%;
+  font-size: 1em - $font-scale;
+  margin: 5.6875px 0;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.labels1 {
+  width: 45%;
+  margin-bottom: 16.25px;
+}
+
+.labels2 {
+  width: 45%;
+}
+
+.dumb {
+  width: 10%;
+}
+
+.dumb2 {
+  width: 50%;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+
+  > * {
+    width: 25%;
+  }
+}
+
+.btnSec {
+  margin: 5px;
+  min-width: 180px;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-contrast);
+}
+
+.raised-button {
+  padding: 8px 10px !important;
+}
+
+.iconComp {
+  margin: 10px;
+  align-self: center;
+}
+
+.required {
+  margin: 8px;
+  color: red;
+}
+
+.champ {
+  margin: 10px 0px;
+}
+
+.input {
+  width: 180px !important;
+}
+
+.unroll-button {
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 0.65em;
+}
+
+h3 {
+  margin-block-start: 0.5em !important;
+  margin-block-end: 0.5em !important;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: -1;
+  visibility: hidden;
+  opacity: 0;
+
+  &.active {
+    z-index: 21;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .popup-background {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  .popup-window {
+    $width: 450px;
+    $height: 180px;
+    position: fixed;
+    width: $width;
+    height: $height;
+    min-width: $width;
+    min-height: $height;
+    max-width: $width;
+    max-height: $height;
+    top: calc(50vh - #{$height} / 2);
+    bottom: calc(50vh - #{$height} / 2);
+    left: calc(50vw - #{$width} / 2);
+    right: calc(50vw - #{$width} / 2);
+    background: white;
+    padding: 20px;
+  }
+
+  .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+
+    > *:first-child {
+      margin-right: 20px;
+    }
+  }
+
+  p {
+    text-align: center;
+    width: 100%;
+  }
+}

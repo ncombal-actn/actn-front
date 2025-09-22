@@ -1,0 +1,91 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { take } from 'rxjs/operators';
+import { CartService } from '@/_core/_services/cart.service';
+import { TempCartService } from '@/_core/_services/temp-cart.service';
+
+import { LicenceService } from '@core/_services';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '@env';
+import { log } from 'node:console';
+
+@Component({
+    selector: 'app-confirmation-panier',
+    templateUrl: './confirmation-panier.component.html',
+    styleUrls: ['./confirmation-panier.component.scss']
+})
+export class ConfirmationPanierComponent implements OnInit {
+
+    ncmd:any;
+    ticket :any;
+    transaction = '';
+    validCommande;
+    iban: string
+    bic: string
+    ncde: any
+    carttype: string = "perm";
+
+    cartService: CartService = null;
+
+    constructor(
+        private route: ActivatedRoute,
+        public permCartService: CartService,
+        public tempCartService: TempCartService,
+        public licenceService: LicenceService,
+        public http: HttpClient
+    ) {
+       
+       
+    }
+
+   
+
+    ngOnInit() {
+        // Retrieve query parameters
+        this.route.queryParams.pipe(take(1)).subscribe((params) => {
+         console.log('Query Params:', params);
+          
+          this.carttype = params['carttype'];
+          this.ncde = decodeURIComponent(params['ncde']);
+          this.ncmd = decodeURIComponent(params['ncmd']);
+            
+        /*   if (this.ncde == undefined) {
+            this.ncde = this.route.snapshot.queryParams['ncde'] 
+          }
+          if (this.ncmd == undefined) {
+          } */
+          this.ticket = decodeURIComponent(params['ticket']);
+          this.transaction = decodeURIComponent(params['transaction']);
+  
+          console.log('Ticket:', this.ticket, 'NCDE:', this.ncde, 'Ncmd:', this.ncmd, 'Transaction:', this.transaction);
+          
+          if (this.carttype === 'temp') {
+            this.cartService = this.tempCartService;
+          } else {
+            this.cartService = this.permCartService;
+          }
+    
+          this.cartService.emptyCart();
+    
+         // this.ticket = decodeURIComponent(params['ticket']);
+         // this.transaction = decodeURIComponent(params['transaction']);
+
+          if (this.ncmd != null) {
+            this.licenceService.majEnduser().subscribe();
+          }
+    
+          this.permCartService.getIban().subscribe((perm) => {
+            this.iban = perm;
+          });
+    
+          this.permCartService.getBic().subscribe((perm) => {
+            this.bic = perm;
+          });
+        });
+      }
+
+    ngOnDestroy() {
+        this.cartService.eraseValidCommande();
+    }
+
+}

@@ -1,0 +1,321 @@
+@if (this.userWeb$ != null) {
+<div>
+  <h2>Vos utilisateurs enregistrés</h2>
+  <div class="tableau mat-elevation-z8">
+    <!-- <mat-paginator [pageSizeOptions]="[50, 100, 150]" aria-label="Select page of users"> </mat-paginator> -->
+    <!--  <mat-form-field id="filter">
+      <mat-label>Filtre</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
+    </mat-form-field> -->
+    <table mat-table [dataSource]="this.dataSource" matSort id="clientTable">
+      <!--   -->
+      <ng-container matColumnDef="nom">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nom</th>
+        <td mat-cell *matCellDef="let client">{{ client.nom }}</td>
+      </ng-container>
+      <ng-container matColumnDef="mail">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Adresse mail</th>
+        <td mat-cell *matCellDef="let client">{{ client.mail }}</td>
+      </ng-container>
+      <ng-container matColumnDef="telephone">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Téléphone</th>
+        <td mat-cell *matCellDef="let client">{{ client.telephone }}</td>
+      </ng-container>
+      <ng-container matColumnDef="identifiant">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Identifiant</th>
+        <td mat-cell *matCellDef="let client">{{ client.identifiant }}</td>
+      </ng-container>
+      <ng-container matColumnDef="service">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Service</th>
+        <td mat-cell *matCellDef="let client">
+          {{ client.servicelib | ouiNonAdmin }}
+        </td>
+        <ng-container matColumnDef="principal">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Utilisateur principal
+          </th>
+          <td mat-cell *matCellDef="let client">{{ client.principal }}</td>
+        </ng-container>
+      </ng-container>
+      <ng-container matColumnDef="droitcommande">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Droit commande
+        </th>
+        <td mat-cell *matCellDef="let client">
+          {{ client.droitcommande | ouiNonAdmin }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="autorisemailling">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Mailling</th>
+        <td mat-cell *matCellDef="let client">
+          {{ client.autorisemailling | ouiNonAdmin }}
+        </td>
+      </ng-container>
+      <!--  <ng-container matColumnDef="droitacces">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Droit acces</th>
+      <td mat-cell *matCellDef="let client"> {{client.droitacces}} </td>
+    </ng-container> -->
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Rôle</th>
+        <td mat-cell *matCellDef="let client">
+          {{ client.role | ouiNonAdmin }}
+        </td>
+      </ng-container>
+      <!-- <ng-container matColumnDef="numindividu">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Numéro individu </th>
+    <td mat-cell *matCellDef="let client"> {{client.numindividu}} </td>
+  </ng-container> -->
+      <ng-container matColumnDef="modif">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let client">
+          @if (principalBool) {
+          <button
+            class="raised-button"
+            type="button"
+            (click)="openWeb(client.numindividu, client.identifiant)"
+          >
+            Modifier
+          </button>
+          }
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <!-- WEB FORM -->
+    <div [ngClass]="boolWeb ? 'popUpActive' : 'popUpInactive'">
+      @if (!ajout) {
+      <h3>Modification d'un utilisateur</h3>
+      } @else {
+      <h3>Ajout d'un utilisateur web</h3>
+      }
+      <button (click)="close2()">CLSE</button>
+      <!-- WEBFORM FORMGROUP -->
+      <form
+        [formGroup]="webForm"
+        #formDirectiveWeb="ngForm"
+        (ngSubmit)="onSubmitWeb()"
+      >
+        <div class="flex">
+          <div class="block marge-phone">
+            <mat-form-field>
+              <mat-label style="padding-top: 13px">Nom / Prénom</mat-label>
+              <input
+                matInput
+                formControlName="nom"
+                placeholder="Nom / Prénom"
+                required
+              />
+              @if (webForm.get('nom').errors?.required) {
+              <mat-error>Champ obligatoire</mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div class="block marge">
+            <mat-form-field>
+              <mat-label style="padding-top: 13px">Adresse mail</mat-label>
+              <input
+                matInput
+                formControlName="mail"
+                placeholder="Mail"
+                required
+              />
+              @if (webForm.get('mail').errors?.required) {
+              <mat-error>Champ obligatoire</mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div class="block marge">
+            <mat-form-field>
+              <mat-label style="padding-top: 13px">N° de téléphone</mat-label>
+              <input
+                matInput
+                formControlName="tel"
+                placeholder="N° de téléphone"
+                name="telephone"
+              />
+              @if (webForm.get('tel').errors?.required) {
+              <mat-error>Chiffres autorisées</mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div class="block marge">
+            <!-- [ngClass]="{ none: !ajout }" -->
+            <mat-form-field>
+              <mat-label style="padding-top: 13px">Service</mat-label>
+              <mat-select
+                matInput
+                placeholder="Service"
+                formControlName="service"
+                required
+              >
+                @for (option of listService; track option; let k = $index) {
+                <mat-option [value]="listServiceAcro[k]" [disabled]="">
+                  {{ option }}
+                </mat-option>
+                }
+              </mat-select>
+              @if (webForm.get('service').errors?.required) {
+              <mat-error>Champ obligatoire</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="flex margeHaut margePlus">
+          <div class="block">
+            <mat-checkbox formControlName="mailing">
+              Autoriser ACTN à envoyer des offres et actualités
+            </mat-checkbox>
+          </div>
+        </div>
+
+        <div class="block">
+          <mat-checkbox (click)="changeWeb()" [checked]="web === true"
+            ><!-- [(ngModel)]="this.web" -->
+            Transformer en utilisateur web
+          </mat-checkbox>
+        </div>
+
+        @if (this.web === true) {
+        <div>
+          <div class="flex margeHaut">
+            <!-- IDENTIFIANT INPUT  [readonly]="!ajout"  -->
+            <div class="block marge-phone zozo">
+              <form [formGroup]="idForm" #formDirectiveIdent="ngForm">
+                <mat-form-field [ngClass]="{ readonly: !ajout }">
+                  <mat-label style="padding-top: 13px">Identifiant</mat-label>
+                  <input
+                    matInput
+                    formControlName="ident"
+                    placeholder="Identifiant"
+                  />
+                  <!-- <mat-hint *ngIf="!ajout" style="font-size:0.9em">L'Identifiant n'est pas modifiable</mat-hint> -->
+                  @if (idForm.get('ident').errors?.required) {
+                  <mat-error>Doit faire entre 4 et 20 caractères</mat-error>
+                  } @if ( idForm.get('ident').errors?.maxlength ||
+                  idForm.get('ident').errors?.minlength ) {
+                  <mat-error>Doit faire entre 4 et 20 caractères</mat-error>
+                  }
+                </mat-form-field>
+              </form>
+            </div>
+            @if (!ajout && !changePass) {
+            <div class="block">
+              <mat-checkbox (click)="changePassword()">
+                Modifier le mot de passe
+              </mat-checkbox>
+            </div>
+            }
+            <div
+              class="block"
+              [ngClass]="{ marge: ajout, none: !ajout && !changePass }"
+            >
+              <mat-form-field>
+                <mat-label style="padding-top: 13px">Mot de passe</mat-label>
+                <input
+                  matInput
+                  type="password"
+                  formControlName="mdp"
+                  placeholder="Mot de passe"
+                />
+                @if ( webForm.get('mdp').errors?.maxlength ||
+                webForm.get('mdp').errors?.pattern ) {
+                <mat-error>Doit faire entre 7 et 20 caractères</mat-error>
+                }
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="flex margeHaut">
+            <div class="block">
+              <mat-radio-group formControlName="commande">
+                <mat-radio-button value="O"
+                  >Autorisation de commande</mat-radio-button
+                >
+                <mat-radio-button value="N"
+                  >Devis et consultation</mat-radio-button
+                >
+              </mat-radio-group>
+            </div>
+          </div>
+          <!-- ADMIN INPUT -->
+          @if (principalBool) {
+          <div class="flex margeHaut margePlus">
+            <div class="block">
+              <mat-checkbox formControlName="admin" value="A">
+                Profil administrateur
+              </mat-checkbox>
+            </div>
+          </div>
+          } @else {
+          <mat-checkbox formControlName="admin" value="A" type="hidden">
+            Profil administrateur
+          </mat-checkbox>
+          } @if (webForm.get('admin').errors?.RemovingTheLastAdmin) {
+          <mat-error
+            >Il doit y avoir au minimum 1 profil Admin par client. Impossible de
+            retirer celui là.</mat-error
+          >
+          }
+        </div>
+        }
+        <div class="error">* Champs obligatoire</div>
+        @if (error) {
+        <div class="error">{{ textBtnErr }}</div>
+        }
+        <div class="flex margeHaut margePlus ecart">
+          <div>
+            @if (!ajout && idPerson != auth.currentUser['TIERSUSR'].trim()) {
+            <button
+              type="button"
+              (click)="suppr()"
+              class="raised-button button--color-secondary"
+            >
+              Supprimer cet utilisateur
+            </button>
+            }
+          </div>
+          <div class="flex">
+            <button
+              type="button"
+              (click)="close(formDirectiveWeb, formDirectiveCont)"
+              class="raised-button button--color-secondary"
+            >
+              Annuler
+            </button>
+            @if (!ajout) {
+            <button
+              type="button"
+              (click)="onSubmitWeb()"
+              class="raised-button marge"
+            >
+              Enregistrer
+            </button>
+            } @else {
+            <button
+              type="button"
+              (click)="onSubmitAddWeb()"
+              class="raised-button marge"
+            >
+              Enregistrer
+            </button>
+            }
+          </div>
+        </div>
+      </form>
+    </div>
+    <div
+      class="dark-overlay"
+      id="overlay"
+      #overlayElement
+      [ngClass]="{ show: boolWeb || boolCont }"
+      (click)="close(formDirectiveWeb, formDirectiveCont)"
+    ></div>
+  </div>
+  @if (principalBool) {
+  <button type="button" (click)="addWeb()" class="raised-button margeCote">
+    Ajouter un utilisateur
+  </button>
+  }
+</div>
+}

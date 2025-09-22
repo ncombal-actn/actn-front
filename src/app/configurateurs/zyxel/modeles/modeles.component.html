@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="header raised-1">
+    <conf-header-stepper [step]="2"></conf-header-stepper>
+  </div>
+
+  @if (isReady) {
+    <div class="content">
+      <div class="gamme">
+        <img loading="lazy" [alt]="gamme.titre" [src]="environment.configurateurZyxel + '/img/' + gamme.titre + '.webp'" />
+        <div class="description">
+          <h2>ZYXEL {{ gamme.titre }}</h2>
+          <p>
+            {{ gamme.texte }}
+            <a class="lien-gamme" [href]="environment.pdfUrl + 'qsg_security_2020.pdf'" target="_blank" rel="noopener noreferrer">En savoir + sur la gamme ZYXEL {{ gamme.titre }}</a>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="modeles content-padding">
+      <p class="center">Sélectionnez le modèle à configurer</p>
+      <conf-sliding-liste [nbProduits]="modeles.length" [produits]="modeles" [color]="couleurGamme" ></conf-sliding-liste>
+    </div>
+  }
+</div>

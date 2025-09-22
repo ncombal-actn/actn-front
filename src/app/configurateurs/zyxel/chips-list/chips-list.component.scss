@@ -1,0 +1,38 @@
+@import "../zyxel.scss";
+
+#container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    ::ng-deep .chips {
+        cursor: pointer;
+        padding: 4px 8px;
+        margin: 0 10px;
+        border: 1px solid $color-red-4;
+        color: $color-red-4;
+        border-radius: 360px;
+        text-decoration: none;
+
+        &--selected,
+        &--interactable:hover {
+            background-color: $color-red-4;
+            color: white;
+        }
+
+        &--whited {
+            background-color: white;
+        }
+
+        &--blue {
+            background-color: var(--color-primary);
+            color: var(--color-primary-contrast);
+            border-color: var(--color-primary);
+        }
+
+        &--interactable {
+            transition: all 50ms ease-in-out;
+        }
+    }
+}

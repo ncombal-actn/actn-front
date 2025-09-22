@@ -1,0 +1,1 @@
+ESET Mail Security pour Kerio Connect : Plug-in dédié à la sécurité des serveurs de messagerie. Il contrôle tout le courrier électronique entrant et sortant.

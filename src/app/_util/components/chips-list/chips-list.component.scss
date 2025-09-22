@@ -1,0 +1,25 @@
+@import "styles/chips.scss";
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+  transition: max-height 300ms ease-in-out;
+  margin-bottom: 12px;
+  max-height: 40px;
+}
+
+.titre {
+  width: 100%;
+  font-size: 0.885em;
+  color: rgba(0, 0, 0, 0.42);
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  align-items: center;
+}
+
+#cont_chips {
+  display: grid;
+  grid-template-columns: 11.5fr 0.5fr;
+}

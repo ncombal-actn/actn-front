@@ -1,0 +1,127 @@
+<!-- Menu client -->
+<!-- Liste de mes client -->
+<div class="paddIframe">
+    
+    <app-title-w-line [title]="'Vos factures'" [icon]="'insert_chart'"></app-title-w-line>
+ 
+    <div class="example-container mat-elevation-z8">
+    
+      <div class="containerFiltre"> 
+        
+        <!--  </mat-card-content>  -->
+        <mat-form-field appearance="outline" class="filterInput">
+        <mat-label>Rechercher sur Onlywan</mat-label>
+        <input
+        matInput
+        (keyup)="applyFilter($event)"
+        placeholder="Rechercher sur Onlywan"
+        #input
+        />
+        <button
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="clearInput()"
+        >
+        <mat-icon>close</mat-icon>
+      </button>
+      </mat-form-field> 
+    </div>
+    <mat-divider></mat-divider>
+      <mat-paginator
+      [pageSizeOptions]="[25, 50, 100]"
+      aria-label="Select page of users"
+      ></mat-paginator>
+      <button class="raised-button thin-button dlBtn ml"  (click)="downlaodCsv()">Télécharger la sélection </button>
+      <table
+        aria-describedby="List-client"
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        id="clientTable"
+        [matSortActive]="'clientreference'"
+        [matSortDirection]="'asc'"
+      >
+       
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? toggleAllRows() : null"
+        [checked]="selection.hasValue() && isAllSelected()"
+        [indeterminate]="selection.hasValue() && !isAllSelected()"
+        [aria-label]="checkboxLabel()" matTooltip="Tout sélectionner">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+        (change)="$event ? selection.toggle(row) : null"
+        [checked]="selection.isSelected(row)"
+        [aria-label]="checkboxLabel(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+  
+   
+    <ng-container matColumnDef="date_facture">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header matSortHeaderDisableClear>
+        Date facture
+      </th>
+      <td mat-cell *matCellDef="let client">{{ client.date_facture| dateTransform | date: 'dd/MM/yyyy'  }}</td>
+    </ng-container>
+       
+        <!-- Position Column -->
+        <ng-container matColumnDef="montant_ht">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Montant HT</th>
+          <td mat-cell *matCellDef="let client">{{ client.montant_ht }} €</td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="montant_ttc">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Montant TTC</th>
+          <td mat-cell *matCellDef="let client">{{ client.montant_ttc }} €</td>
+        </ng-container>
+  
+        <!-- Weight Column -->
+        <ng-container matColumnDef="montant_tva">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Montant TVA</th>
+          <td mat-cell *matCellDef="let client">{{ client.montant_tva }} €</td>
+        </ng-container>
+  
+      
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="nom_facture">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Nom facture</th>
+          <td mat-cell *matCellDef="let client">{{ client.nom_facture }}</td>
+        </ng-container>
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="numero_facture">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Numéro facture</th>
+          <td mat-cell *matCellDef="let client">
+            <a class="underline"
+            [href]="environment.apiUrl+'/document/generateOnlywan.php?document='+client.numero_facture +'&type=ONLYWAN&client='+ extractSecondWord(client.nom_facture) "
+            target="_blank"
+         >
+           <!--   {{ environment.apiUrl + '/document/generate.php?document=' + client.numero_facture + '&type=ONLYWAN'}} -->
+           {{ client.numero_facture }}  <fa-icon [icon]="faFilePdf"></fa-icon>
+         </a></td>
+        </ng-container>    
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          class="example-element-row"
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          (click)="selection.toggle(row)"
+        ></tr>
+  
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="5">
+            Aucune donnée correspondant au filtre "{{ input.value }}"
+          </td>
+        </tr>
+      </table>
+  
+      
+    </div>
+  </div>
+  

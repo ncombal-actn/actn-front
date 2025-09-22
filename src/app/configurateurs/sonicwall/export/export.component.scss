@@ -1,0 +1,12 @@
+@use "../sonicwall.scss" as sonicwall;
+
+$header-background: sonicwall.$color-2;
+$hr-color: sonicwall.$color-1;
+$background-bloc: sonicwall.$color-grey;
+
+$border-prix: sonicwall.$color-1;
+$color-font: sonicwall.$color-2;
+
+$url-logo: "/assets/img/SONICWALL.webp";
+
+@import "../../export/base.scss";

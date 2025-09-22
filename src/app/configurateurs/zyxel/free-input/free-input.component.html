@@ -1,0 +1,21 @@
+
+@if (showLibelles) {
+  <p class="prix">{{ configService.configuration.priceOfOptionGrouped(options.categorie, options.name) | currency:'EUR':'symbol':'1.2-2':'fr' }}</p>
+}
+<conf-input-number class="inputed-options" [number]="n" [min]="lockMin ? minOfInput() + 1 : 0" [max]="maximum" (value)="inputValueChange($event)"></conf-input-number>
+@if (showLibelles) {
+  <p class="size-smaller">Déjà compris : {{ minOfInput() }}</p>
+}
+@if (showLibelles) {
+  <p class="size-smaller">Maximum : {{ maxOfInput() }}</p>
+}
+@if (showLibelles) {
+  <p class="ref size-smaller">
+    Réfs :
+    @for (option of configService.configuration.getOptions(options.categorie, options.name); track option.quantite; let last = $last) {
+      {{ option.option['produit'].value }} x {{ option.quantite }}@if (!last) {
+      ,
+    }
+  }
+</p>
+}

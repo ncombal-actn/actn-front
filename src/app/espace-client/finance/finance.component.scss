@@ -1,0 +1,117 @@
+@import 'styles/popup';
+
+.filter {
+  display: flex;
+  gap: 20px;
+}
+
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  height:  0px;
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.tables-finances {
+  border-radius: 10px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cat-elem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  h2, p {
+    margin: 0;
+  }
+}
+
+.hide{
+  display: none;
+}
+
+.ouiee {
+  display: flex;
+  width: 85px;
+  justify-content: end
+}
+
+.btn-moula {
+  margin-left: 1em;
+  background-color: #003264!important;
+  color: white!important;
+}
+
+.paye-groupe {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.RIB{
+  width: 100%;
+  min-width: 333px;
+  justify-self: end;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  margin-bottom: 0px;
+
+  h3{
+    margin-bottom: 0px;
+  }
+
+  .total {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+.rib_icon{
+  cursor: pointer;
+  color: var(--color-primary) !important;
+  margin-left: 10px;
+}
+
+.CB {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.button-action {
+  display: flex;
+  justify-content: space-around;
+}
+
+.annule-stp {
+  display: flex;
+  justify-content: end;
+  margin-top: 20px;
+
+  .annule-btn {
+    background-color: #9b0037;
+    color: white;
+    width: fit-content;
+  }
+}
+
+.disabled {
+  opacity: 20%;
+}

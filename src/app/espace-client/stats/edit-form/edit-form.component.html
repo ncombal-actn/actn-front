@@ -1,0 +1,110 @@
+<div class="adresseForm">
+  <!--<h3>Editer l'Adresse "{{ editForm.get('nomAddr') }}":</h3>-->
+  <form [formGroup]="editForm" (ngSubmit)="editAddress()">
+      <mat-form-field class="example-full-width">
+        <mat-label>Nom de l'adresse :</mat-label>
+        <input [formControlName]="'nomAddr'" matInput maxlength="40" name="nom" placeholder="40 caracteres max"
+               required
+               type="text"
+        >
+        <!-- <span *ngIf="editForm.nomAddr">&nbsp;{{ editForm.nomAddr.length }}</span> -->
+      </mat-form-field>
+      @if (editForm.get('nomAddr').invalid) {
+        <mat-error>Le nom de l'adresse doit faire entre 1 et 40 caractère. Caractères autorisés :
+          Majuscules, Minuscules, Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+        </mat-error>
+      }
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Adresse ligne 1 :</mat-label>
+        <input matInput [formControlName]="'addr1'"
+               maxlength="30" name="addr1" placeholder="30 caracteres max" required type="text">
+        <!--  <span *ngIf="editForm.addr1">&nbsp;{{ editForm.addr1.length }}</span> -->
+      </mat-form-field>
+      @if (editForm.get('addr1').invalid) {
+        <mat-error>La première ligne de l'adresse doit faire entre 1 et 30 caractère. Caractères
+          autorisés : Majuscules, Minuscules, Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+        </mat-error>
+      }
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Adresse ligne 2 :</mat-label>
+        <input matInput maxlength="30" name="addr2" placeholder="30 caracteres max" [formControlName]="'addr2'"
+               type="text">
+        <!--   <span *ngIf="editForm.addr2">&nbsp;{{ editForm.addr2.length }}</span> -->
+
+      </mat-form-field>
+      @if (editForm.get('addr2').invalid) {
+        <mat-error>La seconde ligne de l'adresse doit faire entre 1 et 30 caractère. Caractères
+          autorisés : Majuscules, Minuscules, Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+        </mat-error>
+      }
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Code Postal :</mat-label>
+        <input matInput maxlength="5" name="codePostal" [formControlName]="'codePostal'"
+               oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+               required
+               type="text">
+      </mat-form-field>
+      @if (editForm.get('codePostal').invalid) {
+        <mat-error>Vérifiez que votre code postal corresponde bien au format du pays choisit. Caractères
+          autorisés : Chiffres
+        </mat-error>
+      }
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Ville :</mat-label>
+        <input matInput maxlength="26" name="ville" placeholder="26 caracteres max" [formControlName]="'ville'"
+               required
+               type="text">
+        <!-- <span *ngIf="editForm.ville">&nbsp;{{ editForm.ville.length }}</span> -->
+      </mat-form-field>
+      @if (editForm.get('ville').invalid) {
+        <mat-error>Le nom de la ville doit faire entre 1 et 26 caractère. Caractères autorisés :
+          Majuscules, Minuscules, Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+        </mat-error>
+      }
+      <mat-form-field class="example-full-width">
+        <mat-label>Téléphone :</mat-label>
+        <input matInput maxlength="15" name="telephone" [formControlName]="'telephone'"
+               oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+               placeholder="Numéro portable de préférence"
+               required
+               type="text">
+        <mat-hint>Veuillez ne pas mettre d'espace entre les caractères, exemple : 0000000000</mat-hint>
+      </mat-form-field>
+      @if (editForm.get('telephone').invalid) {
+        <mat-error>Le numéro de téléphone doit faire entre 1 et 15 caractères, exemple : 0000000000. Caractères
+          autorisés : Chiffres, +
+        </mat-error>
+      }
+      @if (pays$ | async; as pays) {
+        <mat-form-field class="example-full-width">
+          <mat-label>Pays :</mat-label>
+          <!--input [(ngModel)]="addrForm.pays" type="text" name="pays"-->
+          <mat-select [formControlName]="'pays'" required type="text" (selectionChange)="changePays()">
+            <mat-option [value]="'FR'">France</mat-option>
+            <mat-option [value]="'BE'">Belgique</mat-option>
+            <mat-option [value]="'ES'">Espagne</mat-option>
+            <mat-option [value]="'LU'">Luxembourg</mat-option>
+            @for (unPays of pays; track $index) {
+              <mat-option
+                [value]="unPays['alpha2Code']">{{ adresseService.getNameOfCountry(unPays) }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      }
+      @if (editForm.get('pays').invalid) {
+        <mat-error>Pensez à selectionner un pays dans la liste.</mat-error>
+      }
+    <br>
+    <p>* : Champs obligatoires</p>
+    <br>
+    <div class="formButtons">
+      <button (click)="goBack()" class="raised-button">Annuler</button>
+      <button type="submit" class="raised-button">Enregistrer</button>
+    </div>
+  </form>
+</div>

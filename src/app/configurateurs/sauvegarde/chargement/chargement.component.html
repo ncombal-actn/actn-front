@@ -1,0 +1,65 @@
+@if (show) {
+  <div class="popup" [ngClass]="{active: show}">
+    <div class="popup-background" (click)="onClose()" (tap)="onClose()"></div>
+    <div class="popup-window raised-3">
+      <h3>Charger une configuration</h3>
+      <hr/>
+      @if (configurations$ | async; as configurations) {
+        @if (configurations.length > 0) {
+          <div class="configuration weight-bold">
+            <div>Modèle</div>
+            <div>Nom</div>
+            <div>Date</div>
+            <div>Prix HT</div>
+            <div>
+              <fa-icon class="whited" [icon]="faClipboardList"></fa-icon>
+            </div>
+            <div>
+              <fa-icon class="whited" [icon]="faCommentDots"></fa-icon>
+            </div>
+            <div>
+              <fa-icon class="whited" [icon]="faTrash"></fa-icon>
+            </div>
+          </div>
+          @for (configuration of configurations; track configuration.name) {
+            <div class="configuration pointer"
+              (click)="onSelect(configuration)" (tap)="onSelect(configuration)">
+              <div>{{ configuration.modele }}</div>
+              <div>{{ configuration.name }}</div>
+              <div>{{ configuration.date | date:'shortDate' }}</div>
+              <div>{{ configuration.prix | currency:'EUR':'symbol':'1.2-2':'fr' }}<span class="size-smaller">&nbsp;HT</span></div>
+              <div class="circled"
+                [matTooltip]="'Compris dans cette configuration :\r\n' + produitsCompris(configuration)"
+                matTooltipClass="conf-load-tooltip tooltip-breakspace" matTooltipPosition="above"
+                >
+                <fa-icon [icon]="faClipboardList">
+                </fa-icon>
+              </div>
+              <div class="circled"
+                [matTooltip]="'Commentaires : ' + (configuration.commentaires.length > 0 ? configuration.commentaires : 'Vous n\'avez précisé aucun commentaire lors de la sauvegarde.')"
+                matTooltipClass="conf-load-tooltip" matTooltipPosition="above"
+                >
+                <fa-icon [icon]="faCommentDots">
+                </fa-icon>
+              </div>
+              <div class="circled pointer" (click)="onDelete($event, configuration)"  (tap)="onDelete($event, configuration)"
+                matTooltip="Supprimer la configuration"
+                matTooltipClass="conf-load-tooltip" matTooltipPosition="above"
+                >
+                <fa-icon [icon]="faTrash">
+                </fa-icon>
+              </div>
+            </div>
+          }
+        } @else {
+          <h4>Vous n'avez pas sauvegardé de configuration.</h4>
+        }
+      }
+      <div class="buttons">
+        <conf-chips-list>
+          <button class="chips chips--whited" (click)="onClose()" (tap)="onClose()">Fermer</button>
+        </conf-chips-list>
+      </div>
+    </div>
+  </div>
+}

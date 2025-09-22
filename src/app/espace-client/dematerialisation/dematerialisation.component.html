@@ -1,0 +1,69 @@
+<div>
+  <h3>Gérer mon espace de documents dématérialisés</h3>
+  <p>Inscrivez les coordonnées de votre contact devant traiter les documents.</p>
+  <p>Celui-ci recevra les notifications à chaque mise à disposition de documents (factures).</p>
+
+  <!-- FORMULAIRE DE CONTACT DEMATERIALISE -->
+  @if (!submitted) {
+    <form [formGroup]="dematForm" (ngSubmit)="onSubmit()">
+      <!-- EMAIL -->
+      <mat-form-field>
+        <mat-label>E-mail</mat-label>
+        <input matInput formControlName="email" />
+        @if (dematForm.get('email').errors?.required) {
+          <mat-error>Champ obligatoire</mat-error>
+        }
+        @if (dematForm.get('email').errors?.email) {
+          <mat-error>La saisie ne correspond pas à un e-mail</mat-error>
+        }
+      </mat-form-field>
+      <br>
+        <!-- NOM -->
+        <mat-form-field>
+          <mat-label>Nom</mat-label>
+          <input matInput formControlName="nom" />
+          @if (dematForm.get('nom').errors?.required) {
+            <mat-error>Champ obligatoire</mat-error>
+          }
+        </mat-form-field>
+        <br>
+          <!-- TELEPHONE -->
+          <mat-form-field>
+            <mat-label>Téléphone</mat-label>
+            <input matInput type="tel" formControlName="tel" />
+            @if (dematForm.get('tel').errors?.required) {
+              <mat-error>Champ obligatoire</mat-error>
+            }
+            @if (dematForm.get('tel').errors?.maxlength) {
+              <mat-error>Accepte un maximum de 15 caractères</mat-error>
+            }
+            @if (dematForm.get('tel').errors?.pattern) {
+              <mat-error>Seul les caractères suivants sont autorisés [0123456789+-_]</mat-error>
+            }
+          </mat-form-field>
+          <!-- SUBMIT BUTTON -->
+          <input (click)="onSubmit()" class="raised-button" type="submit" value="Valider" [disabled]="dematForm.invalid"> <!--  -->
+          <br/>
+          <p>Nouvel inscrit : votre identifiant et mot de passe vous seront transmis lors de la création de votre prochaine facture.</p>
+        </form>
+      }
+
+      <!-- AFFICHAGE DU RÉSULTAT -->
+      @if (!loading && submitted) {
+        <div>
+          @if (success) {
+            <div>
+              <h4>Changement de contact réussi</h4>
+              <p>Les coordonnées du contact ont bien été enregistrées.</p>
+            </div>
+          } @else {
+            <h4>Changement de contact échoué</h4>
+            <mat-error>Une erreur est survenue lors de l'enregistrement du nouveau contact.</mat-error>
+            <br/>
+            <button class="raised-button" (click)="submitted=false">Réessayer</button>
+          }
+        </div>
+      }
+
+      <a class="raised-button" href="https://www.dematpro.net/" target="_blank">Accéder à mon espace</a>
+    </div>

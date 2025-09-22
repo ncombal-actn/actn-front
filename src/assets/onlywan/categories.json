@@ -1,0 +1,41 @@
+[
+{  "name":"Accueil",
+    "icon":"home",
+    "sousCat":[]
+    
+},
+{  "name":"Outils",
+    "icon":"wrench",
+    "sousCat":[]
+    
+},
+{
+    "name":"Nos offres",
+    "icon":"search",
+    "sousCat":[]
+},
+{  "name":"Etat des services",
+    "icon":"home",
+    "sousCat":[]
+    
+},
+{
+    "name": "Mes Clients",
+    "icon":"home",
+    "sousCat":[]
+},
+{  "name":"Facturation",
+    "icon":"home",
+    "sousCat":[
+        "Liste de mes clients",
+        "Nouveau client"
+        ]
+    
+},
+{  "name":"Contacts",
+    "icon":"phone",
+    "sousCat":[]
+    
+}
+
+]

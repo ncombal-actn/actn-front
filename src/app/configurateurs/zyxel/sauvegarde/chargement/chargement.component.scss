@@ -1,0 +1,37 @@
+@import "../../zyxel.scss";
+
+.configuration {
+    &:not(:first-of-type):hover {
+        background-color: $color-red-4;
+        color: white;
+
+        fa-icon {
+            color: white;
+        }
+
+        .circled {
+            background-color: $color-red-4;
+
+            &:hover {
+                background: $color-grey;
+
+                fa-icon {
+                    color: $color-red-4;
+                }
+            }
+        }
+    }
+
+    fa-icon:not(.whited) {
+        color: $color-red-4;
+    }
+
+    .circled {
+        background: $color-grey;
+    }
+}
+
+::ng-deep .conf-load-tooltip {
+    background-color: $color-red-4;
+    color: white;
+}

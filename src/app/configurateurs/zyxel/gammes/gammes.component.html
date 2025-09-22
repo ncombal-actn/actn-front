@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="header raised-1">
+    <conf-header-stepper [step]="1"></conf-header-stepper>
+  </div>
+
+  <div class="content-padding main raised-1">
+    <div class="gammes">
+      @for (gamme of gammes; track gamme.titre; let index = $index) {
+        <div class="gamme">
+          <img loading="lazy" [src]="environment.configurateurZyxel + 'img/' + gamme.titre + '.webp'" [alt]="'Gamme ' + gamme.titre"/>
+          <span class="col-red-{{ index + 1 }} size-big weight-bold">{{ gamme.titre }}</span>
+          <p>
+            {{ gamme.texte }}
+          </p>
+          @if (modelesCount[index] > 0) {
+            <a class="flat-button rounded-corner bg-red-{{ index + 1 }} hover-bigger" [routerLink]="[gamme.titre, 'modeles']">
+              <fa-icon [icon]="faSlidersH"></fa-icon>Configurez un produit {{ gamme.titre }}
+            </a>
+          } @else {
+            <a class="flat-button rounded-corner bg-grey-2 prochainement">
+              <fa-icon [icon]="faSlidersH"></fa-icon>Disponible prochainement
+            </a>
+          }
+          <ng-template #prochainement>
+            <a class="flat-button rounded-corner bg-grey-2 prochainement">
+              <fa-icon [icon]="faSlidersH"></fa-icon>Disponible prochainement
+            </a>
+          </ng-template>
+        </div>
+      }
+    </div>
+    <img loading="lazy" class="big-image" [src]="environment.configurateurZyxel + 'img/Banner-Simple-Flexible-Ultimate.webp'" alt="Tableau" />
+    <img loading="lazy" class="big-image comparatif" [src]="environment.configurateurZyxel + 'img/comparatif.webp'" alt="Tableau 2" />
+  </div>
+</div>

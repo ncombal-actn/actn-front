@@ -1,0 +1,31 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    
+    "downlevelIteration": true,
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "module": "es2022",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2022",
+    "typeRoots": ["node_modules/@types"],
+    "allowSyntheticDefaultImports": true,
+    "lib": ["es2022", "dom"],
+    "baseUrl": "src/",
+    "resolveJsonModule":true, 
+    
+    "paths": {
+      "@core/*": ["app/_core/*"],
+      "@guards/*": ["app/_core/_guards/*"],
+      "@services/*": ["app/_core/_services/*"],
+      "@models/*": ["app/_shared/_models/*"],
+      "@shared/*": ["app/_shared/*"],
+      "@directives/*": ["app/_shared/_directives/*"],
+      "@env": ["environments/environment"],
+      "@/*": ["app/*"],
+    }
+  }
+}

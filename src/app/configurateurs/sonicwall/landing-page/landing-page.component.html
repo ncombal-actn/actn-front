@@ -1,0 +1,26 @@
+@if (isLoaded) {
+  <div class="container">
+    <div class="head raised-1">
+      <h1>
+        Configurateur Firewall SonicWall
+      </h1>
+      <div class="start-buttons">
+        <a [routerLink]="['gammes']" class="flat-button">Cliquez ici pour démarrer</a>
+        <div class="separateur">OU</div>
+        <a class="flat-button" (click)="showLoadPopup = true" (tap)="showLoadPopup = true"><fa-icon [icon]="faUpload"></fa-icon>Charger une configuration</a>
+      </div>
+    </div>
+    <div class="contenu">
+      <img alt="Configurateurr SonicWall" class="image-gauche" loading="lazy" [src]="environment.configurateurSonicWall + 'img/landing-page-1.webp'" />
+      <div class="description">
+        <h2>Trouvons le pare-feu qui vous convient</h2>
+        @for (colonne of colonnes; track $index; let i = $index) {
+          <p class="colonne">{{ colonne }}</p>
+        }
+      </div>
+      <img alt="Configurateurr SonicWall" class="image-droite" loading="lazy" [src]="environment.configurateurSonicWall + 'img/landing-page-2.webp'" />
+    </div>
+    <conf-chargement [(show)]="showLoadPopup"></conf-chargement>
+    <app-banniere [marques]="['SONI']" emplacement="top"></app-banniere>
+  </div>
+}

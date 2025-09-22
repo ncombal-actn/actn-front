@@ -1,0 +1,100 @@
+<!-- Menu client -->
+<!-- Liste de mes client -->
+<div class="paddIframe ">
+  <app-title-w-line [title]="'Liste de mes clients'" [icon]="'people'"></app-title-w-line>
+
+  @if(!hasErreur) {
+  <mat-form-field appearance="outline" class="filterInput">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+  </mat-form-field>
+  <div class="example-container mat-elevation-z8">
+
+    <table aria-describedby="List-client" mat-table [dataSource]="dataSource" matSort id="clientTable" [matSortActive]="'clientreference'" [matSortDirection]="'asc'">
+
+      <!--- Note that these columns can be defined in any order.
+      The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="clientreference">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header matSortHeaderDisableClear> Référence </th>
+        <td mat-cell class="over"  [routerLink]="['/onlywan/mesClients/detailClient/' + client['numero'] ]" *matCellDef="let client"> {{client.clientreference}} </td>
+      </ng-container>
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="clientadresse">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Adresse </th>
+        <td mat-cell class="over" [routerLink]="['/onlywan/mesClients/detailClient/' + client['numero'] ]" *matCellDef="let client"> {{client.clientadresse}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="dossier">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Dossier </th>
+        <td mat-cell class="over" *matCellDef="let client" [routerLink]="['/onlywan/mesClients/detailClient/' + client['numero'] ]"> {{client.dossier | removeZeros}} </td>
+      </ng-container>
+      <!-- Devis Column -->
+      <ng-container matColumnDef="devis">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Devis </th>
+
+        <td mat-cell  *matCellDef="let client">
+          @if (client.haspdf) {
+            <ng-container  class="over underligne" (click)="openInNewWindow(client.devis)">
+              {{ client.devis }}
+              <fa-icon [icon]="faFilePdf"></fa-icon>
+            </ng-container>
+          } @else {
+            {{ client.devis }}
+            <br/>
+            <span class="size-small no-wrap">
+              PDF indisponible
+              <app-tooltip type="help" [text]="explicationPDFindispo"></app-tooltip>
+            </span>
+          }
+
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="clienttel">
+        <th mat-header-cell *matHeaderCellDef  mat-sort-header>Téléphone </th>
+        <td mat-cell class="over" *matCellDef="let client" [routerLink]="['/onlywan/mesClients/detailClient/' + client['numero'] ]"> {{client.clienttel}} </td>
+      </ng-container>
+      <!-- Symbol Column -->
+      <!-- <ng-container matColumnDef="rio">
+      <th mat-header-cell *matHeaderCellDef> Ip publique </th>
+      <td mat-cell *matCellDef="let client"> {{client.rio}} </td>
+    </ng-container> -->
+    <!-- Symbol Column -->
+    <!--  <ng-container matColumnDef="services">
+    <th mat-header-cell *matHeaderCellDef>Services </th>
+    <td mat-cell *matCellDef="let client"> {{client.services}} </td>
+  </ng-container> -->
+  <!-- Symbol Column -->
+  <!-- <ng-container matColumnDef="site">
+  <th mat-header-cell *matHeaderCellDef> Fin abo </th>
+  <td mat-cell *matCellDef="let client"> {{client.site}} </td>
+</ng-container> -->
+
+<!-- Symbol Column -->
+<!--     <ng-container matColumnDef="statut">
+<th mat-header-cell *matHeaderCellDef> Statut</th>
+<td mat-cell *matCellDef="let client"> {{client.statut}} </td>
+</ng-container> -->
+
+<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+<tr class="example-element-row" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+<!-- Row shown when there is no matching data. -->
+<tr class="mat-row" *matNoDataRow>
+  <td class="mat-cell" colspan="5">Aucune donnée correspondant au filtre "{{input.value}}"</td>
+</tr>
+</table>
+
+<mat-paginator [pageSizeOptions]="[25,50, 100,200]" aria-label="Select page of users"></mat-paginator>
+
+
+</div>
+}
+@else{
+  <h3>Vous n'avez pas encore de clients</h3>
+}
+
+</div>

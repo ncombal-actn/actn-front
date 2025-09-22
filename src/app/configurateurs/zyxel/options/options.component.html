@@ -1,0 +1,181 @@
+<div class="container">
+  <div class="header raised-1">
+    <conf-header-stepper [step]="3"></conf-header-stepper>
+  </div>
+
+  @if (isReady) {
+    <div class="content">
+      <div class="gamme">
+        <div class="image">
+          <img loading="lazy" [src]="environment.photosUrl + modele.photo + '.webp'" [alt]="modele.photo" />
+          <p class="spec" (click)="showSpecPopup = true">
+            Voir les spécifications techniques
+            @if (svg.getIcon('001-mechanism', environment.configurateurZyxel + 'icones/SVG/') | async; as iconeMecanisme) {
+              <svg [innerHTML]="iconeMecanisme" width="128" height="128"></svg>
+            }
+          </p>
+        </div>
+        <div class="description">
+          <h2>{{ modele.produit }}</h2>
+          <p>
+            {{ modele.description }}
+          </p>
+          <div class="section-2">
+            <div>
+              <span class="weight-bold">Fonctions principales :</span>
+              <p class="fonction">{{ stringFromDetails(modele.details) }}</p>
+              <p class="liens">
+                @for (pdf of modele.pdfs; track pdf.label) {
+                  <a [href]="environment.produitPdfUrl + pdf['url'] + '.pdf'" target="_blank" rel="noreferrer noopener">
+                    <fa-icon [icon]="faFilePdf"></fa-icon>
+                    {{ pdf['label'] }}
+                  </a>
+                }
+                <a>
+                  <fa-icon [icon]="faPlayCircle"></fa-icon>
+                  Vidéo
+                </a>
+              </p>
+            </div>
+            <conf-bloc-prix (start)="onClickConfigurez()"></conf-bloc-prix>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form class="content-padding options" [formGroup]="configurateurForm">
+      <p class="center">Sélectionnez vos options ci-dessous</p>
+      <div class="mainmenu top">
+        <conf-chips-list>
+          <div class="chips" [ngClass]="{'chips--selected': categorieAffichage === 0}" (click)="categorieAffichage = 0" (tap)="categorieAffichage = 0">Voir tout</div>
+          <div class="chips" [ngClass]="{'chips--selected': categorieAffichage === 1}" (click)="categorieAffichage = 1" (tap)="categorieAffichage = 1">Pack boitier + protection</div>
+          <div class="chips" [ngClass]="{'chips--selected': categorieAffichage === 2}" (click)="categorieAffichage = 2" (tap)="categorieAffichage = 2">Licences</div>
+          <div class="chips" [ngClass]="{'chips--selected': categorieAffichage === 3}" (click)="categorieAffichage = 3" (tap)="categorieAffichage = 3">Services</div>
+          <div class="chips" [ngClass]="{'chips--selected': categorieAffichage === 4}" (click)="categorieAffichage = 4" (tap)="categorieAffichage = 4">Équipement additionnel</div>
+        </conf-chips-list>
+        <div>
+          <p class="opener" (click)="recapOpen = !recapOpen" (tap)="recapOpen = !recapOpen" [ngClass]="{'open': recapOpen}">
+            Récapitulatif@if (user) {
+            <span>&nbsp;: <span class="weight-bold col-red-4">{{ configService.configuration.prix | currency: 'EUR':'symbol':'1.2-2':'fr' }}</span></span>
+          }
+          <i class="icon-caret-down suffix"></i>
+        </p>
+        <div class="recap" [@expandVerticalTo0]="recapOpen ? 'open' : 'closed'">
+          <div class="padded">
+            <conf-resume (showPrixLocatifChange)="showPrixLocatif = $event" [(recapOpen)]="recapOpen"></conf-resume>
+          </div>
+        </div>
+      </div>
+    </div>
+    @for (group of groups; track $index; let i = $index) {
+      @if (categorieAffichage === i + 1 || categorieAffichage === 0) {
+        <div class="raised-1 options-bloc" [formGroupName]="group" #bloc>
+          <div class="top">
+            <div class="opener" (click)="this.blocsOpened[i] = !this.blocsOpened[i]" [ngClass]="{'open': !blocsOpened[i]}">
+              <p class="weight-bold">{{ group }}</p>
+              <i class="icon-caret-down suffix"></i>
+            </div>
+            <a (click)="optionsOpened[i].fill(true)">Tout déplier</a>
+            <a (click)="optionsOpened[i].fill(false)">Tout replier</a>
+          </div>
+          <ul class="listing" [@expandVerticalTo0]="blocsOpened[i] ? 'closed' : 'open'">
+            @if (options$ | async; as options) {
+              @for (options of options[i]; track options.name; let j = $index) {
+                <li [@expandVertical]="optionsOpened[i][j] ? 'open' : 'closed'">
+                  <div class="options-header">
+                    <div class="opener" (click)="this.optionsOpened[i][j] = !this.optionsOpened[i][j]" [ngClass]="{'open': optionsOpened[i][j]}">
+                      {{ options.name }}
+                      <i class="icon-caret-down suffix"></i>
+                    </div>
+                    @if ((configurateurForm.get(group).get(options.name)?.value ?? '') !== '' && configService.typeDeProduit(options) !== 'input') {
+                      <div class="choice">
+                        {{ optionFromReference(configurateurForm.get(group).get(options.name)?.value) }}
+                        <fa-icon [icon]="faTimes"
+                          (click)="onClickOption(group, options.name)"
+                        (tap)="onClickOption(group, options.name)"></fa-icon>
+                      </div>
+                    }
+                  </div>
+                  <div class="option-details">
+                    <p class="description">
+                      {{ options.description }}
+                    </p>
+                    @if (options.categorie === 'Service') {
+                      <div class="liste-options">
+                        @for (option of options.options; track option.reference) {
+                          <div class="option services">
+                            <p class="description">{{ option.designation }}</p>
+                            <div class="bottom">
+                              <mat-checkbox [formControlName]="option.reference" [value]=""></mat-checkbox>
+                              <p class="weight-bold prix" [ngStyle]="{'font-size': showPrixLocatif ? '1rem' : ''}">
+                                {{ (showPrixLocatif ? configService.getPrixLocatif(+option.prix) : +option.prix) | currency: 'EUR':'symbol':'1.2-2':'fr' }}
+                                @if (showPrixLocatif) {
+                                  / mois
+                                }
+                              </p>
+                              <p class="refs">Réf : {{ option.reference }}</p>
+                            </div>
+                          </div>
+                        }
+                      </div>
+                    } @else {
+                      @if (options.categorie === 'Équipement additionnel') {
+                        <conf-sliding-liste [isModeles]="false" [nbProduits]="options.options.length" [produits]="options.options" (qteProduit)="equipementValueChange($event)"></conf-sliding-liste>
+                      } @else {
+                        @if (options.type === 'input') {
+                          <conf-free-input class="inputed-options" [modele]="modele" [options]="options"></conf-free-input>
+                        } @else {
+                          <mat-radio-group class="liste-options" [formControlName]="options.name">
+                            @for (option of options.options; track option.prix) {
+                              <div class="option">
+                                <p class="annee">{{ option[option['Cible']?.value]?.value || option['Durée']?.value }} {{ option['Unité']?.value }}</p>
+                                <mat-radio-button [value]="option.produit.value.reference"></mat-radio-button>
+                                <p class="weight-bold prix" [ngStyle]="{'font-size': showPrixLocatif ? '1rem' : ''}">
+                                  {{ (showPrixLocatif ? configService.getPrixLocatif(+option.prix.value) : +option.prix.value) | currency: 'EUR':'symbol':'1.2-2':'fr' }}
+                                  @if (showPrixLocatif) {
+                                    / mois
+                                  }
+                                </p>
+                                <p class="refs">Réf : {{ option.produit.value.reference }}</p>
+                              </div>
+                            }
+                          </mat-radio-group>
+                        }
+                      }
+                    }
+                  </div>
+                </li>
+              }
+            }
+          </ul>
+        </div>
+      }
+    }
+    <conf-chips-list class="end">
+      <a class="chips chips--whited hover-bigger" [routerLink]="['../../']">Changer de modèle</a>
+      <a class="chips chips--selected hover-bigger" [routerLink]="['../recapitulatif']">Valider ma configuration</a>
+    </conf-chips-list>
+  </form>
+  @if (showSpecPopup) {
+    <div class="popup popup-spec" [ngClass]="{active: showSpecPopup}">
+      <div class="popup-background" (click)="onHideSpecPopup()" (tap)="onHideSpecPopup()"></div>
+      <div class="popup-window raised-3">
+        <h3>Spécifications techniques</h3>
+        <hr/>
+        <div class="data">
+          <img loading="lazy" [alt]="modele.produit" [src]="configService.apiLink + '/img/tableaux-caracteristiques-techniques/' + modele.produit + '.webp'" />
+        </div>
+        <div class="buttons">
+          <conf-chips-list>
+            <div class="chips chips--whited" (click)="onHideSpecPopup()" (tap)="onHideSpecPopup()">Fermer</div>
+          </conf-chips-list>
+        </div>
+        <div class="close" (click)="onHideSpecPopup()" (tap)="onHideSpecPopup()">
+          <fa-icon [icon]="faTimesCircle"></fa-icon>
+        </div>
+      </div>
+    </div>
+  }
+}
+<conf-help></conf-help>
+</div>
+

@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="header raised-1">
+    <conf-header-stepper [step]="2"></conf-header-stepper>
+  </div>
+
+  @if (isReady) {
+    <div class="content">
+      <div class="gamme">
+        @if (svg.getIcon(gamme.titre, environment.configurateurSonicWall + '/icones/SVG/') | async; as logo) {
+          <div class="icone-gamme">
+            <svg [innerHTML]="logo" preserveAspectRatio="xMinYMin slice" viewBox="0 0 48 48" width="100%"></svg>
+          </div>
+        }
+        <div class="titre">
+          <h3 class="col-2">{{ ss }}</h3>
+          <h4 class="col-g-2">Série {{ gamme.titre }}</h4>
+          <img loading="lazy" [alt]="gamme.titre" [src]="environment.configurateurSonicWall + '/img/' + gamme.titre + '.webp'" />
+        </div>
+        <div class="description">
+          <p>{{ gamme.texte }}</p>
+          <a class="lien-gamme col-2" [href]="environment.configurateurSonicWall + 'pdf/' + gamme.titre + '.pdf'" target="_blank" rel="noopener noreferrer">En savoir + sur la série {{ gamme.titre }}</a>
+        </div>
+      </div>
+    </div>
+    <div class="modeles content-padding">
+      <p class="center">Sélectionnez le modèle à configurer</p>
+      <conf-sliding-liste [nbProduits]="modeles.length" [produits]="modeles" [color]="couleurGamme" ></conf-sliding-liste>
+    </div>
+  }
+</div>

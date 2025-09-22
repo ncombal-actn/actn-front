@@ -1,0 +1,561 @@
+@if (produit.reference != null) {
+  <div class="produit-main" [ngClass]="{'fade-in': isContentLoaded, hide: isLoading}">
+
+    <!-- SECTION1 : ENTETE -->
+    <div class="raised-1" style="border-radius: 10px; padding-bottom: 1vh;background-color: white;">
+      <div class="section1">
+        <!-- @if (produit.codePromo != '') {
+          <div class="info-statut">
+            <div class="status{{ produit.codePromo }}">{{ produit.libPromo }}</div>
+          </div>
+        } -->
+        
+        <app-sliding-liste *ngIf="nbrPhotos > 0" style="max-width: 110px;min-width: 110px; margin-top: 30px" class="galerie" type="galerie"
+                           [nbProduits]="nbrPhotos" [produit]="produit.photo"
+                           (select)="changePhoto($event)"></app-sliding-liste>
+        <!-- IMAGE PRODUIT -->
+        <div class="image-produit-container" style="width: 90%;">
+          <!-- STATUT -->
+          <div id="image" #imageElement class="image-produit">
+
+            @if (imgUrl) {
+              <img [alt]="produit.reference" [redZoom]="imgUrl" [redZoomThumb]="imgUrl" redZoomBehavior="hover"
+                   class="image-produit" [src]="imgUrl" [redZoomClass]="'red-zoom--style--magnifier'"
+                   (error)="imgUrl = produitDetailService.errorImg(produit)" fill="" [redZoomLazy]="false" loading="lazy"
+                   redZoomErrorMessage="test" [redZoomMouseWheel]="false">
+            }
+          </div>
+        </div>
+        <!-- INFOS PRODUIT -->
+        <div class="info-produit" style="width: 100%">
+          <div class="info">
+            <!-- REFERENCE ACTN -->
+            <h2 class="reference-actn">
+              {{ produit.reference }}
+              <img [src]="environment.logoMarquesCouleurs200x80 + produit.marque + '.gif'" alt="{{produit.marque}}" loading="lazy"/>
+              <div class="buttons">
+                <!-- PARTAGER -->
+                <app-share title="Partager" [textToClipboard]="textToClipboard" class="marge-button"></app-share>
+                <!-- FAVORIS -->
+                <app-favoris-button [produitReference]="produit.reference" class="marge-button"></app-favoris-button>
+                <!-- COMPARATEUR -->
+                <app-comparateur-button [produitReference]="produit.reference" class="marge-button">
+                </app-comparateur-button>
+                <!-- COTATION BUTTON -->
+                @if (cotations) {
+                  <a (click)="jumpToAnchor('cotation')">
+                    <app-tooltip [type]="'cotation'" [hideDelay]="0" [showDelay]="0"
+                                 text="Vous avez une cotation sur ce produit"></app-tooltip>
+                  </a>
+                }
+                <!-- PRODUITS ASSOCIES -->
+
+                @if (produitsAssocies && produitsAssocies.length > 0) {
+
+                  <a (click)="jumpToAnchor('produitsAssocies')" class="marge-button">
+                    <app-tooltip [type]="'assos'" [hideDelay]="0" [showDelay]="0"
+                                 text="Produits associés"></app-tooltip>
+                  </a>
+                }
+                <!-- PDFS -->
+                 
+                
+                @for (fiche of fiches; track fiches.label) {
+                 
+                  <a [href]="environment.produitPdfUrl +'/'+ fiche.url+'.pdf'" target="_blank">
+                    <app-tooltip class="marge-button" type="pdf" [text]="fiche.label"></app-tooltip>
+                  </a>
+
+                }
+              </div>
+             
+
+              <!-- <img [src]="environment.logoMarquesCouleurs200x80 + produit.marquelib + '.gif'" alt="{{produit.marquelib}}" /> -->
+            </h2>
+            @if (produitsRemplacement.length > 0) {
+              <div class="basic-chip" style="background-color: #fdc143" (click)="jumpToAnchor('info-produit-suppl')">
+                Voir
+                les produits de remplacement
+              </div>
+            }
+            <div class="info-details">
+              <!-- REFERENCE CONSTRUCTEUR -->
+              <div class="info-details">
+                <p class="reference-constructeur weight-default size-smaller">Réf. constructeur
+                  : {{ produit.reffournisseur }}</p>
+                @if (produit.genCod) {
+                  <p class="reference-constructeur weight-default size-smaller">ean
+                    : {{ produit.genCod }}</p>
+                }
+              </div>
+              <div *ngIf="produit.codePromo != ''" class="info-statut2">
+                @if(produit.codePromo == 'R'){
+                <div title="{{produit.libPromo}}" class="status{{ produit.codePromo }}">{{ produit.libPromo }}</div>
+                }@else{
+                <div title="{{produit.libPromo}}" class="status{{ produit.codePromo }}">{{ produit.libPromo }}
+                  {{ produit.prixdatepromo != '' ? ' jusqu\'au ' + produit.prixdatepromo : '' }}
+                </div>
+                }
+              </div>
+            </div>
+            @if (produit.division !== '') {
+
+              <div style="color: orange;">{{ produit.division }}</div>
+            }
+
+            <!-- DESIGNATION -->
+            <p class="designation">{{ produit.designation }}</p>
+            <!-- ATTENTION -->
+            @if (descriptionMap.get('ATT')?.length > 0 &&
+            produitDetailService.fullString(descriptionMap.get('ATT')).length > 0) {
+              <span class="attention">
+            <mat-icon class="icon-attention">warning</mat-icon>
+            <span>{{ produitDetailService.fullString(descriptionMap.get('ATT')) }}</span>
+          </span>
+            }
+          </div>
+          <!-- PRIX -->
+          @if (this.authService.currentUser) {
+
+            <div class="detail-tout">
+              <div class="details">
+                <div class="prix-détails size-smaller">
+                  <div class="prix-public">
+                    <div class="libelle">prix public</div>
+                    @if (produit.prixPublic != 0) {
+                      <div class="montant">
+                        <div>{{ produit.prixPublic | currency:'EUR':'symbol':'1.2-2':'fr' }}<span
+                          class="size-smaller">&nbsp;HT</span>
+                        </div>
+                      </div>
+                    } @else {
+                      <div class="montant">
+                        NC
+                      </div>
+                    }
+                  </div>
+                  @if (produit.prixD3E != 0) {
+                    <div class="ecopart">
+                      <div class="libelle">écopart.</div>
+                      <div class="montant">
+                        <div>{{ produit.prixD3E | currency:'EUR':'symbol':'1.3-3':'fr' }}<span
+                          class="size-smaller">&nbsp;HT</span></div>
+                      </div>
+                    </div>
+                  }
+                  <!-- s'il y a une cotation, on affiche le prix cotation en plus du prix public -->
+                  @if (!(cartService.cart.items[produit.reference]?.cotation?.prixvente ?? 0) && !cotationLa &&
+                  !activeCotation) {
+                    @if (!produit.hasPriceByQte) {
+                      <div class="prix-pro">
+                        <div class="libelle">votre prix</div>
+                        @if (produit.prix != 0) {
+                          <div class="montant size-big"
+                               [ngClass]="{minwidth: produit.prixPublic != 0 && produit.prix >= produit.prixPublic}">
+                            <div>{{ produit.prix | currency:'EUR':'symbol':'1.2-2':'fr' }}<span
+                              class="size-smaller">&nbsp;HT</span></div>
+                          </div>
+                        } @else {
+                          <div class="montant">
+                            NC
+                          </div>
+                        }
+
+                      </div>
+                    } @else {
+                      @for (qtp of produit.qtePrice; track qtp.price; let i = $index) {
+                        <div [ngClass]="(qtePriceAppliedIndex == i) ? 'prix-pro' : 'prix-public'">
+                          <div class="libelle">prix par {{ qtp.qte }}</div>
+                          <div class="montant">
+                            <div>{{ qtp.price | currency:'EUR':'symbol':'1.2-2':'fr' }}<span class="size-smaller">&nbsp;HT</span>
+                            </div>
+                          </div>
+                        </div>
+
+                      }
+                    }
+                  }
+                  <!-- PRIX COTATION -->
+                  @if (cotationLa) {
+
+                    @if (!produit.hasPriceByQte) {
+                      <div class="prix-public">
+                        <div class="libelle">votre prix</div>
+                        @if (produit.prix != 0) {
+                          <div class="montant"
+                               [ngClass]="{minwidth: produit.prixPublic != 0 && produit.prix >= produit.prixPublic}">
+                            <div>{{ produit.prix | currency:'EUR':'symbol':'1.2-2':'fr' }}<span
+                              class="size-smaller">&nbsp;HT</span></div>
+                          </div>
+                        } @else {
+                          <div class="montant">
+                            NC
+                          </div>
+                        }
+                      </div>
+                    } @else {
+                      @for (qtp of produit.qtePrice; track qtp.price; let i = $index) {
+                        <div [ngClass]="(qtePriceAppliedIndex == i) ? 'prix-pro' : 'prix-public'">
+                          <div class="libelle">prix par {{ qtp.qte }}</div>
+                          <div class="montant">
+                            <div>{{ qtp.price | currency:'EUR':'symbol':'1.2-2':'fr' }}<span class="size-smaller">&nbsp;HT</span>
+                            </div>
+                          </div>
+                        </div>
+
+                      }
+                    }
+                    <div class="prix-pro">
+                      <div class="libelle dark-red">prix cotation</div>
+                      <div class="montant size-big dark-red">
+                        <div>{{ cotationLa.prixvente | currency:'EUR':'symbol':'1.2-2':'fr' }}<span
+                          class="size-smaller">&nbsp;HT</span>
+                        </div>
+                      </div>
+                    </div>
+
+                  }
+
+                  @if (activeCotation) {
+                    @if (!produit.hasPriceByQte) {
+                      <div class="prix-public">
+                        <div class="libelle">votre prix</div>
+                        @if (produit.prix != 0) {
+                          <div class="montant"
+                               [ngClass]="{minwidth: produit.prixPublic != 0 && produit.prix >= produit.prixPublic}">
+                            <div>{{ produit.prix | currency:'EUR':'symbol':'1.2-2':'fr' }}<span
+                              class="size-smaller">&nbsp;HT</span></div>
+                          </div>
+                        } @else {
+                          <div class="montant">
+                            NC
+                          </div>
+                        }
+                      </div>
+                    } @else {
+                      @for (qtp of produit.qtePrice; track qtp.price; let i = $index) {
+                        <div [ngClass]="(qtePriceAppliedIndex == i) ? 'prix-pro' : 'prix-public'">
+                          <div class="libelle">prix par {{ qtp.qte }}</div>
+                          <div class="montant">
+                            <div>{{ qtp.price | currency:'EUR':'symbol':'1.2-2':'fr' }}<span class="size-smaller">&nbsp;HT</span>
+                            </div>
+                          </div>
+                        </div>
+
+                      }
+                    }
+                    <div class="prix-pro">
+                      <div class="libelle">prix cotation</div>
+                      <div class="montant size-big">
+                        <div>{{ activeCotation.prixvente | currency:'EUR':'symbol':'1.2-2':'fr' }}<span
+                          class="size-smaller">&nbsp;HT</span></div>
+                      </div>
+                    </div>
+
+                  }
+
+                </div>
+
+                @if (produit.gabarit != 'V') {
+                  <div class="dispo size-smaller">
+                    <div [ngClass]="{active: produit.qteStock1 > 0, available: produit.qteStock1 > 0}">
+                      <div class="state">
+                        Disponible
+                      </div>
+                      <div class="state-value">{{ produit.qteStock1 | number: '1.0-0' }}</div>
+                    </div>
+                    <div [ngClass]="{ active: produit.qteStock2 > 0 }">
+                      <div class="state">
+                        Stock externe
+                      </div>
+                      <div class="state-value">{{ produit.qteStock2 | number: '1.0-0' }}</div>
+                    </div>
+                    <div [ngClass]="{ active: produit.qteEnReappro > 0 }">
+                      <div class="state">
+                        En réappro.
+                        
+                        <br/>
+                        @if(produit.qteEnReappro > 0 && (produit.dateConfReapproStatut === 'Date prévisonnelle' || produit.dateConfReapproStatut === 'Date confirmée')) {
+                            <p class="size-small">  <app-horizon-delais [produit]="[produit.reference,produit.marque]"></app-horizon-delais></p> 
+
+                          }
+                         
+                      </div>
+
+                      <div class="state-value">
+                        {{ produit.qteEnReappro | number: '1.0-0' }}
+                       
+                      </div>
+                    </div>
+
+                  </div>
+                } @else {
+                  <p class="dispo">Produit dématérialisé</p>
+                }
+
+              </div>
+
+              <div class="panier-pdf">
+                <!-- PANIER -->
+                <div>
+                  <!--<app-add-to-cart-form [produit]="produit" [isDisabled]="produit.prix == 0"
+                    [cotation]="ajoutPanierCotation()" direction="column" (qtyInCart)="getQtePriceAppliedIndex()">
+                  </app-add-to-cart-form>-->
+                  <div class="panier-pdf">
+                    <!-- PANIER -->
+                    <div>
+                      <app-add-to-cart-form [produit]="produit" [isDisabled]="produit.prix == 0"
+                                            [cotation]="ajoutPanierCotation()" direction="column"
+                                            (qtyInCart)="getQtePriceAppliedIndex()"></app-add-to-cart-form>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+              } @else {
+
+            <div class="unconnected-message">
+
+              <div class="unconnected-pdf">
+                <ng-template [ngTemplateOutlet]="pdf"></ng-template>
+              </div>
+
+              <div class="connection-required-message">
+                Connectez-vous pour voir le <b>prix</b>, les <b>disponibilités</b>, ou
+                pour
+                <b>constituer un panier</b>
+              </div>
+              <button class="raised-button connection-required-button" (click)="
+							componentsInteractionService.sideNavigationLine.fireOpenSideNav('espaceClient')
+						" appKeyboardFocus>
+                Je me connecte
+              </button>
+            </div>
+
+          }
+          <ng-template #pdf>
+            <!-- PDF -->
+            <div class="info-pdf">
+            </div>
+          </ng-template>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- COTATION -->
+    @if (cotations) {
+      <div id="cotation">
+        <app-title-w-line title="Cotation" size="small" collapsible="true"
+                          (click)="toggleCollapseDivById($event, 'cotation')"></app-title-w-line>
+        <div class="collapsible" [@expandVertical]="collapsedIdsArray.includes('cotation') ? 'closed' : 'open'"
+             [ngClass]="{ hide: collapsedIdsArray.includes('cotation') }">
+          @if (produit) {
+            <app-cotation-row [produit]="produit" (activeCotation)="changeActiveCotation($event)">
+            </app-cotation-row>
+          }
+        </div>
+      </div>
+    }
+
+    @if (produitsAssocies.length > 0) {
+
+      <app-title-w-line title="Produits associés" collapsible="true" size="verySmall" (click)="toggleCollapseDivById($event, 'produitsAssocies')"></app-title-w-line>
+
+      <span id="produitsAssocies"></span>
+      <div class="collapsible" [@expandVertical]="collapsedIdsArray.includes('produitsAssocies') ? 'closed' : 'open'"
+      [ngClass]="{ hide: collapsedIdsArray.includes('produitsAssocies') }">
+
+        <app-produits [produits]="produitsAssocies" [format]="formatProduitsAssocieVente"
+                      [simple]="simpleProduitsAssocieVente">
+        </app-produits>
+      </div>
+
+
+    }
+
+      @if (produitsRenouvellement.length > 0) {
+      
+      <app-title-w-line title="Produits de renouvellement" collapsible="true" size="verySmall" (click)="toggleCollapseDivById($event, 'produitsRenouvellement')"></app-title-w-line>
+
+      <span id="produitsRenouvellement"></span>
+      <div class="collapsible" [@expandVertical]="collapsedIdsArray.includes('produitsRenouvellement') ? 'closed' : 'open'"
+      [ngClass]="{ hide: collapsedIdsArray.includes('produitsRenouvellement') }">
+
+        <app-produits [produits]="produitsRenouvellement" [format]="formatProduitsAssocieVente"
+                      [simple]="simpleProduitsRenouvellement">
+        </app-produits>
+      </div>
+
+
+    }
+
+
+    <!-- produitsSimilaire -->
+
+    <span id="produitsSimilaires"></span>
+    @if (produitsSimilaire.length > 0 && produitsSimilaire[0].reference !== undefined) {
+
+      <div style="margin-top:15px ;">
+        <app-title-w-line title="Produits similaires" size="verySmall"></app-title-w-line>
+        <!-- produitsSimilaire.length < 30 ? produitsSimilaire.length : 30   -->
+        <app-sliding-liste [produits]="produitsSimilaire" [title]="'Produits similaires'"
+                           [nbProduits]="15" [croissant]="true"></app-sliding-liste>
+        <div class="voir-tout">
+          <a (click)="produitDetailService.navigateToSimilar(produit)" class="raised-button">Voir tous les produits similaires</a>
+        </div>
+      </div>
+    }
+
+    <mat-tab-group [@.disabled]="true" id="info-produit-suppl" [selectedIndex]="tabIndex" #tabGroup>
+
+      <mat-tab label="Caractéristiques">
+        <!-- CARACTERISTIQUES -->
+        <div id="caracteristiques">
+          <table class="caracteristiques collapsible" aria-describedby="Oui">
+            <tbody style="display: block;">
+              @for (crit of produit.crits; track $index) {
+                @if (crit.name != '' && crit.value != '') {
+                  <tr>
+                    <td class="weight-bold">{{ crit.name }}</td>
+                    <td>{{ crit.value }}</td>
+                  </tr>
+                }
+
+              }
+              @if (produit.poidsbrut > 0) {
+                <tr class="critere">
+                  <td class="weight-bold">Poids</td>
+                  <td>{{ produitDetailService.formatProduitPoids(produit) }}</td>
+                </tr>
+              }
+
+              @if (descriptionMap.get('WEB')?.length > 0) {
+
+                @for (web of this.descriptionMap.get('WEB'); track $index) {
+                  <tr>
+                    <td class="weight-bold">{{ produitDetailService.formatWeb(web)[0] }}</td>
+                    <td class="link"><a [href]="produitDetailService.formatWeb(web)[1]" target="_blank"
+                                        rel="noopener">{{ produitDetailService.formatWeb(web)[1] }}</a>
+                    </td>
+                  </tr>
+                }
+              }
+
+
+            </tbody>
+          </table>
+        </div>
+      </mat-tab>
+
+      <!-- DESCRIPTION -->
+      @if (descriptionMap.get('DES')?.length > 0) {
+
+        <mat-tab label="Description">
+          <div id="">
+
+            <p class="justify collapsible">
+              {{ produitDetailService.fullString(descriptionMap.get('DES')) }}
+            </p>
+
+          </div>
+        </mat-tab>
+
+      }
+
+      <!-- FONCTIONS PRINCIPALES -->
+      @if (descriptionMap.get('SPE')?.length > 1) {
+        <mat-tab label="Fonctions principales">
+
+          <div id="fontionsprincipales">
+            @if (produitDetailService.shouldFormat(descriptionMap.get('SPE'))) {
+              <ul class=" fonction listProduit">
+                {{ produitDetailService.fullString(descriptionMap.get('SPE')) }}
+
+              </ul>
+            } @else {
+              <div class="collapsible marginLeft20">
+                @for (f of descriptionMap.get('SPE'); track $index) {
+                  @if (f.trim().length > 0) {
+                    <p class="fonction">{{ f }}</p>
+                  }
+                }
+
+              </div>
+            }
+
+          </div>
+        </mat-tab>
+      }
+
+      <!-- LIVRE AVEC -->
+      @if (descriptionMap.get('PAC')?.length > 0) {
+
+        <mat-tab label="Livré avec">
+          <div id="accessoires" #accessoires>
+            <div class="collapsible marginLeft20">
+              @if (produitDetailService.shouldFormat(descriptionMap.get('PAC'))) {
+                <span class="fonction">{{ produitDetailService.fullString(descriptionMap.get('PAC')) }}</span>
+              } @else {
+
+                @for (f of descriptionMap.get('PAC'); track $index) {
+                  @if (f.trim().length > 0) {
+                    <p class="fonction">{{ f }}</p>
+                  }
+                }
+              }
+            </div>
+          </div>
+        </mat-tab>
+
+      }
+
+      <!-- IMAGES SUPPLEMENTAIRES -->
+      @if (descriptionMap.get('PHO')?.length > 0) {
+
+        <mat-tab label="Photos supplémentaires">
+          <!-- PHOTOS -->
+          <div id="photos">
+
+            @for (pho of descriptionMap.get('PHO'); track $index) {
+
+              @if (produitDetailService.isPhoto(pho)) {
+
+                <img [alt]="pho" class="imgSupp" loading="lazy" src="{{ environment.photosUrl + pho }}">
+              } @else {
+
+                <app-title-w-line title="{{ pho }}" size="small"></app-title-w-line>
+              }
+            }
+          </div>
+
+        </mat-tab>
+      }
+      <!-- VIDEO -->
+      @if (descriptionMap.get('VID')?.length > 0) {
+        <mat-tab label="Vidéos">
+          <div id="videos">
+            <app-youtube [links]="descriptionMap.get('VID').slice(0)"></app-youtube>
+          </div>
+        </mat-tab>
+      }
+
+      <!-- PRODUIT REMPLACEMENT -->
+      @if (produitsRemplacement.length > 0) {
+        <mat-tab label="Produits de remplacement" [bodyClass]="'no-background'">
+          <span id="produitsRemplacement"></span>
+          <div class="collapsible">
+            <app-produits [produits]="produitsRemplacement" [format]="formatProduitsRemplacementVente"
+                          [simple]="simpleProduitsRemplacementVente">
+            </app-produits>
+          </div>
+        </mat-tab>
+      }
+
+
+    </mat-tab-group>
+    <app-popup-obj-display></app-popup-obj-display>
+  </div>
+}

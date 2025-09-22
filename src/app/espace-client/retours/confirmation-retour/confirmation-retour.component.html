@@ -1,0 +1,354 @@
+<form [formGroup]="serieForm">
+  <h3>Description du produit</h3>
+  @if (produit) {
+  <div class="cadreProduit">
+    <span class="titreRMA">
+      <label class="grow2">Marque</label>
+      <label class="grow2">Réf. produit</label>
+      <label class="grow3">Désignation</label>
+      <label class="grow2">Fin de garantie</label>
+      <label class="grow2">N° de BL</label>
+      <label class="grow2">N° de facture</label>
+      <label class="grow1C">Qte</label>
+      <label class="grow2">N° de série</label>
+    </span>
+    <span class="descriptionRMA">
+      <label class="grow2">{{ produit.marque }}</label>
+      <label class="grow2">{{ produit.produit }}</label>
+      <label class="grow3">{{ produit.designation }}</label>
+      <label class="grow2">{{ produit.garantiedatefin }}</label>
+      <label class="grow2"
+        >{{ produit.numbl }} du {{ produit.datecommande }}</label
+      >
+      <label class="grow2"
+        >{{ produit.numfacture }} du {{ produit.datefacture }}</label
+      >
+      <label class="grow1C">{{ quantite }}</label>
+      @if (noserieList.length) {
+      <div class="grow2">
+        @for (noserie of noserieList; track noserie; let index = $index) {
+        <div>
+          {{ noserie }}
+        </div>
+        }
+      </div>
+      } @else { @if (produit.noserie) {
+      <label class="grow2">{{ produit.noserie }}</label>
+      } @else {
+      <div class="grow2">
+        @for (field of serieFormNom; track field;let index = $index) {
+        <mat-form-field>
+          <input matInput [formControlName]="field" placeholder="(Optionnel)"/><!-- 
+             <mat-hint>Fournir cette information nous permet de mieux adapter nos solutions à vos besoins.</mat-hint> -->
+        </mat-form-field>
+        }
+        <i (click)="addSerie()" class="unroll-button icon-plus flat-button"></i>
+      </div>
+      } }
+    </span>
+  </div>
+  }
+</form>
+@if (produit) {
+<form [formGroup]="rmaForm" (ngSubmit)="onSubmit()">
+  <div class="autresInfo">
+    <div class="colonne">
+      <div class="titres">
+        <h3>Référence de retour</h3>
+        <span class="required">*</span>
+      </div>
+      <div class="contenant">
+        <mat-form-field>
+          <input
+            matInput
+            formControlName="refRMA"
+            placeholder="Référence RMA"
+          />
+          @if (rmaForm.get('refRMA').errors?.required && submitting) {
+          <mat-error>Champ obligatoire</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="titres">
+        <h3>Motif de la demande</h3>
+        <span class="required">*</span>
+        <app-tooltip
+          class="iconComp"
+          position="right"
+          type="help"
+          [text]="chargerAideMotif()"
+        ></app-tooltip>
+      </div>
+      <div class="contenant">
+        <mat-radio-group
+          class="example-radio-group"
+          formControlName="motif"
+          (tap)="verifMotif()"
+        >
+          @if (produit.autodureegara === 'O') {
+          <mat-radio-button
+            (click)="verifMotif()"
+            class="example-radio-button"
+            value="1"
+            >Hors service</mat-radio-button
+          >
+          } @if (produit.autoerrcde === 'O') {
+          <mat-radio-button class="example-radio-button" value="2"
+            >Mauvais article reçu</mat-radio-button
+          >
+          } @if (produit.autoerrprepa === 'O') {
+          <mat-radio-button class="example-radio-button" value="3"
+            >Erreur de choix lors de ma commande</mat-radio-button
+          >
+          } @if (rmaForm.get('motif').errors?.required && submitting) {
+          <mat-error>Champ obligatoire</mat-error>
+          }
+        </mat-radio-group>
+        <div class="listAdresse">
+          @if (addrData) {
+          <div class="adresse">
+            <label class="ligneAdresse">
+              {{ addrData.adressenom }}
+            </label>
+            <label class="ligneAdresse">
+              {{ addrData.adresse1 }}
+            </label>
+            @if (addrData.adresse2) {
+            <label class="ligneAdresse">
+              {{ addrData.adresse2 }}
+            </label>
+            }
+            <label class="ligneAdresse">
+              {{ addrData.codepostal }}
+              {{ addrData.ville }}
+            </label>
+            <label class="ligneAdresse">
+              {{ addrData.paysiso }}
+              {{ addrData.pays }}
+            </label>
+          </div>
+          }
+          <div>
+            <button
+              (click)="changerAdresse()"
+              type="button"
+              class="raised-button addBtn"
+            >
+              Changer l'adresse de retour
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="colonne">
+      <div class="titres">
+        <h3>Descriptif d'anomalies</h3>
+        <span class="required">*</span>
+        <app-tooltip
+          class="iconComp"
+          position="right"
+          type="help"
+          [text]="chargerAideAnomalie()"
+        ></app-tooltip>
+      </div>
+      <div class="contenant">
+        <mat-form-field class="longText">
+          <mat-label
+            >Description détaillée de la panne/cause du retour</mat-label
+          >
+          <textarea
+            formControlName="description"
+            matInput
+            cdkTextareaAutosize
+            placeholder="Ex. Quelles sont les conditions dans lesquelles la panne est arrivée, qu'elle en est la cause..."
+          ></textarea>
+          @if (rmaForm.get('description').errors?.required && submitting) {
+          <mat-error>Champ obligatoire</mat-error>
+          } @if (rmaForm.get('description').errors?.maxlength && submitting) {
+          <mat-error>Accepte un maximum de 600 caractères </mat-error>
+          } @if (rmaForm.get('description').errors?.minlength && submitting) {
+          <mat-error>Accepte un minimum de 30 caractères </mat-error>
+          }
+        </mat-form-field>
+
+        
+        <mat-form-field  style="width: 100%;">
+          <mat-label>Ajouter un fichier</mat-label>
+          <input 
+            type="file" 
+            #fileInput 
+            (change)="onFileChange($event)" 
+            accept=".txt, .xml, .log, .csv"
+            style="display: none"
+          />
+          <input 
+            matInput 
+            formControlName="file"
+            [value]="envoiFileName || 'Aucun fichier sélectionné'" 
+            readonly
+            (click)="fileInput.click()"
+          />
+          <mat-icon matSuffix (click)="fileInput.click()" style="cursor: pointer;">attach_file</mat-icon>
+        </mat-form-field>
+        
+        
+        
+      </div>
+      <div class="titres">
+        <h3>Information de sécurité</h3>
+        <app-tooltip
+          class="iconComp"
+          position="right"
+          type="help"
+          [text]="chargerAideSecurite()"
+        ></app-tooltip>
+      </div>
+      <div class="contenant2">
+        <mat-form-field class="longText2">
+          <mat-label>Adresse MAC/IP</mat-label>
+          <input matInput formControlName="IP" />
+        </mat-form-field>
+        <mat-form-field class="longText2">
+          <input matInput formControlName="login" placeholder="Identifiant" />
+          @if (rmaForm.get('login').errors?.maxlength) {
+          <mat-error>Accepte un maximum de 20 caractères </mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field class="longText2">
+          <input
+            matInput
+            type="password"
+            formControlName="password"
+            placeholder="Mot de passe"
+          />
+          @if (rmaForm.get('password').errors?.maxlength && submitting) {
+          <mat-error>Accepte un maximum de 20 caractères </mat-error>
+          }
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="colonne">
+      <div class="titres">
+        <h3>Vos coordonnées pour vous recontacter</h3>
+        <span class="required">*</span>
+      </div>
+      <div class="flex">
+        <div class="miniLabel">Numéro Client</div>
+        <div class="dumb"></div>
+        <div class="miniLabel">Société</div>
+      </div>
+      <div class="flex">
+        <div class="labels1">
+          {{ this.authService.currentUser.id }}
+        </div>
+        <div class="dumb"></div>
+        <div class="labels1">
+          {{ this.authService.currentUser.name }}
+        </div>
+      </div>
+      <div class="contenant">
+        <mat-form-field class="longText">
+          <input matInput formControlName="nom" placeholder="Nom" />
+          @if (rmaForm.get('nom').errors?.required && submitting) {
+          <mat-error>Champ obligatoire</mat-error>
+          } @if (rmaForm.get('nom').errors?.maxlength && submitting) {
+          <mat-error>Accepte un maximum de 40 caractères </mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field class="longText">
+          <input
+            matInput
+            formControlName="tel"
+            type="text"
+            placeholder="Téléphone"
+          />
+          @if (rmaForm.get('tel').errors?.required && submitting) {
+          <mat-error>Champ obligatoire</mat-error>
+          } @if (rmaForm.get('tel').errors?.maxlength && submitting) {
+          <mat-error>Accepte un maximum de 15 caractères </mat-error>
+          } @if (rmaForm.get('tel').errors?.pattern && submitting) {
+          <mat-error
+            >Seul les caractères suivants sont autorisés
+            [0123456789+-_]</mat-error
+          >
+          }
+        </mat-form-field>
+
+        <mat-form-field class="longText">
+          <input matInput formControlName="mail" placeholder="Adresse mail" />
+          @if (rmaForm.get('mail').errors?.required && submitting) {
+          <mat-error>Champ obligatoire</mat-error>
+          } @if (rmaForm.get('mail').errors?.maxlength && submitting) {
+          <mat-error>Accepte un maximum de 70 caractères </mat-error>
+          } @if (rmaForm.get('mail').errors?.email && submitting) {
+          <mat-error>La saisie ne correspond pas à un email </mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="contenant2">
+        <mat-checkbox formControlName="cgv">
+          J'accepte les
+          <a
+            [routerLink]="['/conditions-generales-de-vente']"
+            fragment="7"
+            href=""
+            >Conditions Générales de Vente</a
+          ><span class="required">*</span>
+        </mat-checkbox>
+        @if (rmaForm.get('mail').errors?.required && submitting) {
+        <mat-error>Champ obligatoire</mat-error>
+        }
+      </div>
+    </div>
+  </div>
+  <div class="flex buttons">
+    <button
+      class="raised-button addBtn btnSec"
+      type="button"
+      (click)="retourRMA()"
+    >
+      Retour à la liste
+    </button>
+    <button class="raised-button addBtn" type="submit" [disabled]="disableBTN">
+      Valider la demande
+    </button>
+  </div>
+  <div class="champ">
+    <label><span class="required">*</span>Champs obligatoires</label>
+  </div>
+</form>
+}
+
+<div class="popup" [ngClass]="{ active: showPopup }">
+  <div class="popup-background" (click)="hide()" (tap)="hide()"></div>
+  <div class="popup-window raised-3">
+    <div>
+      <p>
+        Le dépannage de votre produit est assuré par le constructeur. Veuillez
+        cliquer ci-dessous pour être redirigé vers le site constructeur.
+      </p>
+      <div class="buttons">
+        <button
+          class="raised-button button--color-secondary"
+          (click)="hide()"
+          (tap)="hide()"
+        >
+          Fermer
+        </button>
+        <button
+          class="raised-button btnSec"
+          type="button"
+          (click)="redirectionConstructeur()"
+          (tap)="redirectionConstructeur()"
+        >
+          SAV via constructeur
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-change-adresse
+  [bool]="showPopupAdd"
+  (adresseSortie)="addChange($event)"
+  (isPopUp)="boolChange($event)"
+></app-change-adresse>

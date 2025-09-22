@@ -1,0 +1,1 @@
+ESET Dynamic Threat Defense offre une couche de sécurité supplémentaire aux autres produits ESET, tels que les solutions Mail Security et Endpoint, en identifiant les menaces inconnues grâce à une sandbox cloud.

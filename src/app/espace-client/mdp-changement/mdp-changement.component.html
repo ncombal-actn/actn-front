@@ -1,0 +1,80 @@
+<div class="center">
+  <div class="raised-1 zizi">
+    <h3>Changement de mot de passe</h3>
+    <!-- FORMULAIRE DE CHANGEMENT DE MOT DE PASSE -->
+    @if (!success) {
+      <form [formGroup]="mdpChangementForm" (ngSubmit)="onSubmit()" class="form">
+        <!-- ANCIEN MOT DE PASSE -->
+        <mat-form-field>
+          <app-password-show-input formControlName="oldMdp" [required]="true" [label]="'Ancien mot de passe'"></app-password-show-input>
+          @if (mdpChangementForm.get('oldMdp').errors?.required) {
+            <mat-error>Champ obligatoire.</mat-error>
+          }
+        </mat-form-field>
+        <!-- NOUVEAU MOT DE PASSE -->
+        <mat-form-field>
+          <!-- <mat-label>Nouveau mot de passe</mat-label> -->
+          <app-password-show-input formControlName="newMdp" [label]="'Nouveau mot de passe'" [required]="true"></app-password-show-input>
+          @if (mdpChangementForm.get('newMdp').errors?.required) {
+            <mat-error>Champ obligatoire.</mat-error>
+          }
+          @if (mdpChangementForm.get('newMdp').errors?.minlength) {
+            <mat-error>Le mot de passe doit contenir au minimum {{minLength}} caractères.</mat-error>
+          }
+          @if (mdpChangementForm.get('newMdp').errors?.maxlength) {
+            <mat-error>Le mot de passe doit contenir au maximum {{maxLength}} caractères.</mat-error>
+          }<!-- 
+          <mat-hint>Le mot de passe doit faire entre {{minLength}} et {{maxLength}} caractères.</mat-hint> -->
+        </mat-form-field>
+        <!-- CONFIRMATION NOUVEAU MOT DE PASSE -->
+        <mat-form-field >
+          <div class="password-input">
+            <!-- <input matInput [type]="hide ? 'password' : 'text'" formControlName="confirmNewMdp" placeholder="Confirmer le mot de passe" required/> material-->
+            <input matInput formControlName="confirmNewMdp"  placeholder="Confirmer le mot de passe"  [type]="show ? 'text' : 'password'" [attr.required]="required"/>
+            <i id="eye" mat-icon-button [class]="show ? 'icon-eye' : 'icon-eye-blocked'" (mousedown)="showPassword()" (mouseup)="hidePassword()" (mouseleave)="hidePassword()" (tap)="tapPassword()"></i>
+          </div>
+          <!--  <mat-label>Confirmer le mot de passe</mat-label> -->
+          <!--  <mat-icon  [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" matSuffix mat-icon-button  (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon> -->
+          @if (mdpChangementForm.get('confirmNewMdp').errors?.required) {
+            <mat-error>Champ obligatoire.</mat-error>
+          }
+          @if (mdpChangementForm.get('confirmNewMdp').errors?.confirmedValidator) {
+            <mat-error>Les mots de passe ne correspondent pas.</mat-error>
+          }<!-- 
+          <mat-hint>Le mot de passe doit faire entre {{minLength}} et {{maxLength}} caractères.</mat-hint> -->
+        </mat-form-field>
+        <!-- SUBMIT BUTTON -->
+        @if (clicked && mdpChangementForm.get('oldMdp').errors?.required) {
+          <mat-error class="error">Le mot de passe actuel est obligatoire.</mat-error>
+        }
+        @if (clicked && mdpChangementForm.get('newMdp').errors?.required) {
+          <mat-error class="error">Le nouveau mot de passe est obligatoire.</mat-error>
+        }
+        @if (clicked && mdpChangementForm.get('newMdp').errors?.minlength) {
+          <mat-error class="error">Le nouveau mot de passe doit contenir au minimum {{minLength}} caractères.</mat-error>
+        }
+        @if (clicked && mdpChangementForm.get('newMdp').errors?.maxlength) {
+          <mat-error class="error">Le nouveau mot de passe doit contenir au maximum {{maxLength}} caractères.</mat-error>
+        }
+        @if (clicked && mdpChangementForm.get('confirmNewMdp').errors?.required) {
+          <mat-error class="error">La confirmation du nouveau mot de passe est obligatoire.</mat-error>
+        }
+        @if (clicked && mdpChangementForm.get('confirmNewMdp').errors?.confirmedValidator) {
+          <mat-error class="error">Les mots de passes ne correspondent pas.</mat-error>
+        }
+        @if (submitted) {
+          <mat-error class="error">Le mot de passe actuel indiqué est incorrect.</mat-error>
+        }
+        <input class="raised-button" type="submit" value="Changer le mot de passe" [disabled]="loading">
+      </form>
+    }
+
+    <!-- AFFICHAGE DU RÉSULTAT -->
+    @if (success) {
+      <div>
+        <h4>Le changement de mot passe a été effectué</h4>
+        <p>Vous devrez utiliser ce nouveau mot de passe dès votre prochaine connexion.</p>
+      </div>
+    }
+  </div>
+</div>

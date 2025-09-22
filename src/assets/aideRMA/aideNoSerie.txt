@@ -1,0 +1,1 @@
+Numéro disponible sur le bon de livraison. C'est un numéro unique, pour le même type de produit si vous avez commandé une quantité multiple, il ne peut y avoir deux numéros identiques. Ce numéro est optionnel (non présent sur les câbles par exemple).

@@ -1,0 +1,82 @@
+@if (done === true) {
+  <div class="mat-elevation-z8" id="gros_block" #container> <!-- mat-sidenav-container -->
+    <div class="mat-elevation-z8 sidenav"><!-- mat-sidenav -->
+      <div class="chevron">
+        <img
+        loading="lazy"
+          src="assets/img/Just_O_P_RGB-removebg-preview_BLANC.webp"
+          id="white_logo"
+          alt="logo"
+          (click)="HideAndSeek('ACCUEIL', container)"
+          />
+          @if (categories.length > 1) {
+            <div
+              style="margin-left: 10px; display: grid; grid-template-rows: auto"
+              >
+              @for (btn of categories; track $index) {
+                @for (kk of btn; track kk.name) {
+                  <div
+                    (click)="show($event, 'rotate'); HideAndSeek(kk.name)"
+                    class="menu__item"
+                    >
+                    <mat-icon
+                      class="icon_onlywan"
+                      (click)="show($event, 'rotate'); HideAndSeek(kk.name)"
+                      >{{ kk.image }}</mat-icon
+                      >
+                      {{ kk.name }}
+                      @for (sousCat of kk.children; track sousCat.nomoption; let i = $index) {
+                        <ng-container
+                          class="rotate"
+                          >
+                          @if (i > 0) {
+                            <div
+                  (click)="
+                    navigateLink(sousCat.nomoption, sousCat.murl, kk.name)
+                  "
+                              class="rotate"
+                              >
+                              <span class="sous_menu">{{ sousCat.nomoption }}</span>
+                            </div>
+                          }
+                        </ng-container>
+                      }
+                    </div>
+                  }
+                }
+              
+              </div>
+            }
+            @if (this.nav == true) {
+              <div
+                style="align-self: end; justify-self: end; cursor: pointer"
+                id="swapArrow"
+                (click)="showNav()"
+                >
+                <mat-icon style="cursor: pointer">chevron_left</mat-icon>
+              </div>
+            }
+          </div>
+        </div> <!-- mat-sidenav -->
+        <div class="main_onlywan">
+         
+        <!-- Main Container -->
+        <div id="mainContent">
+          <!-- Accueil -->
+          @if (
+            (HideAndSeekArray[0] !== 'accueil' ||
+            this.url !== '/onlywan/accueil') &&
+            this.url !== '/onlywan'
+            ) {
+            <div
+              class="onlmywanHeader paddIframe"
+              >
+              <!-- && this.url !== '/onlywan/' -->
+              <img loading="lazy" src="assets/img/onlywan.webp" id="logo" alt="logo_onlywan" />
+            </div>
+          }
+          <router-outlet (activate)="onActivate($event)"></router-outlet>
+        </div>
+      </div>
+    </div> <!-- mat-sidenav-container -->
+  }

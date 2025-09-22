@@ -1,0 +1,42 @@
+p{
+    font-size: 12px;
+    color: #003264;
+    font-weight: bold;
+    cursor: pointer;
+    
+    position: relative;
+   
+    overflow: hidden;
+    transition: color 0.3s ease;
+  
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0%;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background-color: #003264;
+      transition: width 0.3s ease, left 0.3s ease;
+    }
+  
+    &::before {
+      transform: translateY(0);
+    }
+  
+    &::after {
+      transform: translateY(0);
+    }
+  
+    &:hover::before,
+    &:hover::after {
+      width: 100%;
+      left: 0;
+    }
+  
+    &:hover {
+      color: #0056b3;
+    }
+   }
+  

@@ -1,0 +1,52 @@
+
+@if (slides) {
+  <section class="mainCarousel"
+    (mouseenter)="isHovering = true"
+    (mouseleave)="isHovering = false">
+    <!-- SLIDER -->
+    <div class="sliderScreen">
+      <!-- {{this.step}}/ {{this.slides.length}} -->
+      <div class="slider">
+        <!-- NGFOR SLIDE -->
+        @for (slide of slides; track slide; let i = $index) {
+          <span
+            class="carouselSlide"
+            (click)="openLink(i)"
+            id="carouselSlide{{i+1}}"
+            srcset="{{ slide }}">
+            <!-- <img src="{{ slide }}"> -->
+          </span>
+        }
+      </div>
+    </div>
+    <div class="carouselMarblesContainer">
+      <!-- ARROW LEFT-->
+      <div
+        class="carouselArrows arrow-up"
+      [ngClass]="{
+			displayArrow: isHovering,
+			hideArrow: !isHovering }"
+        (click)="slideLeft()"
+        >
+      </div>
+      <!-- MARBLES -->
+      <div class="carouselMarbles">
+        @for (slide of slides; track slide; let i = $index) {
+          <div
+            class="carouselMarble"
+            [ngClass]="{ colorPrimary: (step == (i+1) && isHovering), displayArrow: isHovering, hideArrow: !isHovering }">
+            <fa-icon class="carouselMarbleIcon" (click)="jumpToStep(i)" [icon]="faCircle"></fa-icon>
+          </div>
+        }
+      </div>
+      <!-- ARROW RIGHT -->
+      <div
+        class="carouselArrows arrow-down"
+      [ngClass]="{
+			displayArrow: isHovering,
+			hideArrow: !isHovering }"
+        (click)="slideRight()">
+      </div>
+    </div>
+  </section>
+}

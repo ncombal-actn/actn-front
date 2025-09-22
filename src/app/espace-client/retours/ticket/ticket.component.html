@@ -1,0 +1,115 @@
+<!-- DEPRECATED - REMOVED -->
+@if (false) {
+  <form
+    [formGroup]="ticketForm" (ngSubmit)="onFormSubmit()">
+    <div class="main-container">
+      <div class="user-info">
+        <!-- N° Client -->
+        <mat-form-field class="size-default">
+          <mat-label>Numéro de client</mat-label>
+          <input matInput required readonly
+            formControlName="clientID" type="text" />
+            @if (ticketForm.get('clientID').errors?.required) {
+              <mat-error>Champ obligatoire</mat-error>
+            }
+            <!-- <mat-error *ngIf="panierForm.get('email').errors?.maxlength">70 Caractères maximum</mat-error> -->
+          </mat-form-field>
+          <!-- NOM -->
+          <mat-form-field class="size-default">
+            <mat-label>Nom</mat-label>
+            <input matInput required
+              formControlName="nom" type="text" />
+              @if (ticketForm.get('nom').errors?.required) {
+                <mat-error>Champ obligatoire</mat-error>
+              }
+            </mat-form-field>
+            <!-- MAIL -->
+            <mat-form-field class="size-default">
+              <mat-label>Adresse mail</mat-label>
+              <input matInput required
+                formControlName="email" type="email" />
+                @if (ticketForm.get('email').errors?.required) {
+                  <mat-error>Champ obligatoire</mat-error>
+                }
+                @if (ticketForm.get('email').errors?.email) {
+                  <mat-error>La saisie ne correspond pas à un email</mat-error>
+                }
+              </mat-form-field>
+              <!-- TELEPHONE -->
+              <mat-form-field class="size-default">
+                <mat-label>Téléphone</mat-label>
+                <input matInput required
+                  formControlName="telephone" type="tel" />
+                  @if (ticketForm.get('telephone').errors?.required) {
+                    <mat-error>Champ obligatoire</mat-error>
+                  }
+                  @if (ticketForm.get('telephone').errors?.pattern) {
+                    <mat-error>Le champ doit correspondre à un numéro de téléphone </mat-error>
+                  }
+                </mat-form-field>
+              </div>
+              <div class="ticket-info">
+                <!-- SUJET -->
+                <mat-form-field class="size-default">
+                  <mat-label>Sujet</mat-label>
+                  <input matInput required
+                    formControlName="sujet" type="text" />
+                    @if (ticketForm.get('sujet').errors?.required) {
+                      <mat-error>Champ obligatoire</mat-error>
+                    }
+                  </mat-form-field>
+                  <!-- SEVERITE -->
+                  <!-- <mat-form-field class="size-default">
+                  <mat-label>Sévérité</mat-label>
+                  <mat-select formControlName="gravite" required>
+                    <mat-option *ngFor="let gravite of gravites" [value]="gravite">{{ fmaj(gravite) }}</mat-option>
+                  </mat-select>
+                </mat-form-field> -->
+                <mat-radio-group formControlName="gravite" class="severite-radio-buttons">
+                  <p>Sévérité</p>
+                  @for (gravite of gravites; track $index) {
+                    <mat-radio-button [value]="gravite">
+                      {{ gravite }}
+                    </mat-radio-button>
+                  }
+                </mat-radio-group>
+                <!-- MATERIEL -->
+                <mat-form-field class="size-default">
+                  <mat-label>Matériel</mat-label>
+                  <input matInput required
+                    formControlName="materiel" type="text" />
+                    @if (ticketForm.get('materiel').errors?.required) {
+                      <mat-error>Champ obligatoire</mat-error>
+                    }
+                  </mat-form-field>
+                  <!-- NUMERO DE SERIE -->
+                  <mat-form-field class="size-default">
+                    <mat-label>Numéro de Serie</mat-label>
+                    <input matInput
+                      formControlName="numeroSerie" type="text" />
+                      @if (ticketForm.get('numeroSerie').errors?.required) {
+                        <mat-error>Champ obligatoire</mat-error>
+                      }
+                    </mat-form-field>
+                    <!-- DESCRIPTION INCIDENT -->
+                    <mat-form-field class="size-default input-description">
+                      <mat-label>Description de l'incident</mat-label>
+                      <textarea matInput required
+                      formControlName="description" type="text"></textarea>
+                      @if (ticketForm.get('description').errors?.required) {
+                        <mat-error>Champ obligatoire</mat-error>
+                      }
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="form-footer">
+                  <button type="submit" class="raised-button" [disabled]="ticketConfirmed">
+                    Envoyer le ticket
+                  </button>
+                  @if (ticketConfirmed) {
+                    <button class="raised-button confirmation-button" routerLink="/accueil">Retour à l'accueil</button>
+                    <span class="confirmation-txt">Ticket envoyé, vous allez recevoir un mail de confirmation</span>
+                  }
+                </div>
+              </form>
+            }

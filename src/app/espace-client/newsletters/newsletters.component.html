@@ -1,0 +1,83 @@
+<form [formGroup]="newsForm" (ngSubmit)="onSubmit()">
+  <div class="page">
+
+    <div class="container">
+      <h3>Si vous souhaitez recevoir nos dernières actualités et promotions,
+        ainsi que celle de nos partenaires, veuillez remplir le formulaire ci-dessous.
+      </h3>
+      <mat-form-field class="input">
+        <input
+          matInput
+          formControlName="mail"
+          placeholder="Votre adresse email"/>
+          @if (newsForm.get('mail').errors?.required) {
+            <mat-error>Champ obligatoire</mat-error>
+          }
+          @if (newsForm.get('mail').errors?.maxlength) {
+            <mat-error>Accepte un maximum de 70 caractères</mat-error>
+          }
+          @if (newsForm.get('mail').errors?.email) {
+            <mat-error>La saisie ne correspond pas à un email</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field class="input">
+          <input
+            matInput
+            formControlName="nom"
+            placeholder="Votre nom"/>
+            @if (newsForm.get('nom').errors?.required) {
+              <mat-error>Champ obligatoire</mat-error>
+            }
+            @if (newsForm.get('nom').errors?.maxlength) {
+              <mat-error>Accepte un maximum de 40 caractères</mat-error>
+            }
+          </mat-form-field>
+          <mat-form-field class="input">
+            <input
+              matInput
+              formControlName="tel"
+              placeholder="Votre numéro de téléphone"/>
+              @if (newsForm.get('tel').errors?.required) {
+                <mat-error>Champ obligatoire</mat-error>
+              }
+              @if (newsForm.get('tel').errors?.maxlength) {
+                <mat-error>Accepte un maximum de 15 caractères</mat-error>
+              }
+              @if (newsForm.get('tel').errors?.pattern) {
+                <mat-error>Seul les caractères suivants sont autorisés [0123456789+-_]</mat-error>
+              }
+            </mat-form-field>
+            <mat-checkbox formControlName="newsACTN" class="check">
+              Je souhaite recevoir par e-mail les offres et actualités d'ACTN.
+            </mat-checkbox>
+            <mat-checkbox formControlName="newsAutre" class="check">
+              Je souhaite recevoir par e-mail les offres et actualités des partenaires ACTN (uniquement les marques de notre catalogue - aucune revente à des tiers)
+            </mat-checkbox>
+            <mat-checkbox formControlName="desinscription" class="check">
+              Je souhaite me désinscrire des listes de diffusion.
+            </mat-checkbox>
+          </div>
+
+          <!--     <div class="container">
+          <h3>Choisissez vos préférences de catégories afin que les offres et actualités que nous vous envoyons soient plus ciblées.
+          </h3>
+          <div class="categories" *ngIf="structureCatalogue | async as structure">
+            <div class="categorie"
+              [ngClass]="{'selected': newsForm.get('categories').value.includes(cat)}"
+              *ngFor="let cat of structure.nodes; index as i"
+              (click)="catToggle(cat)"
+              (tap)="catToggle(cat)">
+              {{ cat.value.label }}
+              <img default="" [src]="environment.photosUrl + cat.value.photo + '.webp'" />
+            </div>
+          </div>
+        </div> -->
+
+      </div>
+      <div class="flex">
+        <div class="dumb"></div>
+        <div class="fin">
+          <button class="raised-button addBtn" type="submit" >Valider la demande</button>
+        </div>
+      </div>
+    </form>

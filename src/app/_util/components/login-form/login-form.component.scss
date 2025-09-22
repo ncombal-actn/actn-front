@@ -1,0 +1,55 @@
+@import "variables.scss";
+
+form {
+  padding: 10px;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+
+  .section__header {
+    opacity: 0.5;
+  }
+}
+
+.action-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+mat-form-field {
+  margin-bottom: 12px;
+}
+
+#eye {
+  border-radius: 50%;
+
+  padding: 3px;
+  padding-right: 4px;
+  margin-left: 5px;
+
+  transition: background-color 300ms linear;
+}
+.icon-eye {
+  cursor: pointer;
+  background-color: lightgrey;
+}
+.icon-eye-blocked {
+  cursor: pointer;
+}
+
+.connectionFailure {
+  color: var(--color-warn);
+  margin-bottom: 8px;
+}
+
+.login-button {
+  cursor: pointer;
+}
+
+.mdp {
+  line-height: 2;
+}
+

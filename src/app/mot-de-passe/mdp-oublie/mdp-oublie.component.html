@@ -1,0 +1,35 @@
+<div class="base-container">
+  @if (!isSent) {
+  <form [formGroup]="mdpOublieForm" (ngSubmit)="onSubmit()">
+    <h3>Vous avez oublié votre mot de passe ?</h3>
+    <p>
+      Saissisez l'adresse email que vous utilisez pour vous connecter à votre
+      compte ACTN.
+    </p>
+    <!-- EMAIL -->
+    <mat-form-field>
+      <input matInput placeholder="Email" formControlName="email" />
+      @if (mdpOublieForm.get('email').errors?.required) {
+      <mat-error>Champ obligatoire</mat-error>
+      } @if (mdpOublieForm.get('email').errors?.maxlength) {
+      <mat-error>Accepte un maximum de 70 caractères</mat-error>
+      } @if (mdpOublieForm.get('email').errors?.email) {
+      <mat-error>La saisie ne correspond pas à un email</mat-error>
+      }
+    </mat-form-field>
+    <!-- SUBMIT BUTTON -->
+    <button class="raised-button" [disabled]="isLoading">
+      Envoyer la demande
+    </button>
+  </form>
+  } @if (isSent) {
+  <div>
+    <h3>Demande de nouveau mot de passe reçue</h3>
+    <p>
+      Si l'email indiqué est associé à un compte ACTN, vous recevrez un email
+      contenant le rappel de votre identifiant et un lien vous permettant de
+      réinitialiser votre mot de passe.
+    </p>
+  </div>
+  }
+</div>

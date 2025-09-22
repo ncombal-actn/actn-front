@@ -1,0 +1,41 @@
+@if (isLoaded) {
+  <div class="container">
+    <div class="header raised-1">
+      @if (svg.getIcon('zyxel-landingpage', environment.configurateurZyxel + 'icones/SVG/') | async; as lpIcon) {
+        <div class="ruban">
+          <svg [innerHTML]="lpIcon" viewBox="0 0 2319 70" preserveAspectRatio="xMaxYMid slice" height="50px" width="100%"></svg>
+        </div>
+      }
+      <h1>
+        Configurateur Firewall ZYXEL
+      </h1>
+      <div class="start-buttons">
+        <a [routerLink]="['gammes']" class="flat-button">Cliquez ici pour démarrer</a>
+        <div class="separateur">OU</div>
+        <a class="flat-button" (click)="showLoadPopup = true" (tap)="showLoadPopup = true"><fa-icon [icon]="faUpload"></fa-icon>Charger une configuration</a>
+      </div>
+    </div>
+    <div class="contenu">
+      <img loading="lazy" alt="Configurateur Zyxel" class="image-gauche" [src]="environment.configurateurZyxel + 'img/landing-page.webp'" />
+      <div class="description">
+        <h2>Zyxel, le seul acteur du marché spécialisé dans la sécurité au quotidien des PME</h2>
+        <div class="colonnes">
+          @for (colonne of colonnes; track $index; let i = $index) {
+            <div class="colonne">
+              <img  loading="lazy" alt="Configurateur Zyxel" [src]="environment.configurateurZyxel + 'img/colonne' + (i + 1) + '.webp'"/>
+              <h3 class="title">{{ titreColonnes[i] }}</h3>
+              <p class="texte">{{ colonne }}</p>
+            </div>
+          }
+        </div>
+        <div class="start-buttons">
+          <a [routerLink]="['gammes']" class="flat-button">Cliquez ici pour démarrer</a>
+          <div class="separateur">OU</div>
+          <a class="flat-button" (click)="showLoadPopup = true" (tap)="showLoadPopup = true"><fa-icon [icon]="faUpload"></fa-icon>Charger une configuration</a>
+        </div>
+      </div>
+    </div>
+    <conf-chargement [(show)]="showLoadPopup"></conf-chargement>
+    <app-banniere [marques]="['ZYXE']" emplacement="top"></app-banniere>
+  </div>
+}

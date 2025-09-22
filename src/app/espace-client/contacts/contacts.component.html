@@ -1,0 +1,31 @@
+@if (userService.contacts$ | async; as contacts) {
+  <app-title-w-line [title]="userService.contactGroupName"></app-title-w-line>
+  <div class="contacts-container">
+    @for (contact of contacts; track contact.nom) {
+      <div class="contact-box raised-2">
+        <fa-icon [icon]="faUserTie"></fa-icon>
+        <h2>{{ contact.nom }}</h2>
+        <p>Téléphone : <a class="text-link" [href]="'tel:' + contact.telLink">{{ contact.tel }}</a></p>
+        @if (contact.mail.length > 0) {
+          <p>Email : <a class="text-link" [href]="'mailto:' + contact.mail">{{ contact.mail }}</a></p>
+        }
+      </div>
+    }
+  </div>
+}
+
+<!--
+<h1>CONTACTS ADMINISTRATIFS</h1>
+<div class="contacts-container">
+  <div class="contact raised-2" *ngFor="let contact of contacts">
+    <fa-icon [icon]="['fas', 'user-tie']"></fa-icon>
+    <h2>{{ contact.nom }}</h2>
+    <p>Téléphone : <a class="text-link" [href]="'tel:' + contact.telLink">{{ contact.tel }}</a></p>
+    <p *ngIf="contact.mail.length > 0">Email : <a class="text-link" [href]="'mailto:' + contact.mail">{{ contact.mail }}</a></p>
+  </div>
+</div> 
+-->
+@if (contactadmHtmlData) {
+  <app-title-w-line title="Contacts Administratifs"></app-title-w-line>
+}
+<div [innerHtml]="contactadmHtmlData"></div>

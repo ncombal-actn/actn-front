@@ -1,0 +1,284 @@
+<div class="side-nav__panel" [ngClass]="{ show: currentMenu.length }" (keydown.escape)="currentMenu = ''">
+  @if (authService.currentUser) {
+    <div class="user-details">
+      <div class="details">
+        <p>Numéro client : {{ userID }}</p>
+        <p>Compte : {{ authService.currentUser?.name }}</p>
+        <p>Utilisateur : {{ authService.currentUser?.TIERSUSR }} @if (authService.currentUser?.role) {
+          <span>({{ authService.currentUser?.role }})</span>
+        }</p>
+      </div>
+      <div class="user">
+        <fa-icon class="delete-on-xs" [icon]="faUser"></fa-icon>
+        <p class="delete-on-xs">{{ authService.currentUser?.TIERSIND }}</p>
+        <div class="deconnexion">
+          <a (click)="logOut()" (tap)="logOut()"><fa-icon [icon]="faSignOutAlt"></fa-icon>Se déconnecter</a>
+        </div>
+      </div>
+    </div>
+    <div class="contacts size-smaller">
+      <h3>{{ userService.contactGroupName }}</h3>
+      @if (userService.contacts$ | async; as contacts) {
+        @for (contact of contacts; track contact.nom) {
+          <div class="contact">
+            <span class="weight-bold nom">{{ contact.nom }}&nbsp;:&nbsp;</span>
+            <div class="tel-mail">
+              <span class="tel">
+                <a class="text-link" [href]="'tel:' + contact.telLink">
+                  <span>{{ contact.tel }}</span>
+                </a>
+              </span>
+              @if (contact.mail.length > 0) {
+                <span class="mail">
+                  <a class="text-link" [href]="'mailto:' + contact.mail">
+                    <span>{{ contact.mail }}</span>
+                  </a>
+                </span>
+              }
+            </div>
+          </div>
+        }
+      }
+      <a routerLink="/espace-client/contacts" class="size-smaller contacts-link" (click)="close()" (tap)="close()">Voir tous vos contacts</a>
+    </div>
+  }
+  <div class="side-nav__content">
+    <div class="menu-espace-client">
+      @if (this.authService.currentUser) {
+        <div>
+          <!-- <div class="infos-client">
+          <div class="infos-client__id">
+            ID : {{ this.authService.currentUser.id }}
+          </div>
+          <div class="infos-client__nom">
+            {{ this.authService.currentUser.name }}
+          </div>
+        </div> -->
+        <mat-tab-group mat-stretch-tabs dynamicHeight [disablePagination]="true" animationDuration="0" class="side-nav__tabs">
+          <mat-tab label="Espace client">
+            <div class="menu menu--orientation-vertical">
+              <!-- COMMANDES -->
+              <a routerLink="/espace-client/commandes" routerLinkActive="active" class="menu__item" (click)="close()" (tap)="close()">
+                <fa-icon  [icon]="faShoppingCart"></fa-icon>
+                <div class="label">Commandes</div>
+              </a>
+              <!-- RELIQUATS -->
+              <a routerLink="/espace-client/reliquats" routerLinkActive="active" class="menu__item" (click)="close()" (tap)="close()">
+                <fa-icon  [icon]="faFileInvoice"></fa-icon>
+                <div class="label">Reliquats</div>
+              </a>
+              <!-- DEVIS -->
+              <a routerLink="/espace-client/devis" routerLinkActive="active" class="menu__item" (click)="close()" (tap)="close()">
+                <fa-icon  [icon]="faReceipt"></fa-icon>
+                <div class="label">Devis</div>
+              </a>
+              <!-- COTATIONS -->
+              <a
+                routerLink="/espace-client/cotation" routerLinkActive="active" class="menu__item" (click)="close()" (tap)="close()">
+                <div class="taggedItem">
+                  <fa-icon  [icon]="faEuroSign"></fa-icon>
+                  <div class="tag" [ngClass]="{ show: nbrOfCriticalCotations > 0 }"
+                    matTooltip="Des cotations inépuisées vont expirer"
+                    matTooltipClass="tooltip-problem-cotation"
+                    matTooltipPosition="above"
+                    matTooltipShowDelay="0"
+                    matTooltipHideDelay="800">
+                    {{ +nbrOfCriticalCotations }} zz
+                  </div>
+                </div>
+                <div class="label">Cotations spéciales</div>
+              </a>
+              <!-- PANIERS SAUVEGARDES -->
+              <a routerLink="/espace-client/paniers-sauvegardes" routerLinkActive="active" class="menu__item" (click)="close()" (tap)="close()">
+                <fa-icon  [icon]="faSave"></fa-icon>
+                <div class="label">Paniers Sauvegardés</div>
+              </a>
+              <!-- RMA -->
+              <a class="menu__item" [ngClass]="{ focused: menuRMA }" (click)="show()">
+                <fa-icon  [icon]="faUndo"></fa-icon>
+                <div class="label">Retours de matériel (RMA)
+                  <i class="icon-caret-down" [ngClass]="{ focused: menuRMA }"></i>
+                </div>
+              </a>
+              <!-- <a *ngIf='menuRMA' routerLink="/espace-client/ticket" routerLinkActive="active" class="menu__item sous_item" (click)="close()" (tap)="close()">
+              <fa-icon [icon]="['fas', 'ticket-alt']"></fa-icon>
+              <div class="label">Déclarer un incident</div>
+            </a> -->
+            @if (menuRMA) {
+              <a routerLink="/espace-client/retours" routerLinkActive="active" class="menu__item sous_item" (click)="close()" (tap)="close()">
+                <fa-icon  [icon]="faUndo"></fa-icon>
+                <div class="label">Faire une demande de RMA</div>
+              </a>
+            }
+            @if (menuRMA) {
+              <a routerLink="/espace-client/suivi" routerLinkActive="active" class="menu__item sous_item" (click)="close()" (tap)="close()">
+                <fa-icon  [icon]="faUndo"></fa-icon>
+                <div class="label">Suivi de RMA</div>
+              </a>
+            }
+            <!-- MENU FINANCE -->
+            <a class="menu__item" [ngClass]="{ focused: menuFinance }" (click)="showFinance()">
+              <fa-icon  [icon]="faMoneyBillWave"></fa-icon>
+              <div class="label">Règlement et relevé
+                <i class="icon-caret-down" [ngClass]="{ focused: menuFinance }"></i>
+              </div>
+            </a>
+            <!-- RÈGLEMENT LIBRE -->
+            @if (menuFinance) {
+              <a routerLink="/espace-client/reglement" routerLinkActive="active" class="menu__item sous_item" (click)="close()" (tap)="close()">
+                <fa-icon  [icon]="faMoneyCheck"></fa-icon>
+                <div class="label">Réglement libre</div>
+              </a>
+            }
+            <!-- RELEVÉ -->
+            @if (menuFinance) {
+              <a routerLink="/espace-client/finance" routerLinkActive="active" class="menu__item sous_item"
+                (click)="close()" (tap)="close()">
+                <fa-icon  [icon]="faMoneyBill"></fa-icon>
+                <div class="label">Relevé de compte</div>
+              </a>
+            }
+            <!-- COMPARATEUR -->
+            <!-- <a
+            routerLink="/espace-client/comparateur" routerLinkActive="active" class="menu__item" (click)="close()" (tap)="close()">
+            <i class="icon-compare"></i>
+            <div class="label">Comparateur</div>
+          </a> -->
+          <!-- FAVORIS -->
+          <!-- <a routerLink="/favoris" routerLinkActive="active" class="menu__item" (click)="close()" (tap)="close()">
+          <fa-icon [icon]="['fas', 'star']"></fa-icon>
+          <div class="label">Favoris</div>
+        </a> -->
+        <!-- LICENCE -->
+        <a routerLink="/espace-client/contrats" routerLinkActive="active" class="menu__item" (click)="close()" (tap)="close()">
+          <div class="taggedItem">
+            <fa-icon  [icon]="faWrench"></fa-icon>
+            <div class="tag" [ngClass]="{ show: licenceService.prioritaire > 0 }">{{ +licenceService.prioritaire }}</div>
+          </div>
+          <div class="label">Licences et contrats de maintenance</div>
+        </a>
+        <!-- TARIFS -->
+        <a routerLink="/espace-client/tarif-marque" routerLinkActive="active" class="menu__item" (click)="close()" (tap)="close()">
+          <fa-icon [icon]="faTag"></fa-icon>
+          <div class="label">Téléchargement de tarifs</div>
+        </a>
+        <!-- NUMEROS DE SERIE -->
+        <a routerLink="/espace-client/numeros-de-serie" routerLinkActive="active" class="menu__item" (click)="close()" (tap)="close()">
+          <fa-icon  [icon]="faBarcode"></fa-icon>
+          <div class="label">Numeros de serie</div>
+        </a>
+        <!-- CONTACTS -->
+        <a routerLink="/espace-client/contacts" routerLinkActive="active" class="menu__item"
+          (click)="close()" (tap)="close()">
+          <fa-icon  [icon]="faHeadset"></fa-icon>
+          <div class="label">Contacts ACTN</div>
+        </a>
+      </div>
+    </mat-tab>
+    <mat-tab label="Mon profil">
+      <div class="menu menu--orientation-vertical">
+        <!-- UTILISATEURS ET PERMISSIONS -->
+        <a routerLink="/espace-client/utilisateurs" routerLinkActive="active" class="menu__item"
+          (click)="close()" (tap)="close()">
+          <fa-icon  [icon]="faUserCog"></fa-icon>
+          <div class="label">Utilisateurs et droits</div>
+        </a>
+        <!-- CHANGEMENT DE MOT DE PASSE -->
+        <a routerLink="/espace-client/mdp-changement" routerLinkActive="active" class="menu__item" (click)="close()" (tap)="close()">
+          <fa-icon  [icon]="faKey"></fa-icon>
+          <div class="label">Changer de mot de passe</div>
+        </a>
+        <!-- SUIVI D'ACTIVITE -->
+        <a routerLink="/espace-client/suivi-activite" routerLinkActive="active" class="menu__item" (click)="close()" (tap)="close()">
+          <fa-icon  [icon]="faChartLine"></fa-icon>
+          <div class="label">Suivi d'activité</div>
+        </a>
+        <!-- ADRESSES -->
+        <a routerLink="/espace-client/adresses" routerLinkActive="active" class="menu__item" (click)="close()" (tap)="close()">
+          <fa-icon  [icon]="faHome"></fa-icon>
+          <div class="label">Mes Adresses</div>
+        </a>
+        <!-- GRILLES TRANSPORT -->
+        <!-- FRAIS DE LIVRAISON -->
+        <a routerLink="/frais-de-livraison" routerLinkActive="active" class="menu__item" (click)="close()" (tap)="close()">
+          <fa-icon  [icon]="faTruck"></fa-icon>
+          <div class="label">Frais de livraison</div>
+        </a>
+        <!-- NEWSLETTERS -->
+        <a routerLink="/espace-client/newsletters" routerLinkActive="active" class="menu__item" (click)="close()" (tap)="close()">
+          <fa-icon  [icon]="faNewspaper"></fa-icon>
+          <div class="label">Newsletters</div>
+        </a>
+        <!-- DEMATERIALISATION -->
+        <a routerLink="/espace-client/dematerialisation" routerLinkActive="active" class="menu__item"
+          (click)="close()" (tap)="close()">
+          <fa-icon  [icon]="faCloud"></fa-icon>
+          <div class="label">Dématerialisation</div>
+        </a>
+        <!-- ONLYWAN -->
+        <a [routerLink]="['/onlywan']" routerLinkActive="active" class="menu__item" (click)="close()" (tap)="close()">
+          <img loading="lazy" style="height: 15px; width: 15px; justify-self: center;" id="logoOnlywan" src="assets/img/O_onlywan_black.png" alt="logo onlywan">
+          <div class="label">OnlyWAN</div>
+        </a>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+  <!-- <div class="menu menu--orientation-vertical">
+  <a class="menu__item clickable" (click)="logOut()" tabindex="0">
+    <fa-icon  [icon]="['fas', 'sign-out-alt']"></fa-icon>
+    <span class="label">Déconnexion </span>
+  </a>
+</div> -->
+</div>
+} @else {
+  <div class="side-nav__header">
+    <h2 class="side-nav__header__title">Espace Client</h2>
+  </div>
+  <div class="log-required-message">
+    {{
+    currentMenu === 'panierPreview'
+    ? 'Connectez-vous pour accéder à votre panier'
+    : 'Connectez-vous pour accéder à votre espace client et au panier'
+    }}
+  </div>
+  <app-login-form (EventLogIn)="EventLog.emit()" [(hasFocusedInput)]="locked"></app-login-form>
+}
+</div>
+
+@if (currentMenu === 'panierPreview') {
+  <div class="panier-preview">
+    <div class="side-nav__header">
+      <h2 class="side-nav__header__title">Panier</h2>
+    </div>
+    @if (this.authService.currentUser) {
+      <div></div>
+    } @else {
+      <div class="side-nav__header">
+        <h2 class="side-nav__header__title">Espace Client</h2>
+      </div>
+      <div class="log-required-message">
+        {{
+        currentMenu === 'panierPreview'
+        ? 'Connectez-vous pour accéder à votre panier'
+        : 'Connectez-vous pour accéder à votre espace client et au panier'
+        }}
+      </div>
+      <app-login-form (EventLogIn)="EventLog.emit()" [(hasFocusedInput)]="locked"></app-login-form>
+    }
+  </div>
+}
+
+@if (currentMenu === 'favorisPreview') {
+  <div class="favoris-preview">
+    <div class="side-nav__header">
+      <h2 class="side-nav__header__title">Favoris</h2>
+    </div>
+  </div>
+}
+</div>
+
+</div>
+<!-- change "mousemove" with "click"
+(mousemove)="close()"
+-->
+<div class="dark-overlay" [ngClass]="{ show: currentMenu.length }" (click)="close()" (tap)="close()"></div>

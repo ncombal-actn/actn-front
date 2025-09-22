@@ -1,0 +1,17 @@
+.btn-action {
+  color: white !important;
+
+  &.oui {
+    background-color: #001b50 !important;
+  }
+
+  &.non {
+    background-color: #9b0037 !important;
+  }
+}
+
+.div-btn {
+  display: flex !important;
+  justify-content: end !important;
+  gap: 20px !important;
+}

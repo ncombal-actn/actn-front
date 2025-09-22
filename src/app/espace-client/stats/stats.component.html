@@ -1,0 +1,54 @@
+<button class="raised-button" [routerLink]="['/espace-client/adresses/ajout-adresse']">Ajouter une Adresse</button>
+
+<h3>Adresses de Livraison :</h3>
+<div class="adresseFlex">
+  @for (addr of addrData; track addr.nom; let i = $index) {
+    <div class="adresseList">
+      <div class="adresseBox">
+        <span><strong>{{ addr.nom }}</strong></span>
+        <br>
+        <span>{{ addr.adresse1 }}</span><br>
+        @if (addr.adresse2) {
+          <span>{{ addr.adresse2 }}<br></span>
+        }
+        <span>{{ addr.codepostal }} </span>
+        <span>{{ addr.ville }}</span>
+        <br>
+        <span>{{ addr.phone }}</span>
+        <br>
+        <span>{{ (addr.paysiso ? addr.paysiso : "??") }} </span>
+        <span>{{ (addr.pays ? addr.pays : "???") }}</span>
+        <br>
+      </div>
+      <i (click)="deleteAdresse(addrData[i].codeadresse, addrData[i].nom)"
+         class="adresseIconBin raised-button"
+         title="Supprimer cette adresse">
+        <mat-icon>delete</mat-icon>
+      </i>
+      @if (addr.defaut) {
+        <i class="adresseIcon raised-button" title="Adresse par defaut">
+          <mat-icon>check_box</mat-icon>
+        </i>
+
+      }
+      @if (!addr.defaut) {
+        <i (click)="changeDefaultAddress(addrData[i].codeadresse,
+                                          addrData[i].nom,
+                                          addrData[i].adresse1,
+                                          addrData[i].adresse2,
+                                          addrData[i].codepostal,
+                                          addrData[i].ville,
+                                          addrData[i].phone,
+                                          addrData[i].pays)"
+           class="adresseIcon raised-button" title="Faire de cette adresse mon adresse par defaut">
+          <mat-icon>check_box_outline_blank</mat-icon>
+        </i>
+      }
+      <i [routerLink]="['/espace-client/adresses/modifier-adresse/'+ addrData[i].codeadresse]"
+         class="adresseIcon raised-button" title="Modifier cette adresse">
+        <mat-icon>edit</mat-icon>
+      </i>
+      <br>
+    </div>
+  }
+</div>

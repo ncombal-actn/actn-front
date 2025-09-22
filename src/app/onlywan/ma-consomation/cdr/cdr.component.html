@@ -1,0 +1,408 @@
+<!-- Menu client -->
+<!-- Liste de mes client -->
+<div class="paddIframe">
+  <app-title-w-line
+    [title]="'Vos CDR'"
+    [icon]="'insert_chart'"
+  ></app-title-w-line>
+
+  <ng-container>
+    <div class="example-container mat-elevation-z8">
+      <div class="firstDiv">
+        <!-- <mat-card-content> -->
+        <mat-panel-title
+          class="display_left menu__item text-button font active"
+          >
+          Filtres <mat-icon (click)="resetFilters()">close </mat-icon>
+        </mat-panel-title>
+        <div class="containerFiltre" [formGroup]="filtresForm">
+
+          <mat-form-field>
+            <mat-label>Nom utilisateur</mat-label>
+            <mat-select
+              formControlName="nomuser"
+              multiple
+              [(ngModel)]="nomSelected"
+              (ngModelChange)="
+                onSearch('nomuser', 'array', 'includes', $event, 'nomSelected')
+              "
+              multiple
+              ><!--  -->
+              @for (client of tests; track $index) {
+                <mat-option [value]="client">{{
+                  client
+                }}</mat-option>
+              }
+            </mat-select>
+            @if (filtresForm.value.nomuser != '') {
+              <button
+                matSuffix
+                mat-icon-button
+                aria-label="Clear"
+                (click)="resetOneFilters('nomuser'); $event.stopPropagation()"
+                >
+                <mat-icon>close</mat-icon>
+              </button>
+            }
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Numéro d'appel</mat-label>
+            <mat-select
+              formControlName="numeroappel"
+              multiple
+              [(ngModel)]="numeroappel"
+              (ngModelChange)="
+                onSearch(
+                  'numeroappel',
+                  'array',
+                  'includes',
+                  $event,
+                  'numeroappel'
+                )
+              "
+              multiple
+              >
+              <!--  -->
+              @for (
+                client of getUniqueValues(
+                this.listeClients,
+                'numeroappel'
+                )
+                ; track
+                $index) {
+                <mat-option
+                  [value]="client"
+                  >{{ client }}</mat-option
+                  >
+                }
+              </mat-select>
+              @if (filtresForm.value.numeroappel != '') {
+                <button
+                  matSuffix
+                  mat-icon-button
+                  aria-label="Clear"
+                  (click)="resetOneFilters('numeroappel'); $event.stopPropagation()"
+                  >
+                  <mat-icon>close</mat-icon>
+                </button>
+              }
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Numéro facturé</mat-label>
+              <mat-select
+                formControlName="numerofacture"
+                multiple
+                [(ngModel)]="numerofacture"
+              (ngModelChange)="
+                onSearch(
+                  'numerofacture',
+                  'array',
+                  'includes',
+                  $event,
+                  'numerofacture'
+                )
+              "
+                multiple
+                ><!-- -->
+                @for (
+                  client of getUniqueValues(
+                  this.listeClients,
+                  'numerofacture'
+                  )
+                  ; track
+                  $index) {
+                  <mat-option
+                    [value]="client"
+                    >{{ client }}</mat-option
+                    >
+                  }
+                </mat-select>
+                @if (filtresForm.value.numerofacture != '') {
+                  <button
+                    matSuffix
+                    mat-icon-button
+                    aria-label="Clear"
+              (click)="
+                resetOneFilters('numerofacture'); $event.stopPropagation()
+              "
+                    >
+                    <mat-icon>close</mat-icon>
+                  </button>
+                }
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Destination</mat-label>
+                <mat-select
+                  formControlName="destination"
+                  multiple
+                  [(ngModel)]="destination"
+              (ngModelChange)="
+                onSearch(
+                  'destination',
+                  'array',
+                  'includes',
+                  $event,
+                  'destination'
+                )
+              "
+                  multiple
+                  ><!--  -->
+                  @for (
+                    client of getUniqueValues(
+                    this.listeClients,
+                    'destination'
+                    )
+                    ; track
+                    $index) {
+                    <mat-option
+                      [value]="client"
+                      >{{ client }}</mat-option
+                      >
+                    }
+                  </mat-select>
+                  @if (filtresForm.value.destination != '') {
+                    <button
+                      matSuffix
+                      mat-icon-button
+                      aria-label="Clear"
+                      (click)="resetOneFilters('destination'); $event.stopPropagation()"
+                      >
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  }
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-label>Sélectionner deux dates</mat-label>
+                  <mat-date-range-input [rangePicker]="picker">
+                    <input
+                      matStartDate
+                      formControlName="dateappel"
+                      placeholder="Start date"
+                      [(ngModel)]="dateappel"
+                (ngModelChange)="
+                  onSearch('dateappel', 'date', 'GE', $event, 'dateappel')
+                "
+                      />
+                      <input
+                        matEndDate
+                        formControlName="dateappel2"
+                        placeholder="End date"
+                        [(ngModel)]="dateappel2"
+                (ngModelChange)="
+                  onSearch('dateappel2', 'date', 'LE', $event, 'dateappel2')
+                "
+                        />
+                      </mat-date-range-input>
+                      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                      <mat-datepicker-toggle
+                        matIconSuffix
+                        [for]="picker"
+                      ></mat-datepicker-toggle>
+                      <mat-date-range-picker #picker></mat-date-range-picker>
+
+                      @if (filtresForm.controls.dateappel.hasError('matStartDateInvalid')) {
+                        <mat-error
+                          >Invalid start date</mat-error
+                          >
+                      }
+                      @if (filtresForm.controls.dateappel2.hasError('matEndDateInvalid')) {
+                        <mat-error
+                          >Invalid end date</mat-error
+                          >
+                        }
+
+
+                      </mat-form-field>
+                      @if (
+                        filtresForm.value.dateappel !== null || filtresForm.value.dateappel2 !== null
+                        ) {
+                        <mat-icon
+                          (click)="test(); $event.stopPropagation()"
+                          >close
+                        </mat-icon>
+                      }
+                      <!-- <button
+                      class="raised-button thin-button dlBtn"
+                      (click)="getUniqueValues(this.listeClients, 'nomuser')"
+
+
+                      <mat-form-field>
+                        <mat-label>Filtrer par nom</mat-label>
+                        <mat-select formControlName="nomClient" multiple
+                          [(ngModel)]="valeurSelectionnee"
+                          (selectionChange)="applyFilter2(valeurSelectionnee)"
+                          >
+                          <mat-option *ngFor="let client of tests" [value]="client">{{
+                            client
+                          }}</mat-option>
+
+                        </mat-select>
+
+                      </mat-form-field>
+                      >
+                      MAMAN
+                    </button> -->
+                    <!--  <button
+                    class="raised-button thin-button dlBtn"
+                    (click)="calculerTotalPrixVente()"
+                    >
+                    ENVOIE LA SAUCE
+                  </button> -->
+                  <!-- <button
+                  class="raised-button thin-button dlBtn"
+
+                  >  (click)="calculerTotalTemps()"
+                  IL EST TEMPS
+                </button> -->
+              </div>
+
+             
+          </div>
+          <mat-divider></mat-divider>
+
+          <div>
+            <mat-paginator
+              [pageSizeOptions]="[25, 50, 100]"
+              aria-label="Select page of users"
+            ></mat-paginator>
+            <div class="secondDiv">
+              <button
+                class="raised-button thin-button dlBtn"
+                (click)="downlaodCsv()"
+                >
+                Télécharger la sélection
+              </button>
+              <h4 class="totalBox example-container">
+                Total temps : {{ totalTemps | secondesToMinutes }}
+              </h4>
+              <h4 class="totalBox example-container">
+                Total hors forfait  : {{ totalPrixVente | number : "1.2-2" }} €
+              </h4>
+            </div>
+          </div>
+
+          <table
+            aria-describedby="List-client"
+            mat-table
+            [dataSource]="dataSource"
+            matSort
+            id="clientTable"
+            [matSortActive]="'clientreference'"
+            [matSortDirection]="'asc'"
+            >
+            <!--processedClient$ | async -->
+            <ng-container matColumnDef="select">
+              <th mat-header-cell *matHeaderCellDef>
+                <mat-checkbox
+                  (change)="$event ? toggleAllRows() : null"
+                  [checked]="selection.hasValue() && isAllSelected()"
+                  [indeterminate]="selection.hasValue() && !isAllSelected()"
+                  [aria-label]="checkboxLabel()"
+                  matTooltip="Tout sélectionner"
+                  >
+                </mat-checkbox>
+              </th>
+              <td mat-cell *matCellDef="let row">
+                <mat-checkbox
+                  (click)="$event.stopPropagation()"
+                  (change)="$event ? selection.toggle(row) : null"
+                  [checked]="selection.isSelected(row)"
+                  [aria-label]="checkboxLabel(row)"
+                  >
+                </mat-checkbox>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="callId">
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+                matSortHeaderDisableClear
+                >
+                Call-ID
+              </th>
+              <td mat-cell *matCellDef="let client">{{ client.callId }}</td>
+            </ng-container>
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="dateappel">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Date d'appel
+              </th>
+              <td mat-cell *matCellDef="let client">
+                {{ client.dateappel | date : "dd/MM/yy" }}
+              </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="numerofacture">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Numéro facturé
+              </th>
+              <td mat-cell *matCellDef="let client">{{ client.numerofacture }}</td>
+            </ng-container>
+            <!-- Weight Column -->
+            <ng-container matColumnDef="numeroappel">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Numéro d'appel
+              </th>
+              <td mat-cell *matCellDef="let client">{{ client.numeroappel }}</td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="duree">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Durée en minutes
+              </th>
+              <td mat-cell *matCellDef="let client">
+                {{ client.duree }} min
+              </td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="destination">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Destination</th>
+              <td mat-cell *matCellDef="let client">
+                @if (client.nspecial_url !='') {
+                  <a [href]="client.nspecial_url" target="_blank">{{ client.destination }}</a>
+                } @else {
+                  {{ client.destination }}
+                }
+
+              </td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="nomuser">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Nom utilisateur
+              </th>
+              <td mat-cell *matCellDef="let client">{{ client.nomuser }}</td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="prixvente">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Prix vente
+              </th>
+              <td mat-cell *matCellDef="let client">{{ client.prixvente }} €</td>
+            </ng-container>
+            <!-- Symbol Column -->
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr
+              class="example-element-row"
+              mat-row
+              *matRowDef="let row; columns: displayedColumns"
+              (click)="selection.toggle(row)"
+            ></tr>
+
+            <!-- Row shown when there is no matching data. -->
+            <!--  <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="5">
+              Aucune donnée correspondant au filtre "{{ input.value }}"
+            </td>
+          </tr> -->
+        </table>
+      </div>
+    </ng-container>
+  </div>

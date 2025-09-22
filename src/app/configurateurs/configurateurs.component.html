@@ -1,0 +1,4 @@
+@if (!isProductFound) {
+  <h3>Le produit {{ ref }} n'est pas un produit configurable.</h3>
+  <a class="text-link" (click)="produitService.goToProduitById(ref)">Retourner sur la fiche produit</a>
+}

@@ -1,0 +1,71 @@
+
+  
+  /* Container for the tutorial */
+  .tutorial-container {
+   // max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Header styles */
+  h1, h2, h3 {
+   // color: #4a90e2; /* Changed to a softer blue */
+    margin-bottom: 10px;
+  }
+  
+  h1 {
+    font-size: 2.5em;
+    text-align: center;
+  }
+  
+  h2 {
+    font-size: 2em;
+    border-bottom: 2px solid #4a90e2; /* Changed to a softer blue */
+    padding-bottom: 5px;
+  }
+  
+  h3 {
+    font-size: 1.5em;
+    margin-top: 20px;
+  }
+  
+  /* List styles */
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  ul li {
+    background: #e9f5ff;
+    margin: 20px 0; /* Increased margin for more space between steps */
+    padding: 15px;
+    border-left: 5px solid #4a90e2; /* Changed to a softer blue */
+    border-radius: 5px;
+  }
+  
+  ul li:nth-child(odd) {
+    background: #d0eaff;
+  }
+  
+  /* Link styles */
+  a {
+    color: #4a90e2; /* Changed to a softer blue */
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Image styles */
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }

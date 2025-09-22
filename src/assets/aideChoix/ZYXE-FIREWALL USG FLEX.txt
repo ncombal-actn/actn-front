@@ -1,0 +1,1 @@
+Zyxel USG FLEX maximise la performance firewall UTM en utilisant la puissance du cloud UTM. USG FLEX offre des options de VPN flexibles (IPSec, SSL ou L2TP) permettant un accès à distance sûr et flexible pour le travail et la gestion à distance.

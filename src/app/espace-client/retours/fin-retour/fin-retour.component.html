@@ -1,0 +1,99 @@
+<h3>Description du produit</h3>
+@if (produit) {
+  <div class="cadreProduit">
+    <span class="titreRMA">
+      <label class="grow2">Marque</label>
+      <label class="grow2">Réf. produit</label>
+      <label class="grow3">Désignation</label>
+      <label class="grow2">Fin de garantie</label>
+      <label class="grow2">N° de BL</label>
+      <label class="grow2">N° de facture</label>
+      <label class="grow1C">Quantité</label>
+      <label class="grow1CG">N°</label>
+      <label class="grow2">N° de série</label>
+    </span>
+    <span class="descriptionRMA">
+      <label class="grow2">{{ produit.marque }}</label>
+      <label class="grow2">{{ produit.produit }}</label>
+      <label class="grow3">{{ produit.designation }}</label>
+      <label class="grow2">{{ produit.garantiedatefin }}</label>
+      <label class="grow2">{{ produit.numbl }} du {{ produit.datecommande }}</label>
+      <label class="grow2">{{ produit.numfacture }} du {{ produit.datefacture }}</label>
+      <label class="grow1C">{{ quantite }}</label>
+      @if (noserieList.length) {
+        <div class="grow1CG">
+          @for (noserie of noserieList; track noserie; let i = $index) {
+            <div>
+              {{ i+1 }}
+            </div>
+          }
+        </div>
+        <div class="grow2">
+          @for (noserie of noserieList; track noserie; let i = $index) {
+            <div>
+              {{ noserie }}
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="grow1CG">
+          @if (produit.noserie) {
+            <div>
+              1
+            </div>
+          }
+        </div>
+        <label class="grow2">{{ produit.noserie }}</label>
+      }
+    </span>
+  </div>
+}
+
+<div class="autresInfo">
+
+  <div class="colonne">
+    <div class="titres">
+      <h3>Recapitulatif</h3>
+    </div>
+    <div class="cadre">
+      <div class="contenant">
+        <b>Motif : </b>{{ recap.motif }}
+      </div>
+      <div class="contenant">
+        <b>Réf. RMA : </b>{{ recap.refRMA }}
+      </div>
+      <div class="contenant">
+        <b>Description : </b>{{ recap.description }}
+      </div>
+      <div class="contenant">
+        <b>Adresse MAC/IP : </b>{{ recap.IP }}
+      </div>
+      <div class="contenant">
+        <b>Identifiant : </b>{{ recap.login }}
+      </div>
+      <div class="contenant">
+        <b>Mot de passe : </b>{{ pass }}
+      </div>
+      <div class="contenant">
+        <b>Fichier : </b>{{ recap.file }}
+      </div>
+    </div>
+  </div>
+
+  <div class="colonne2">
+    <div class="message">
+      Votre demande de RMA a été prise en compte.<br>
+      Vous recevrez votre document d'autorisation de RMA dans les meilleurs délais<br>
+      à l'adresse e-mail <b>{{ recap.mail }}</b><br>
+      Ce document devra <b>impérativement</b> accompagner votre retour, et <b>être accessible et visible sans ouverture du colis</b>.<br>
+      Tout retour non accompagné de ce document sera refusé.<br>
+    </div>
+  </div>
+</div>
+
+<div class="flex">
+  <div class="dumb"></div>
+  <div class="fin">
+    <button class="raised-button addBtn" type="button" (click)="retourAccueil()">Accueil</button>
+  </div>
+</div>

@@ -1,0 +1,420 @@
+<app-title-w-line title="Ouverture de compte" size="small"></app-title-w-line>
+<form [formGroup]="ouvertureDeCompteForm" (ngSubmit)="onSubmit()">
+
+  <div class="mainFormFlex">
+    <div class="formFlex" >
+      <!-- INFORMATIONS SOCIETE -->
+      <div formGroupName="societe">
+
+        <h3>Informations société</h3>
+
+        <div class="radio-button">
+          <mat-radio-group aria-label="Base" formControlName="base" (change)="editValidatorsDependingOnBase($event)">
+            <mat-radio-button value="BFR">
+              Basée en France
+            </mat-radio-button>
+            &nbsp;
+            <mat-radio-button value="BET">
+              Étranger et hors France métropolitaine
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Raison sociale"
+            formControlName="raisonSociale"
+            required
+            maxlength="40"
+            />
+            @if (ouvertureDeCompteForm.get('societe').get('raisonSociale').errors?.required) {
+              <mat-error>Champ obligatoire</mat-error>
+            }
+            @if (ouvertureDeCompteForm.get('societe').get('raisonSociale').errors?.maxlength) {
+              <mat-error>Accepte un maximum de 40 caractères</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select matInput placeholder="Activité" formControlName="activite" required>
+              @for (option of listActivite; track $index; let j = $index) {
+                <mat-option [value]="listActiviteAcro[j]" [disabled]="">
+                  {{ option }}
+                </mat-option>
+              }
+            </mat-select>
+            @if (ouvertureDeCompteForm.get('societe').get('activite').errors?.required) {
+              <mat-error>Champ obligatoire</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput placeholder="Numéro SIRET" formControlName="siret" [required]="isBasedInFrance()" 
+            maxlength="14"/>
+            @if (ouvertureDeCompteForm.get('societe').get('siret').errors?.required) {
+              <mat-error>Champ obligatoire</mat-error>
+            }
+            @if (ouvertureDeCompteForm.get('societe').get('siret').errors?.maxlength) {
+              <mat-error>Accepte un maximum de 14 caractères</mat-error>
+            }
+            @if (ouvertureDeCompteForm.get('societe').get('siret').errors?.validateSiret) {
+              <mat-error>SIRET invalide</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Numéro de TVA Intra-communautaire"
+              formControlName="tvaID"
+              maxlength="14"
+              />
+              @if (ouvertureDeCompteForm.get('societe').get('tvaID').errors?.maxlength) {
+                <mat-error>Accepte un maximum de 14 caractères</mat-error>
+              }
+              @if (ouvertureDeCompteForm.get('societe').get('tvaID').errors?.IsTva) {
+                <mat-error>Le format du numéro de TVA est incorrect. Les espaces ne sont pas autorisés.</mat-error>
+              }
+            </mat-form-field>
+
+            <!-- <mat-form-field>
+            <input matInput placeholder=" Code APE" formControlName="ape" />
+            <mat-error *ngIf="ouvertureDeCompteForm.get('societe').get('ape').errors?.maxlength">Accepte un maximum de 5 caractères</mat-error>
+          </mat-form-field> -->
+
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Groupe/Groupement Economique"
+              formControlName="groupeEco"
+              maxlength="40"
+              />
+              @if (ouvertureDeCompteForm.get('societe').get('groupeEco').errors?.maxlength) {
+                <mat-error>Accepte un maximum de 40 caractères</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput placeholder="Téléphone" formControlName="telephone" required maxlength="15"/>
+              @if (ouvertureDeCompteForm.get('societe').get('telephone').errors?.required) {
+                <mat-error>Champ obligatoire</mat-error>
+              }
+              @if (ouvertureDeCompteForm.get('societe').get('telephone').errors?.maxlength) {
+                <mat-error>Accepte un maximum de 15 caractères</mat-error>
+              }
+              @if (ouvertureDeCompteForm.get('societe').get('telephone').errors?.pattern) {
+                <mat-error>Seul les caractères suivants sont autorisés [0123456789+-_]</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Téléphone portable"
+                formControlName="portable"
+                maxlength="15"
+                />
+                @if (ouvertureDeCompteForm.get('societe').get('portable').errors?.maxlength) {
+                  <mat-error>Accepte un maximum de 15 caractères</mat-error>
+                }
+                @if (ouvertureDeCompteForm.get('societe').get('portable').errors?.pattern) {
+                  <mat-error>Seul les caractères suivants sont autorisés [0123456789+-_]</mat-error>
+                }
+              </mat-form-field>
+
+            </div>
+
+            <!-- DEMAT -->
+            <div formGroupName="demat">
+
+              <h3 class="emailTitle">Email d'envoi des factures dématérialisés <app-tooltip class="iconComp" position="right" type="help" [text]="retournAideDemate()"></app-tooltip> </h3>
+
+              <mat-form-field>
+                <input matInput placeholder="Email" formControlName="email" required maxlength="70"/>
+                @if (ouvertureDeCompteForm.get('demat').get('email').errors?.required) {
+                  <mat-error>Champ obligatoire</mat-error>
+                }
+                @if (ouvertureDeCompteForm.get('demat').get('email').errors?.maxlength) {
+                  <mat-error>Accepte un maximum de 70 caractères</mat-error>
+                }
+                @if (ouvertureDeCompteForm.get('demat').get('email').errors?.email) {
+                  <mat-error>La saisie ne correspond pas à un email</mat-error>
+                }
+              </mat-form-field>
+
+            </div>
+
+            <!-- LOGISTIQUE -->
+            <div formGroupName="logistique">
+
+              <h3  class="emailTitle">Email d'envoi des Bon de livraison <app-tooltip class="iconComp" position="right" type="help" [text]="retournAideLivraison()"></app-tooltip></h3>
+
+              <mat-form-field>
+                <input matInput placeholder="Email" formControlName="email" required maxlength="70"/>
+                @if (ouvertureDeCompteForm.get('logistique').get('email').errors?.required) {
+                  <mat-error>Champ obligatoire</mat-error>
+                }
+                @if (ouvertureDeCompteForm.get('logistique').get('email').errors?.maxlength) {
+                  <mat-error>Accepte un maximum de 70 caractères</mat-error>
+                }
+                @if (ouvertureDeCompteForm.get('logistique').get('email').errors?.email) {
+                  <mat-error>La saisie ne correspond pas à un email</mat-error>
+                }
+              </mat-form-field>
+
+            </div>
+          </div>
+
+
+          <div class="formFlex">
+            <!-- INTERLOCUTEURS / ACCÈS WEB -->
+            <div formGroupName="adminUser">
+
+              <h3>Acheteur / Accès web</h3>
+
+              <mat-form-field>
+                <input matInput placeholder="Nom" formControlName="nom" required maxlength="40"/>
+                @if (ouvertureDeCompteForm.get('adminUser').get('nom').errors?.required) {
+                  <mat-error>Champ obligatoire</mat-error>
+                }
+                @if (ouvertureDeCompteForm.get('adminUser').get('nom').errors?.maxlength) {
+                  <mat-error>Accepte un maximum de 40 caractères</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field>
+                <input matInput placeholder="Login" formControlName="login" required maxlength="20"/>
+                @if (ouvertureDeCompteForm.get('adminUser').get('login').errors?.required) {
+                  <mat-error>Champ obligatoire</mat-error>
+                }
+                @if (ouvertureDeCompteForm.get('adminUser').get('login').errors?.maxlength) {
+                  <mat-error>Accepte un maximum de 20 caractères</mat-error>
+                }
+                @if (ouvertureDeCompteForm.get('adminUser').get('login').errors?.pattern) {
+                  <mat-error>Doit contenir au moins une lettre</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field>
+                <input matInput type="password" placeholder="Mot de passe" formControlName="password" [(ngModel)]="password" required maxlength="20" />
+                @if (ouvertureDeCompteForm.get('adminUser').get('password').errors?.required) {
+                  <mat-error>Champ obligatoire</mat-error>
+                }
+                @if (ouvertureDeCompteForm.get('adminUser').get('password').errors?.maxlength) {
+                  <mat-error>Accepte un maximum de 20 caractères</mat-error>
+                }
+                @if (ouvertureDeCompteForm.get('adminUser').get('password').errors?.minlength) {
+                  <mat-error>Accepte un minimum de 6 caractères</mat-error>
+                }
+                @if (ouvertureDeCompteForm.get('adminUser').get('password').errors?.blank) {
+                  <mat-error>Caractère espace non autorisé</mat-error>
+                }
+                <mat-hint>Le mot de passe doit contenir entre 6 et 20 caractères. Les espaces ne sont pas autorisés</mat-hint>
+              </mat-form-field>
+
+              <mat-form-field>
+                <input matInput type="password" placeholder="Confirmation de mot de passe" formControlName="confirmPassword" required maxlength="20"/>
+                @if (ouvertureDeCompteForm.get('adminUser').get('confirmPassword').errors?.required) {
+                  <mat-error>Champ obligatoire</mat-error>
+                }
+                @if (ouvertureDeCompteForm.get('adminUser').get('confirmPassword').errors?.maxlength) {
+                  <mat-error>Accepte un maximum de 20 caractères</mat-error>
+                }
+                @if (ouvertureDeCompteForm.get('adminUser').get('confirmPassword').errors?.confirmPassword) {
+                  <mat-error>Ne correspond pas au mot de passe</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field>
+                <input matInput placeholder="Email" formControlName="email" required maxlength="70"/>
+                @if (ouvertureDeCompteForm.get('adminUser').get('email').errors?.required) {
+                  <mat-error>Champ obligatoire</mat-error>
+                }
+                @if (ouvertureDeCompteForm.get('adminUser').get('email').errors?.maxlength) {
+                  <mat-error>Accepte un maximum de 70 caractères</mat-error>
+                }
+                @if (ouvertureDeCompteForm.get('adminUser').get('email').errors?.email) {
+                  <mat-error>La saisie ne correspond pas à un email</mat-error>
+                }
+              </mat-form-field>
+
+            </div>
+
+            <!-- INTERLOCUTEURS / COMPTA -->
+            <div formGroupName="comptaUser">
+
+              <h3>Interlocuteur / Comptabilité</h3>
+
+              <mat-form-field>
+                <input matInput placeholder="Nom" formControlName="nom" required maxlength="40"/>
+                @if (ouvertureDeCompteForm.get('comptaUser').get('nom').errors?.required) {
+                  <mat-error>Champ obligatoire</mat-error>
+                }
+                @if (ouvertureDeCompteForm.get('comptaUser').get('nom').errors?.maxlength) {
+                  <mat-error>Accepte un maximum de 40 caractères</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field>
+                <input matInput placeholder="Email" formControlName="email" required maxlength="70"/>
+                @if (ouvertureDeCompteForm.get('comptaUser').get('email').errors?.required) {
+                  <mat-error>Champ obligatoire</mat-error>
+                }
+                @if (ouvertureDeCompteForm.get('comptaUser').get('email').errors?.maxlength) {
+                  <mat-error>Accepte un maximum de 70 caractères</mat-error>
+                }
+                @if (ouvertureDeCompteForm.get('comptaUser').get('email').errors?.email) {
+                  <mat-error>La saisie ne correspond pas à un email</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field>
+                <input matInput placeholder="Téléphone" formControlName="telephone" required maxlength="15"/>
+                @if (ouvertureDeCompteForm.get('comptaUser').get('telephone').errors?.required) {
+                  <mat-error>Champ obligatoire</mat-error>
+                }
+                @if (ouvertureDeCompteForm.get('comptaUser').get('telephone').errors?.maxlength) {
+                  <mat-error>Accepte un maximum de 15 caractères</mat-error>
+                }
+                @if (ouvertureDeCompteForm.get('comptaUser').get('telephone').errors?.pattern) {
+                  <mat-error>Seul les caractères suivants sont autorisés [0123456789+-_]</mat-error>
+                }
+              </mat-form-field>
+
+            </div>
+          </div>
+
+
+          <!-- FACTURE ET DÉMATÉRIALISATION -->
+          <div class="formFlex" formGroupName="facturation">
+
+            <h3>Adresse société</h3>
+
+            <mat-form-field>
+              <input matInput placeholder="Adresse" formControlName="adresse1" required (input)="onAdresseChange($event)" [matAutocomplete]="auto" maxlength="30"/>
+              <mat-autocomplete #auto="matAutocomplete">
+                @if (adresses$ | async; as adresses) {
+                  @for (adresse of adresses; track adresse.properties) {
+                    <mat-option [value]="adresse['properties']['name']" (click)="onAdresseSelected(adresse['properties'])" (tap)="onAdresseSelected(adresse['properties'])">
+                      {{ adresse['properties']['label'] }}
+                    </mat-option>
+                  }
+                }
+              </mat-autocomplete>
+              @if (ouvertureDeCompteForm.get('facturation').get('adresse1').errors?.required) {
+                <mat-error>Champ obligatoire</mat-error>
+              }
+              @if (ouvertureDeCompteForm.get('facturation').get('adresse1').errors?.maxlength) {
+                <mat-error>Accepte un maximum de 30 caractères</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Complément d'adresse"
+                formControlName="adresse2" maxlength="30"
+                />
+                @if (ouvertureDeCompteForm.get('facturation').get('adresse2').errors?.maxlength) {
+                  <mat-error>Accepte un maximum de 30 caractères</mat-error>
+                }
+              </mat-form-field>
+
+              <!-- <mat-form-field>
+              <input matInput placeholder="Code postal" formControlName="codePostal" required/>
+              <mat-error *ngIf="ouvertureDeCompteForm.get('facturation').get('codePostal').errors?.required">Champ obligatoire</mat-error>
+              <mat-error *ngIf="ouvertureDeCompteForm.get('facturation').get('codePostal').errors?.maxlength">Accepte un maximum de 5 caractères</mat-error>
+            </mat-form-field> 
+            -->
+
+            <mat-form-field>
+              <input matInput placeholder="Code postal" formControlName="codePostal" required [matAutocomplete]="auto"/>
+              <!-- <mat-autocomplete #auto="matAutocomplete">
+
+              <mat-option *ngFor="let city of listCity.features" [value]="city"> <-- (click)="onAdresseSelected(adresse['properties'])" (tap)="onAdresseSelected(adresse['properties'])" --
+                {{ city.properties.city }}
+              </mat-option>
+
+            </mat-autocomplete> -->
+            <!--
+            <mat-error *ngIf="ouvertureDeCompteForm.get('facturation').get('adresse1').errors?.required">Champ obligatoire</mat-error>
+            <mat-error *ngIf="ouvertureDeCompteForm.get('facturation').get('adresse1').errors?.maxlength">Accepte un maximum de 30 caractères</mat-error>
+
+            -->
+          </mat-form-field>
+
+          <mat-form-field>
+            <input type="text" placeholder="Ville" matInput formControlName="commune" [matAutocomplete]="test" >
+            <mat-autocomplete #test="matAutocomplete">
+              @for (city of listCity.features; track city.properties) {
+                <mat-option [value]="city.properties.name">
+                  {{ city.properties.name }}
+                </mat-option>
+              }
+            </mat-autocomplete>
+
+          </mat-form-field>
+
+          @if (ouvertureDeCompteForm.get('facturation').get('commune').errors?.required) {
+            <mat-error>Champ obligatoire</mat-error>
+          }
+          @if (ouvertureDeCompteForm.get('facturation').get('commune').errors?.maxlength) {
+            <mat-error>Accepte un maximum de 26 caractères</mat-error>
+          }
+
+
+
+          <mat-form-field>
+            <mat-label>Pays</mat-label>
+            <mat-select formControlName="pays" required>
+              @if (pays$ | async; as pays) {
+                @for (unPays of pays; track $index) {
+                  <mat-option [value]="unPays['alpha2Code']">{{ adresseService.getNameOfCountry(unPays) }}</mat-option>
+                }
+              }
+            </mat-select>
+          </mat-form-field>
+
+
+          <mat-checkbox class="marge" formControlName="cgv"  (change)='showOptions($event)'>
+            J'accepte les <a [routerLink]="['/conditions-generales-de-vente']" href="">Conditions Générales de Vente</a><span style="color: red;"> *</span>
+            @if (showMessageCheckbox) {
+              <mat-error>Champ obligatoire</mat-error>
+            }
+          </mat-checkbox>
+
+          <mat-checkbox class="marge" formControlName="newsletter">
+            J'accepte de recevoir les lettres d'information commerciale et techniques d'actn
+          </mat-checkbox>
+
+          <!-- RECAPTCHA -->
+
+          <!-- <div class="marge" *ngIf="!browserIsModzilla"> -->
+          <div class="marge">
+            <re-captcha (resolved)="captcha_resolved($event)" siteKey="6LcAdb8UAAAAAIjhpmmyoC5ZTuxacCyGOM17wmLP"></re-captcha>
+          </div>
+
+
+          <div class="champObligatoire">* Champs obligatoire</div>
+          <!-- SUBMIT -->
+          <input class="raised-button" type="submit" value="Envoyer la demande">
+
+
+        </div>
+      </div>
+
+      <!-- ERROR MESSAGE -->
+      @if (displayError) {
+        <div class="errorMessage">
+          {{ displayError }}
+        </div>
+      }
+      <!-- SUCCESS MESSAGE -->
+      @if (displaySuccess) {
+        <div class="successMessage">
+          {{ displaySuccess }}
+        </div>
+      }
+
+    </form>

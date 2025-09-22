@@ -1,0 +1,85 @@
+@import "../zyxel.scss";
+
+.header {
+    background: $color-grey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 125px;
+
+    > * {
+        width: 80%;
+    }
+}
+
+.main {
+    background: white;
+    background: linear-gradient(
+        180deg,
+        white 0%,
+        white 50%,
+        $color-grey 50%,
+        $color-grey 100%
+    );
+}
+
+.gammes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 40px;
+    margin: 20px 0;
+
+    .gamme {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+
+        > * {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        > img {
+            width: 80%;
+            object-fit: scale-down;
+        }
+
+        a {
+            margin-top: auto;
+            width: 80%;
+
+            fa-icon {
+                font-size: 1.4em;
+                margin-right: 20px;
+            }
+
+            &.prochainement {
+                color: black;
+                cursor: default;
+            }
+        }
+    }
+}
+
+.tableau h2 {
+    width: fit-content;
+    margin: 40px auto;
+    color: $color-red-4;
+}
+
+.big-image {
+    width: 100%;
+    object-fit: scale-down;
+}
+
+.medium-image {
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+    object-fit: scale-down;
+}
+
+.comparatif {
+    mix-blend-mode: multiply;
+}

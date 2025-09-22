@@ -1,0 +1,152 @@
+@import "variables.scss";
+
+.titre{
+    max-width: 50%;
+}
+
+.page{
+    display: flex;
+    justify-content: space-between;
+}
+
+.container{
+    width: 46%;/*46%*/
+    display: block;
+    @media screen and (max-width:768px){
+        width: 90%;
+    }
+}
+
+.input{
+    display: block;
+    width: 33%;
+    @media screen and (max-width:768px){
+        width: 50%;
+    }
+    @media screen and (max-width:500px){
+        width: 60%;
+    }
+    @media screen and (max-width:420px){
+        width:80%;
+    }
+    @media screen and (max-width:320px){
+        width:90%;
+    }
+}
+
+.check{
+    padding: 10px 0px;
+    display: block;
+}
+
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 100%;
+    align-items: center;
+}
+
+.categorie {
+    background-color: white;
+    $margin: 5px;
+    margin: $margin;
+    border: 3px solid rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    cursor: pointer;
+    height: 120px;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: large;
+
+    font-size: 1.1em;
+    display: block;
+    text-align: center;
+    width: calc(100% / 6 - #{$margin} * 2);
+    transition: all 0ms ease-in-out;
+
+    @media screen and (min-width: 1650px) {
+        width: calc(100% / 4 - #{$margin} * 2);
+    }
+
+    @media screen and (max-width: 1300px) {
+        width: calc(100% / 8 - #{$margin} * 2);
+        border-width: 2px;
+    }
+
+    @media screen and (max-width: 767.98px) {
+        width: calc(100% / 8 - #{$margin} * 2);
+        border-width: 2px;
+    }
+
+    &:hover {
+        transition: all 100ms ease-in-out;
+        background-color: rgba(105, 105, 105, 0.1);
+        border-color: rgba(0, 0, 0, 0.6);
+        color: var(--color-secondary);
+
+        img {
+            transition: opacity 100ms ease-in-out;
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+    }
+
+    img {
+        mix-blend-mode: multiply;
+        transition: opacity 0ms ease-in-out;
+        width: 100%;
+        filter: grayscale(100%);
+        opacity: 0.4;
+        height: 80%;
+        object-fit: scale-down;
+    }
+
+    &.selected {
+        background-color: rgba(105, 105, 105, 0.1);
+        border-color: var(--color-primary);
+
+        img {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+    }
+}
+
+.raised-button{
+    padding: 8px 10px !important;
+}
+
+.addBtn{
+    margin: 5px 0px;
+    min-width: 180px;
+    @media screen and (max-width:768px){
+        margin-left: 10px;
+    }
+}
+
+.flex{
+    display: flex;
+}
+
+.dumb{
+    width: 80%;
+    @media screen and (max-width:768px){
+        width:0px;
+    }
+
+}
+
+.fin{
+    width: 20%;
+    display: flex;
+    align-items: center;
+    @media screen and (max-width:768px){
+        width:0px;
+    }
+}
+
+::ng-deep.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: white !important;
+}
+

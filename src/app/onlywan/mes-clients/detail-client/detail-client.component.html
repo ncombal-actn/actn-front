@@ -1,0 +1,248 @@
+<div class="paddIframe">
+  <app-title-w-line
+    [title]="'Détail du dossier '"
+    [icon]="'person_search'"
+  ></app-title-w-line>
+  <mat-card>
+    @if (this.noClients == false) {
+      <form [formGroup]="clientForm">
+        <div class="CLeJourdesPecsZebi">
+          <div>
+            <h2>Information générales</h2>
+            <label>
+              <mat-form-field class="example-full-width">
+                <mat-label>Reference dossier :</mat-label>
+                <input
+                  class="disable-pointer-events"
+                  formControlName="clientreference"
+                  matInput
+                  readonly
+                  name="clientreference"
+                  placeholder="30 caracteres max"
+                  disabled="true"
+                  />
+                  <!-- <mat-error *ngIf="clientForm.get('clientreference').invalid"
+                  >La de dossier doit faire entre 1 et 30 caractère. Caractères
+                  autorisés : Majuscules, Minuscules, Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+                </mat-error> -->
+              </mat-form-field>
+            </label>
+          </div>
+          <div>
+            <h2>Adresse société</h2>
+            <label>
+              <mat-form-field class="example-full-width">
+                <mat-label>Adresse client :</mat-label>
+                <input
+                  class="disable-pointer-events"
+                  formControlName="clientadresse"
+                  matInput
+                  maxlength="30"
+                  name="clientadresse"
+                  placeholder="30 caracteres max"
+                  type="text"
+                  />
+                  <!-- <mat-error *ngIf="clientForm.get('clientreference').invalid"
+                  >La de dossier doit faire entre 1 et 30 caractère. Caractères
+                  autorisés : Majuscules, Minuscules, Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+                </mat-error> -->
+              </mat-form-field>
+            </label>
+            <label>
+              <mat-form-field class="example-full-width">
+                <mat-label>Code postal :</mat-label>
+                <input
+                  class="disable-pointer-events"
+                  formControlName="clientcodepostal"
+                  matInput
+                  maxlength="30"
+                  name="clientcodepostal"
+                  placeholder="30 caracteres max"
+                  type="text"
+                  />
+                  <!-- <mat-error *ngIf="clientForm.get('clientreference').invalid"
+                  >La de dossier doit faire entre 1 et 30 caractère. Caractères
+                  autorisés : Majuscules, Minuscules, Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+                </mat-error> -->
+              </mat-form-field>
+            </label>
+            <label>
+              <mat-form-field class="example-full-width">
+                <mat-label>Ville :</mat-label>
+                <input
+                  class="disable-pointer-events"
+                  formControlName="clientville"
+                  matInput
+                  maxlength="30"
+                  name="clientville"
+                  placeholder="30 caracteres max"
+                  type="text"
+                  />
+                  <!-- <mat-error *ngIf="clientForm.get('clientreference').invalid"
+                  >La de dossier doit faire entre 1 et 30 caractère. Caractères
+                  autorisés : Majuscules, Minuscules, Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+                </mat-error> -->
+              </mat-form-field>
+            </label>
+            <label>
+              <mat-form-field class="example-full-width">
+                <mat-label>Client téléphone :</mat-label>
+                <input
+                  class="disable-pointer-events"
+                  formControlName="clienttel"
+                  matInput
+                  maxlength="30"
+                  name="clienttel"
+                  placeholder="30 caracteres max"
+                  type="text"
+                  />
+                  <!-- <mat-error *ngIf="clientForm.get('clientreference').invalid"
+                  >La de dossier doit faire entre 1 et 30 caractère. Caractères
+                  autorisés : Majuscules, Minuscules, Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+                </mat-error> -->
+              </mat-form-field>
+            </label>
+          </div>
+          <div>
+            <h2>Vos coordonnées pour être recontacté</h2>
+            <label>
+              <mat-form-field class="example-full-width">
+                <mat-label>Revendeur nom :</mat-label>
+                <input
+                  class="disable-pointer-events"
+                  formControlName="revendeurnom"
+                  matInput
+                  maxlength="30"
+                  name="revendeurnom"
+                  placeholder="30 caracteres max"
+                  type="text"
+                  />
+                  <!-- <mat-error *ngIf="clientForm.get('clientreference').invalid"
+                  >La de dossier doit faire entre 1 et 30 caractère. Caractères
+                  autorisés : Majuscules, Minuscules, Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+                </mat-error> -->
+              </mat-form-field>
+            </label>
+            <label>
+              <mat-form-field class="example-full-width">
+                <mat-label>Revendeur mail :</mat-label>
+                <input
+                  class="disable-pointer-events"
+                  formControlName="revendeurmail"
+                  matInput
+                  maxlength="30"
+                  name="revendeurmail"
+                  placeholder="30 caracteres max"
+                  type="text"
+                  />
+                  <!-- <mat-error *ngIf="clientForm.get('clientreference').invalid"
+                  >La de dossier doit faire entre 1 et 30 caractère. Caractères
+                  autorisés : Majuscules, Minuscules, Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+                </mat-error> -->
+              </mat-form-field>
+            </label>
+            <label>
+              <mat-form-field class="example-full-width">
+                <mat-label>Telephone Contact :</mat-label>
+                <input
+                  class="disable-pointer-events"
+                  formControlName="telephoneContact"
+                  matInput
+                  maxlength="30"
+                  name="telephoneContact"
+                  placeholder="30 caracteres max"
+                  type="text"
+                  />
+                  <!-- <mat-error *ngIf="clientForm.get('clientreference').invalid"
+                  >La de dossier doit faire entre 1 et 30 caractère. Caractères
+                  autorisés : Majuscules, Minuscules, Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+                </mat-error> -->
+              </mat-form-field>
+            </label>
+          </div>
+          <div>
+            <h2>Information technique</h2>
+            <label>
+              <mat-form-field class="example-full-width">
+                <mat-label>Numero de ligne :</mat-label>
+                <input
+                  class="disable-pointer-events"
+                  formControlName="numeroligne"
+                  matInput
+                  maxlength="30"
+                  name="numeroligne"
+                  placeholder="30 caracteres max"
+                  type="text"
+                  />
+                  <!-- <mat-error *ngIf="clientForm.get('clientreference').invalid"
+                  >La de dossier doit faire entre 1 et 30 caractère. Caractères
+                  autorisés : Majuscules, Minuscules, Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+                </mat-error> -->
+              </mat-form-field>
+            </label>
+            <label>
+              <mat-form-field class="example-full-width">
+                <mat-label>Numéro de secours :</mat-label>
+                <input
+                  class="disable-pointer-events"
+                  formControlName="numsecours"
+                  matInput
+                  maxlength="30"
+                  name="numsecours"
+                  placeholder="30 caracteres max"
+                  type="text"
+                  />
+                  <!-- <mat-error *ngIf="clientForm.get('clientreference').invalid"
+                  >La de dossier doit faire entre 1 et 30 caractère. Caractères
+                  autorisés : Majuscules, Minuscules, Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+                </mat-error> -->
+              </mat-form-field>
+            </label>
+            <label>
+              <mat-form-field class="example-full-width">
+                <mat-label>Services :</mat-label>
+                <input
+                  class="disable-pointer-events"
+                  formControlName="services"
+                  matInput
+                  maxlength="30"
+                  name="services"
+                  placeholder="30 caracteres max"
+                  type="text"
+                  />
+                  <!-- <mat-error *ngIf="clientForm.get('clientreference').invalid"
+                  >La de dossier doit faire entre 1 et 30 caractère. Caractères
+                  autorisés : Majuscules, Minuscules, Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+                </mat-error> -->
+              </mat-form-field>
+            </label>
+            <label>
+              <mat-form-field class="example-full-width">
+                <mat-label>Ip publique :</mat-label>
+                <input
+                  class="disable-pointer-events"
+                  formControlName="ippublique"
+                  matInput
+                  maxlength="30"
+                  name="ippublique"
+                  placeholder="30 caracteres max"
+                  type="text"
+                  />
+                  <!-- <mat-error *ngIf="clientForm.get('clientreference').invalid"
+                  >La de dossier doit faire entre 1 et 30 caractère. Caractères
+                  autorisés : Majuscules, Minuscules, Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+                </mat-error> -->
+              </mat-form-field>
+            </label>
+          </div>
+        </div>
+      </form>
+    } @else {
+      <div class="CLeJourdesPecsZebi">
+        <h2 style="text-align: center;">Erreur 404</h2>
+        <button class="raised-button bgBlue" [routerLink]="['/onlywan/mesClients/listeDeMesClients']"> Revenir à la liste des client</button>
+      </div>
+    }
+
+  </mat-card>
+</div>

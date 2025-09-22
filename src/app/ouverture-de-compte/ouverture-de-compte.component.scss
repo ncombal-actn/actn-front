@@ -1,0 +1,105 @@
+mat-form-field, mat-checkbox {
+	display: block;
+	width: 100%;
+
+	max-width: 90vw;
+}
+
+a{
+ color: blue;	
+}
+
+.marge{
+	margin-bottom: 20px;
+}
+
+a:hover{
+	text-decoration: underline;
+}
+
+.mainFormFlex {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	background-color: white;
+  	padding: 15px;
+  	border-radius: 15px;
+}
+
+.formFlex {
+	width: 32%;
+}
+@media screen and (max-width: 1600px) {
+	.formFlex {
+		width: 32%;
+	}
+}
+@media screen and (max-width: 1200px) {
+	.formFlex {
+		width: 49%;
+	}
+}
+@media screen and (max-width: 800px) {
+	.formFlex {
+		width: 99%;
+	}
+}
+
+.radio-button {
+	width: 100%;
+
+	mat-radio-group {
+		display: flex;
+		flex-wrap: wrap;
+		width: 100%;
+
+		mat-radio-button {
+			// justify-content: space-evenly;
+			// margin: auto;
+			margin-bottom: 10px;
+			padding-right: 5px;
+			
+		}
+	}
+}
+
+.comfirmationForm {
+	display: flex;
+	flex-direction: column;
+	float: right;
+}
+
+.errorMessage {
+	color: red;
+	max-width: 100%;
+	font-size: 1.1rem;
+}
+.successMessage {
+	color: green;
+	max-width: 100%;
+	font-size: 1.1rem;
+}
+
+.raised-button {
+	margin: 15px;
+}
+
+.champObligatoire {
+    color: red;
+    font-size: 0.8em;
+}
+.emailTitle{
+	display: flex;
+	justify-content: space-between;
+}
+
+.grecaptcha-badge {
+	width: 70px !important;
+	overflow: hidden !important;
+	transition: all 0.3s ease !important;
+	left: 4px !important;
+  }
+  .grecaptcha-badge:hover {
+	width: 256px !important;
+  }

@@ -1,0 +1,23 @@
+.reglement-libre {
+	width: 100%;
+	font-size: 1.2rem;
+}
+
+.reglement-form {
+  display: grid;
+  margin: auto;
+  max-width: 500px;
+
+
+  button {
+    justify-self: end;
+  }
+}
+
+mat-form-field {
+	font-size: 1rem;
+}
+.valid {
+  background-color: #001b50;
+  color: white!important;
+}

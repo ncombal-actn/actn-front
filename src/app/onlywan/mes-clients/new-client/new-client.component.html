@@ -1,0 +1,244 @@
+<div class="paddIframe ">
+  <app-title-w-line [title]="'Nouveau client'" [icon]="'person_add'"></app-title-w-line>
+  <div class="adresseForm">
+    <!--  <button (click)="fakeValue()"></button> -->
+    <form [formGroup]="addrForm">
+      <h3>Information générales</h3>
+      <label>
+        <mat-form-field appearance="outline" class="example-full-width">
+          <mat-label>Votre référence :</mat-label>
+          <input formControlName="reference" matInput maxlength="30" name="nom client"
+            placeholder="30 caracteres max"  type="text">
+            @if (addrForm.get('reference').invalid) {
+              <mat-error>La référence du client doit faire entre 1 et 30
+                caractère.
+                Caractères autorisés : Majuscules, Minuscules,
+                Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+              </mat-error>
+            }
+          </mat-form-field>
+        </label>
+        <label>
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Numéro de la ligne:</mat-label>
+
+            <input  formControlName="numeroLigne"  matInput maxlength="20" name="numéroLigne" placeholder="20 caracteres max"
+              type="text">
+              @if (addrForm.get('numeroLigne').invalid) {
+                <mat-error>Le numéro de la ligne doit faire entre 1 et 20
+                  caractère. Caractères
+                  autorisés :  Chiffres +
+                </mat-error>
+              }
+            </mat-form-field>
+          </label>
+          <br>
+            <!--  <label>
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Raison sociale :</mat-label>
+              <input formControlName="raisonSociale" matInput maxlength="30" name="raisonSociale"
+                placeholder="30 caracteres max"  type="text">
+                <mat-error *ngIf="addrForm.get('raisonSociale').invalid">La raison sociale doit faire entre 1 et 30
+                  caractère. Caractères
+                  autorisés : Majuscules, Minuscules, Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+                </mat-error>
+              </mat-form-field>
+            </label> -->
+            <!--    <label>
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Référence interne partenaire :</mat-label>
+
+              <input formControlName="referenceInternePartenaire" matInput maxlength="30"
+                name="referenceInternePartenaire" placeholder="30 caracteres max" type="text">
+                <mat-error *ngIf="addrForm.get('referenceInternePartenaire').invalid">La Référence interne partenaire
+                  doit faire entre 1 et 30
+                  caractère. Caractères
+                  autorisés : Majuscules, Minuscules, Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+                </mat-error>
+              </mat-form-field>
+            </label>  -->
+
+
+            <br>
+
+              <h3>Adresse société</h3>
+              <label>
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Nom usuel du site (dépot,société, bureau ...) :</mat-label>
+
+                  <input formControlName="nomSite" matInput maxlength="30" name="nomSite"  placeholder="30 caracteres max"
+                    type="text">
+
+                    @if (addrForm.get('nomSite').invalid) {
+                      <mat-error>Le nom usuel du site doit faire entre 1 et 30
+                        caractère. Caractères
+                        autorisés : Majuscules, Minuscules, Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+                      </mat-error>
+                    }
+                  </mat-form-field>
+                </label>
+                <label>
+                  <mat-form-field appearance="outline" class="example-full-width">
+                    <mat-label>Addresse</mat-label>
+
+                    <input formControlName="addr" matInput maxlength="30" name="addr"  placeholder="30 caracteres max"
+                      type="text">
+
+                      @if (addrForm.get('addr').invalid) {
+                        <mat-error>L'adresse doit faire entre 1 et 30
+                          caractère. Caractères
+                          autorisés : Majuscules, Minuscules, Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+                        </mat-error>
+                      }
+                    </mat-form-field>
+                  </label>
+                  <!--  <label>
+                  <mat-form-field appearance="outline" class="example-full-width">
+                    <mat-label>Addresse(suite): :</mat-label>
+
+                    <input formControlName="addrSuite" matInput maxlength="30" name="addrSuite"
+                      placeholder="30 caracteres max" type="text">
+                      <span *ngIf="addrForm.addr2">&nbsp;{{ addrForm.addr2.length }}</span>
+                      <mat-error *ngIf="addrForm.get('addrSuite').invalid">La seconde ligne de l'adresse doit faire entre 1 et
+                        30
+                        caractère. Caractères
+                        autorisés : Majuscules, Minuscules, Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+                      </mat-error>
+                    </mat-form-field>
+                  </label> -->
+                  <label>
+                    <mat-form-field appearance="outline" class="example-full-width">
+                      <mat-label>Code Postal:</mat-label>
+
+                      <input formControlName="codePostal" matInput maxlength="5"  name="codePostal"
+                        placeholder="5 caracteres max" type="text">
+
+                        @if (addrForm.get('codePostal').invalid) {
+                          <mat-error>Le code postale doit faire 5
+                            caractère. Caractères
+                            autorisés :Chiffres
+                          </mat-error>
+                        }
+                      </mat-form-field>
+                    </label>
+                    <label>
+                      <mat-form-field appearance="outline" class="example-full-width">
+                        <mat-label>Ville :</mat-label>
+
+                        <input formControlName="ville" matInput maxlength="30" name="ville"  placeholder="30 caracteres max"
+                          type="text">
+
+                          @if (addrForm.get('ville').invalid) {
+                            <mat-error>La ville doit faire entre 1 et 30
+                              caractère. Caractères
+                              autorisés : Majuscules, Minuscules, Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+                            </mat-error>
+                          }
+
+                        </mat-form-field>
+                      </label>
+                      <label>
+                        <mat-form-field appearance="outline" class="example-full-width">
+                          <mat-label>Téléphone :</mat-label>
+                          <input formControlName="telephoneSociete" matInput maxlength="20" name="telephoneSociete"
+                            placeholder="20 caracteres max" type="text" required>
+
+                            @if (addrForm.get('telephoneSociete').invalid) {
+                              <mat-error>Le numéro de téléphone doit faire entre 1 et
+                                20 caractères, exemple : 0000000000. Caractères
+                                autorisés : Chiffres, +
+                              </mat-error>
+                            }
+                          </mat-form-field>
+                        </label>
+
+                        <h3>Vos coordonnées pour être recontacté</h3>
+                        <label>
+                          <mat-form-field appearance="outline" class="example-full-width">
+                            <mat-label>Nom Prenom :</mat-label>
+
+                            <input formControlName="nomPrenom" matInput maxlength="30" name="nomPrenom" placeholder="30 caracteres max"
+                              type="text" required>
+
+                              @if (addrForm.get('nomPrenom').invalid) {
+                                <mat-error>Le nom doit faire entre 1 et 30
+                                  caractère. Caractères
+                                  autorisés : Majuscules, Minuscules, Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+                                </mat-error>
+                              }
+                            </mat-form-field>
+                          </label>
+                          <!-- <label>
+                          <mat-form-field appearance="outline" class="example-full-width">
+                            <mat-label>Prénom :</mat-label>
+
+                            <input formControlName="prenom" matInput maxlength="26" name="prenom" placeholder="26 caracteres max"
+                              required type="text">
+
+                              <mat-error *ngIf="addrForm.get('prenom').invalid">Le prenom doit faire entre 1 et 26 caractère.
+                                Caractères autorisés :
+                                Majuscules, Minuscules, Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+                              </mat-error>
+                            </mat-form-field>
+                          </label> -->
+
+                          <label>
+                            <mat-form-field appearance="outline" class="example-full-width">
+                              <mat-label>Téléphone :</mat-label>
+
+                              <input formControlName="telephoneContact" matInput maxlength="20" name="telephoneContact"
+                                oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                pattern="[0-9+.\s]{1,20}" placeholder="Numéro portable de préférence" required type="text">
+                                <mat-hint>Veuillez ne pas mettre d'espace entre les caractères, exemple : 0000000000</mat-hint>
+                                @if (addrForm.get('telephoneContact').invalid) {
+                                  <mat-error>Le numéro de téléphone  doit faire entre 1
+                                    et 20 caractères, exemple : 0000000000. Caractères
+                                    autorisés : Chiffres, +
+                                  </mat-error>
+                                }
+                              </mat-form-field>
+                            </label>
+                            <!--   <br>
+                            <label>
+                              <mat-form-field appearance="outline" class="example-full-width">
+                                <mat-label>Téléphone mobile :</mat-label>
+
+                                <input formControlName="telephoneMobile" matInput maxlength="15" name="telephoneMobile"
+                                  oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                  pattern="[0-9+.\s]{1,15}" placeholder="Numéro portable de préférence" required type="text">
+                                  <mat-hint>Veuillez ne pas mettre d'espace entre les caractères, exemple : 0000000000</mat-hint>
+                                  <mat-error *ngIf="addrForm.get('telephoneMobile').invalid">Le numéro de téléphone mobile doit faire
+                                    entre 1 et 15 caractères, exemple : 0000000000. Caractères
+                                    autorisés : Chiffres, +
+                                  </mat-error>
+                                </mat-form-field>
+                              </label>  -->
+                              <br>
+
+                                <label>
+                                  <mat-form-field appearance="outline" class="example-full-width">
+                                    <mat-label>Adresse mail :</mat-label>
+
+                                    <input formControlName="mail" matInput maxlength="100" name="mail" required placeholder="100 caracteres max"
+                                      type="email">
+
+                                      @if (addrForm.get('mail').invalid) {
+                                        <mat-error>L'adresse mail doit faire entre 1 et 30
+                                          caractère. Caractères
+                                          autorisés : Majuscules, Minuscules, Chiffres, éèêàâîïÉÈÊÀÂÎÏ'
+                                        </mat-error>
+                                      }
+                                    </mat-form-field>
+                                  </label>
+
+                                  <h4 class="red">* : Champs obligatoires</h4>
+                                  <br>
+                                  </form>
+                                  <div class="formButtons">
+                                    <button [routerLink]="['/onlywan/mesClients/listeClients']" class="raised-button bgBlue">Annuler</button>
+                                    <button (click)="addAddress()" class="raised-button bgBlue">Ajouter</button>
+                                  </div>
+                                </div>
+
+                              </div>
+

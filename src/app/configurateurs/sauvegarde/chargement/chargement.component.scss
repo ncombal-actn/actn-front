@@ -1,0 +1,34 @@
+.configuration {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) repeat(3, 24px);
+    column-gap: 15px;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+
+    > *:not(:last-child) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.whited {
+    color: transparent !important;
+}
+
+.circled {
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+::ng-deep .tooltip-breakspace {
+    white-space: pre-line;
+}

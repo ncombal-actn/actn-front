@@ -1,0 +1,44 @@
+<!-- PRIX HT -->
+<div class="bloc-container raised-2">
+  <p class="size-bigger weight-bold">Prix HT de votre configuration</p>
+  <p class="size-smaller">(sur la base des options sélectionnées)</p>
+  <p class="weight-bold prix">{{ configService.configuration.prix | currency: 'EUR':'symbol':'1.2-2':'fr' }}</p>
+  @if (onOptions) {
+    <conf-chips-list>
+      <div class="chips chips--selected chips--special hover-bigger"
+        (click)="onClickConfigurez()"
+        (tap)="onClickConfigurez()"
+        >
+        Configurez votre solution
+      </div>
+    </conf-chips-list>
+  }
+</div>
+
+<!-- LOCATION -->
+<<!-- div class="bloc-container raised-2">
+<p class="size-bigger weight-bold titre-prix-public">Louez à votre client final *</p>
+<p class="weight-bold prix-public">{{ (configService.configuration.prixPublic * (1 + (0.01 * (locationSelectionne.taux ?? 0)))) / (locationSelectionne.mois ?? 1) | currency: 'EUR':'symbol':'1.2-2':'fr' }} / mois</p>
+<p class="size-smaller">
+  * mensualités calculées sur la base du prix public des options sélectionnées, soit {{ (configService.configuration.prixPublic * (1 + (0.01 * (locationSelectionne.taux ?? 0)))) | currency: 'EUR':'symbol':'1.2-2':'fr' }} sur une durée de {{ locationSelectionne.mois }} mois
+</p>
+<app-location-button type="button" [produit]="produitPourLocation" (selectedLocation)="locationSelectionne = $event" [configurateur]="true" [produits]="produitsLocation"></app-location-button>
+</div> -->
+
+@if (showHelpPopup) {
+  <div class="popup" [ngClass]="{active: showHelpPopup}">
+    <div class="popup-background" (click)="showHelpPopup = false" (tap)="showHelpPopup = false"></div>
+    <div class="popup-window raised-3">
+      <h3>Page d'information location</h3>
+      <hr/>
+      <div>
+        BLABLABLA
+      </div>
+      <div class="buttons">
+        <conf-chips-list>
+          <button class="chips chips--whited" (click)="showHelpPopup = false" (tap)="showHelpPopup = false">Fermer</button>
+        </conf-chips-list>
+      </div>
+    </div>
+  </div>
+}

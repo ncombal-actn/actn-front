@@ -1,0 +1,101 @@
+<app-title-w-line title="Les prestations techniques ACTN" [doWrap]="wrap"></app-title-w-line>
+@if (ready) {
+  <div class="prestations raised-1 padding-3">
+    <p>
+      ACTN vous propose un large choix de prestations techniques pour vous
+      faciliter la vie. De la configuration rapide d'un VLAN au paramétrage
+      complet d'un système de vidéosurveillance... nos experts sont à votre
+      disposition. Profitez-en !
+      <br />
+      <br />
+      <b>1.</b> Je complète le formulaire ci-dessous en indiquant mes coordonnées
+      et les prestations désirées.
+      <br />
+      <br />
+      <b>2.</b> Notre service commercial prend contact avec vous pour valider
+      votre demande et vous fait parvenir le devis pour celle-ci.
+      <br />
+      <br />
+      <b>3.</b> Après validation de votre commande, un de nos techniciens vous
+      contacte pour effectuer la prestation.
+    </p>
+    <h2>FORMULAIRE DE DEMANDE DE PRESTATION TECHNIQUE</h2>
+    <p>
+      Ce formulaire est destiné à notre équipe commerciale afin de vous faire
+      parvenir un devis.
+    </p>
+    <form [formGroup]="prestationForm" (ngSubmit)="onSubmit()">
+      <div id="contact-fields">
+        <mat-form-field>
+          <input matInput placeholder="Société" formControlName="societe" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Numéro de client" readonly="true" formControlName="clientID" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Nom" formControlName="nom" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Fonction" formControlName="fonction" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Email" formControlName="email" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Téléphone" formControlName="telephone" />
+        </mat-form-field>
+      </div>
+      <h2>CARTE DES PRESTATIONS</h2>
+      <p class="margin-bottom-x">Sélectionnez dans chaque rubrique la ou les prestations voulues.</p>
+      <div id="listeProduct">
+        @for (categorie of categories | slice: 0:toDisplay; track $index; let i = $index) {
+          <ng-container class="margin">
+            <div class="category">
+              <figure class="category__header">
+                <img loading="lazy" class="icon" [src]="environment.backend + 'prestations/icones/' + categorie[0].niveaucode3+'.webp'" [alt]="categorie[0].photo" />
+                <figcaption class="category__header__label">{{categorie[0].niveaulibelle3 }}</figcaption>
+              </figure>
+              <!--   Si une nouvelle prestation est dans une categorie mais s'affiche mal ajouter +1 a grid-row voir SCSS-->
+              @for (produit of categorie; track produit.reference) {
+                <div>
+                  <div class="choices">
+                    <div class="choice">
+                      <div class="choice__designation">{{categorie[0].niveaulibelle3}} {{ produit.designation }}</div>
+                      <div class="choice__description">
+                        {{ produit.reference }}
+                      </div>
+                      <div class="price">
+                        @if (isNaN(+produit.prix)) {
+                          {{ produit.prix }}
+                        } @else {
+                          {{ produit.prix | currency: 'EUR':'symbol':'1.2-2':'fr' }}
+                        }
+                      </div>
+                      <mat-checkbox class="checkbox" formControlName="test" (click)="addPrestation(produit)">
+                      </mat-checkbox>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          </ng-container>
+        }
+      </div>
+      <h2>COMPLÉMENT D'INFORMATION</h2>
+      <mat-form-field class="comment">
+        <textarea formControlName="commentaires" matInput cdkTextareaAutosize
+        placeholder="Merci de laissez ici le plus de précisions possible, précisez la nature de votre de votre demande de prestation (numéro de devis, réference produit)..." minlength="20"></textarea>
+      </mat-form-field>
+      <mat-divider></mat-divider>
+      @if (formError) {
+        <p class="error">Vous devez sélectionner au moins une prestation.<br>Et remplir le complément d'information.</p>
+      } @else {
+        <p class="error">&nbsp;</p>
+      }
+      <button class="raised-button" type="submit " (click)="show()"
+        [ngClass]="{'button-error': formError, 'button-error--secondary-color': formError}">
+        Envoyer la demande
+      </button>
+    </form>
+  </div>
+}

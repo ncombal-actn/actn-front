@@ -1,0 +1,92 @@
+@if (this.paniersSauvegardes) {
+  <div class="saved-paniers-list">
+    @for (panier of this.paniersSauvegardes; track panier.value; let i = $index) {
+      <div class="saved-paniers">
+        <div class="cart-title">
+          <!-- TITLE -->
+          @if (editingIndex != i) {
+            <strong>{{ panier.values[0].referencecommande }}</strong> <i title="Modifier le titre" (click)="editIndex(i)" class="icon-pen raised-button panier-inline-button edit-button"></i>
+          }
+          <!-- EDIT TITLE -->
+          @if (editingIndex == i) {
+            <mat-form-field>
+              <mat-label>Référence de commande</mat-label>
+              <input matInput required name="cartTitle{{i}}" [(ngModel)]="editedCartTitle" />
+            </mat-form-field>
+            <i title="Valider" (click)="confirmEdit(i)" class="raised-button panier-inline-button confirm-edit-button"><mat-icon>done</mat-icon></i>
+            <i title="Annuler" (click)="cancelEdit()" class="raised-button panier-inline-button confirm-edit-button"><mat-icon>clear</mat-icon></i>
+            @if (editError == i) {
+              <span class="errorLine">
+                <br>Caractère(s) incompatible(s) ou texte trop long (25 max)
+                </span>
+              }
+            }
+          </div>
+          <div>
+            Références :
+            <div class="panier-designations" [ngClass]="{'panier-designations-reduced' : (editingIndex == i)}">
+              @for (prod of panier.values; track prod.prod) {
+                <div class="panier-designation">
+                  &nbsp;- {{ prod.quantitecommande | number}} * <a (click)="goToPageProduit(prod.prod)">{{ prod.prod }}</a>
+                </div>
+              }
+              <!-- <div>&nbsp;&nbsp;- [...]</div> -->
+            </div>
+          </div>
+          <div class="sauv-panier-buttons">
+            <button class="raised-button" (click)="openAddPopup(i)">
+              Ajouter au Panier
+            </button>
+            <i class="raised-button delete-icon"
+              (click)="showDeletePopUp = i;">
+              <mat-icon>delete</mat-icon>
+            </i>
+            <div
+              class="confirmation-pop-up raised-1"
+              [ngClass]="{ show: showDeletePopUp === i }"
+              >
+              <div class="message">Supprimer le panier sauvegardé ?</div>
+              <button
+                class="text-button button--color-warn"
+                (click)="deletePanier( panier.values[0].numcommande, panier.values[0].referencecommande ); showDeletePopUp = -1"
+                >
+                SUPPRIMER
+              </button>
+              <button class="text-button" (click)="showDeletePopUp = -1">
+                ANNULER
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+      @if (this.paniersSauvegardes.length == 0) {
+        <div>
+          Vous n'avez aucuns paniers sauvegardés
+        </div>
+      }
+    </div>
+  }
+  @if (indexOfSavedCartBeingAdded >= 0) {
+    <div class="popup" [ngClass]="{active: indexOfSavedCartBeingAdded >= 0}">
+      <div class="popup-background" (click)="closeAddPopup()" (tap)="closeAddPopup()"></div>
+      <div class="popup-window raised-3">
+        <h3>Ajouter un panier sauvegardé</h3>
+        <p>Vous souhaitez ajouter les produits du panier sauvegardé {{ this.paniersSauvegardes[indexOfSavedCartBeingAdded].values[0].referencecommande }} à votre panier actif.</p>
+        <!-- <ng-container *ngIf="devisPopup.transactioncode === 'DEV'">
+        <p class="red">Attention : ce devis a été créé par un de nos commerciaux, certains produits ne pourront peut-être pas être ajoutés au panier.</p>
+      </ng-container> -->
+      <br />
+      <p class="size-bigger weight-bold">Comment souhaitez-vous ajouter ces produits à votre panier ?</p>
+      <br />
+      <div class="buttons">
+        <button class="raised-button"
+          (click)="addSavedCart(indexOfSavedCartBeingAdded, true)"
+        (tap)="addSavedCart(indexOfSavedCartBeingAdded, true)">J'écrase mon panier actuel</button>
+        <button class="raised-button"
+          (click)="addSavedCart(indexOfSavedCartBeingAdded)"
+        (tap)="addSavedCart(indexOfSavedCartBeingAdded)">J'ajoute ces produits à mon panier courant</button>
+        <button class="raised-button button--color-secondary" (click)="closeAddPopup()" (tap)="closeAddPopup()">Annuler</button>
+      </div>
+    </div>
+  </div>
+}

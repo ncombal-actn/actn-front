@@ -1,0 +1,44 @@
+.paddIframe{
+    padding: 0px 15px 0px 15px;
+    width: 100%;
+  }
+  
+#clientTable{
+    width: 100%;
+    text-align: left;
+  }
+  th.mat-header-cell{
+    text-align: left;
+  }
+  mat-icon{
+    cursor: pointer;
+    
+    
+  }
+  .red{
+    
+   color: var(--color-secondary)
+  }
+
+  .filterInput{
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .mat-mdc-row:hover .mat-mdc-cell {
+    border-color: #358171;
+  }
+  
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+.over{
+  cursor: pointer;
+}
+::ng-deep .underligne:hover{
+  
+  text-decoration: underline;  
+}

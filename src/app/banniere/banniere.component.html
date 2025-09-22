@@ -1,0 +1,7 @@
+@if (affichage && imageExists) {
+  <div>
+    <a [href]="linkActive" (click)="onBanniereClick($event)">
+      <img loading="lazy" alt="Banniere" class="imgBan"  [src]="environment.banniereUrl + banniereActive + '.webp'" />
+    </a>
+  </div>
+}

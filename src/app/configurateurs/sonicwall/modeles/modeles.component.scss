@@ -1,0 +1,60 @@
+@import "../sonicwall.scss";
+
+.icone-gamme {
+    width: 50%;
+    height: 50%;
+    margin: auto auto;
+}
+
+.titre {
+    margin: 0 auto;
+    text-align: center;
+    font-size: larger;
+    
+    h3 {
+        margin-bottom: 0;
+    }
+
+    h4 {
+        margin-top: 0;
+        font-weight: normal;
+    }
+
+    img {
+        margin-top: -10%;
+        width: 80%;
+        object-fit: scale-down;
+    }
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    a {
+        margin-top: 20px;
+        font-weight: bold;
+    }
+}
+
+.gamme {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) repeat(2, minmax(0, 2fr));
+}
+
+.modeles {
+    background: $color-grey;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    conf-sliding-liste {
+        display: block;
+        width: 80%;
+    }
+}
+
+.center {
+    margin: 10px 0;
+}

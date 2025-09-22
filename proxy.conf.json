@@ -1,0 +1,9 @@
+{
+    "/backend/api": {
+      "target": "https://www.actn.fr",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug"
+    }
+  }
+  

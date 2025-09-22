@@ -1,0 +1,58 @@
+
+form {
+	margin-top: 20px;
+}
+
+.main-container {
+	display: flex;
+	flex-direction: row;
+	gap: 40px 40px;
+	flex-wrap: wrap;
+}
+
+.user-info {
+	display: flex;
+	flex-wrap: nowrap;
+	flex-direction: column;
+	width: 400px;
+}
+
+.ticket-info {
+	display: flex;
+	flex-wrap: nowrap;
+	flex-direction: column;
+	width: 400px;
+
+	.input-description {
+		max-width: 100%;
+	}
+	.severite-radio-buttons {
+		margin-bottom: 5px;
+
+		p {
+			margin-bottom: 10px;
+		}
+		.mat-radio-button {
+			margin-right: 20px;
+		}
+	}
+}
+
+.mat-form-field {
+	max-width: 100%;
+}
+
+.form-footer {
+	display: flex;
+	flex-direction: row-reverse;
+	align-items: center;
+	gap: 20px;
+}
+
+.confirmation-button {
+	text-align: center;
+}
+.confirmation-txt {
+	text-align: center;
+	color: green;
+}

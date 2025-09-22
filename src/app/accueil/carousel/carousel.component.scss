@@ -1,0 +1,147 @@
+
+.mainCarousel {
+	position: relative;
+
+	/* width: 1400px;
+	height: 500px; */
+
+	width: 100%;
+	height: auto;
+	padding-top: 25%;
+
+	margin-left: 50%;
+	transform: translateX(-50%);
+	margin-bottom: 30px;
+	max-width: 95vw;
+}
+
+.sliderScreen {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+
+	overflow: hidden;
+}
+.slider {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+	position: absolute;
+
+	left: 0;
+	top: 0;
+}
+.carouselSlide {
+
+	display: inline-block;
+
+	width: 100%;
+	height: inherit;
+
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	top: 0;
+	border-radius: 10px;
+	cursor: pointer;
+}
+/*
+@media screen and (max-width: 1200px) {
+	.carouselSlide {
+		background-size: contain;
+	}
+}*/
+
+.carouselArrows {
+	z-index: 1;
+	position: relative;
+	flex: none;
+
+	height: inherit;
+	width: 40px;
+
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+
+	cursor: pointer;
+	transition: opacity .2s linear;
+}
+.arrow-up {
+	background-image: url("../../../assets/img/arrow-right.webp");
+	transform: rotate(180deg);
+}
+.arrow-down {
+	background-image: url("../../../assets/img/arrow-right.webp");
+}
+.displayArrow {
+	opacity: .3;
+}
+.displayArrow:hover {
+	opacity: 1;
+}
+.hideArrow {
+	opacity: 0;
+}
+
+.carouselMarblesContainer {
+	position: absolute;
+	bottom: -40px;
+	// right: 0;
+	margin-left: 50%;
+	transform: translateX(-50%);
+	margin-bottom: 10px;
+	z-index: 0;
+
+	height: 40px;
+	width: 100%;
+
+	transition: opacity .2s linear;
+
+	display: flex;
+	flex-wrap: nowrap;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	gap: 2px;
+}
+.carouselMarbles {
+	position: relative;
+	z-index: 50;
+	max-width: calc(100% - 80px);
+
+	display: flex;
+	flex-shrink: 1;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	gap: 6px;
+}
+@media (max-width: 800px) {
+	.carouselMarblesContainer {
+		display: none;
+	}
+	.carouselArrows {
+		height: 40%;
+		right: 5px;
+	}
+}
+.carouselMarble {
+	display: block;
+	cursor: pointer;
+	border-radius: 50%;
+	transition: opacity .2s linear;
+	width: 16px;
+	height: 16px;
+}
+
+.colorPrimary {
+	color: var(--color-primary);
+	opacity: 1;
+}

@@ -1,0 +1,659 @@
+<header class="raised-2" [ngClass]="{'show': showHeader}">
+  <div class="logos">
+    @if (router.url.includes('configurateur/zyxel')) {
+      <div class="logo-actn">
+        <img loading="lazy" alt="Configurateur Zyxel" [src]="environment.configurateurZyxel + 'img/zyxel-networks-logo-black.webp'" />
+      </div>
+    }
+    @if (router.url.includes('configurateur/sonicwall')) {
+      <div class="top-nav__brand">
+        @if (svg.getIcon('SONICWALL - OnWhite', environment.configurateurSonicWall + '/icones/SVG/') | async; as SonicwallIcon) {
+          <div>
+            <svg class="brand-svg" [innerHTML]="SonicwallIcon" preserveAspectRatio="xMinYMin slice" viewBox="0 0 310 50"></svg>
+          </div>
+        }
+      </div>
+    }
+    <a class="logo-actn" routerLink="/accueil" routerLinkActive="active">
+      <img loading="lazy" alt="ACTN" src="assets/img/favicon.webp" />
+    </a>
+  </div>
+  <ul
+    class="sub-nav menu collapsible"
+		[ngClass]="{
+				'menu--orientation-horizontal': !cms.subNavSmall,
+				'menu--orientation-vertical drop__content drop__content--side-bottom': cms.subNavSmall,
+				show: cms.showSubnav
+			}">
+    @if (cms.subNavSmall) {
+      <app-catalogue-search-bar
+        class="search-bar"
+        >
+      </app-catalogue-search-bar>
+    }
+    <li class="drop menu__item"
+      [ngClass]="{ focus: cms.showCatalogue }"
+      tabindex="0"
+      (mouseenter)="cms.onMouseEnterMenu()"
+      (mouseleave)="cms.onMouseLeaveMenu()"
+      (click)="cms.onMouseEnterMenu()"
+      (tap)="cms.onMouseEnterMenu()"
+      (keydown.enter)="cms.showCatalogue = !cms.showCatalogue"
+      appKeyboardFocus
+      [keepFocusIf]="cms.showCatalogue">
+      <span class="label">
+        Catalogue
+      </span>
+      <i class="icon-caret-down suffix"
+      [ngClass]="{ focused: cms.showCatalogue }"></i>
+
+      <fa-icon [icon]="faChevronRight"
+      class="chevron suffix"></fa-icon>
+    </li>
+
+    <div #megamenu
+      class="megamenu large scale-up-ver-top"
+			 [ngClass]="{
+					'drop__content drop__content--size-large drop__content--side-bottom': !cms.subNavSmall,
+					'overlay animate--slide-in-left': cms.subNavSmall,
+					show: cms.showCatalogue
+				}"
+      (mouseenter)="cms.showCatalogue = true"
+      (mouseleave)="cms.showCatalogue = false"
+      appExposeHeightSetter>
+      <!-- Retour -->
+      @if (cms.subNavSmall) {
+        <div class="position">
+          <button class="text-button"
+            (click)="cms.showCatalogue = false"
+            (tap)="cms.showCatalogue = false">
+            <fa-icon class="button__icon"
+            [icon]="faArrowLeft"></fa-icon>Catalogue
+          </button>
+        </div>
+      }
+
+      <ul class="menu menu--orientation-vertical categories">
+        
+
+        @if (cms.structureCatalogue | async; as structure) {
+          @for (categorie of structure.nodes; track categorie.value.label; let i = $index) {
+            <li class="drop menu__item menu__item--disable-hovered-state"
+              [ngClass]="{ focus: cms.currentActiveCategorieIndex.value === i }"
+              tabindex="0"
+              [routerLink]="['/catalogue/' + '/' + categorie.value.label]"
+              routerLinkActive="router-link-active"
+              (click)="cms.showSubnav = false; cms.showCatalogue = false;"
+							(tap)="
+									cms.onCatalogueCategorieHoveredIndex.next(i);
+									cms.currentSubCategoriesContainer.next(sub_categories_container)
+								"
+							(keydown.enter)="
+									cms.onCatalogueCategorieHoveredIndex.next(i);
+									cms.currentSubCategoriesContainer.next(sub_categories_container)
+								"
+							(mouseenter)="
+									cms.onCatalogueCategorieHoveredIndex.next(i);
+									cms.currentSubCategoriesContainer.next(sub_categories_container)
+								"
+							(mouseleave)="
+									cms.onCatalogueCategorieHoveredIndex.next(null);
+									cms.currentSubCategoriesContainer.next(sub_categories_container)
+								"
+              appKeyboardFocus
+              [keepFocusIf]="cms.currentActiveCategorieIndex.value === i">
+              <span class="label">{{ categorie.value.label }}</span>
+              <fa-icon [icon]="faChevronRight"
+              class="chevron suffix"></fa-icon>
+            </li>
+            <div #sub_categories_container
+              class="sub-categories-container"
+							 [ngClass]="{
+									show: cms.currentActiveCategorieIndex.value === i,
+									'drop__content drop__content--side-right': !cms.subNavSmall,
+									'overlay animate--slide-in-left': cms.subNavSmall
+								}"
+							 (mouseenter)="
+									cms.onCatalogueSousCategoriesContainerHoveredIndex.next(i)
+								"
+							 (mouseleave)="
+									cms.onCatalogueSousCategoriesContainerHoveredIndex.next(null)
+								">
+              <div class="position">
+                <button
+                  class="text-button"
+                  (click)="cms.onBackButton()"
+                  (tap)="cms.onBackButton()">
+                  <fa-icon
+                    class="button__icon"
+                  [icon]="faArrowLeft"></fa-icon>{{ categorie.value.label }}
+                </button>
+              </div>
+              <div class="scrollable">
+                <ul class="sub_categories">
+                  @for (sub_categorie of categorie.nodes; track sub_categorie.value.label; let i = $index) {
+                    <li
+                      class="sub_categorie weight-bold">
+                      <a
+                        tabindex="0"
+										   (keydown.enter)="
+													cms.onCatalogueNiveauSelected(
+														'catalogue',
+														categorie.value.label,
+														sub_categorie.value.label
+													)
+												"
+										   (click)="
+													cms.onCatalogueNiveauSelected(
+														'catalogue',
+														categorie.value.label,
+														sub_categorie.value.label
+													)
+												"
+										   (tap)="
+													cms.onCatalogueNiveauSelected(
+														'catalogue',
+														categorie.value.label,
+														sub_categorie.value.label
+													)
+												"
+                      routerLinkActive="active">{{ sub_categorie.value.label }}</a>
+                      @if (sub_categorie.nodes) {
+                        <ul class="">
+                          @for (
+                            sub_sub_categorie of sub_categorie.nodes; track
+                            sub_sub_categorie.value.label; let i = $index) {
+                            <li
+                              class="sub_sub_categorie size-smaller weight-default"
+                              >
+                              <a
+                                tabindex="0"
+												   (keydown.enter)="
+															cms.onCatalogueNiveauSelected(
+																'catalogue',
+																categorie.value.label,
+																sub_categorie.value.label,
+																sub_sub_categorie.value.label
+															)
+														"
+												   (click)="
+															cms.onCatalogueNiveauSelected(
+																'catalogue',
+																categorie.value.label,
+																sub_categorie.value.label,
+																sub_sub_categorie.value.label
+															)
+														"
+												   (tap)="
+															cms.onCatalogueNiveauSelected(
+																'catalogue',
+																categorie.value.label,
+																sub_categorie.value.label,
+																sub_sub_categorie.value.label
+															)
+														"
+                              routerLinkActive="active">{{ sub_sub_categorie.value.label }}</a>
+                            </li>
+                          }
+                        </ul>
+                      }
+                    </li>
+                  }
+                </ul>
+                @if (categorie.value.label === 'Cybersécurité') {
+                  <ul class="aide-choix">
+                    <a [routerLink]="['/licences-cybersecurite']"
+                      routerLinkActive="active"
+                      (click)="cms.onSearch()"
+                      (tap)="cms.onSearch()"
+                      >
+                      <fa-icon class="prefix icon" transform="flip-h" [icon]="faCogs"></fa-icon>
+                      Espace Licences et Logiciels Cybersécurité
+                    </a>
+                    <hr/>
+                    <a [routerLink]="['configurateur', 'zyxel']"
+                      class="configurateur"
+                      routerLinkActive="active"
+                      (click)="cms.onSearch()"
+                      (tap)="cms.onSearch()"
+                      >
+                      Configurateur Firewall
+                      <img loading="lazy" alt="Configurateur Zyxel" [src]="environment.configurateurZyxel + 'img/zyxel-networks-logo.webp'">
+                    </a>
+                    <!-- <hr/>
+                    <a 	[routerLink]="['configurateur', 'sonicwall']"
+                      class="configurateur"
+                      routerLinkActive="active"
+                      (click)="cms.onSearch()"
+                      (tap)="cms.onSearch()"
+                      >
+                      Configurateur Firewall
+                      <div *ngIf="svg.getIcon('SONICWALL', environment.configurateurSonicWall + '/icones/SVG/') | async as SonicwallIcon">
+                        <svg [innerHTML]="SonicwallIcon" preserveAspectRatio="xMinYMin slice" viewBox="0 0 310 50"></svg>
+                      </div>
+                    </a> -->
+                    <hr/>
+                  </ul>
+                }
+                @if (categorie.value.label === 'Formations') {
+                  <ul class="aide-choix">
+                    <a href="https://blog.actn.fr/?post_type=tribe_events&eventDisplay=list&tribe-bar-search=formation" target="_blank"
+                      (click)="cms.onSearch()"
+                      (tap)="cms.onSearch()">
+                      <fa-icon class="prefix icon" transform="flip-h" [icon]="faCalendar"></fa-icon>
+                      Voir le calendrier des évènements
+                    </a>
+                  </ul>
+                }
+              </div>
+            </div>
+          }
+          <!-- NOS MARQUES -->
+          <li (click)="cms.onSearch()"
+            (tap)="cms.onSearch()"
+            (keydown.enter)="cms.onCatalogueCategorieHoveredIndex.next(cms.nosMarquesHoveredInt);"
+            (mouseenter)="cms.onCatalogueCategorieHoveredIndex.next(cms.nosMarquesHoveredInt)"
+            (mouseleave)="cms.onCatalogueCategorieHoveredIndex.next(null);"
+            class="drop menu__item" routerLink="/catalogue/nos-marques" routerLinkActive="active">
+            <a>
+              Nos marques
+            </a>
+          </li>
+          <div
+            #sub_categories_container
+            class="sub-categories-container"
+						[ngClass]="{
+							show: cms.currentActiveCategorieIndex.value === cms.nosMarquesHoveredInt,
+							'drop__content drop__content--side-right': !cms.subNavSmall,
+							'overlay animate--slide-in-left': cms.subNavSmall
+						}"
+            (mouseenter)="cms.onCatalogueSousCategoriesContainerHoveredIndex.next(cms.nosMarquesHoveredInt)"
+            (mouseleave)="cms.onCatalogueSousCategoriesContainerHoveredIndex.next(null)"
+            >
+            <div class="scrollable">
+              <ul class="">
+                <li class="sub_categorie weight-bold">
+                  <a
+                    tabindex="0"
+                    (keydown.enter)="cms.navigateCataloguePath('nos-marques');"
+                    (click)="cms.navigateCataloguePath('nos-marques');"
+                    (tap)="cms.navigateCataloguePath('nos-marques');"
+                    routerLinkActive="active">
+                    Voir toutes nos marques
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- METIERS -->
+          <li (click)="cms.onSearch()"
+            (tap)="cms.onSearch()"
+            (keydown.enter)="cms.onCatalogueCategorieHoveredIndex.next(cms.nosMetiersHoveredInt);"
+            (mouseenter)="cms.onCatalogueCategorieHoveredIndex.next(cms.nosMetiersHoveredInt)"
+            (mouseleave)="cms.onCatalogueCategorieHoveredIndex.next(null);"
+            class="drop menu__item" routerLink="/catalogue/metiers" routerLinkActive="active">
+            <a>
+              Nos Métiers
+            </a>
+          </li>
+          <div
+            #sub_categories_container
+            class="sub-categories-container"
+                        [ngClass]="{
+                            show: cms.currentActiveCategorieIndex.value === cms.nosMetiersHoveredInt,
+                            'drop__content drop__content--side-right': !cms.subNavSmall,
+                            'overlay animate--slide-in-left': cms.subNavSmall
+                        }"
+            (mouseenter)="cms.onCatalogueSousCategoriesContainerHoveredIndex.next(cms.nosMetiersHoveredInt)"
+            (mouseleave)="cms.onCatalogueSousCategoriesContainerHoveredIndex.next(null)"
+            >
+            <div class="scrollable">
+              <ul class="">
+                <li class="sub_categorie weight-bold">
+                  <a
+                    tabindex="0"
+                    (keydown.enter)="cms.navigateCataloguePath('metiers');"
+                    (click)="cms.navigateCataloguePath('metiers');"
+                    (tap)="cms.navigateCataloguePath('metiers');"
+                    routerLinkActive="active">
+                    Voir toutes nos métiers
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- PROMOTIONS -->
+          <li
+            class="drop menu__item menu__item--disable-hovered-state"
+            [ngClass]="{ focus: cms.currentActiveCategorieIndex.value === cms.promotionHoveredInt }"
+            tabindex="0"
+            routerLinkActive="router-link-active"
+            (tap)="cms.onCatalogueCategorieHoveredIndex.next(cms.promotionHoveredInt);"
+            (keydown.enter)="cms.onCatalogueCategorieHoveredIndex.next(cms.promotionHoveredInt);"
+            (mouseenter)="cms.onCatalogueCategorieHoveredIndex.next(cms.promotionHoveredInt);"
+            (mouseleave)="cms.onCatalogueCategorieHoveredIndex.next(null);"
+            appKeyboardFocus
+            [keepFocusIf]="cms.currentActiveCategorieIndex.value === cms.promotionHoveredInt">
+            <span class="label" >Promotions</span>
+          </li>
+          <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
+          <div
+            #sub_categories_container
+            class="sub-categories-container"
+                         [ngClass]="{
+								show: cms.currentActiveCategorieIndex.value === cms.promotionHoveredInt,
+								'drop__content drop__content--side-right': !cms.subNavSmall,
+								'overlay animate--slide-in-left': cms.subNavSmall
+							}"
+						 (mouseenter)="
+								cms.onCatalogueSousCategoriesContainerHoveredIndex.next(cms.promotionHoveredInt)
+							"
+						 (mouseleave)="
+								cms.onCatalogueSousCategoriesContainerHoveredIndex.next(null)
+							">
+            <div class="scrollable">
+              <ul class="">
+                <li class="sub_categorie weight-bold">
+                  <a
+                    tabindex="0"
+                    (keydown.enter)="cms.navigateCataloguePath('nouveautes');"
+                    (click)="cms.navigateCataloguePath('nouveautes');"
+                    (tap)="cms.navigateCataloguePath('nouveautes');"
+                    routerLinkActive="active">
+                    Nouveautés
+                  </a>
+                </li>
+                <li class="sub_categorie weight-bold">
+                  <a
+                    tabindex="0"
+                    (keydown.enter)="cms.navigateCataloguePath('promotions');"
+                    (click)="cms.navigateCataloguePath('promotions');"
+                    (tap)="cms.navigateCataloguePath('promotions');"
+                    routerLinkActive="active" style="color: black;">
+                    Promotions
+                  </a>
+                </li>
+                <li class="sub_categorie weight-bold">
+                  <a
+                    tabindex="0"
+                    (keydown.enter)="cms.navigateCataloguePath('packs');"
+                    (click)="cms.navigateCataloguePath('packs');"
+                    (tap)="cms.navigateCataloguePath('packs');"
+                    routerLinkActive="active">
+                    Packs
+                  </a>
+                </li>
+                <li class="sub_categorie weight-bold">
+                  <a
+                    tabindex="0"
+                    (keydown.enter)="cms.navigateCataloguePath('destockage');"
+                    (click)="cms.navigateCataloguePath('destockage');"
+                    (tap)="cms.navigateCataloguePath('destockage');"
+                    routerLinkActive="active">
+                    Destockage
+                  </a>
+                </li>
+                <li class="sub_categorie weight-bold">
+									<a
+									   tabindex="0"
+									   (keydown.enter)="cms.navigateCataloguePath('reconditionne');"
+									   (click)="cms.navigateCataloguePath('reconditionne');"
+									   (tap)="cms.navigateCataloguePath('reconditionne');"
+									   routerLinkActive="active">
+									   Seconde Vie
+									</a>
+								</li>
+              </ul>
+            </div>
+          </div>
+          <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
+        }
+      </ul>
+    </div>
+
+   
+
+    @if (this.authService.currentUser && cms.subNavMedium) {
+      <li
+        id="commande-rapide-desktop"
+        class="menu__item"
+        appKeyboardFocus>
+        <a routerLink="/ressources/Promotions" routerLinkActive="active" class="black">
+          Promotion
+        </a>
+      </li>
+    }
+
+
+
+    <li class="drop menu__item" appKeyboardFocus
+      [ngClass]="{ focus: cms.showRessources }"
+      tabindex="0"
+      routerLink="/outils">
+      <span class="label">Outils</span>
+
+      <!-- <i
+      class="icon-caret-down suffix"
+    [ngClass]="{ focused: cms.showRessources }"></i> -->
+
+    <!-- <fa-icon
+    class="suffix"
+    [icon]="['fa', 'chevron-right']"
+  class="chevron suffix"></fa-icon> -->
+</li>
+
+<div class="drop__content"
+  #megamenu
+  class="megamenu scale-up-ver-top"
+			 [ngClass]="{
+				'drop__content drop__ressource--size-large drop__ressource--side-bottom': !cms.subNavSmall,
+				'overlay animate--slide-in-left': cms.subNavSmall,
+				logged: this.authService.currentUser,
+				show: cms.showRessources
+			}"
+  (mouseenter)="cms.showRessources = true"
+  (mouseleave)="cms.showRessources = false"
+  appExposeHeightSetter>
+
+  <!-- Retour -->
+  @if (cms.subNavSmall) {
+    <div class="position">
+      <button
+        class="text-button"
+        (click)="cms.showRessources = false"
+        (tap)="cms.showRessources = false">
+        <fa-icon
+          class="button__icon"
+        [icon]="faArrowLeft"></fa-icon>Ressources
+      </button>
+    </div>
+  }
+  @if (1) {
+    <ul class="ressources">
+      <!-- Prestations -->
+      <!-- <li class="drop menu__item">
+      <a class="ressource" routerLink="/prestations">
+        Prestations
+      </a>
+    </li> -->
+    <!-- Ressources -->
+  <!--   @for (ressource of cms.listeRessources; track $index) {
+      <li class="drop menu__item">
+        @if ((ressource.type == 'href')) {
+          <a
+            class="ressource weight-default" target="_blank" href="{{ ressource.url }}">
+            {{ ressource.texte }}
+          </a>
+        } @else {
+          <a class="ressource weight-default" routerLink="{{ ressource.url }}">
+          {{ ressource.texte }}</a>
+        }
+      </li>
+    } -->
+  </ul>
+}
+</div>
+
+
+@if (cms.subNavLarge) {
+  <li
+    class="drop menu__item" appKeyboardFocus
+    [ngClass]="{ focus: cms.showActual }"
+    tabindex="0"
+    (mouseenter)="cms.showActual = true && !cms.subNavSmall"
+    (mouseleave)="cms.showActual = false"
+    (click)="cms.showActual = !cms.showActual"
+    (tap)="cms.showActual = !cms.showActual"
+    (keydown.enter)="cms.showActual = !cms.showActual"
+    [keepFocusIf]="cms.showActual">
+    <span class="label">Actualités </span>
+    <i
+      class="icon-caret-down suffix"
+    [ngClass]="{ focused: cms.showActual }"></i>
+    <fa-icon
+      class="suffix"
+      [icon]="faChevronRight"
+    class="chevron suffix"></fa-icon>
+  </li>
+}
+
+<div class="drop__content"
+  #megamenuActual
+  class="megamenu scale-up-ver-top"
+			 [ngClass]="{
+					'drop__content drop__actual--size-large drop__actual--side-bottom': !cms.subNavSmall,
+					'overlay animate--slide-in-left': cms.subNavSmall,
+					logged: this.authService.currentUser,
+					show: cms.showActual
+				}"
+  (mouseenter)="cms.showActual = true"
+  (mouseleave)="cms.showActual = false"
+  appExposeHeightSetter>
+
+  <!-- Retour -->
+  @if (cms.subNavSmall) {
+    <div class="position">
+      <button
+        class="text-button"
+        (click)="cms.showActual = false"
+        (tap)="cms.showActual = false">
+        <fa-icon
+          class="button__icon"
+        [icon]="faArrowLeft"></fa-icon>Actualités
+      </button>
+    </div>
+  }
+  @if (1) {
+    <ul class="ressources">
+      <!-- Prestations -->
+      <!-- <li class="drop menu__item">
+      <a class="ressource" routerLink="/prestations">
+        Prestations
+      </a>
+    </li> -->
+    <!-- Ressources -->
+    <li class="drop menu__item">
+      <a class="ressource weight-default" target="_blank" href="https://blog.actn.fr/">
+        Toute l’actu des marques
+      </a>
+    </li>
+    <li class="drop menu__item">
+      <a class="ressource weight-default" target="_blank"
+        href="https://blog.actn.fr/?post_type=tribe_events">
+        Vos prochains événements
+      </a>
+    </li>
+    <li class="drop menu__item">
+      <a class="ressource weight-default" target="_blank"
+        href="https://www.gotostage.com/channel/7fe714b31eb644c2904b7fd6b410f531">
+        Plateforme VOD ACTN
+      </a>
+    </li>
+  </ul>
+}
+</div>
+
+</ul>
+<div class="search-bar">
+  
+    
+  
+ <app-catalogue-search-bar class="search-bar"></app-catalogue-search-bar>
+</div>
+<div class="icon-buttons">
+  <!-- COMPARATEUR -->
+  <a
+    tabindex="0"
+    class="icon-button text-button"
+    type="button"
+    routerLink="/comparateur"
+    routerLinkActive="active"
+    matTooltip="Comparateur"
+    matTooltipClass="tooltipClass">
+    <i class="icon-compare">
+      <div class="tag small" [ngClass]="{ show: +cms.comparateurReferences.length > 0 }">{{ +cms.comparateurReferences.length }}</div>
+    </i>
+  </a>
+
+  <!-- FAVORIS -->
+  <a
+    tabindex="0"
+    class="icon-button text-button"
+    type="button"
+    routerLink="/favoris"
+    routerLinkActive="active"
+    matTooltip="Favoris"
+    matTooltipClass="tooltipClass">
+    <fa-icon class="icon-favoris" [icon]="faStar"></fa-icon>
+    <div class="tag fav-tag small" [ngClass]="{ show: +cms.favorisReferences.length > 0 }">{{ +cms.favorisReferences.length }}</div>
+  </a>
+
+ 
+
+  <!-- CART WHEN NOT CONNECTED -->
+  @if (!authService.currentUser) {
+    <a
+      tabindex="0"
+      class="icon-button text-button"
+      type="button"
+      (click)="cms.openSideNav('toggleEspaceClient')"
+      (tap)="cms.openSideNav('toggleEspaceClient')">
+      <i class="icon-cart"></i>
+    </a>
+  }
+
+  <!-- CART WHEN CONNECTED -->
+  @if (authService.currentUser) {
+    <a
+      tabindex="0"
+      class="icon-button text-button"
+      type="button"
+      routerLink="/panier"
+      routerLinkActive="active">
+      <i class="icon-cart">
+        <div class="tag small" [ngClass]="{ show: cartService.qteProduits > 0 }">{{ +cartService.qteProduits }}</div>
+      </i>
+    </a>
+  }
+
+  <a
+    tabindex="0"
+    class="icon-button text-button logged"
+    type="button"
+    (click)="cms.openSideNav('toggleEspaceClient')"
+    (tap)="cms.openSideNav('toggleEspaceClient')">
+    <i class="icon-user">
+      <div class="tag small" [ngClass]="{ show: licenceService.prioritaire > 0 }">{{ +licenceService.prioritaire }}</div>
+    </i>
+    @if (authService.currentUser) {
+      <span
+        class="espace-client-menu-toggle__infos-client">
+        <div>{{ authService.currentUser.id }}</div>
+        @if (authService.currentUser) {
+          <div>{{ authService.currentUser.name }}</div>
+        }
+      </span>
+    }
+  </a>
+</div>
+</header>

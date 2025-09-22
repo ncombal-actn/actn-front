@@ -1,0 +1,274 @@
+/*--------------------------------------------------- PARENT ---------------------------------------------------------------------------------------------------------- PARENTS ---------------------------------------------------------- */
+
+
+
+
+// h2 {
+//     text-transform: uppercase;
+//     text-decoration: none;
+//     margin: 0 0 20px 0;
+// }
+
+app-title-w-line {
+    display: block;
+    text-transform: uppercase;
+    margin: 0 0 20px 0;
+
+}
+
+.container {
+    font-family: "Roboto", sans-serif;
+    color: rgba(0, 0, 0, 0.87);
+    // display: grid;
+    // grid-template-rows: repeat(9, 1fr), minmax(80px, auto) 1fr;
+}
+
+.deco {
+    border-radius: 3px;
+    border: solid 2px grey;
+    width: 160px;
+}
+
+textarea {
+    border-radius: 3px;
+    border: solid 2px grey;
+}
+
+mat-form-field input {
+    width: 300px;
+}
+
+
+/*---------------------------------------------------- ENFANTS----------------------------------------------------------------------------------------------------- */
+
+
+
+.child {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+    gap: 15px;
+    background: #FFFFFF;
+    padding: 40px 20px 40px 80px;
+}
+
+
+.child_A {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 15px;
+    background: #FFFFFF;
+    padding: 40px 20px 40px 80px;
+}
+
+.child_B {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
+    background: #FFFFFF;
+    padding: 40px 20px 40px 80px;
+}
+
+.child_C {
+    background: #FFFFFF;
+    padding: 40px 20px 40px 80px;
+}
+
+/*---------------------------------------------------- ENFANTS 1 ---------------------------------------------------------------------------------------------------- */
+
+
+.child1_title {
+   grid-column-start: 1;
+   grid-column-end: 4;
+   grid-row-start: 1;
+   grid-row-end: 2;
+}
+
+.child1_title1 {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    // justify-self: start;
+}
+
+.child1_commentaire {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+
+.child1_commentaire1 {
+    padding: 15px 0 15px 0;
+}
+
+.child1_commentaire2 {
+    padding: 15px 0 10px 0;
+}
+
+.child1_commentaire3 {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 4;
+    grid-row-start: 5;
+    padding-top: 15px;
+}
+
+
+.child1_input, .child1_checkboxes label {
+    display: block;
+
+}
+
+.child1_marge {
+    padding-top: 2px;
+}
+
+select {
+    height: 21px;
+}
+
+
+.child1_b1 {
+    grid-column-start: 2;
+}
+
+.child1_marque {
+    display: grid;
+    justify-items: center;
+}
+
+/*-------------------------------------------------------- ENFANT 2 ----------------------------------------------------------------------------------------------------*/
+
+
+.child2_part {
+    display: grid;
+    row-gap: 8px;
+    label {
+        font-size: 15px;
+    }
+}
+
+
+/*------------------------------------------------- MEDIA QUERIES / 2 COLONNES ----------------------------------------------------------------------------------------*/
+
+
+@media screen and (max-width: 1430px) {
+
+    .child {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 15px;
+    }
+
+    .child1_title {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        grid-row-start: 1;
+        grid-row-end: 2;
+     }
+
+     .child1_commentaire {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        grid-row-start: 2;
+        grid-row-end: 3;
+     }
+
+     .child1_commentaire3 {
+         grid-column-start: 1;
+         grid-column-end: 3;
+
+     }
+
+    .child_A {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        row-gap: 80px;
+    }
+    //  .child1_title1 {
+    //      grid-area: child1_title1;
+    //  }
+    //  .dLink {
+    //      grid-area: dLink;
+    //  }
+    //  .check_dLink {
+    //      grid-area: check_dLink;
+    //  }
+    //  .hikvision {
+    //      grid-area: hikvision;
+    //  }
+    //  .check_hikvision {
+    //      grid-area: check_hikvision;
+    //  }
+    //  .mobotix {
+    //      grid-area: mobotix;
+    //  }
+    //  .check_mobotix {
+    //      grid-area: check_mobotix;
+    //  }
+    //  .ubiquiti {
+    //      grid-area: ubiquiti;
+    //  }
+    //  .check_ubiquiti {
+    //      grid-area: check_ubiquiti;
+    //  }
+
+    //  .child_A {
+    //     display: grid;
+    //     grid-template-rows: repeat(5, 1fr);
+    //     grid-template-columns: 1fr 1fr;
+    //     grid-template-areas:
+    //         "child1_title1 child1_title1"
+    //         "dLink hikvision"
+    //         "check_dLink check_hikvision"
+    //         "mobotix ubiquiti"
+    //         "check_mobotix check_ubiquiti";
+    //  }
+
+     .child1_title1 {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        grid-row-start: 1;
+        grid-row-end: 2;
+     }
+
+}
+
+
+
+/*---------------------------------------------- MEDIA QUERIES / 1 COLONNE -------------------------------------------------------------------------------------------------*/
+
+
+
+@media screen and (max-width: 880px) {
+
+    .child, .child_A, .child_C {
+        display: block;
+        padding-left: 140px;
+        padding-right: 60px;
+    }
+
+    h2 {
+        margin-bottom: 60px;
+    }
+
+    .child1_input, .child1_checkboxes, .child1_commentaire, .child1_part, .child1_marque {
+        margin-bottom: 50px;
+    }
+
+    textarea {
+        width: 300px;
+    }
+
+    .child_B {
+        padding-right: 0;
+    }
+    .child1_b2 {
+        margin-left: 10px;
+    }
+}
+
+
+//------------------------------------------------ MEDIA QUERIES / ENTETE ------------------------------------------------------------------------------------------------*/
+

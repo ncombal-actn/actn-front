@@ -1,0 +1,231 @@
+@if (listMarqueCode) {
+  <app-banniere emplacement="top" [listMarque]="listMarqueCode"></app-banniere>
+}
+@if (listMarque) {
+  <div class="cadre">
+    <div class="flex">
+      <div class="logo" [ngClass]="{'selected': !showMarque, 'semiSelected': showMarque && marqueActive.code}"
+        (click)="openMarque()" (tap)="openMarque()">
+        <fa-icon [icon]="faChevronUp" class="chevron"></fa-icon>
+      </div>
+      <div class="titre">
+        <app-title-w-line [withLine]="false" [title]="marqueActive.code.length > 0 ? 'Marque : ' : 'Marque'" size="small"
+        (click)="openMarque()" (tap)="openMarque()"></app-title-w-line>
+        @if (marqueActive.code) {
+          <img loading="lazy" [alt]="marqueActive.libelle" class="marque-img" [src]="environment.logoMarquesCouleurs200x80 + marqueActive.libelle + '.gif'">
+        }
+        @if (marqueActive.libelle) {
+          <div class="basic-chip empty">
+            <fa-icon [icon]="faTimesCircle" (click)="removeMarque()" (tap)="removeMarque()"></fa-icon>
+          </div>
+        }
+        <span class="barre"></span>
+      </div>
+    </div>
+    <div class="marque" [ngClass]="{'hidden': !showMarque}">
+      @for (option of listMarque; track option.code; let j = $index) {
+        <div class="marque-options raised-2" (click)="toggleMarque(option)"
+          (tap)="toggleMarque(option)" [ngClass]="{'selected': marqueActive.code === option.code}">
+          <img  loading="lazy" [alt]="option.photo" class="marque-img" [src]="environment.logoMarquesCouleurs200x80 + option.photo + '.gif'">
+        </div>
+      }
+    </div>
+  </div>
+}
+@if (marqueActive.code) {
+  <div class="cadre">
+    <div class="flex">
+      <div class="logo"
+        [ngClass]="{'selected': !showFiltreCom, 'semiSelected': showFiltreCom && nomComActive.libelle}"
+        (click)="openFiltreCom()" (tap)="openFiltreCom()">
+        <fa-icon [icon]="faChevronUp" class="chevron"></fa-icon>
+      </div>
+      <div class="titre">
+        <app-title-w-line [withLine]="false" [title]="nomComActive.libelle.length > 0 ? 'Gamme : ' : 'Gamme'" size="small"
+        (click)="openFiltreCom()" (tap)="openFiltreCom()"></app-title-w-line>
+        @if (nomComActive.libelle) {
+          <div class="basic-chip gamme">
+            <span>{{ nomComActive.libelle }}</span>
+            <fa-icon [icon]="faTimesCircle" (click)="removeNomCom()" (tap)="removeNomCom()"></fa-icon>
+          </div>
+        }
+        <span class="barre"></span>
+      </div>
+    </div>
+    <div class="legende" [ngClass]="{'hidden': !showFiltreCom}">
+      @for (legende of legendeGamme; track legende.libelle) {
+        <p (click)="legendeSelectionne = legendeSelectionne === legende.couleur ? '' : legende.couleur" (tap)="legendeSelectionne = legendeSelectionne === legende.couleur ? '' : legende.couleur" [ngClass]="{'selected': legendeSelectionne === legende.couleur}">
+          <span class="couleur" [ngStyle]="{'background': legende.couleur}"></span>
+          {{ legende.libelle }}
+        </p>
+      }
+    </div>
+    <div class="categories" [ngClass]="{'hidden': !showFiltreCom}">
+      @for (crit of listNomCom; track crit.libelle; let j = $index) {
+          
+        @if (crit.libelle && (legendeSelectionne.length === 0 || crit.couleur === legendeSelectionne)) {
+         
+          <div class="cat" (click)="toggleFiltreCom(crit)" (tap)="toggleFiltreCom(crit)" [ngClass]="{'selected': crit.libelle === nomComActive.libelle}">
+            <div class="inner raised-2">
+              <div class="front">
+                <span class="marqueur" [ngStyle]="{'border-top-color': crit.couleur}"></span>
+                <p class="title">{{ crit.libelle }}</p>
+                <img loading="lazy" [alt]="crit.libelle" default="" [src]="environment.aideChoix + marqueActive.code + '-' + crit.libelle + '.webp'" />
+              </div>
+              <div class="back">
+                <span class="marqueur" [ngStyle]="{'border-top-color': crit.couleur}"></span>
+                <p class="title">{{ crit.libelle }}</p>
+                <p class="size-small description">
+                  {{ crit.description.texte }}
+                </p>
+              </div>
+            </div>
+          </div>
+        }
+      }
+    </div>
+  </div>
+}
+@if (nomComActive.libelle) {
+  @if (nomComActive.description.texte) {
+    <div class="description-full">
+      <img  loading="lazy" [alt]="nomComActive.libelle" default="" [src]="environment.aideChoix + marqueActive.code + '-' + nomComActive.libelle + '.webp'" />
+      <span>
+        {{ nomComActive.description.texte }}
+      </span>
+      @if (nomComActive.description.image) {
+        <div>
+          <img loading="lazy" [alt]="nomComActive.description.image" default="" [src]="nomComActive.description.image" />
+        </div>
+      }
+    </div>
+  }
+}
+@if (nomComActive.libelle && marqueActive.code && this.listNomSubCom.length > 0) {
+  <div class="cadre">
+    <div class="flex">
+      <div class="logo"
+        [ngClass]="{'selected': !showFiltreSubCom, 'semiSelected': showFiltreSubCom && nomSubComActive.libelle}"
+        (click)="openFiltreSubCom()" (tap)="openFiltreSubCom()">
+        <fa-icon [icon]="faChevronUp" class="chevron"></fa-icon>
+      </div>
+      <div class="titre">
+        <app-title-w-line [withLine]="false" [title]="nomSubComActive.libelle.length > 0 ? 'Ligne de produit : ' : 'Ligne de produit'" size="small"
+        (click)="openFiltreSubCom()" (tap)="openFiltreSubCom()"></app-title-w-line>
+        @if (nomSubComActive.libelle) {
+          <div class="basic-chip ligne">
+            <span>{{ nomSubComActive.libelle }}</span>
+            <fa-icon [icon]="faTimesCircle" (click)="removeNomSubCom()" (tap)="removeNomSubCom()"></fa-icon>
+          </div>
+        }
+        <span class="barre"></span>
+      </div>
+    </div>
+    <div class="categories" [ngClass]="{'hidden': !showFiltreSubCom}">
+      @for (crit of listNomSubCom; track crit.libelle; let j = $index) {
+        <div class="cat" (click)="toggleFiltreSubCom(crit)" (tap)="toggleFiltreSubCom(crit)" [ngClass]="{'selected': crit.libelle === nomSubComActive.libelle, 'small': !crit.photo.exists}">
+          <div class="inner raised-2">
+            <div class="front">
+              <p class="title">{{ crit.libelle }}</p>
+              @if (crit.photo.exists) {
+                <img loading="lazy" [alt]="crit.libelle" default="" [src]="environment.aideChoix + marqueActive.code + '-' + crit.libelle + '.webp'"/>
+              }
+            </div>
+            <div class="back">
+              <p class="title">{{ crit.libelle }}</p>
+              <p class="size-small description">
+                {{ crit.description.texte }}
+              </p>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+}
+@if (nomSubComActive.libelle) {
+  @if (nomSubComActive.description.texte) {
+    <div class="description-full">
+      <img loading="lazy" [alt]="nomSubComActive.libelle" onerror="this.style.width='0px'; this.style.padding='0px'" default="" [src]="environment.aideChoix + marqueActive.code + '-' + nomSubComActive.libelle + '.webp'" />
+      <span>
+        {{ nomSubComActive.description.texte }}
+      </span>
+      @if (nomSubComActive.description.image) {
+        <div>
+          <img loading="lazy" [alt]="nomSubComActive.description.image" default="" [src]="nomSubComActive.description.image" />
+        </div>
+      }
+    </div>
+  }
+}
+@if (nomComActive.libelle && marqueActive.code && passage) {
+  <div class="cadre">
+    <div class="flex">
+      <div class="logo" [ngClass]="{'selected': !showFiltre, 'semiSelected': showFiltre && produits.length > 0}" (click)="openFiltre()" (tap)="openFiltre()">
+        <fa-icon [icon]="faChevronUp" class="chevron"></fa-icon>
+      </div>
+      <div class="titre" (click)="openFiltre()" (tap)="openFiltre()">
+        <app-title-w-line [withLine]="false" [title]="chipsFiltre.length > 0 ? 'Filtres :' : 'Filtres'" size="small"></app-title-w-line>
+        @if (chipsFiltre.length > 0) {
+          @for (chips of chipsFiltre; track chips.value) {
+            <div class="basic-chip listed">
+              <span>{{ chips.value }}</span>
+              <fa-icon [icon]="faTimesCircle" (click)="removeFiltre(chips)" (tap)="removeFiltre(chips)"></fa-icon>
+            </div>
+          }
+          <div class="basic-chip listed">
+            <span>Tout</span>
+            <fa-icon [icon]="faTimesCircle" (click)="removeAllFiltre()" (tap)="removeAllFiltre()"></fa-icon>
+          </div>
+        }
+        <span class="barre"></span>
+      </div>
+    </div>
+    <form [formGroup]="filtresForm" (ngSubmit)="toggleFiltre()" class="container">
+      <div id="filtres" [ngClass]="{'hidden': !showFiltre}">
+        @for (filtre of filtres; track filtre.options; let i = $index) {
+          @if (filtre.options.length > 0) {
+            <div class="filtre">
+              <mat-form-field class="select-filter">
+                <mat-select placeholder="{{ filtre.label }}" [formControlName]="filtre.label" disableOptionCentering multiple panelClass="select-panel">
+                  @for (option of filtre.options; track option.value; let j = $index) {
+                    <mat-option [value]="option.value" [disabled]='option.count === 0'>
+                      {{ option.value }} ({{ option.count }})
+                    </mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              @if (filtresForm.get(filtre.label).value.length > 0) {
+                <i
+                  (click)="filtresForm.get(filtre.label).setValue('')">
+                  <mat-icon>clear</mat-icon>
+                </i>
+              }
+            </div>
+          }
+        }
+      </div>
+      @if (showFiltre) {
+        <div class="flexend">
+          <button class="raised-button btn">Voir les résultats</button>
+        </div>
+      }
+    </form>
+  </div>
+}
+@if (searched) {
+  @if (loading) {
+    <h4>Recherche en cours...</h4>
+  } @else {
+    @if (produits$ | async; as produits) {
+      @if (produits.length > 0) {
+        <h4>{{ produits.length }} résultats</h4>
+        <app-produits [produits]="produits" format="liste" [listMarque]="listMarqueCode"></app-produits>
+      } @else {
+        <h4 class="link">
+          Aucun résultat trouvé pour votre recherche. Veuillez modifier ou supprimer certains filtres afin de trouver un produit.
+        </h4>
+      }
+    }
+  }
+}

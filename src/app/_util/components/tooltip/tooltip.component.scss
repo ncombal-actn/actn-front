@@ -1,0 +1,130 @@
+.icon {
+    display: inline-flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-help {
+    color: grey;
+}
+
+.tooltip-help {
+    background-color: grey;
+}
+
+.icon-alert {
+    color: var(--color-warn);
+}
+
+.tooltip-alert {
+    background-color: var(--color-warn);
+    color: var(--color-warn-contrast);
+}
+
+.icon-problem {
+    color: var(--color-primary);
+}
+
+.icon-pdf {
+  color: #f9170a;
+}
+
+.icon-secondary {
+    color: var(--color-secondary);
+}
+
+.tooltip-problem {
+    background-color: var(--color-primary);
+    color: var(--color-primary-contrast);
+}
+
+.icon-white {
+    color: white;
+}
+
+.icon-tooltip {
+    cursor: help;
+}
+
+.icon-share {
+    cursor: pointer;
+}
+
+.btn-tooltip {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 14px;
+    color: #333;
+  }
+
+  .btn-help {
+    color: blue;
+  }
+
+  .btn-alert {
+    color: red;
+  }
+
+  .btn-problem {
+    color: orange;
+  }
+
+  .btn-error {
+    color: darkred;
+  }
+
+  .btn-share {
+    color: green;
+  }
+
+  .btn-favoris {
+    color: gold;
+  }
+
+  .btn-favoris-empty {
+    color: lightgray;
+  }
+
+  .btn-pdf {
+    color: darkred;
+  }
+
+  .btn-reload {
+    color: blue;
+  }
+
+  .btn-trash {
+    color: black;
+  }
+
+  .btn-edit {
+    color: purple;
+  }
+
+  .btn-assos {
+    color: teal;
+  }
+
+  .btn-location {
+    color: brown;
+  }
+
+  .btn-cart {
+    color: darkgreen;
+  }
+
+  .btn-help-me {
+    color: darkblue;
+  }
+
+  .btn-cotation {
+    color: darkgoldenrod;
+  }
+
+  .btn-cotation-warn {
+    color: darkorange;
+  }

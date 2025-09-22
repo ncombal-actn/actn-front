@@ -1,0 +1,110 @@
+@use '@angular/material' as mat;
+
+$actn-primary: (
+  50: #e7eaec,
+  100: #c4cbcf,
+  200: rgba(50, 173, 218),
+  300: #75868e,
+  400: #586c76,
+  500: rgba(0,50,100),
+  600: #344b56,
+  700: #2c414c,
+  800: #253842,
+  900: rgba(0,20,60),
+  A100: #74caff,
+  A200: #41b7ff,
+  A400: #0ea3ff,
+  A700: #0097f4,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #ffffff,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #ffffff
+  )
+);
+
+$actn-secondary: (
+  50: #e0f4fa,
+  100: #b3e4f2,
+  200: #80d2ea,
+  300: rgba(220, 90, 155),
+  400: #26b3da,
+  500: rgba(155, 0, 55),
+  600: #0392c0,
+  700: #0081b0,
+  800: #006c98,
+  900: rgba(100, 0, 25),
+  A100: #e2f3ff,
+  A200: #afdfff,
+  A400: #7ccbff,
+  A700: #63c1ff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000
+  )
+);
+
+// TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
+//  The following line adds:
+//    1. Default typography styles for all components
+//    2. Styles for typography hierarchy classes (e.g. .mat-headline-1)
+//  If you specify typography styles for the components you use elsewhere, you should delete this line.
+//  If you don't need the default component typographies but still want the hierarchy styles,
+//  you can delete this line and instead use:
+//    `@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());`
+//@include mat.all-legacy-component-typographies();
+//@include mat.legacy-core();
+
+$primary: mat.m2-define-palette($actn-primary, 500, 200, 900);
+$accent: mat.m2-define-palette($actn-secondary, 500, 300, 900);
+$warn: mat.m2-define-palette(mat.$m2-red-palette);
+
+$actn-theme: mat.m2-define-light-theme($primary, $accent, $warn);
+
+//@include mat.all-legacy-component-themes($actn-theme);
+
+:root {
+  --color-primary: #{mat.m2-get-color-from-palette($primary)};
+  --color-primary-lighter: #{mat.m2-get-color-from-palette($primary, lighter)};
+  --color-primary-darker: #{mat.m2-get-color-from-palette($primary, darker)};
+  --color-primary-contrast: #{mat.m2-get-color-from-palette($primary, default-contrast)};
+  --color-primary-lighter-contrast: #{mat.m2-get-color-from-palette($primary, lighter-contrast)};
+  --color-primary-darker-contrast: #{mat.m2-get-color-from-palette($primary, darker-contrast)};
+
+  --color-secondary: #{mat.m2-get-color-from-palette($accent)};
+  --color-secondary-lighter: #{mat.m2-get-color-from-palette($accent, lighter)};
+  --color-secondary-darker: #{mat.m2-get-color-from-palette($accent, darker)};
+  --color-secondary-contrast: #{mat.m2-get-color-from-palette($accent, default-contrast)};
+  --color-secondary-lighter-contrast: #{mat.m2-get-color-from-palette($accent, lighter-contrast)};
+  --color-secondary-darker-contrast: #{mat.m2-get-color-from-palette($accent, darker-contrast)};
+
+  --color-warn: #{mat.m2-get-color-from-palette($warn)};
+  --color-warn-contrast: #{mat.m2-get-color-from-palette($warn, default-contrast)};
+
+  --color-soft-warn: rgb(255, 153, 0);
+  --color-soft-warn-contrast: white;
+
+  --color-success: #108a00;
+}

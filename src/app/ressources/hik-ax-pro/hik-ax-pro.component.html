@@ -1,0 +1,87 @@
+<div class="hik-ax-pro">
+  <!-- BANIERE -->
+  <div class="banner"><img alt="banner" loading="lazy" [src]="bannerImgUrl"></div>
+  <!-- INFOS -->
+  <!-- *ngIf="axProHeaderHtml" -->
+  @if (!!axProHeaderHtml) {
+    <div [ngClass]="{'htmllibrebox-container': !plusdinfo}">
+      <div class="htmllibrebox" [innerHtml]="axProHeaderHtml"></div>
+      @if (!plusdinfo) {
+        <div class="htmllibre-gradiant">
+          <button class="raised-button" (click)="moreInfo()">Lire la suite</button>
+        </div>
+      }
+      <!-- <h2>Gamme AX PRO</h2>
+      <p>AX PRO est la gamme d’alarme sans fil de Hikvision. La gamme comprend une offre complète de périphériques à commencer par la centrale, véritable cœur de l’installation pour l’ensemble du système. Ensuite, une large gamme de détecteurs intérieurs et extérieurs, ainsi que des périphériques polyvalents, notamment des sirènes, des répéteurs, des relais, ou encore des badges sont conçus pour répondre aux besoins d’une multitude de scénarios. Les périphériques sont dotés des technologies de communication sans fil Tri-X et Cam-X ; pour de multiples cas d’utilisation comme pour une entreprise ou une résidence principale.</p>
+      <br>
+        <p>AX PRO s’installe facilement sans fil pour simplifier la configuration. Installer simplement la centrale, les PIRCAM, les détecteurs intérieurs et extérieurs et autres périphériques avec des vis ou de la colle, selon les surfaces de montage.</p>
+        <br>
+          <p>Tous les produits de la gamme peuvent être ajoutés selon les besoins et peuvent être reliés de manière flexible à d’autres appareils Hikvision. Le système AX PRO peut être géré et entretenu facilement via l’application Hik Pro-Connect ou le portail Web pour les installateurs. Les installateurs et les centres de surveillance peuvent superviser l’état du système d’alarme à tout moment et de n’importe où avec l’autorisation de l’utilisateur final. De plus, le rapport d’état est un excellent outil pour la maintenance du système ainsi que pour les actualisations du firmware. L'interface est pratique et permet de recevoir des notifications chaque fois qu'un incident se produit. Et pour les utilisateurs finaux, l’application Hik-Connect permet de piloter leur installation à distance directement via smartphone.</p> -->
+        </div>
+      }
+      <div class="texte">
+        <h3>Cliquez simplement sur la gamme de votre choix pour affichez les produits disponibles.</h3>
+      </div>
+      <!-- MODELE CLIQUABLE -->
+      <div class="model">
+        <img alt="Model" [src]="modelImgUrl" loading="lazy">
+        <div class="model-buttons">
+          <div>
+            <a class="m01" (click)="changeSlidingListUrl('brisdeglace')"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> Détecteur de bris de glace</span></a>
+            <a class="m02" (click)="changeSlidingListUrl('centraleaxpro')"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> Centrale AX PRO</span></a>
+            <a class="m03" (click)="changeSlidingListUrl('pircam')"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> PIRCAM</span></a>
+            <a class="m04" (click)="changeSlidingListUrl('fumee')"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> Détecteur de fumée</span></a>
+            <a class="m05" (click)="changeSlidingListUrl('eau')"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> Détecteur de fuite d’eau</span></a>
+          </div>
+          <div>
+            <a class="m06" (click)="changeSlidingListUrl('camera')"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> Caméra IP</span></a>
+            <a class="m07" (click)="changeSlidingListUrl('repeteur')"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> Répétiteur sans fil</span></a>
+            <a class="m08" (click)="changeSlidingListUrl('relais')"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> Relais</span></a>
+            <a class="m09" (click)="changeSlidingListUrl('aimantchoc')"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> Aimant + Capteur de choc</span></a>
+            <a class="m10" (click)="changeSlidingListUrl('boutonurgence')"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> Bouton d'urgence</span></a>
+          </div>
+          <div>
+            <a class="m11" (click)="changeSlidingListUrl('badge')" style="width: 180px;"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> Badges & lecteurs</span></a>
+            <a class="m12" (click)="changeSlidingListUrl('clavier')"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> Clavier</span></a>
+            <a class="m13" [href]="catalogueLinkList.hikconnect.url" target="_blank"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> Hik-Connect</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="model-small">
+        <a (click)="changeSlidingListUrl('centraleaxpro')"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> Centrale AX PRO</span></a>
+        <a (click)="changeSlidingListUrl('pircam')"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> PIRCAM</span></a>
+        <a (click)="changeSlidingListUrl('aimantchoc')"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> Aimant + Capteur de choc</span></a>
+        <a (click)="changeSlidingListUrl('brisdeglace')"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> Détecteur de bris de glace</span></a>
+        <a (click)="changeSlidingListUrl('boutonurgence')"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> Bouton d'urgence</span></a>
+        <a (click)="changeSlidingListUrl('fumee')"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> Détecteur de fumée</span></a>
+        <a (click)="changeSlidingListUrl('eau')"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> Détecteur de fuite d’eau</span></a>
+        <a (click)="changeSlidingListUrl('repeteur')"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> Répétiteur sans fil</span></a>
+        <a (click)="changeSlidingListUrl('relais')"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> Relais</span></a>
+        <a (click)="changeSlidingListUrl('badge')" style="width: 180px;"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> Badges & lecteurs</span></a>
+        <a (click)="changeSlidingListUrl('clavier')"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> Clavier</span></a>
+        <a (click)="changeSlidingListUrl('camera')"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> Caméra IP</span></a>
+        <a [href]="catalogueLinkList.hikconnect.url" target="_blank"><span><fa-icon class="reddot" [icon]="faCircle"></fa-icon> Hik-Connect</span></a>
+      </div>
+
+      <!-- CATALOGUE -->
+      <div id="catalogueTitre" class="catalogue">
+        @if (catalogueLinkIndex == 'defaut') {
+          @if (defaultProducts) {
+            <app-title-w-line id="catalogueTitre" title="Notre sélection du moment"></app-title-w-line>
+            <app-sliding-liste [random]="random" [nbProduits]="defaultProducts.length" [produits]="defaultProducts" type="produit" [simplePreviewProduct]="true"></app-sliding-liste>
+          }
+        } @else {
+          <!-- TITRE DE LA CATEGORIE -->
+          <app-title-w-line  [title]="catalogueLinkList[catalogueLinkIndex].titre"></app-title-w-line>
+          @for (catalogueLinkKey of catalogueLinksListOfKeys; track catalogueLinkKey.url) {
+            @if (catalogueLinkIndex == catalogueLinkKey) {
+              <app-sliding-list-from-link [catalogueLink]="catalogueLinkList[catalogueLinkKey].url" [maxLength]="20"></app-sliding-list-from-link>
+            }
+          }
+          <div class="voir-tout">
+            <div class="raised-button" (click)="navigateAxProLink(catalogueLinkList[catalogueLinkIndex].url)">Voir toutes les références</div>
+          </div>
+        }
+      </div>
+
+    </div>

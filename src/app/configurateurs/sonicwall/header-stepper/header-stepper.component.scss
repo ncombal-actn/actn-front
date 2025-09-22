@@ -1,0 +1,14 @@
+@import "../sonicwall.scss";
+
+.step {
+    background-color: $color-grey-2;
+
+    &--selected {
+        color: $color-1 !important;
+
+        .number {
+            color: white !important;
+            background-color: $color-1 !important;
+        }
+    }
+}

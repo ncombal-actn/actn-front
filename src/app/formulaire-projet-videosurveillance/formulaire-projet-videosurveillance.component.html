@@ -1,0 +1,648 @@
+<div class="container">
+<form (ngSubmit)="onSubmit()" [formGroup]="videoSurveillanceForm">
+  <div class="child">
+    <app-title-w-line title="Formulaire pour projet de videosurveillance" size="big" class="child1_title"></app-title-w-line>
+      <div >
+        <mat-form-field>
+            <input matInput formControlName="societe" placeholder="Société" required/>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+            <input matInput formControlName="clientID" placeholder="Numéro de client" required/>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+            <input matInput formControlName="nom" placeholder="Nom" />
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+            <input matInput formControlName="fonction" placeholder="Fonction"/>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+            <input matInput formControlName="email" placeholder="Email" required/>
+        </mat-form-field>
+      </div>
+    <div>
+      <mat-form-field>
+          <input matInput formControlName="telephone" placeholder="Téléphone"/>
+      </mat-form-field>
+    </div>
+    <div class="child1_commentaire3">
+        Afin de pouvoir r&eacute;pondre le plus pr&eacute;cisement possible &agrave; votre demande de devis,
+      nous vous remercions de bien vouloir prendre le temps de r&eacute;pondre aux questions ci-dessous.
+    </div>
+  </div>
+
+
+
+  <div class="child" >
+  <app-title-w-line title="Caméra" size="small" class="child1_title"></app-title-w-line>
+  <div class="child1_input">
+    <h4>Nombre de caméras</h4>
+    <div>
+      <mat-form-field appearance="outline"><input matInput name="nombre_cameras" type="text" id="nombre_cameras" class="deco" [(ngModel)]="nombre_cameras" [ngModelOptions]="{standalone: true}"></mat-form-field></div>
+  </div>
+  <div class="child1_checkboxes">
+    <h4>Type de cam&eacute;ra</h4>
+    <div>
+      <label>
+        <input type="checkbox" name="camera_type" value="fixe" id="camera_type_0">
+        Cam&eacute;ra Fixe
+      </label>
+      <label>
+        <input type="checkbox" name="camera_type" value="dome" id="camera_type_1">
+        Dôme Fixe
+      </label>
+      <label>
+        <input type="checkbox" name="camera_type" value="ptz" id="camera_type_2">
+        Cam&eacute;ra PTZ
+      </label>
+      <label>
+        <input type="checkbox" name="camera_type" value="dome ptz" id="camera_type_3">
+        Dôme PTZ
+      </label>
+      <label>
+        <input type="checkbox" name="camera_type" value="speed dome" id="camera_type_4">
+        Speed Dome
+      </label>
+    </div>
+  </div>
+  <div class="child1_checkboxes">
+    <h4>R&eacute;solution</h4>
+    <div>
+      <label>
+        <input type="checkbox" name="camera_resolution" value="2 megapixels" id="camera_resolution_0">
+        2 M&eacute;gapixels
+      </label>
+      <label>
+        <input type="checkbox" name="camera_resolution" value="3 megapixels" id="camera_resolution_1">
+        3 M&eacute;gapixels
+      </label>
+      <label>
+        <input type="checkbox" name="camera_resolution" value="4 megapixels" id="camera_resolution_2">
+        4 M&eacute;gapixels
+      </label>
+      <label>
+        <input type="checkbox" name="camera_resolution" value="5 megapixels" id="camera_resolution_3">
+        5 M&eacute;gapixels
+      </label>
+      <label>
+        <input type="checkbox" name="camera_resolution" value="8 megapixels" id="camera_resolution_4">
+        8 M&eacute;gapixels
+      </label>
+      <label>
+        <input type="checkbox" name="camera_resolution" value="superieur 8 megapixels" id="camera_resolution_5">
+        > 8 M&eacute;gapixels
+      </label>
+    </div>
+  </div>
+  <div class="child1_checkboxes">
+    <h4>Fonction Jour / Nuit</h4>
+    <div>
+      <label>
+        <input type="checkbox" name="camera_journuit" value="jour couleur" id="camera_journuit_0">
+        Jour (Couleur)
+      </label>
+      <label>
+        <input type="checkbox" name="camera_journuit" value="nuit noir et blanc" id="camera_journuit_1">
+        Nuit (N&B)
+      </label>
+      <label>
+        <input type="checkbox" name="camera_journuit" value="jour nuit couleur noir et blanc" id="camera_journuit_2">
+        Jour - Nuit (Couleur - N&B)
+      </label>
+      <label>
+        <input type="checkbox" name="camera_journuit" value="jour nuit noir et blanc" id="camera_journuit_3">
+        Jour - Nuit (N&B)
+      </label>
+    </div>
+  </div>
+  <div class="child1_checkboxes">
+    <h4>Utilisation</h4>
+    <div>
+      <label><input type="checkbox" name="camera_utilisation" value="interieur" id="camera_utilisation_0">Int&eacute;rieur</label>
+      <label><input type="checkbox" name="camera_utilisation" value="exterieur" id="camera_utilisation_1">Ext&eacute;rieur</label>
+    </div>
+  </div>
+  <div class="child1_checkboxes">
+    <h4> Cam&eacute;ra sans fil</h4>
+    <div>
+      <label><input type="checkbox" name="camera_sansfil" id="camera_sansfil_0" value="oui">Oui</label>
+      <label><input type="checkbox" name="camera_sansfil" id="camera_sansfil_1" value="non">Non</label>
+    </div>
+  </div>
+  <div class="child1_checkboxes">
+    <h4>Objectif</h4>
+    <div>
+      <label>
+        <input type="checkbox" name="camera_objectif" value="focale fixe" id="camera_objectif_0">
+        Focale fixe
+      </label>
+      <label>
+        <input type="checkbox" name="camera_objectif" value="varifocal" id="camera_objectif_1">
+        Varifocal
+      </label>
+      <label>
+        <input type="checkbox" name="camera_objectif" value="objectifs multiples" id="camera_objectif_2">
+        Objectifs multiples
+      </label>
+      <label>
+        <input type="checkbox" name="camera_objectif" value="objectifs deportes" id="camera_objectif_3">
+        Objectifs d&eacute;port&eacute;s
+      </label>
+    </div>
+  </div>
+  <div class="child1_checkboxes">
+    <h4>Antivandale</h4>
+    <div>
+      <label><input type="checkbox" name="camera_antivandale" value="oui" id="camera_antivandale_0">Oui</label>
+      <label><input type="checkbox" name="camera_antivandale" value="non" id="camera_antivandale_1">Non</label>
+    </div>
+  </div>
+  <div class="child1_checkboxes">
+    <h4>Compression vid&eacute;o</h4>
+    <div>
+      <label>
+        <input type="checkbox" name="camera_compression_video" value="mjpeg" id="camera_compression_video_0">
+        MJPEG
+      </label>
+      <label>
+        <input type="checkbox" name="camera_compression_video" value="mxpeg" id="camera_compression_video_1">
+        MxPEG
+      </label>
+      <label>
+        <input type="checkbox" name="camera_compression_video" value="h264" id="camera_compression_video_2">
+        H.264 / H.264+
+      </label>
+      <label>
+        <input type="checkbox" name="camera_compression_video" value="h265" id="camera_compression_video_3">
+        H.265 / H.265+
+      </label>
+    </div>
+  </div>
+  <div class="child1_input">
+    <h4>Angle de vue souhait&eacute;</h4>
+    <div>
+      <mat-form-field appearance="outline">
+        <input matInput  name="textfield" type="text" id="textfield" [(ngModel)]="textfield" [ngModelOptions]="{standalone: true}" placeholder="en degré (°)"> 
+      </mat-form-field>
+      </div>
+  </div>
+  <div class="child1_input">
+    <h4>Distance de visualisation souhait&eacute;e</h4>
+    <div>
+      <mat-form-field appearance="outline"><input matInput type="text" name="textfield2" id="textfield2" [(ngModel)]="textfield2" [ngModelOptions]="{standalone: true}" placeholder="en m"></mat-form-field></div>
+  </div>
+  <div class="child1_checkboxes">
+    <h4>Type d'usage</h4>
+    <div>
+      <label>
+        <input type="checkbox" name="camera_usage" value="detection" id="camera_usage_0">
+        D&eacute;tection (20 px/m)
+      </label>
+      <label>
+        <input type="checkbox" name="camera_usage" value="reconnaissance" id="camera_usage_1">
+        Reconnaissance faciale (100 px/m)
+      </label>
+      <label>
+        <input type="checkbox" name="camera_usage" value="lecture plaque" id="camera_usage_2">
+        Lecture de plaque d'immatriculation (200 <br>&emsp;&nbsp; px/m)  avec ou sans analyse de la plaque
+      </label>
+      <label>
+        <input type="checkbox" name="camera_usage" value="identification" id="camera_usage_3">
+        Identification (250 à 500 px/m)
+      </label>
+      <label>
+        <input type="checkbox" name="camera_usage" value="autre" id="camera_usage_4">
+        Autre
+      </label>
+    </div>
+  </div>
+  <div class="child1_checkboxes">
+    <h4>Type de fixation</h4>
+    <div>
+      <label>
+        <input type="checkbox" name="camera_fixation" value="murale" id="camera_fixation_0">
+        Murale
+      </label>
+      <label>
+        <input type="checkbox" name="camera_fixation" value="murale deportee" id="camera_fixation_1">
+        Murale d&eacute;port&eacute;e
+      </label>
+      <label>
+        <input type="checkbox" name="camera_fixation" value="poteau" id="camera_fixation_2">
+        Poteau
+      </label>
+      <label>
+        <input type="checkbox" name="camera_fixation" value="plafond" id="camera_fixation_3">
+        Plafond
+      </label>
+      <label>
+        <input type="checkbox" name="camera_fixation" value="faux plafond" id="camera_fixation_4">
+        Faux-plafond
+      </label>
+      <label>
+        <input type="checkbox" name="camera_fixation" value="angle" id="camera_fixation_5">
+        Angle
+      </label>
+      <label>
+        <input type="checkbox" name="camera_fixation" value="parapet" id="camera_fixation_6">
+        Parapet
+      </label>
+      <label>
+        <input type="checkbox" name="camera_fixation" value="suspendu" id="camera_fixation_7">
+        Suspendu au plafond
+      </label>
+    </div>
+  </div>
+  <div class="child1_checkboxes">
+    <h4>Type d'alimentation de la cam&eacute;ra</h4>
+    <div>
+      <label>
+        <input type="checkbox" name="camera_alimentation" value="poe" id="camera_alimentation_0">
+        PoE / PoE+
+      </label>
+      <label>
+        <input type="checkbox" name="camera_alimentation" value="hi poe" id="camera_alimentation_1">
+        PoE++
+      </label>
+      <label>
+        <input type="checkbox" name="camera_alimentation" value="alim electrique 230V" id="camera_alimentation_2">
+        Alimentation &eacute;lectrique standard 230V
+      </label>
+      <label>
+        <input type="checkbox" name="camera_alimentation" value="alim electrique 12V" id="camera_alimentation_3">
+        Alimentation &eacute;lectrique 12VDC
+      </label>
+      <label>
+        <input type="checkbox" name="camera_alimentation" value="alim electrique 24V" id="camera_alimentation_4">
+        Alimentation &eacute;lectrique 24VAC
+      </label>
+      <label>
+        <input type="checkbox" name="camera_alimentation" value="eclairage public" id="camera_alimentation_5">
+        Alimentation et recharge sur&eacute;clairage<br>&emsp;&nbsp; public
+      </label>
+      <label>
+        <input type="checkbox" name="camera_alimentation" value="PV" id="camera_alimentation_6">
+        Panneaux photovoltaïques
+      </label>
+    </div>
+  </div>
+  <div class="child1_checkboxes">
+    <h4>Utilisation avec des modules E/S (par exemple : ouverture de  barri&egrave;re ou de porte, allumer une lumi&egrave;re, d&eacute;clencher une sir&egrave;ne, etc &hellip;)</h4>
+    <div>
+      <label><input type="checkbox" name="camera_ES" value="oui" id="camera_ES_0">Oui</label>
+      <label><input type="checkbox" name="camera_ES" value="non" id="camera_ES_1">Non</label>
+    </div>
+  </div>
+  </div>
+
+  <div class="child_C">
+  <app-title-w-line title="éclairage" size="small"></app-title-w-line>
+  <div class="child1_commentaire1">
+    L'&eacute;clairage  repr&eacute;sente une part tr&egrave;s importante dans la qualit&eacute; des images.
+    Il est  primordial de proposer des projecteurs en cas de mauvaise luminosit&eacute;.
+    Attention  aux m&eacute;langes de lumi&egrave;re IR et de lumi&egrave;re blanche qui ne font pas bon  m&eacute;nage.
+  </div>
+  <div class="child1_checkboxes">
+    <h4>Type de projecteur souhait&eacute;</h4>
+    <div>
+      <label><input type="checkbox" name="eclairage_projecteur" value="projecteur lumiere blanche" id="eclairage_projecteur_0">Projecteur lumière blanche</label>
+      <label><input type="checkbox" name="eclairage_projecteur" value="projecteur IR" id="eclairage_projecteur_1">Projecteur IR (pour les objectifs noir et blanc uniquement)</label>
+    </div>
+  </div>
+  </div>
+
+  <div class="child ">
+  <app-title-w-line title="visualisation" size="small" class="child1_title"></app-title-w-line>
+  <div class="child1_commentaire">
+    Attention, un serveur vid&eacute;o est fait pour enregistrer mais pas pour visualiser.
+  </div>
+  <div class="child1_input">
+    <h4>Syst&egrave;me d'exploitation</h4>
+    <div>
+      <mat-form-field appearance="outline"><input matInput type="text" name="logiciel_OS" id="logiciel_OS" class="deco" [(ngModel)]="logiciel_OS" [ngModelOptions]="{standalone: true}">
+      </mat-form-field >
+      </div>
+  </div>
+  <div class="child1_checkboxes">
+    <h4>Utilisation</h4>
+    <div>
+      <label><input type="checkbox" name="logiciel_utilisation" value="visualisation seule" id="logiciel_utilisation_0">Visualisation seule</label>
+      <label><input type="checkbox" name="logiciel_utilisation" value="visu et enregistrement" id="logiciel_utilisation_1">Visualisation et enregistrement</label>
+    </div>
+  </div>
+  <div class="child1_checkboxes">
+    <h4>Consultation</h4>
+    <div>
+      <label>
+        <input type="checkbox" name="logiciel_consultation" value="locale" id="logiciel_consultation_0">
+        Locale
+      </label>
+      <label>
+        <input type="checkbox" name="logiciel_consultation" value="distante" id="logiciel_consultation_1">
+        Distante
+      </label>
+    </div>
+  </div>
+  <div class="child1_checkboxes">
+    <h4>Mode de consultation</h4>
+    <div>
+      <label>
+        <input type="checkbox" name="logiciel_consultation_" value="mobile" id="logiciel_consultation_2">
+        Mobile - Smartphone
+      </label>
+      <label>
+        <input type="checkbox" name="logiciel_consultation_" value="ordinateur" id="logiciel_consultation_3">
+        Ordinateur
+      </label>
+      <label>
+        <input type="checkbox" name="logiciel_consultation_" value="centre de controle" id="logiciel_consultation_4">
+        Centre de contrôle
+      </label>
+      <label>
+        <input type="checkbox" name="logiciel_consultation_" value="mur d images" id="logiciel_consultation_5">
+        Mur d'images
+      </label>
+    </div>
+  </div>
+  <div class="child1_part">
+    <h4 >Calcul de la bande passante pour la visualisation</h4>
+    <div class="child2_part">
+      <div>
+        <label>R&eacute;solution d'affichage</label>
+        <div class="child1_marge">
+          <select  name="visualisation_resolution" id="visualisation_resolution" class="deco" [(ngModel)]="visualisation_resolution" [ngModelOptions]="{standalone: true}">
+            <option value="">-- Selectionner --</option>
+            <option value="cif">CIF (320 &times; 240)</option>
+            <option value="vga">VGA (640 &times; 480)</option>
+            <option value="svga">SVGA (800 &times; 600)</option>
+            <option value="xga">XGA (1024 &times; 768)</option>
+            <option value="hd">HD (1280 &times; 720)</option>
+            <option value="mega">Mega (1280 &times; 960)</option>
+            <option value="full hd">FULL HD (1920 &times; 1080)</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label>Nombre d'images  par seconde</label>
+        <div class="child1_marge">
+          <mat-form-field appearance="outline">
+          <input type="text" matInput name="nb_img_par_seconde" id="nb_img_par_seconde" class="deco" [(ngModel)]="nb_img_par_seconde" [ngModelOptions]="{standalone: true}" size="27">
+        </mat-form-field>
+          <mat-form-field appearance="outline">
+          <input type="text" matInput name="nb_img_par_seconde" id="nb_img_par_seconde" class="deco" [(ngModel)]="nb_img_par_seconde" [ngModelOptions]="{standalone: true}" size="27">
+          </mat-form-field>
+        </div>
+      </div>
+      <div>
+        <label for="compression">Compression</label>
+        <div class="child1_marge">
+          <select  name="compression" id="compression" class="deco" [(ngModel)]="compression" [ngModelOptions]="{standalone: true}">
+            <option value="">-- Selectionner --</option>
+            <option value="mjpeg">MJPEG</option>
+            <option value="mxpeg">MxPEG</option>
+            <option value="h264">H.264 / H.264+</option>
+            <option value="h265">H.265 / H.265+</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="child1_input">
+    <h4>Bande passante de l&rsquo;acc&egrave;s  Internet</h4>
+    <div>
+      <mat-form-field appearance="outline">
+        <input type="text" matInput name="logiciel_bandepassantelien" id="logiciel_bandepassantelien" class="deco" [(ngModel)]="logiciel_bandepassantelien" [ngModelOptions]="{standalone: true}" placeholder="en Mbit/s">
+      </mat-form-field></div>
+  </div>
+  </div>
+
+  <div class="child">
+  <app-title-w-line title="stockage" size="small" class="child1_title"></app-title-w-line>
+  <div class="child1_checkboxes">
+    <h4>R&eacute;solution</h4>
+    <div>
+      <label>
+        <input type="checkbox" name="stockage_resolution" value="megapixel" id="stockage_resolution_0">
+        HD (1280 &times; 720)
+      </label>
+      <label>
+        <input type="checkbox" name="stockage_resolution" value="2 megapixels" id="stockage_resolution_1">
+        Mega (1280 &times; 960)
+      </label>
+      <label>
+        <input type="checkbox" name="stockage_resolution" value="3 megapixels" id="stockage_resolution_2">
+        Full HD (1920 &times; 1080)
+      </label>
+      <label>
+        <input type="checkbox" name="stockage_resolution" value="4 megapixels" id="stockage_resolution_3">
+        QXGA (2048 &times; 1536)
+      </label>
+      <label>
+        <input type="checkbox" name="stockage_resolution" value="5 megapixels" id="stockage_resolution_4">
+        4 MP (2688 &times; 1512)
+      </label>
+      <label>
+        <input type="checkbox" name="stockage_resolution" value="8 megapixels" id="stockage_resolution_5">
+        5 MP (2592 &times; 1944)
+      </label>
+      <label>
+        <input type="checkbox" name="stockage_resolution" value="sup 8 megapixels" id="stockage_resolution_6">
+        6 MP (3072 &times; 2048)
+      </label>
+      <label>
+        <input type="checkbox" name="stockage_resolution" value="sup 8 megapixels_1" id="stockage_resolution_6_1">
+        Ultra HD (3840 &times; 2160)
+      </label>
+      <label>
+        <input type="checkbox" name="stockage_resolution" value="sup 8 megapixels_2" id="stockage_resolution_6_2">
+        > 8 M&eacute;gapixels
+      </label>
+    </div>
+  </div>
+  <div class="child1_checkboxes">
+    <h4>Nombre d'images par seconde</h4>
+    <div>
+      <label>
+        <input type="checkbox" name="stockage_imgs" value="1" id="stockage_imgs_0">
+        1
+      </label>
+      <label>
+        <input type="checkbox" name="stockage_imgs" value="6" id="stockage_imgs_1">
+        6
+      </label>
+      <label>
+        <input type="checkbox" name="stockage_imgs" value="12" id="stockage_imgs_2">
+        12
+      </label>
+      <label>
+        <input type="checkbox" name="stockage_imgs" value="18" id="stockage_imgs_3">
+        18
+      </label>
+      <label>
+        <input type="checkbox" name="stockage_imgs" value="25" id="stockage_imgs_4">
+        25
+      </label>
+      <label>
+        <input type="checkbox" name="stockage_imgs" value="30" id="stockage_imgs_5">
+        30
+      </label>
+      <label>
+        <input type="checkbox" name="stockage_imgs" value="60" id="stockage_imgs_6">
+        60
+      </label>
+      <label for="stockage_imgs">&nbsp; Autre
+        <mat-form-field appearance="outline">
+        <input type="text" matInput name="stockage_imgs" id="stockage_imgs" class="deco">
+      </mat-form-field>
+      </label>
+    </div>
+  </div>
+  <div class="child1_checkboxes">
+    <h4>Compression vid&eacute;o</h4>
+    <div>
+      <label>
+        <input type="checkbox" name="stockage_compression" value="mjpeg" id="stockage_compression_0">
+        MJPEG</label>
+      <label>
+        <input type="checkbox" name="stockage_compression" value="mxpeg" id="stockage_compression_1">
+        MxPEG</label>
+      <label>
+        <input type="checkbox" name="stockage_compression" value="h264" id="stockage_compression_2">
+        H.264 / H.264+</label>
+      <label>
+        <input type="checkbox" name="stockage_compression" value="h265" id="stockage_compression_3">
+        H.265 / H.265+
+      </label>
+    </div>
+  </div>
+  <div class="child1_checkboxes">
+    <h4>Mode d'enregistrement</h4>
+    <div>
+      <label>
+        <input type="checkbox" name="stockage_mode_enregistrement" value="continu" id="stockage_modeenregistrement_0">
+        Continu
+      </label>
+      <label>
+        <input type="checkbox" name="stockage_mode_enregistrement" value="detection mouvement" id="stockage_modeenregistrement_1">
+        D&eacute;tection de mouvement
+      </label>
+      <label>
+        <input type="checkbox" name="stockage_mode_enregistrement" value="continu et detection intelligente" id="stockage_modeenregistrement_2">
+        Continu + D&eacute;tection intelligente
+      </label>
+    </div>
+  </div>
+  <div class="child1_input">
+    <h4>Dur&eacute;e d'enregistrement souhait&eacute;e</h4>
+    <div>
+      <mat-form-field appearance="outline"><input type="text" matInput name="stockage_duree_enregistrement" id="stockage_duree_enregistrement" class="deco" [(ngModel)]="stockage_duree_enregistrement" [ngModelOptions]="{standalone: true}" placeholder="en jours (30 jours maxi)">
+      </mat-form-field></div>
+  </div>
+  </div>
+
+  <div class="child">
+  <app-title-w-line title="récupération des données de la caméra" size="small" class="child1_title"></app-title-w-line>
+  <div class="child1_commentaire">
+    Le Wi-Fi n&rsquo;est pas adapt&eacute; &agrave; la  vid&eacute;osurveillance sauf dans de rares cas, l&rsquo;id&eacute;al est de partir sur de la  radio.
+  </div>
+  <div class="child1_checkboxes">
+    <h4>Type de lien</h4>
+    <div>
+      <label>
+        <input type="checkbox" name="recuperation_data_lien" value="ethernet" id="recuperation_data_lien_0">
+        Ethernet
+      </label>
+      <label>
+        <input type="checkbox" name="recuperation_data_lien" value="fo" id="recuperation_data_lien_1">
+        Fibre Optique
+      </label>
+      <label>
+        <input type="checkbox" name="recuperation_data_lien" value="p2p" id="recuperation_data_lien_2">
+        Radio P2P (point &agrave; point)
+      </label>
+      <label>
+        <input type="checkbox" name="recuperation_data_lien" value="pmp" id="recuperation_data_lien_3">
+        Radio PMP (point &agrave; multipoint)
+      </label>
+      <label>
+        <input type="checkbox" name="recuperation_data_lien" value="wifi" id="recuperation_data_lien_4">
+        Wi-Fi
+      </label>
+    </div>
+  </div>
+  <div class="child1_input">
+    <h4>Bande passante n&eacute;cessaire  pour chaque lien</h4>
+    <div>
+      <mat-form-field appearance="outline"><input type="text" matInput name="recuperation_data_bandepassante" id="recuperation_data_bandepassante" class="deco" [(ngModel)]="recuperation_data_bandepassante" [ngModelOptions]="{standalone: true}" placeholder="en Mbit/s"></mat-form-field></div>
+  </div>
+  <div class="child1_input">
+    <h4>Distance entre le point vid&eacute;o  et la centralisation</h4>
+
+    <div>
+      <mat-form-field appearance="outline">
+        <input type="text" matInput name="recuperation_data_distance" id="recuperation_data_distance" class="deco" [(ngModel)]="recuperation_data_distance" [ngModelOptions]="{standalone: true}" placeholder="en m">
+      </mat-form-field></div>
+
+    <div>
+      <mat-form-field appearance="outline"><input matInput type="text" name="recuperation_data_distance" id="recuperation_data_distance" class="deco" [(ngModel)]="recuperation_data_distance" [ngModelOptions]="{standalone: true}" placeholder="en m">
+      </mat-form-field></div>
+
+  </div>
+  </div>
+
+
+
+  <div class="child_A">
+    <app-title-w-line title="marque souhaitée pour votre projet" size="small" class="child1_title1"></app-title-w-line>
+    <div class="child1_marque">
+      <label>
+        <img loading="lazy" src="https://www.actn.fr/CommunWeb/marque/200x80/COULEUR/DLINK.gif" width="200" height="80" alt=""/>
+        <input type="checkbox" name="marque" value="dlink" id="marque_0"/>
+        D-Link
+      </label>
+    </div>
+    <div class="child1_marque">
+      <label>
+        <img loading="lazy" src="https://www.actn.fr/CommunWeb/marque/200x80/COULEUR/HIKVISION.gif" width="200" height="80" alt=""/>
+        <input type="checkbox" name="marque" value="hikvision" id="marque_1"/>
+        Hikvision
+      </label>
+    </div>
+    <div class="child1_marque">
+      <label>
+        <img loading="lazy" src="https://www.actn.fr/CommunWeb/marque/200x80/COULEUR/MOBOTIX.gif" width="200" height="80" alt=""/>
+        <input type="checkbox" name="marque" value="mobotix" id="marque_2"/>
+        Mobotix
+      </label>
+    </div>
+    <div class="child1_marque">
+      <label>
+        <img loading="lazy" src="https://www.actn.fr/CommunWeb/marque/200x80/COULEUR/UBIQUITI.gif" width="200" height="80" alt=""/>
+        <input type="checkbox" name="marque" value="ubiquiti" id="marque_3"/>
+        Ubiquiti
+      </label>
+    </div>
+  </div>
+
+  <div class="child_C" >
+    <app-title-w-line title="informations complémentaires" size="small"></app-title-w-line>
+    <div align="center" class="child1_commentaire1">Si vous le souhaitez, vous pouvez partager des documents sur votre projet (plans, photos, documents)</div>
+    <div align="center"><input name="files" type="file" multiple="multiple" id="files" (change)="handleFileInput($event.target.files)"></div>
+    <div class="child1_commentaire2" align="center">Description compl&eacute;mentaire de votre projet</div>
+    <div align="center"><textarea name="description_projet" id="description_projet" [(ngModel)]="description_projet" [ngModelOptions]="{standalone: true}" cols="90" rows="8"></textarea></div>
+  </div>
+
+  <div class="child_B ">
+    <div class="child1_b1"><button class="raised-button" type="submit" name="reset" id="reset">Effacer le formulaire</button></div>
+    <div class="child1_b2"><button class="raised-button" type="submit" name="submit" id="submit">Envoyer</button></div>
+  </div>
+
+</form>
+</div>

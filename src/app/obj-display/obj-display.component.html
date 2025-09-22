@@ -1,0 +1,17 @@
+<div *ngIf="displayUrl">
+  <button class="raised-button" routerLink="/">
+    Retour
+  </button>
+
+  <object id="obj" class="object-display" [data]="displayUrl" type="application/pdf">
+    <p>Votre navigateur ne peut pas afficher le PDF.</p>
+
+    <button class="raised-button center">
+      <a [href]="displayUrl">Cliquer ici pour le télécharger.</a>
+    </button>
+  </object>
+
+  <button class="raised-button" routerLink="/">
+    Retour
+  </button>
+</div>

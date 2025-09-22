@@ -1,0 +1,136 @@
+.cadreProduit{
+    background-color: white;
+    box-shadow: 0 2px 3px 1px rgba(0, 0, 0, 0.2);
+}
+
+.titreRMA {
+    display: flex;
+    font-weight: 550;
+	justify-content: space-between;
+    padding:15px 5px;
+    margin: 10px 0;
+}
+
+.descriptionRMA{
+    display: flex;
+	justify-content: space-between;
+    padding:0px 5px 15px 5px;
+    margin: 10px 0;
+}
+
+.grow1CG {
+	flex-grow: 1;
+    flex-basis: 0;
+    padding: 0 5px;
+    color: grey;
+    align-self: center;
+    text-align: center;
+}
+
+.autresInfo{
+    display: flex;
+    justify-content: space-between;
+}
+
+.colonne{
+    flex-grow: 1;
+    flex-basis: 0;
+    margin-right: 20px;
+}
+
+.colonne2{
+    flex-grow: 2;
+    flex-basis: 0;
+    margin-right: 20px;
+}
+
+.titres{
+    display: flex;
+    align-items: baseline;
+}
+
+.cadre{
+    background-color: white;
+    box-shadow: 0 2px 3px 1px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    max-width: 500px;
+}
+
+.contenant{
+    display: block;
+    margin: 10px;
+}
+
+.message{
+    display: block;
+    font-size: 1.4em;
+    margin: 40px;
+}
+
+.flex{
+    display: flex;
+}
+
+.dumb{
+    width: 75%;
+}
+
+.fin{
+    width: 25%;
+}
+
+.addBtn{
+    width: 120px;
+    height: 40px;
+    font-weight: bold;
+}
+
+.grow1 {
+	flex-grow: 1;
+    flex-basis: 0;
+    padding: 0 5px;
+    align-self: center;
+}
+
+.grow2 {
+    flex-grow: 2;
+	flex-basis: 0;
+    padding: 0 5px;
+    align-self: center;
+}
+
+.grow3 {
+    flex-grow: 3;
+	flex-basis: 0;
+    padding: 0 5px;
+    align-self: center;
+}
+
+.grow1C {
+	flex-grow: 1;
+    flex-basis: 0;
+    padding: 0 5px;
+    align-self: center;
+    text-align: center;
+}
+
+.grow1F {
+	flex-grow: 1;
+    flex-basis: 0;
+    padding: 0 5px;
+    display: flex;
+    align-self: center;
+}
+
+.grow1CG {
+	flex-grow: 1;
+    flex-basis: 0;
+    padding: 0 5px;
+    color: grey;
+    align-self: center;
+    text-align: center;
+}
+
+.raised-button{
+    padding: 8px 10px !important;
+}

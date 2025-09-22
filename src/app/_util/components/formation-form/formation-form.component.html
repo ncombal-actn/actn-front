@@ -1,0 +1,22 @@
+@if (formationFormDOM) {
+  <!-- BUTTON -->
+  @if (cartQte > 1) {
+    <div class="formationWarning">remplir un formulaire par participant</div>
+  }
+  <button class="raised-button formationButton" (click)="openGoogleForm()">
+    Remplir le formulaire d'inscription à une formation {{ this.formationFormData.marquelib }}
+  </button>
+  <!-- <div class="formationWarning" *ngIf="cartQte > 1">remplir un formulaire par participant</div> -->
+  <!-- IF openGoogleFrom -->
+  @if (openGoogleFrom) {
+    <!-- POPUP -->
+    <div class="formationPopUp">
+      <div class="formationForm" [innerHtml]="formationFormDOM"></div>
+      <button class="raised-button formationButton closeFormButton" (click)="closeGoogleForm()">
+        Fermer le formulaire
+      </button>
+    </div>
+    <!-- GREY OVERLAY -->
+    <div class="grey-overlay" (click)="closeGoogleForm()"></div>
+  }
+}

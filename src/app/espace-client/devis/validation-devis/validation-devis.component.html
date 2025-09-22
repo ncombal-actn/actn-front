@@ -1,0 +1,542 @@
+<!--
+@if (ready === 2) {
+  <div>
+    <form [formGroup]="panierForm">
+      &lt;!&ndash; TITRE &ndash;&gt;
+      <h3>Validation du devis {{ devis.numcommande }} - {{ devis.referencecommande }}</h3>
+      &lt;!&ndash; LISTE PRODUITS &ndash;&gt;
+      <div class="liste-produits raised-1 bg-white">
+        <app-labels-panier modeAffichage="1"></app-labels-panier>
+        @for (cartItem of produits | keyvalue; track cartItem.value; let i = $index) {
+          <div class="produit">
+            <app-panier-row [cartItem]="cartItem.value" [showInputNumber]="false"></app-panier-row>
+          </div>
+        }
+      </div>
+      @if (showClientFinal()) {
+        <div class="liste-produits raised-1 ">
+          <app-enduser-form title="Informations du client final" [produits]="cartService.cart.items" (clientChange)="enduser = $event" [client]="newEnduser"></app-enduser-form>
+          @if (submitted && !enduserForm.valid) {
+            <mat-error>Le formulaire client final comporte des erreurs.
+            </mat-error>
+          }
+        </div>
+      }
+      <div class="liste-produits raised-1 bg-white">
+        <h3>Informations de commande</h3>
+        &lt;!&ndash; REFERENCE &ndash;&gt;
+        <mat-form-field class="full-width size-default">
+          <mat-label>Votre référence de commande</mat-label>
+          <input matInput required formControlName="ref" name="sauveref" id="ref" type="text" />
+          @if (panierForm.get('ref').errors?.required) {
+            <mat-error>Champ obligatoire</mat-error>
+          }
+          @if (panierForm.get('ref').errors?.pattern) {
+            <mat-error>Caractères autorisés : majuscules, minuscules, chiffres, espaces.</mat-error>
+          }
+        </mat-form-field>
+        &lt;!&ndash; EMAIL &ndash;&gt;
+        <mat-form-field class="full-width size-default">
+          <mat-label>Adresse mail</mat-label>
+          <input matInput required formControlName="email" name="mail" id="mail" type="email" />
+          @if (panierForm.get('email').errors?.required) {
+            <mat-error>Champ obligatoire</mat-error>
+          }
+          @if (panierForm.get('email').errors?.email) {
+            <mat-error>La saisie ne correspond pas à un email.</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      &lt;!&ndash; MODE DE LIVRAISON &ndash;&gt;
+      <div class="liste-produits raised-1 bg-white">
+        <h3>Mode de livraison</h3>
+        @if (submitted && panierForm.get('transporteur').errors?.required) {
+          <mat-error class="margin">
+            Vous devez sélectionner un mode de livraison
+          </mat-error>
+        }
+        <mat-radio-group aria-label="Transporteur" formControlName="transporteur" >
+          {{ devis.transporteur }}
+          @if (this.panierForm.get('transporteur') == 'CHR') {
+            <mat-radio-button value="CHR" [checked]="this.panierForm.get('transporteur') == 'CHR'">
+              Chronopost
+            </mat-radio-button>
+          }
+          @if (this.panierForm.get('transporteur') == 'COL') {
+            <mat-radio-button value="COL" [checked]="this.panierForm.get('transporteur') == 'COL'">
+              Colissimo
+            </mat-radio-button>
+          }
+          @if (this.panierForm.get('transporteur') == 'SCH') {
+            <mat-radio-button value="SCH" [checked]="this.panierForm.get('transporteur') == 'SCH'">
+              Schenker 48/72h
+            </mat-radio-button>
+          }
+          @if (this.panierForm.get('transporteur') == 'LDF') {
+            <mat-radio-button value="LDF" [checked]="this.panierForm.get('transporteur') == 'LDF'">
+              Stock externe 8/10 jours <span class="smallfont">GRATUIT</span>
+            </mat-radio-button>
+          }
+          @if (this.panierForm.get('transporteur') == 'MAI') {
+            <mat-radio-button value="MAI" [checked]="this.panierForm.get('transporteur') == 'MAI'">
+              Email
+            </mat-radio-button>
+          }
+          @if (this.panierForm.get('transporteur') == 'ENL') {
+            <mat-radio-button value="ENL" [checked]="this.panierForm.get('transporteur') == 'ENL'">
+              Retrait en nos locaux / EXW
+            </mat-radio-button>
+          }
+          @if (this.panierForm.get('transporteur') == 'VTP') {
+            <mat-radio-button value="VTP" [checked]="this.panierForm.get('transporteur') == 'VTP'">
+              Transport par vos soins
+            </mat-radio-button>
+          }
+          @if (devis.transporteur === 'TRA') {
+            <mat-radio-button value="TRA" [checked]="devis.transporteur === 'TRA'">
+              Transitaire
+            </mat-radio-button>
+          }
+        </mat-radio-group>
+        <br /><br /><a class="text-link" target="_blank" routerLink="/grille-transport">Grille de transport</a>
+      </div>
+      &lt;!&ndash; ADRESSES &ndash;&gt;
+      @if ((this.devis.transporteur != 'MAI') && (this.panierForm.get('transporteur') != 'ENL') && (this.panierForm.get('transporteur') != 'VTP') && this.panierForm.get('transporteur')) {
+        <div class="liste-produits raised-1 bg-white"
+          >
+          <h3>Adresse de livraison</h3>
+          @if (submitted && panierForm.errors?.adresse) {
+            <mat-error>
+              Votre devis ne contient pas d'adresse de livraison, demandez une modification du devis à votre commercial sur la page <a class="underline" [routerLink]="['/espace-client', 'devis']">Devis</a>.
+            </mat-error>
+          }
+          <mat-radio-group class="adresses" aria-label="Adresse"   formControlName="adresse">
+            @if (devis !== '') {
+              <mat-radio-button [checked]="devis !==''" class="adresse box raised-2" >
+                <span class="weight-bold">{{ devis.wnom }}</span><br />
+                <span>{{ devis.wadresse1 }}&nbsp;&nbsp;</span><br>
+                @if (devis.wadresse2) {
+                  <span>{{ devis.wadresse2 }}&nbsp;&nbsp;<br></span>
+                }
+                @if (devis.wcodepostal) {
+                  <span>{{ devis.wcodepostal }}&nbsp;&nbsp;</span>
+                }
+                @if (devis.wville) {
+                  <span>{{ devis.wville }}</span>
+                  }<br />
+                  @if (devis.wphone) {
+                    <span>{{ devis.wphone }}&nbsp;&nbsp;</span>
+                    }<br />
+                    @if (devis.wpaysiso) {
+                      <span>{{ (devis.wpaysiso ? devis.wpaysiso : "FR") }}&nbsp;&nbsp;</span>
+                    }
+                    @if (devis.wpays) {
+                      <span>{{ (devis.wpays ? devis.wpays : "France") }}</span>
+                    }
+                  </mat-radio-button>
+                }
+              </mat-radio-group>
+            </div>
+          }
+          &lt;!&ndash; BON DE LIVRAISON &ndash;&gt;
+          <div class="col-3">
+            <div class="liste-produits raised-1 bg-white">
+              <h3>Bon de livraison</h3>
+              <mat-radio-group aria-label="Bon de livraison" formControlName="livraison">
+                <mat-radio-button value="STD" checked>
+                  Standard
+                </mat-radio-button>
+                <mat-radio-button value="LID">
+                  Personnalisé / Neutre / Drop shipping
+                </mat-radio-button>
+              </mat-radio-group>
+              &lt;!&ndash; DATE DE LIVRAISON &ndash;&gt;
+              <h3>Date d'expédition souhaitée</h3>
+              <mat-form-field class="size-default">
+                <mat-label>Date d'expédition</mat-label>
+                <input matInput type="date" formControlName="dateexpedition" [min]="mindate" required>
+              </mat-form-field>
+              @if (submitted && panierForm.errors?.weekend) {
+                <mat-error>
+                  La date d'expédition souhaitée ne peut pas être un week end
+                </mat-error>
+              }
+              &lt;!&ndash; CONDITIONS &ndash;&gt;
+              <div class="lawful-checkbox">
+                <mat-checkbox name="lawful" formControlName="lawful">
+                  J'ai lu et j'accepte les&nbsp;
+                </mat-checkbox>
+                <a class="text-link" routerLink="/conditions-generales-de-vente">conditions générales de vente
+                d'ACTN</a>
+              </div>
+              @if (submitted && panierForm.get('lawful').errors?.required) {
+                <mat-error class="margin">
+                  Vous devez accepter les conditions générales de vente
+                </mat-error>
+              }
+            </div>
+            @if (page != 'devis' && !( (needCotationTransport) && (panierForm.get('transporteur') == 'CHR' || panierForm.get('transporteur') == 'COL' || panierForm.get('transporteur') === 'SCH') )) {
+              <div class="raised-1 liste-produits no_m_top bg-white" > &lt;!&ndash;  else pageDemandedeDevis &ndash;&gt;
+                <h3>Moyen de paiement</h3>
+                <mat-radio-group aria-label="Moyen de paiement" class="paiement" name="paiement" formControlName="paiement">
+                  <mat-radio-button value="VIR" class="paiement_btn " [checked]="panierForm.get('paiement') === 'VIR'">
+                    Commander (paiement par virement immédiat)
+                  </mat-radio-button>
+                  <mat-radio-button value="CCB" class="paiement_btn" [checked]="panierForm.get('paiement') === 'CCB'">
+                    Commander (paiement par carte bancaire)
+                  </mat-radio-button>
+                  @if (this.authService.currentUser.AutoCDE  ==='O') {
+                    <mat-radio-button  value="ENC"  class="paiement_btn"
+                      [checked]="panierForm.get('paiement') === 'ENC'">
+                      Commander (sur encours)
+                    </mat-radio-button>
+                  }
+                  @if (submitted && panierForm.get('paiement').errors?.required) {
+                    <mat-error class="margin">
+                      Vous devez choisir un mode de paiement
+                    </mat-error>
+                  }
+                </mat-radio-group>
+                @if ((this.panierForm.get('paiement') === 'VIR')) {
+                  <div class="RIB">
+                    <h3>RIB ACTN</h3>
+                    <p  class="" #tooltip="matTooltip"
+                      matTooltip="Copied"
+                    matTooltipPosition="after"></p>
+                    <div class="total ">
+                      <div class="rib_txt"> IBAN</div>
+                      <div class="rib_txt"> {{iban}} <mat-icon class="rib_icon" (click)="copyText(iban); tooltip.show()"
+                      >file_copy</mat-icon></div>
+                    </div>
+                    <div class="total ">
+                      <div class="rib_txt">  BIC</div> &lt;!&ndash; &ndash;&gt;
+                      <div class="rib_txt"> {{bic}} <mat-icon class="rib_icon" (click)="copyText(bic); tooltip.show()">file_copy</mat-icon></div>
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+            &lt;!&ndash; DIV alignement devis &ndash;&gt;
+            @if ([page]=='devis';) {
+              <div></div>
+            }
+            @if ([page]!='devis'&& ( (needCotationTransport) && (panierForm.get('transporteur') == 'CHR' || panierForm.get('transporteur') == 'COL' || panierForm.get('transporteur') === 'SCH') )) {
+              <div></div>
+            }
+            <ng-template #totaux_loading class="paiement_container"></ng-template>
+            <div class="paiement_container  raised-1 bg-white"  > &lt;!&ndash; totaux liste-produits *ngIf="panierPort; else totaux_loading"  *ngIf="!( (needCotationTransport) && (panierForm.get('transporteur') == 'CHR' || panierForm.get('transporteur') == 'COL' || panierForm.get('transporteur') === 'SCH') ); else isCommandeBesoinDeRecalcul" &ndash;&gt;
+              <div class="total">
+                <div>Total marchandise HT</div>
+                @if (userHasEscompte) {
+                  <div>{{ panierPort.totalMarchandiseht + panierPort.escompte | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
+                }
+                @if (!userHasEscompte) {
+                  <div>{{ panierPort.totalMarchandiseht | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
+                }
+              </div>
+              @if (userHasEscompte) {
+                <div class="total">
+                  <div>Escompte HT</div>
+                  <div>{{ +authService.currentUser.Pescompte }} %</div>
+                  <div>-{{ this.panierPort.escompte | currency:'EUR':'symbol' }}</div>
+                </div>
+              }
+              @if (panierPort.Totald3e) {
+                <div class="total">
+                  <div>Total Éco-participation HT</div>
+                  <div>{{ panierPort.Totald3e | currency:'EUR':'symbol':'1.3-3':'fr' }}</div>
+                </div>
+              }
+              <div class="total">
+                <div>Frais de port HT</div>
+                @if (panierPort.port != 0) {
+                  <div>
+                    {{ panierPort.port | currency: 'EUR':'':'1.2-2':'fr' }}<span>
+                  €</span></div>
+                }
+                @if (panierPort.port == 0) {
+                  <div>gratuit</div>
+                }
+              </div>
+              @if (panierPort.port != 0 && panierPort.portfranco && (panierPort.portfranco < 99000)) {
+                <div class="total">
+                  <div style="font-weight: 400;">
+                    (Franco à {{ panierPort.portfranco | currency: 'EUR':'symbol':'1.2-2':'fr' }})
+                  </div>
+                </div>
+              }
+              @if (panierPort.totalpoids) {
+                @if (panierPort.totalpoids == panierPort.allpoids) {
+                  <div class="">
+                    <div style="font-weight: 400;">Poids total {{ panierPort.totalpoids | number: '1.3-3' }} kg</div>
+                  </div>
+                } @else {
+                  <div>
+                    <div style="font-weight: 400;">Poids retenu {{ panierPort.totalpoids | number: '1.3-3' }} kg</div>
+                    <div style="font-weight: 400; font-size: 0.8em;">Poids total {{ panierPort.allpoids | number: '1.3-3' }}
+                    kg</div>
+                  </div>
+                }
+              }
+              <div class="total">
+                <div>Total HT</div>
+                @if (userHasEscompte) {
+                  <div>{{ panierPort.totalht + panierPort.escompte | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
+                }
+                @if (!userHasEscompte) {
+                  <div>{{ panierPort.totalht | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
+                }
+                <input type="hidden" value="{{ panierPort.totalht }}" readonly />
+              </div>
+              @if ([page]=='devis';) {
+                <div class="total TVA">
+                  <div>TVA</div>
+                  <div> {{ panierPort.tva | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
+                </div>
+              }
+              @if ([page]=='devis';) {
+                <div class="total TTC">
+                  <div>Total TTC </div>
+                  <div>{{ panierPort.ttc + fraisCcb | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
+                </div>
+              }
+              &lt;!&ndash;
+              <div *ngIf="( (needCotationTransport) && (panierForm.get('transporteur') == 'CHR' || panierForm.get('transporteur') == 'COL' || panierForm.get('transporteur') === 'SCH') && (this.panierForm.get('paiement') !== 'CCB') )" class="total TVA">
+                <div>TVA</div>
+                <div> {{ panierPort.tva | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
+              </div>
+              <div *ngIf="( (needCotationTransport) && (panierForm.get('transporteur') == 'CHR' || panierForm.get('transporteur') == 'COL' || panierForm.get('transporteur') === 'SCH') )" class="total TTC">
+                <div>Total TTC </div>
+                <div>{{ panierPort.ttc + fraisCcb | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
+              </div> &ndash;&gt;
+              &lt;!&ndash; CB &ndash;&gt;
+              @if ((this.panierForm.get('paiement') === 'CCB' && !userHasEscompte)) {
+                <div class="">
+                  <div class="total">
+                    <div>Frais de traitement HT </div>
+                    <div>{{ this.fraisCcb | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
+                    &lt;!&ndash;  <input type="hidden" value="{{ panierPort.fraisBancaire }}" readonly /> &ndash;&gt;
+                  </div>
+                  <div class="total TVA">
+                    <div>TVA</div>
+                    <div> {{ panierPort.tva | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
+                  </div>
+                  <div class="total TTC">
+                    <div>Total TTC </div>
+                    <div>{{ panierPort.ttc + fraisCcb | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
+                  </div>
+                  @if (!( (needCotationTransport) && (panierForm.get('transporteur') == 'CHR' || panierForm.get('transporteur') == 'COL' || panierForm.get('transporteur') === 'SCH') )) {
+                    <div class="text_left">
+                      <button name="typval" value="CCB" type="submit" class="raised-button valider_panier"
+                        [disabled]="awaitingCommandResponse || lockCommande" (click)="submit(ccb)">
+                        Valider le réglement
+                      </button>
+                    </div>
+                  }
+                </div>
+              }
+              &lt;!&ndash; Fake btn il sert de placeholder  &ndash;&gt;
+              @if (!(this.panierForm.get('paiement')) && [page] !='devis') {
+                <div  >
+                  <div class="total TVA">
+                    <div>TVA </div>
+                    <div> {{ panierPort.tva | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
+                  </div>
+                  <div class="total TTC">
+                    <div>Total TTC</div>
+                    <div>{{ panierPort.ttc | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
+                  </div>
+                  @if (!( (needCotationTransport) && (panierForm.get('transporteur') == 'CHR' || panierForm.get('transporteur') == 'COL' || panierForm.get('transporteur') === 'SCH') )) {
+                    <div class="text_left">
+                      @if (!renewLicence && !cartHasCotation) {
+                        <button name="typval" value="VIR" type="submit" class="raised-button valider_panier"
+                          [disabled]="awaitingCommandResponse || lockCommande"
+                          (click)="submit('VIR')">
+                          Valider le réglement
+                        </button>
+                      }
+                    </div>
+                  }
+                </div>
+              }
+              &lt;!&ndash; Virement &ndash;&gt;
+              @if ((this.panierForm.get('paiement') === 'VIR' && !userHasEscompte)) {
+                <div class="">
+                  <div class="total TVA">
+                    <div>TVA </div>
+                    <div> {{ panierPort.tva | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
+                  </div>
+                  <div class="total TTC">
+                    <div>Total TTC</div>
+                    <div>{{ panierPort.ttc | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
+                  </div>
+                  @if (!( (needCotationTransport) && (panierForm.get('transporteur') == 'CHR' || panierForm.get('transporteur') == 'COL' || panierForm.get('transporteur') === 'SCH') )) {
+                    <div class="text_left">
+                      @if (!renewLicence && !cartHasCotation) {
+                        <button name="typval" value="VIR" type="submit" class="raised-button valider_panier"
+                          [disabled]="awaitingCommandResponse || lockCommande"
+                          (click)="submit(vir)">
+                          Valider le réglement
+                        </button>
+                      }
+                    </div>
+                  }
+                </div>
+              }
+              &lt;!&ndash; ENCOUR &ndash;&gt;
+              @if ((this.panierForm.get('paiement') === 'ENC')) {
+                <div class=" ">
+                  &lt;!&ndash; paiement_price totaux &ndash;&gt;
+                  <div class="total TVA">
+                    <div>TVA</div>
+                    <div> {{ panierPort.tva | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
+                  </div>
+                  <div class="total TTC ">
+                    <div>Total TTC </div>
+                    <div> {{ panierPort.ttc | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
+                  </div>
+                  @if (!( (needCotationTransport) && (panierForm.get('transporteur') == 'CHR' || panierForm.get('transporteur') == 'COL' || panierForm.get('transporteur') === 'SCH') )) {
+                    <div class="text_left">
+                      @if ((user.AutoCDE == 'O')) {
+                        <button name="typval" value="CDW" type="submit"
+                          class="raised-button valider_panier" [disabled]="awaitingCommandResponse || lockCommande  "
+                          (click)="submit(cdw)">
+                          Valider le réglement
+                        </button>
+                      }
+                    </div>
+                  }
+                </div>
+              }
+              @if (panierPort) {
+                <div>
+                </div>
+              }
+              &lt;!&ndash; Escompte CB &ndash;&gt;
+              @if ((userHasEscompte && (this.panierForm.get('paiement') === 'CCB' && this.panierForm.get('paiement') !== 'ENC'))) {
+                <hr class="price-hr" />
+                <div class="total">
+                  <div>Frais de traitement HT </div>
+                  <div>{{ this.fraisCcb | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
+                  &lt;!&ndash;  <input type="hidden" value="{{ panierPort.fraisBancaire }}" readonly /> &ndash;&gt;
+                </div>
+                <div class="total TVA">
+                  <div>TVA</div>
+                  <div>{{ (( (this.panierPort.totalEscompte - this.panierPort.tva)  + this.fraisCcb ) * this.panierPort.tauxTva) | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
+                </div>
+                <div class="total">
+                  <div>Montant règlement TTC</div>
+                  <div>{{ ( ((this.panierPort.totalEscompte - this.panierPort.tva) + this.fraisCcb) * this.panierPort.tauxTva) + ((this.panierPort.totalEscompte - this.panierPort.tva )+ this.fraisCcb) | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
+                </div>
+                @if (!( (needCotationTransport) && (panierForm.get('transporteur') == 'CHR' || panierForm.get('transporteur') == 'COL' || panierForm.get('transporteur') === 'SCH') )) {
+                  <div class="text_left"
+                    >
+                    <button name="typval" value="CCB" type="submit" class="raised-button valider_panier"
+                      [disabled]="awaitingCommandResponse || lockCommande" (click)="submit('CCB')">
+                      Valider le réglement
+                    </button>
+                  </div>
+                }
+              }
+              &lt;!&ndash; Escompte VIR &ndash;&gt;
+              &lt;!&ndash;  <ng-container *ngIf="  (this.panierForm.get('paiement') === 'VIR' && this.panierForm.get('paiement') !== 'ENC')">
+              <hr class="price-hr" />
+              <div class="total TVA">
+                <div>TVA</div>
+                <div> {{ panierPort.tvaEscompte | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
+              </div>
+              <div class="total">
+                <div>Montant règlement TTC</div>
+                <div>{{ this.panierPort.totalEscompte | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
+              </div>
+              <button name="typval" value="VIR" type="submit" class="raised-button valider_panier"
+                [disabled]="awaitingCommandResponse || lockCommande" *ngIf="!renewLicence && !cartHasCotation"
+                (click)="submit(vir)">
+                Valider le réglement zo
+              </button>
+            </ng-container> &ndash;&gt;
+            &lt;!&ndash; CB -
+            <div class="" *ngIf="(this.panierForm.get('paiement') === 'CCB')">
+              <div class="total">
+                <div>Frais de traitement HT </div>
+                <div>{{ fraisCcb | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
+                <input type="hidden" value="{{ panierPort.fraisBancaire }}" readonly /> -
+              </div>
+              <div class="total ">
+                <div>TVA</div>
+                <div> {{ panierPort.tva | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
+              </div>
+              <div class="total ">
+                <div>Total TTC </div>
+                <div>{{ panierPort.ttc + fraisCcb | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
+              </div>  <div>
+              <button name="typval" value="CCB" type="submit" class="raised-button valider_panier"
+                [disabled]="awaitingCommandResponse || lockCommande" (click)="submit(ccb)">
+                Valider le réglement
+              </button>
+            </div>
+          </div> &ndash;&gt;
+        </div>
+      </div>
+      @if (submitted) {
+        <div class="errors">
+          &lt;!&ndash; ENDUSER &ndash;&gt;
+          @if (showClientFinal() && !enduserForm.valid) {
+            <mat-error>
+              Le formulaire client final comporte des erreurs.
+            </mat-error>
+          }
+          &lt;!&ndash; PHP ERROR &ndash;&gt;
+          @if (requestError) {
+            <mat-error>
+              Echec de la requête d'envoi du formulaire
+            </mat-error>
+          }
+          &lt;!&ndash; NO REFERENCE &ndash;&gt;
+          @if (panierForm.get('ref').errors?.required) {
+            <mat-error>
+              <label for="ref">Vous n'avez pas saisi votre référence de commande</label>
+            </mat-error>
+          }
+          &lt;!&ndash; NO EMAIL &ndash;&gt;
+          @if (panierForm.get('email').errors?.required) {
+            <mat-error>
+              <label for="mail">Vous n'avez pas saisi d'adresse mail</label>
+            </mat-error>
+          }
+          &lt;!&ndash; INVALID MAIL &ndash;&gt;
+          @if (panierForm.get('email').errors?.email) {
+            <mat-error>
+              <label for="mail">L'adresse mail saisie n'est pas valide</label>
+            </mat-error>
+          }
+          &lt;!&ndash; TRANSPORTEUR &ndash;&gt;
+          @if (panierForm.get('transporteur').errors?.required) {
+            <mat-error>
+              Vous devez sélectionner un mode de livraison
+            </mat-error>
+          }
+          &lt;!&ndash; NO ADDRESS &ndash;&gt;
+          @if (panierForm.errors?.adresse) {
+            <mat-error>
+              Vous n'avez pas sélectionné d'adresse de livraison
+            </mat-error>
+          }
+          &lt;!&ndash; DATE WEEKEND &ndash;&gt;
+          @if (panierForm.errors?.weekend) {
+            <mat-error>
+              La date d'expédition souhaitée ne peut pas être un week end
+            </mat-error>
+          }
+          &lt;!&ndash; UNLAWFUL &ndash;&gt;
+          @if (panierForm.get('lawful').errors?.required) {
+            <mat-error>
+              Vous devez accepter les conditions générales de vente
+            </mat-error>
+          }
+        </div>
+      }
+  </form>
+</div>
+}
+-->

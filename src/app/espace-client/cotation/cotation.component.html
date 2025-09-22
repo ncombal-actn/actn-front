@@ -1,0 +1,520 @@
+<mat-card
+  appearance="outlined"
+  class="container-filtres raised-1"
+  style="margin-bottom: 1em"
+>
+  <mat-card-header
+    ><h2 (click)="clearAllFilters()" class="text-button">
+      Filtres <mat-icon>close</mat-icon>
+    </h2></mat-card-header
+  >
+  <mat-card-content>
+    <form [formGroup]="filterForm">
+      <div class="filtre-reliquat">
+        <mat-form-field class="filtre filtreBox">
+          <mat-label>Réf. Cotation</mat-label>
+          <input formControlName="refCotation" matInput />
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            *ngIf="filterForm.value.refCotation"
+            (click)="clearFilter('refCotation')"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field class="filtre filtreBox">
+          <mat-label>N° Cotations</mat-label>
+          <input formControlName="cotation" matInput />
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            *ngIf="filterForm.value.cotation"
+            (click)="clearFilter('cotation')"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field class="filtre filtreBox">
+          <mat-label>Marque</mat-label>
+          <input formControlName="marque" matInput />
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            *ngIf="
+              filterForm.value.marque && filterForm.value.marque.length > 0
+            "
+            (click)="clearFilter('marque')"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-form-field class="filtre filtreBox">
+          <mat-label>Produit</mat-label>
+          <input formControlName="prod" matInput />
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            *ngIf="filterForm.value.prod"
+            (click)="clearFilter('prod')"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <div class="filtre  toggle-cotations" >      
+          <mat-slide-toggle
+            class="marque-toggle"
+            [checked]="showDisabledCotation"
+            (change)="showDisabledCotation = $event.checked"
+          >
+          Affichez les cotations obsolètes
+          </mat-slide-toggle>  
+      </div>
+      </div>
+ 
+
+      <div class="marque-filtres" *ngIf="marqueArray">
+        <div
+          class="marque-options"
+          [ngClass]="{
+            selected: filterForm.get('marque')?.value.includes(option)
+          }"
+          *ngFor="let option of marqueArray; let j = index"
+          (click)="filtreMarqueToggle(option)"
+          (tap)="filtreMarqueToggle(option)"
+        >
+          <img loading="lazy"
+            class="marque-img"
+            [src]="environment.logoMarquesCouleurs200x80 + option + '.gif'"
+            [alt]="option"
+          />
+        </div>
+      </div>
+
+      
+
+    </form>
+  </mat-card-content>
+</mat-card>
+<button mat-raised-button class="export" (click)="exportToExcel()">Exporter en xls</button>
+
+<span class="labels display-grid heavy-font">
+  <label>Référence</label>
+  <label>N° Cotation</label>
+  <label>Nbr. de commandes restantes</label>
+  <!-- <label class="grow">Marque</label> -->
+  <label>Date de début</label>
+  <label>Date de fin</label>
+  <label>Exporter</label>
+</span>
+<div class="separator"></div>
+
+<div
+  *ngIf="(filteredCotationMap | async ).size == 0"
+  class="no-result"
+  style="color: red; font-size: 1.2rem"
+>
+  Vous n'avez pas de cotation(s) active(s)<br /><br />
+</div>
+
+<div
+  *ngFor="let cotation of (filteredCotationMap | async) | keyvalue; let i = index"
+  class="bloc-cotation raised-1"
+>
+<div class="entete">
+      @if (!display[i]) {
+      <i (click)="unrollDetails(i);" class="unroll-button icon-plus raised-button"></i>
+      }
+      @if (display[i]) {
+      <i (click)="unrollDetails(i);" class="unroll-button icon-minus raised-button"></i>
+      }
+
+  <!-- ENTETE COTATION -->
+  <div class="header display-grid">
+    <!-- REFERENCE COTATION -->
+    <div>{{ cotation.value[0].cotation.refcot }}</div>
+    <!-- NUMERO COTATION -->
+    <div>
+      {{ cotation.value[0].cotation.numfrs }} -
+      {{ cotation.value[0].cotation.numcotation }}
+    </div>
+    <!-- NBR DE COMMANDES -->
+    <div>
+      {{
+        cotation.value[0].cotation.nbrcdemax - cotation.value[0].cotation.nbrcde
+      }}
+      / {{ cotation.value[0].cotation.nbrcdemax }}
+    </div>
+    <!-- DATE DEBUT -->
+    <div>{{ cotation.value[0].cotation.datedeb | date : "shortDate" }}</div>
+    <!-- DATE FIN -->
+    <div>{{ cotation.value[0].cotation.datefin | date : "shortDate" }}</div>
+    <button mat-button (click)="exportToExcel(cotation);" class="bleu-actn">
+          Exporter en xls
+          <mat-icon class="bleu-actn">file_copy</mat-icon>
+        </button>
+  </div>
+
+  <!-- ETAT COTATION -->
+  <div class="end-annotations">
+    <div class="end-annotation-warning">
+      Votre cotation arrive à expiration dans
+      {{ this.dateMap.get(cotation.value[0].cotation.numcotation) }}
+      jour<ng-container
+        *ngIf="this.dateMap.get(cotation.value[0].cotation.numcotation) > 1"
+        >s</ng-container
+      >
+    </div>
+  </div>
+ @if (display[i]) {
+  <!-- PRODUITS DE LA COTATION -->
+  <div class="cotationDetails">
+    <!-- <hr> -->
+    <div *ngFor="let cotationProduit of cotation.value">
+      <!-- COTATION PRODUIT -->
+      <div *ngIf="!cotationProduit.cotation.status" class="produit">
+        <!-- COTATION INFO PRODUIT -->
+        <div class="center1">
+          <a
+            (click)="
+              produitService.goToProduitById(cotationProduit.produit.reference)
+            "
+            (tap)="
+              produitService.goToProduitById(cotationProduit.produit.reference)
+            "
+          >
+            <div class="flex">
+              <p>
+                <strong>{{ cotationProduit.produit.reference }}</strong>
+              </p>
+              <img 
+              loading="lazy"
+                class="image-produit"
+                [src]="
+                  environment.logoMarquesUrl +
+                  '70x30center/' +
+                  cotationProduit.produit.marque +
+                  '.gif'
+                "
+                [default]="produitService.errorImg(cotationProduit.produit)"
+                [alt]="cotationProduit.produit.marque"
+              />
+            </div>
+            <p>{{ cotationProduit.produit.designation }}</p>
+          </a>
+        </div>
+        <!-- COTATION PRIX PRODUIT -->
+        <div class="prix-détails">
+          <div class="votre-prix">
+            <div>prix cotation</div>
+            <div
+              *ngIf="cotationProduit.cotation.prixvente !== 0; else NC2"
+              class="montant"
+            >
+              <div>
+                {{
+                  cotationProduit.cotation.prixvente
+                    | currency : "EUR" : "symbol" : "1.2-2" : "fr"
+                }}<span class="size-smaller">HT</span>
+              </div>
+            </div>
+            <ng-template #NC2>
+              <div class="montant">NC</div>
+            </ng-template>
+          </div>
+          <div class="votre-prix">
+            <div>prix standard</div>
+            <div>
+              {{
+                cotationProduit.cotation.prixstd
+                  | currency : "EUR" : "symbol" : "1.2-2" : "fr"
+              }}<span class="size-smaller">HT</span>
+            </div>
+          </div>
+          <div class="votre-prix">
+            <div>quantité déjà commandée</div>
+            <div>
+              <!-- produit.qtemax -  -->{{ cotationProduit.cotation.qtecde }} /
+              {{ cotationProduit.cotation.qtecdemax }}
+            </div>
+          </div>
+          <div class="votre-prix">
+            <div>quantité mini par commande</div>
+            <div>
+              {{ cotationProduit.cotation.qtecdemini }}
+            </div>
+          </div>
+        </div>
+        <!-- COTATION DISPONIBILITE PRODUIT -->
+        <div class="dispo">
+          <div
+            [ngClass]="{
+              active: cotationProduit.cotation.qtestock > 0,
+              available: cotationProduit.cotation.qtestock > 0
+            }"
+          >
+            <div class="state">Disponible</div>
+            <div class="state-value">
+              {{ cotationProduit.cotation.qtestock | number : "1.0-0" }}
+            </div>
+          </div>
+          <div [ngClass]="{ active: cotationProduit.cotation.qtestockext > 0 }">
+            <div class="state">Stock externe</div>
+            <div class="state-value">
+              {{ cotationProduit.cotation.qtestockext | number : "1.0-0" }}
+            </div>
+          </div>
+          <div [ngClass]="{ active: cotationProduit.cotation.qtereappro > 0 }">
+            <div class="state">
+              En réappro
+              <ng-container *ngIf="cotationProduit.cotation.qtereappro > 0">
+                <br />
+                <p
+                  *ngIf="cotationProduit.cotation.dateconfcde != ''; else NC"
+                  class="size-small"
+                >
+                  {{
+                    cotationProduit.cotation.dateconfcdestatus
+                      | date : "shortDate"
+                  }}:
+                </p>
+                <ng-template #NC> Date non communiquée: </ng-template>
+              </ng-container>
+            </div>
+            <div class="state-value">
+              {{ cotationProduit.cotation.qtereappro | number : "1.0-0" }}
+              <ng-container *ngIf="cotationProduit.cotation.qtereappro > 0">
+                <br />
+                <ng-container
+                  *ngIf="cotationProduit.cotation.dateconfcde != ''; else NC"
+                >
+                  <p class="size-small">
+                    {{
+                      cotationProduit.cotation.dateconfcde | date : "shortDate"
+                    }}
+                  </p>
+                </ng-container>
+                <ng-template #NC> N.C. </ng-template>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <!-- ADD COTATION PRODUIT TO CART -->
+        <app-add-to-cart-form
+          class="add-to-cart"
+          [produit]="cotationProduit.produit"
+          [isDisabled]="cotationProduit.cotation.prixvente === 0"
+          direction="column"
+          [cotation]="cotationProduit.cotation"
+        ></app-add-to-cart-form>
+      </div>
+    </div>
+  </div>
+}
+</div>
+</div>
+@if(showDisabledCotation){
+<div
+  *ngFor="let cotation of (filteredDisabledCotationMap | async) | keyvalue; let i = index"
+  class="bloc-cotation raised-1"
+>
+  <!-- ENTETE COTATION -->
+  <div class="header display-grid">
+      @if (!disabledDisplay[i]) {
+      <i (click)="unrollDisabledDetails(i);" class="unroll-button icon-plus raised-button"></i>
+      }
+      @if (disabledDisplay[i]) {
+      <i (click)="unrollDisabledDetails(i);" class="unroll-button icon-minus raised-button"></i>
+      }
+
+    <!-- REFERENCE COTATION -->
+    <div>{{ cotation.value[0].cotation.refcot }}</div>
+    <!-- NUMERO COTATION -->
+    <div>{{ cotation.value[0].cotation.numcotation }}</div>
+    <!-- NBR DE COMMANDES -->
+    <div>
+      {{
+        cotation.value[0].cotation.nbrcdemax - cotation.value[0].cotation.nbrcde
+      }}
+      / {{ cotation.value[0].cotation.nbrcdemax }}
+    </div>
+    <!-- DATE DEBUT -->
+    <div>{{ cotation.value[0].cotation.datedeb | date : "shortDate" }}</div>
+    <!-- DATE FIN -->
+    <div>{{ cotation.value[0].cotation.datefin | date : "shortDate" }}</div>
+    <!-- Export-->
+     <button mat-button (click)="exportToExcel(cotation);" class="bleu-actn">
+          Exporter en xls
+          <mat-icon class="bleu-actn">file_copy</mat-icon>
+    </button>
+
+  </div>
+
+   @if (disabledDisplay[i]) {
+  <!-- PRODUITS DE LA COTATION -->
+  <div class="cotationDetails">
+    <!-- <hr> -->
+    <div *ngFor="let cotationProduit of cotation.value">
+      <!-- DISABLED COTATION PRODUIT -->
+      <div class="produit deactivated">
+        <!-- COTATION DESACTIVE INFOS PRODUIT -->
+        <div class="center1 halfOpacity">
+          <a
+            (click)="
+              produitService.goToProduitById(cotationProduit.produit.reference)
+            "
+            (tap)="
+              produitService.goToProduitById(cotationProduit.produit.reference)
+            "
+          >
+            <div class="flex">
+              <p>
+                <strong>{{ cotationProduit.produit.reference }}</strong>
+              </p>
+              <img
+              loading="lazy"
+                class="image-produit"
+                [src]="
+                  environment.logoMarquesUrl +
+                  '70x30center/' +
+                  cotationProduit.produit.marque +
+                  '.gif'
+                "
+                [default]="produitService.errorImg(cotationProduit.produit)"
+                [alt]="cotationProduit.produit.marque"
+              />
+            </div>
+            <p>{{ cotationProduit.produit.designation }}</p>
+          </a>
+        </div>
+        <!-- COTATION DESACTIVE PRIX PRODUIT -->
+        <div class="prix-détails halfOpacity">
+          <div class="votre-prix">
+            <div>prix cotation</div>
+            <div
+              *ngIf="cotationProduit.cotation.prixvente !== 0; else NC2"
+              class="montant"
+            >
+              <div>
+                {{
+                  cotationProduit.cotation.prixvente
+                    | currency : "EUR" : "symbol" : "1.2-2" : "fr"
+                }}<span class="size-smaller">HT</span>
+              </div>
+            </div>
+            <ng-template #NC2>
+              <div class="montant">NC</div>
+            </ng-template>
+          </div>
+          <div class="votre-prix">
+            <div>prix standard</div>
+            <div>
+              {{
+                cotationProduit.cotation.prixstd
+                  | currency : "EUR" : "symbol" : "1.2-2" : "fr"
+              }}<span class="size-smaller">HT</span>
+            </div>
+          </div>
+          <div class="votre-prix">
+            <div>quantité déjà commandée</div>
+            <div>
+              {{ cotationProduit.cotation.qtecde }} /
+              {{ cotationProduit.cotation.qtecdemax }}
+            </div>
+          </div>
+        </div>
+        <!-- COTATION DESACTIVE DISPONIBILITE PRODUIT -->
+        <div class="dispo halfOpacity">
+          <div
+            [ngClass]="{
+              active: cotationProduit.cotation.qtestock > 0,
+              available: cotationProduit.cotation.qtestock > 0
+            }"
+          >
+            <div class="state">Disponible</div>
+            <div class="state-value">
+              {{ cotationProduit.cotation.qtestock | number : "1.0-0" }}
+            </div>
+          </div>
+          <div [ngClass]="{ active: cotationProduit.cotation.qtestockext > 0 }">
+            <div class="state">Stock externe</div>
+            <div class="state-value">
+              {{ cotationProduit.cotation.qtestockext | number : "1.0-0" }}
+            </div>
+          </div>
+          <div [ngClass]="{ active: cotationProduit.cotation.qtereappro > 0 }">
+            <div class="state">
+              En réappro
+              <ng-container *ngIf="cotationProduit.cotation.qtereappro > 0">
+                <br />
+                <p
+                  *ngIf="cotationProduit.cotation.dateconfcde != ''; else NC"
+                  class="size-small"
+                >
+                  {{
+                    cotationProduit.cotation.dateconfcdestatus
+                      | date : "shortDate"
+                  }}:
+                </p>
+                <ng-template #NC> Date non communiquée: </ng-template>
+              </ng-container>
+            </div>
+            <div class="state-value">
+              {{ cotationProduit.cotation.qtereappro | number : "1.0-0" }}
+              <ng-container *ngIf="cotationProduit.cotation.qtereappro > 0">
+                <br />
+                <ng-container
+                  *ngIf="cotationProduit.cotation.dateconfcde != ''; else NC"
+                >
+                  <p class="size-small">
+                    {{
+                      cotationProduit.cotation.dateconfcde | date : "shortDate"
+                    }}
+                  </p>
+                </ng-container>
+                <ng-template #NC> N.C. </ng-template>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <!-- COTATION OBSOLETE MSG -->
+        <div class="obsoleteCotation">
+          <p>
+            Cotation obsolète<app-tooltip
+              [text]="cotationProduit.cotation.invalidReason"
+            ></app-tooltip>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="end-annotations">
+    <button
+      class="raised-button end-annotation-renew"
+      (click)="
+        askForRenewal(
+          cotation.value[0].cotation.numcotation,
+          i,
+          cotation.value[0].cotation.numfrs,
+          cotation.value[0].cotation.refcot
+        )
+      "
+      [disabled]="disabledRenewalButtons.includes(i)"
+    >
+      <ng-container>Demander un renouvellement</ng-container>
+      <!-- *ngIf="!disabledRenewalButtons.includes(i); else disabledRenewCotation" -->
+      <ng-template>Demande envoyée</ng-template>
+      <!-- #disabledRenewCotation -->
+    </button>
+  </div>
+}
+</div>
+
+}

@@ -1,0 +1,49 @@
+<form [formGroup]="loginForm" (ngSubmit)="logIn()">
+  <section>
+    <h2 class="section__header">Se connecter</h2>
+    @if (errorMessage) {
+      <mat-error>
+        Votre session est arrivée à expiration ou vous avez été déconnecté.<br />
+        Si vous rencontrez cette erreur plusieurs fois, essayez de <ng-template [ngTemplateOutlet]="reloadLink"></ng-template>
+        la page web de votre navigateur (en cliquant sur <ng-template [ngTemplateOutlet]="reloadLink"></ng-template> ou en appuyant sur les touches CTRL + F5).
+      </mat-error>
+    }
+    <mat-form-field>
+      <input type="text"  formControlName="login" matInput placeholder="Login"
+        (focusin)="inputFocused()"
+        (focusout)="inputUnFocused()"/>
+        @if (loginForm.get('login').errors?.required) {
+          <mat-error>Champ obligatoire</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <app-password-show-input class="togglePassword" formControlName="password" [label]="'Mot de passe'"></app-password-show-input>
+        @if (loginForm.get('password').errors?.required) {
+          <mat-error>Champ obligatoire</mat-error>
+        }
+      </mat-form-field>
+
+      @if (connectionFailure == true) {
+        <div class="connectionFailure"><span>Échec de la connexion, l'identifiant et/ou le mot de passe ne correspondent pas.</span></div>
+      }
+      <button id="blue-button" class="raised-button login-button" type="submit" [disabled]="!loginForm.valid">Se connecter</button>
+      <!-- MDP OUBLIE -->
+      <br><a [routerLink]="['/mot-de-passe/oublie']" class="mdp" (click)="close()">Mot de passe oublié ?</a>
+    </section>
+
+    <section>
+      <h2 class="section__header">Vous n'êtes pas encore client ?</h2>
+      <a
+        class="raised-button"
+        type="button"
+        (click)="close()" (tap)="close()"
+        [routerLink]="['/ouverture-de-compte']"
+        routerLinkActive="active"
+      >Ouvrir un compte</a>
+    </section>
+  </form>
+
+  <ng-template #reloadLink>
+    <span class="text-link" (click)="document.location.reload(true)" (tap)="document.location.reload(true)">rafraichir</span>
+  </ng-template>

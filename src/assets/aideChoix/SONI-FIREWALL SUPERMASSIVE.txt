@@ -1,0 +1,1 @@
+La série SuperMassive de SonicWall est la plate-forme de pare-feu de nouvelle génération (NGFW) de SonicWall conçue pour les grands réseaux afin d'assurer l'évolutivité, la fiabilité et la sécurité approfondie à des vitesses de plusieurs gigabits avec une latence quasi nulle.

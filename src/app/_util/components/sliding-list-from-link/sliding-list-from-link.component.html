@@ -1,0 +1,4 @@
+<ng-container *ngIf="filteredProduits">
+	<app-title-w-line *ngIf="title" [title]="title"></app-title-w-line>
+	<app-sliding-liste [random]="random" [nbProduits]="filteredProduits.length" [produits]="filteredProduits" [type]="type" [simplePreviewProduct]="false"></app-sliding-liste>
+<ng-container>

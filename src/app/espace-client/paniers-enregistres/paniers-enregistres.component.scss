@@ -1,0 +1,168 @@
+@import "../contrats/contrats.component";
+
+/* SAVED PANIER LIST */
+.saved-paniers-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+.saved-paniers {
+  position: relative;
+  font-size: 1rem;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 3px 1px rgba(0, 0, 0, 0.2);
+  margin: 1%;
+
+  width: 23%;
+  height: 240px;
+  @media screen and (max-width: 1705px) {
+    width: 48%;
+  }
+  @media screen and (max-width: 1105px) {
+    width: 98%;
+  }
+
+  mat-form-field {
+    font-size: 1rem;
+
+    ::ng-deep .mat-form-field-wrapper {
+     margin-bottom: -1.25rem;
+      // padding: 0;
+    }
+  }
+}
+.cart-title {
+  margin-bottom: 5px;
+}
+.panier-inline-button {
+  text-align: right;
+  display: inline-block;
+
+  color: var(--color-primary-contrast);
+  padding: 5px 5px;
+  margin-left: 8px;
+
+  font-family: "actn-icons", serif !important;
+  cursor: pointer;
+}
+.edit-button {
+  font-size: 1rem;
+}
+.confirm-edit-button mat-icon {
+  font-size: 1rem;
+  height: auto;
+  width: auto;
+}
+.errorLine {
+  color: red;
+  font-size: 0.8rem;
+}
+.panier-designations {
+  height: 100px;
+  overflow:auto;
+}
+.panier-designations-reduced {
+  height: 75px;
+}
+.panier-designation {
+  font-size: 0.9rem;
+}
+/* .app-input-number {
+  display: inline-block;
+  width: 100px;
+
+  zoom: 50%;
+  transform: scale(0.5);
+  transform-origin: 0 0;
+} */
+.sauv-panier-buttons {
+  position: absolute;
+  bottom: 15px;
+
+  display: flex;
+  flex-direction: row-reverse;
+  width: calc(100% - 30px);
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.sauv-panier-buttons button {
+  cursor: pointer;
+  display: inline-block;
+  margin: 0px 5px;
+  padding: 12px 15px;
+
+  height: 45px;
+}
+.delete-icon {
+  width: 54px;
+  cursor: pointer;
+}
+.sauv-panier-buttons button mat-icon {
+  font-size: 1.5rem;
+
+  //font-size: 18px;
+}
+.sauv-panier-buttons + button{
+  // font-size: 1.2rem;
+
+  font-size: 1.1rem;
+}
+
+/* CONFIRMATION POP UP */
+.confirmation-pop-up {
+  position: relative;
+  top: 0px;
+  right: 0px;
+  display: flex;
+  align-items: center;
+  padding: 15px 10px 15px 30px;
+  border-radius: 8px;
+  background: white;
+  z-index: 10;
+
+  .message {
+    margin-right: 15px;
+  }
+
+  &:not(.show) {
+    display: none;
+  }
+
+  /* .show {
+    display: flex;
+  } */
+}
+
+/* .expandable {
+  position: relative;
+  overflow: hidden;
+  max-height: 20px;
+  transition: max-height .3s ease-in-out;
+
+  span {
+    position: relative;
+    z-index: 1;
+  }
+
+  > .expandable_content {
+  }
+
+  &.open {
+    max-height: 100vh;
+    > .expandable_content {
+      top: 0;
+    }
+  }
+
+}
+
+.accordion-price-prefix {
+  .mat-expansion-panel-header-title {
+    flex-basis: 100%;
+  }
+.mat-expansion-panel-header-description {
+   flex-basis: 120px;
+   flex-shrink: 0;
+  }
+}
+ */

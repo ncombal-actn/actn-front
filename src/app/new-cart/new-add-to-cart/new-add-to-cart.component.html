@@ -1,0 +1,2 @@
+<app-input-number [number]="quantity" (value)="quantityChange($event)"></app-input-number>
+<button mat-raised-button (click)="addToCart()" class="button-add-to-cart" [matBadge]="getQtePerItem()" [matBadgeColor]="'warn'"><mat-icon>shopping_cart</mat-icon> Ajouter au panier</button>

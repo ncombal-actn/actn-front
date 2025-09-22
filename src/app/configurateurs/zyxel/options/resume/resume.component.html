@@ -1,0 +1,109 @@
+<div class="rollerband raised-3" #recap (mouseenter)="onMouseEnterRecap()" (mouseleave)="onMouseLeaveRecap()">
+  <div class="header">
+    <h3 class="t-left">Récapitulatif</h3>
+    <fa-icon class="handle" [icon]="faChevronUp" (click)="onClickRecap($event)" (tap)="onClickRecap($event)" [ngClass]="{'handle--open': recapOpen}"></fa-icon>
+    <div class="t-right right">
+      <h3>Votre prix</h3>
+      @if (user) {
+        <h3>{{ configService.configuration.prix | currency: 'EUR':'symbol':'1.2-2':'fr' }}</h3>
+      } @else {
+        <conf-chips-list>
+          <div class="chips chips--selected hover-bigger"
+            (click)="componentsInteractionService.sideNavigationLine.fireOpenSideNav('toggleEspaceClient')"
+            (tap)="componentsInteractionService.sideNavigationLine.fireOpenSideNav('toggleEspaceClient')">
+            Je me connecte
+          </div>
+        </conf-chips-list>
+      }
+    </div>
+  </div>
+  <hr>
+    <div #details class="details">
+      @for (group of (configService.configuration.configuration| keyvalue); track group.key; let isLast = $last) {
+        @if (configService.configuration.getNbCategoryChoices(group.key) > 0) {
+          <h4 class="size-big col-red-4">{{ group.key }}</h4>
+          @for (choice of group.value | keyvalue; track choice.value) {
+            @switch (typeDeProduit(group.key, choice.value[0])) {
+              @case ('one') {
+                @for (v of choice.value; track $index) {
+                  @if (v.option && v.quantite > 0) {
+                    <div class="produit">
+                      <div>
+                        <p class="weight-bold">{{ choice.key }}</p>
+                        <div class="description">
+                          <span class="col-red-4">{{ v.option[v.option['Cible'].value].value || v.option['Durée'].value}} {{ v.option['Unité'].value }}</span> - {{ configService.getTexte(v.option['Gamme'].value, choice.key) ?? ''}}
+                        </div>
+                      </div>
+                      <p class="col-red-4 end nowrap">{{ v.option.prix.value | currency: 'EUR':'symbol':'1.2-2':'fr' }}</p>
+                      <div class="end">
+                        <fa-icon class="col-red-4 clickable" [icon]="faTimes" (click)="onClickDelete(group.key, choice.key)" (tap)="onClickDelete(group.key, choice.key)"></fa-icon>
+                      </div>
+                    </div>
+                  }
+                }
+              }
+              @case ('services') {
+                @for (v of choice.value; track v.option) {
+                  @if (v.option && v.quantite > 0) {
+                    <div class="produit">
+                      <div>
+                        <p class="weight-bold">{{ v.option.produit.value }}</p>
+                        <div class="description">
+                          {{ v.option.description.value }}
+                        </div>
+                      </div>
+                      <p class="col-red-4 end nowrap">{{ v.option.prix.value | currency: 'EUR':'symbol':'1.2-2':'fr' }}</p>
+                      <div class="end">
+                        <fa-icon class="col-red-4 clickable" [icon]="faTimes" (click)="onClickDelete(group.key, choice.key, v.option)" (tap)="onClickDelete(group.key, choice.key, v.option)"></fa-icon>
+                      </div>
+                    </div>
+                  }
+                }
+              }
+              @case ('input') {
+                @if (choice.value[0]; as v) {
+                  @if (configService.configuration.nbOfOptionGrouped(group.key, choice.key) > 0) {
+                    <div class="produit">
+                      <div>
+                        <p class="weight-bold">{{ choice.key }}</p>
+                        <div class="description">
+                          <span class="col-red-4">{{ configService.configuration.nbOfOptionGrouped(group.key, choice.key) }} {{ v.option['Unité'].value }}</span> - {{ configService.getTexte(v.option['Gamme'].value, choice.key) ?? ''}}
+                        </div>
+                      </div>
+                      <p class="col-red-4 end nowrap">{{ configService.configuration.priceOfOptionGrouped(group.key, choice.key) | currency: 'EUR':'symbol':'1.2-2':'fr' }}</p>
+                      <div class="end">
+                        <fa-icon class="col-red-4 clickable" [icon]="faTimes" (click)="onClickDelete(group.key, choice.key)" (tap)="onClickDelete(group.key, choice.key)"></fa-icon>
+                      </div>
+                    </div>
+                  }
+                }
+              }
+              @case ('equipement') {
+                @for (v of choice.value; track v.option) {
+                  @if (v.option && v.quantite > 0) {
+                    <div class="produit">
+                      <div>
+                        <p class="weight-bold">{{ choice.key }}</p>
+                        <div class="description">
+                          {{ v.option['produit'].value }} - {{ getProduitDetails(v.option['produit'].value).designation }}
+                        </div>
+                      </div>
+                      <p class="col-red-4 end nowrap">{{ v.option.prix.value | currency: 'EUR':'symbol':'1.2-2':'fr' }}@if (v.quantite > 1) {
+                        x {{ v.quantite }}
+                      }</p>
+                      <div class="end">
+                        <fa-icon class="col-red-4 clickable" [icon]="faTimes" (click)="onClickDelete(group.key, choice.key)" (tap)="onClickDelete(group.key, choice.key)"></fa-icon>
+                      </div>
+                    </div>
+                  }
+                }
+              }
+            }
+          }
+        } @else {
+          <h4 class="size-big col-red-4">{{ group.key }}</h4>
+          <p class="margin">Aucun produit sélectionné</p>
+        }
+      }
+    </div>
+  </div>

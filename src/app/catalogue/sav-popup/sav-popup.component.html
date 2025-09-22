@@ -1,0 +1,16 @@
+<img class="marqueimg" [default]="environment.logoMarquesCouleurs200x80 + 'ACTN.gif'" loading="lazy"
+[src]="environment.logoMarquesCouleurs200x80 + data.data[0].marque + '.gif'" [alt]="data.data[0].marque" />
+<h1 mat-dialog-title>Procedure SAV pour la marque: {{ data.data[0].marque }}</h1>
+<div mat-dialog-content>
+    <ul>
+        @for (item of data.data; track $index) {
+            @if(item.description !== ""){
+                <li [ngClass]="{'bold-text': item.contains_colon}">{{item.description}}</li>
+            }
+        }
+    </ul>
+  
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onClose()">Fermer</button>
+</div>

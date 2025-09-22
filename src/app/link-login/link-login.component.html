@@ -1,0 +1,18 @@
+
+@if (loading) {
+  <h3>CONNECTION EN COURS...</h3>
+}
+<!-- SUCCESS -->
+@if (!!success) {
+  <h3>
+    {{ success }}
+  </h3>
+}
+
+<!-- ERROR -->
+@if (!!error) {
+  <h3 style="color: red;">
+    {{ error }}
+  </h3>
+  <button id="" class="raised-button" type="button" routerLink="/accueil">Retour à l'accueil</button>
+}

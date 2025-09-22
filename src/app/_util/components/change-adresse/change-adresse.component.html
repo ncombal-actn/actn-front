@@ -1,0 +1,32 @@
+@if (listAdresse) {
+  <div [ngClass]="bool ? 'popUpActive' : 'popUpInactive'">
+    <h3>Quel adresse de retour choisissez vous ?</h3>
+    <mat-radio-group class="adresses" aria-label="Adresse" [(ngModel)]="selectedAdress">
+      @for (adresse of listAdresse; track adresse.nom; let i = $index) {
+        <div class="adresse box">
+          <mat-radio-button
+            [value]="adresse"
+            class="radio-button">
+            <span><strong>{{ adresse.nom }}</strong></span>
+            <br>
+              <span>{{ adresse.adresse1 }}&nbsp;&nbsp;</span><br>
+              @if (adresse.adresse2) {
+                <span>{{ adresse.adresse2 }}&nbsp;&nbsp;<br></span>
+              }
+              <span>{{ adresse.codepostal }}&nbsp;&nbsp;</span>
+              <span>{{ adresse.ville }}</span>
+              <br>
+                <span>{{ adresse.phone }}&nbsp;&nbsp;</span>
+                <br>
+                  <span>{{ (adresse.paysiso ? adresse.paysiso : "FR") }}&nbsp;&nbsp;</span>
+                  <span>{{ (adresse.pays ? adresse.pays : "France") }}</span>
+                </mat-radio-button>
+              </div>
+            }
+          </mat-radio-group>
+          <div class="flex">
+            <button (click)="emitAdresse()" type="button" class="raised-button addBtn" [disabled]="!selectedAdress">Sélectionner cette adresse de retour</button>
+          </div>
+        </div>
+      }
+      <div class="dark-overlay" [ngClass]="{ show: bool }" (click)="close()"></div>

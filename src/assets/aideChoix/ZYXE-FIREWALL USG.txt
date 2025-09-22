@@ -1,0 +1,1 @@
+Les firewall Zyxel USG (Universal Security Gateway) disposent de toutes les fonctionnalités des firewalls VPN, plus la capacité de détecter et de bloquer les malwares tels que les virus.

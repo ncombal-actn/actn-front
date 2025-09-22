@@ -1,0 +1,11 @@
+<div class="popup" [ngClass]="{active: showPopup}">
+    <div class="popup-background" (click)='hide()' (tap)='hide()'></div>
+    <div class="popup-window raised-3">
+        <div>
+            <p>Ce fichier PDF n'est pas disponible.</p>
+            <div class="buttons">
+                <button class="raised-button button--color-secondary" (click)='hide()' (tap)='hide()'>Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>

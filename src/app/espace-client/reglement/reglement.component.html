@@ -1,0 +1,65 @@
+<div class="reglement-libre">
+  <form
+    [formGroup]="reglementForm"
+    method="POST"
+    (ngSubmit)="onSubmit()"
+    class="reglement-form"
+    >
+    <!-- [action]="environment.apiUrl + '/ModeCB/form_payment.php'" -->
+    <!-- <input type="hidden" name="vads_order_id" value="REGLEMENT_LIBRE" readonly/>
+    <input type="hidden" name="vads_cust_id" [value]="this.authService.currentUser.id" readonly/>
+    <input type="hidden" name="vads_cust_name" [value]="this.authService.currentUser.name" readonly/>
+    <input type="hidden" name="vads_cust_address" value="adresse" readonly/>
+    <input type="hidden" name="vads_cust_zip" value="31000" readonly/>
+    <input type="hidden" name="vads_cust_city" value="ville" readonly/>
+    <input type="hidden" name="vads_cust_country" value="FR" readonly/>
+    <input type="hidden" name="vads_cust_phone" value="060606060" readonly/>
+    <input type="hidden" name="vads_cust_email" value="jjeunehomme@actn.fr" readonly/> -->
+
+    <!-- <input type="hidden" name="vads_amount" [value]="100" readonly/> --> <!-- amount  -->
+
+    <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+
+    <!-- REFERENCE -->
+    <mat-form-field appearance="outline">
+      <input type="text" matInput placeholder="N° de commande, devis, ou facture" formControlName="reference">
+      @if (reglementForm.get('reference').hasError('required')) {
+        <mat-error>
+          Veuillez renseigner une reference
+        </mat-error>
+      }
+      @if (reglementForm.get('reference').hasError('pattern')) {
+        <mat-error>
+          Caractères autorisés : majuscules, minuscules, chiffres
+        </mat-error>
+      }
+    </mat-form-field>
+
+    <!-- EMAIL -->
+    <mat-form-field appearance="outline">
+      <input type="email" matInput placeholder="Email" formControlName="email"
+        [errorStateMatcher]="matcher">
+        @if (reglementForm.get('email').hasError('required') || reglementForm.get('email').hasError('pattern')) {
+          <mat-error>
+            Veuillez renseigner une adresse email valide
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <!-- MONTANT -->
+      <mat-form-field appearance="outline">
+        <input type="text" matInput placeholder="Montant" formControlName="amount">
+        <span matSuffix>€</span>
+        @if (reglementForm.get('amount').hasError('required') || reglementForm.get('amount').hasError('pattern')) {
+          <mat-error>
+            Veuillez renseigner un montant valide<br>
+            (chiffres, point et virgule uniquement, 2 décimales maximum)
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <!-- SUBMIT -->
+      <button mat-button class="raised-button valid" type="submit">Valider</button>
+
+    </form>
+  </div>

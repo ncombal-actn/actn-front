@@ -1,0 +1,217 @@
+<div class="container">
+  <div class="header raised-1">
+    <conf-header-stepper [step]="4"></conf-header-stepper>
+  </div>
+
+  @if (isReady) {
+    <div class="content">
+      <div class="gamme">
+        <div class="image">
+          <img loading="lazy" [src]="environment.photosUrl + modele.photo + '.webp'" [alt]="modele.photo" />
+          <p class="spec" (click)="showSpecPopup = true">
+            Voir les spécifications techniques
+            @if (svg.getIcon('001-mechanism', environment.configurateurZyxel + 'icones/SVG/') | async; as iconeMecanisme) {
+              <svg [innerHTML]="iconeMecanisme" width="128" height="128"></svg>
+            }
+          </p>
+        </div>
+        <div class="description">
+          <h2>{{ modele.produit }}</h2>
+          <p>
+            {{ modele.description }}
+          </p>
+          <div class="section-2">
+            <div>
+              <span class="weight-bold">Fonctions principales :</span>
+              <p class="fonction">{{ stringFromDetails(modele.details) }}</p>
+              <p class="liens">
+                @for (pdf of modele.pdfs; track pdf.url) {
+                  <a [href]="environment.produitPdfUrl + pdf['url'] + '.pdf'" target="_blank" rel="noreferrer noopener">
+                    <fa-icon [icon]="faFilePdf"></fa-icon>
+                    {{ pdf['label'] }}
+                  </a>
+                }
+                <a>
+                  <fa-icon [icon]="faPlayCircle"></fa-icon>
+                  Vidéo
+                </a>
+              </p>
+            </div>
+            <conf-bloc-prix></conf-bloc-prix>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="content-padding options">
+      <div class="titre">
+        <h1>Récapitulatif de votre configuration</h1>
+        <conf-chips-list>
+          <div class="chips chips--whited hover-bigger"
+            (click)="exportComponent.show()" (tap)="exportComponent.show()">
+            Exporter
+          </div>
+          <div class="chips chips--whited hover-bigger"
+            (click)="showLoadPopup = true" (tap)="showLoadPopup = true">
+            Charger
+          </div>
+          <div class="chips chips--whited hover-bigger"
+            (click)="showSavePopup = true" (tap)="showSavePopup = true">
+            Sauvegarder
+          </div>
+          <div class="chips chips--selected hover-bigger"
+            (click)="configService.addToCart(configService.configuration)" (tap)="configService.addToCart(configService.configuration)">
+            Acheter
+          </div>
+        </conf-chips-list>
+      </div>
+      <hr class="barre"/>
+      @for (group of configService.configuration.configuration | keyvalue; track group.key; let i = $index) {
+        <div class="raised-1 options-bloc">
+          <table class="recap" aria-describedby="Recap">
+            <th></th>
+            <thead>
+              <tr>
+                <td class="left">{{ group.key }}</td>
+                <td>Référence</td>
+                <td>Disponibilité</td>
+                <td>Prix HT</td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              @if (configService.configuration.getNbCategoryChoices(group.key) > 0) {
+                @for (choice of group.value | keyvalue; track choice.value; let j = $index) {
+                  @switch (typeDeProduit(group.key, choice.value[0])) {
+                    @case ('one') {
+                      @for (v of choice.value; track v.option) {
+                        @if (v.option && v.quantite > 0) {
+                          <tr>
+                            <td class="description left">
+                              <span class="weight-bold">{{ choice.key }}</span><br/>
+                              <span class="red">{{ v.option[v.option['Cible'].value].value || v.option['Durée'].value}} {{ v.option['Unité'].value }}</span> - {{ configService.getTexte(v.option['Gamme'].value, choice.key) }}
+                            </td>
+                            <td>{{ v.option.produit.value }}</td>
+                            <td><ng-template *ngTemplateOutlet="dispo;context:{produit: getProduitDetails(v.option.produit.value), qte: 1}"></ng-template></td>
+                            <td class="prix">{{ v.option.prix.value | currency: 'EUR':'symbol':'1.2-2':'fr' }}</td>
+                            <td>
+                              <conf-chips-list>
+                                <div class="chips chips--whited"
+                                  (click)="optionsOpened[i][j] = !optionsOpened[i][j]"
+                                  [ngClass]="{'chips--whited': !optionsOpened[i][j], 'chips--selected': optionsOpened[i][j]}"
+                                  >
+                                  Modifier
+                                </div>
+                              </conf-chips-list>
+                              <fa-icon class="delete-icon" [icon]="faTimes" (click)="delete(group.key, choice.key)" (tap)="delete(group.key, choice.key)"></fa-icon>
+                            </td>
+                          </tr>
+                          <tr class="pleine-ligne" [@expandVertical]="optionsOpened[i][j] ? 'open' : 'closed'">
+                            <div class="option-details">
+                              <div></div>
+                              <mat-radio-group class="liste-options">
+                                @for (option of configService.retrieveOptions(modele.produit, choice.key); track option.option) {
+                                  <div class="option">
+                                    <p class="annee">{{ option[option['Cible']?.value]?.value || option['Durée']?.value }} {{ option['Unité']?.value }}</p>
+                                    <mat-radio-button [value]="option.produit.value" [checked]="v.option.produit.value === option.produit.value" (click)="onClickOption(group.key, choice.key, v, {option: option, quantite: 1})" (tap)="onClickOption(group.key, choice.key, v, {option: option, quantite: 1})"></mat-radio-button>
+                                    <p class="weight-bold prix" [ngStyle]="{'font-size': showPrixLocatif ? '1rem' : ''}">
+                                      {{ (showPrixLocatif ? configService.getPrixLocatif(+option.prix.value) : +option.prix.value) | currency: 'EUR':'symbol':'1.2-2':'fr' }}
+                                      @if (showPrixLocatif) {
+                                        / mois
+                                      }
+                                    </p>
+                                    <p class="refs">Réf : {{ option.produit.value }}</p>
+                                  </div>
+                                }
+                              </mat-radio-group>
+                            </div>
+                          </tr>
+                        }
+                      }
+                    }
+                    @case ('services') {
+                      @for (v of choice.value; track v.option) {
+                        @if (v.option && v.quantite > 0) {
+                          <tr>
+                            <td class="description left">
+                              <span class="weight-bold">{{ v.option.produit.value }}</span><br/>
+                              {{ v.option.description.value }}
+                            </td>
+                            <td>{{ v.option.produit.value }}</td>
+                            <td><ng-template *ngTemplateOutlet="dispo;context:{produit: getProduitDetails(v.option.produit.value), qte: 1}"></ng-template></td>
+                            <td class="prix">{{ v.option.prix.value | currency: 'EUR':'symbol':'1.2-2':'fr' }}</td>
+                            <td>
+                              <fa-icon class="delete-icon" [icon]="faTimes" (click)="delete(group.key, choice.key, v.option)" (tap)="delete(group.key, choice.key, v.option)"></fa-icon>
+                            </td>
+                          </tr>
+                        }
+                      }
+                    }
+                    @case ('input') {
+                      @if (choice.value[0]; as v) {
+                        @if (configService.configuration.nbOfOptionGrouped(group.key, choice.key) > 0) {
+                          <tr>
+                            <td class="description left">
+                              <span class="weight-bold">{{ choice.key }}</span><br/>
+                              <span class="red">{{ configService.configuration.nbOfOptionGrouped(group.key, choice.key) }} {{ v.option['Unité'].value }}</span> - {{ configService.getTexte(v.option['Gamme'].value, choice.key) }}
+                            </td>
+                            <td>
+                              @for (v of choice.value; track v.option) {
+                                @if (v.quantite > 0) {
+                                  {{ v.option.produit.value }} x {{ v.quantite }}<br/>
+                                }
+                              }
+                            </td>
+                            <td><ng-template *ngTemplateOutlet="dispo;context:{produit: getProduitDetails(v.option.produit.value), qte: 1}"></ng-template></td>
+                            <td class="prix">{{ configService.configuration.priceOfOptionGrouped(group.key, choice.key) | currency: 'EUR':'symbol':'1.2-2':'fr' }}</td>
+                            <td>
+                              <conf-free-input [lockMin]="true" [modele]="modele" [options]="{ categorie: group.key, name: choice.key, options: optionsToOptions(choice.value) }" [showLibelles]="false"></conf-free-input>
+                              <fa-icon class="delete-icon" [icon]="faTimes" (click)="delete(group.key, choice.key)" (tap)="delete(group.key, choice.key)"></fa-icon>
+                            </td>
+                          </tr>
+                        }
+                      }
+                    }
+                    @case ('equipement') {
+                      @for (v of choice.value; track $index) {
+                        @if (v.option && v.quantite > 0) {
+                          <tr>
+                            <td class="description left">
+                              <span class="weight-bold">{{ choice.key }}</span><br/>
+                              {{ getProduitDetails(v.option.produit.value)?.designation ?? '' }}
+                            </td>
+                            <td>{{ v.option.produit.value }}</td>
+                            <td><ng-template *ngTemplateOutlet="dispo;context:{produit: getProduitDetails(v.option.produit.value), qte: 1}"></ng-template></td>
+                            <td class="prix">{{ v.option.prix.value | currency: 'EUR':'symbol':'1.2-2':'fr' }} x {{ v.quantite }}</td>
+                            <td>
+                              <conf-input-number [number]="v.quantite" [min]="1" (value)="v.quantite = $event"></conf-input-number>
+                              <fa-icon class="delete-icon" [icon]="faTimes" (click)="delete(group.key, choice.key)" (tap)="delete(group.key, choice.key)"></fa-icon>
+                            </td>
+                          </tr>
+                        }
+                      }
+                    }
+                  }
+                }
+              } @else {
+                <br/><p>Aucun produit sélectionné</p>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+      <app-banniere [marques]="['ZYXE']" emplacement="middle"></app-banniere>
+      <conf-pdf [configuration]="configService.configuration" #export></conf-pdf>
+    </div>
+  }
+  <conf-help></conf-help>
+  <conf-sauvegarde [(show)]="showSavePopup"></conf-sauvegarde>
+  <conf-chargement [(show)]="showLoadPopup"></conf-chargement>
+</div>
+
+<ng-template #dispo let-produit="produit" let-qte="qte">
+  @if (produit.gabarit === 'V') {
+    <p>Produit dématérialisé</p>
+  } @else {
+    <p class="stock" [ngClass]="{ 'en-stock': qte <= produit.qteStock1 }">{{ produit.qteStock1 }} en stock</p>
+  }
+</ng-template>

@@ -1,0 +1,83 @@
+@if (ncmd || ncde ) {
+  <div>
+    <h3 class="title">Confirmation de transaction</h3>
+    <div class="bar-prodression">
+      <app-stepper [step]="3"></app-stepper>
+    </div>
+    <!-- <div class="param-box">
+    <h3 class="inline">Numéro de commande :</h3>
+    <p class="inline">&nbsp;{{ this.ncmd }}</p>
+    <br>
+      <h3 class="inline">Ticket de transaction :</h3>
+      <p class="inline">&nbsp;{{ this.ticket }}</p>
+      <br>
+        <br>
+          <p class="inline">{{ this.message }}</p> 
+        </div> -->
+        <div class="param-box">
+          <p>
+            Votre  <span>commande</span>@if ((this.transaction == 'CBB' ||this.transaction == 'CDE')) {
+            <span>commande</span>
+            }@if (this.transaction == 'DEV') {
+            <span>devis</span>
+            } a bien été
+            @if (!(this.transaction == 'DEV')) {
+              <span>prise en compte</span>
+              }@if (this.transaction == 'DEV') {
+              <span>enregistré</span>
+            }
+            @if(this.ncmd !== 'undefined'){
+           sous le <b>n° {{ this.ncmd }}</b>
+            Vous allez recevoir un mail de confirmation. 
+            
+         
+        }@else{
+          sous le <b>n° {{ this.ncde }}</b>
+            Vous allez recevoir un mail de confirmation. 
+        
+        } 
+          <!-- DEVIS -->
+          @if (this.transaction == 'DEV') {
+            <p>
+              Pour valider votre devis retournez-nous simplement par mail votre devis avec la mention "bon pour accord"
+            </p>
+          }
+          <!-- COMMANDE -->
+          @if ((this.transaction == 'CBB')) {
+            <p>
+              L'état de traitement et d’avancement  de votre commande est  accessible par l’option du menu <a routerLink="/espace-client/commandes"> commandes</a>
+            </p>
+          }
+          <!-- VIREMENT -->
+          @if ((this.transaction == 'VIR')) {
+            <p>
+              Votre commande n° <strong>{{this.ncmd}}</strong> sera pris en compte à la réception de votre virement. <br>
+             
+              <br>
+              <strong>Référence à rappeler  <span class="red">impérativement</span> sur votre virement :  <span class="red">{{this.ncmd}}</span> </strong>  <br>
+              <br>
+              <strong>IBAN  {{this.iban}}</strong>  <br>
+              <strong>BIC {{this.bic}}</strong> <br>
+              L'état de traitement et d’avancement de votre commande est  accessible par l’option du menu <a routerLink="/espace-client/commandes"> commandes</a>
+            </p>
+          }
+          <!-- TICKET -->
+          @if (this.ticket !== 0 && this.ticket !== '0') {
+            <p>Ticket bancaire de règlement n° {{ this.ticket }} </p>
+          }
+        </div>
+        <div class="margin">
+          <button
+            mat-raised-button
+            class="raised-button"
+            routerLink="/"
+            >
+            CONTINUER
+          </button>
+        </div>
+      </div>
+    } @else {
+      Aucune commande à confirmer. Toutefois, si vous avez reçu un email de confirmation, votre commande a bien été prise en compte. En cas de doute, veuillez vérifier vos emails ou nous contacter.
+    }
+
+    <app-categorie></app-categorie>

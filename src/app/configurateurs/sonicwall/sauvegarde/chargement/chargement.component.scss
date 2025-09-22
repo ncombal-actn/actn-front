@@ -1,0 +1,37 @@
+@import "../../sonicwall.scss";
+
+.configuration {
+    &:not(:first-of-type):hover {
+        background-color: $color-1;
+        color: white;
+
+        fa-icon {
+            color: white;
+        }
+
+        .circled {
+            background-color: $color-1;
+
+            &:hover {
+                background: $color-grey;
+
+                fa-icon {
+                    color: $color-1;
+                }
+            }
+        }
+    }
+
+    fa-icon {
+        color: $color-1;
+    }
+
+    .circled {
+        background: $color-grey;
+    }
+}
+
+::ng-deep .conf-load-tooltip {
+    background-color: $color-1;
+    color: white;
+}

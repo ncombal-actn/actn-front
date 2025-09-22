@@ -1,0 +1,75 @@
+.iFrameDiv{
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .paddIframe{
+    padding: 0px 15px 0px 15px;
+  }
+  body{
+    font-family: Roboto, 'Helvetica Neue', sans-serif ; 
+}
+
+.text-center{
+  text-align: center;
+  font-size: 3rem;
+}
+
+  article{
+
+text-decoration: none;
+color: #8f8f8f;
+
+}
+.grid_box{
+  height: 55%;
+  display: grid;
+  align-content: center;
+  margin-top: 10vh;
+  border: solid #8f8f8f 3px;
+  padding: 20px;
+  border-radius: 19px;
+}
+
+h3{
+color: #404040;
+font-weight: bolder;
+}
+a{
+
+text-decoration: none;
+color: #008cb9;
+cursor: pointer;
+margin: 5px;
+
+}
+mat-card{
+  width: 25%;
+  padding: 20px;
+}
+article{
+  height: 100%;
+  width: 100%;
+}
+.NWAR{
+color: #404040;
+}
+.d_flex{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    /* height: 25vh; */
+    gap: 20px;
+}
+.d_flex2{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+a:hover{
+text-decoration: underline;   
+}
+.ml15{
+  margin-left: 15px;
+}

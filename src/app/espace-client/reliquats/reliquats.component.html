@@ -1,0 +1,193 @@
+<mat-card appearance="outlined" class="container-filtres raised-1" style="margin-bottom: 1em">
+  <mat-card-header><h2 (click)="clearAllFilters()" class="text-button">Filtres <mat-icon>close</mat-icon></h2></mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="filterForm">
+      <div class="filtre-reliquat">
+        <mat-form-field class="filtre filtreBox">
+          <mat-label>N° Commande</mat-label>
+          <input formControlName="commande" matInput />
+          <button matSuffix mat-icon-button aria-label="Clear" *ngIf="filterForm.value.commande" (click)="clearFilter('commande')">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-form-field class="filtre filtreBox">
+          <mat-label>Réf. Commande</mat-label>
+          <input formControlName="refCommande" matInput />
+          <button matSuffix mat-icon-button aria-label="Clear" *ngIf="filterForm.value.refCommande" (click)="clearFilter('refCommande')">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-form-field class="filtre filtreBox">
+          <mat-label>Marque</mat-label>
+          <input formControlName="marque" matInput />
+          <button matSuffix mat-icon-button aria-label="Clear" *ngIf="filterForm.value.marque  && filterForm.value.marque.length > 0" (click)="clearFilter('marque')">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-form-field class="filtre filtreBox">
+          <mat-label>Produit</mat-label>
+          <input formControlName="prod" matInput />
+          <button matSuffix mat-icon-button aria-label="Clear" *ngIf="filterForm.value.prod" (click)="clearFilter('prod')">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <div class="marque-filtres" *ngIf="marqueArray">
+        <div class="marque-options" [ngClass]="{'selected': filterForm.get('marque')?.value.includes(option)}"
+            *ngFor="let option of marqueArray; let j = index" (click)="filtreMarqueToggle(option)"
+            (tap)="filtreMarqueToggle(option)">
+            <img loading="lazy" class="marque-img" [src]="environment.logoMarquesCouleurs200x80 + option + '.gif'" [alt]="option" />
+        </div>
+      </div>
+
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<span class="labels display-flex heavy-font br10">
+  <label class="grow">Réf. client</label>
+  <label class="grow">N° de commande</label>
+  <label class="grow">Date</label>
+</span>
+<div class="separator"></div>
+
+<!-- NGFOR - RELIQUATS -->
+@if (reliquat$) {
+
+@for (reliquat of filteredReliquat$ | async ; track $index; let i = $index) {
+  @if (reliquat$.length == 0) {
+    <div class="no-result">Vous n'avez pas de reliquat</div>
+    }
+
+<div>
+  <div class="over floatClear bgWhite br3sur4">
+    <!-- ENTETE RELIQUAT -->
+    <div (click)="unrollDetails(i)" class="entete">
+      @if (!display[i]) {
+      <i class="unroll-button icon-plus raised-button"></i>
+      } @if (display[i]) {
+      <i class="unroll-button icon-minus raised-button"></i>
+      }
+      <div class="reliquat display-flex">
+        <label hidden>Réf. client</label>
+        <div class="refClient grow">{{ reliquat[0].referencecommande }}</div>
+        <label hidden>Réf. ACTN</label>
+        @if (!reliquat[0].pdfar) {
+        <div class="refACTN grow">{{ reliquat[0].numcommande }}</div>
+        } @else {
+        <a
+          class="refACTN grow arpdflink"
+          target="_blank"
+          [href]="
+            environment.apiUrl +
+            '/document/generate.php?document=' +
+            reliquat[0].numcommande +
+            '&type=AR'
+          "
+        >
+          {{ reliquat[0].numcommande }}
+          <fa-icon [icon]="faFilePdf"></fa-icon>
+        </a>
+        }
+        <label hidden>Date de Commande</label>
+        <div class="date grow">
+          {{ reliquat[0].datecommande | date : "dd/MM/yyyy" }}
+        </div>
+      </div>
+    </div>
+    <!-- RELIQUAT DETAILS -->
+    @if (display[i]) {
+    <div class="reliquatDetails">
+      <hr />
+      <!-- ADRESSE -->
+      <div class="display-flex">
+        <div class="block">
+          <span class="heavy-font">Adresse de Livraison</span>
+          <div class="adresses">
+            <span class="heavy-font">{{ reliquat[0].wnom }}</span>
+            <br />
+            <span>{{ reliquat[0].wadresse1 }}&nbsp;&nbsp;</span>
+            <br />
+            @if (reliquat[0].wadresse2) {
+            <span>{{ reliquat[0].wadresse2 }}&nbsp;&nbsp;<br /></span>
+            }
+            <span>{{ reliquat[0].wcodepostal }}&nbsp;&nbsp;</span>
+            <span>{{ reliquat[0].wville }}</span>
+            <br />
+            <span>{{ reliquat[0].pays ? reliquat[0].pays : "France" }}</span>
+            <br />
+          </div>
+        </div>
+        <div class="block">
+          <span class="heavy-font">{{ reliquat[0].message }}</span>
+        </div>
+      </div>
+      <div class="block">
+        <span class="heavy-font">{{ reliquat[0].message }}</span>
+      </div>
+    </div>
+    }
+    <hr />
+    <!-- Produits -->
+    <span class="labels_produits detail-grid heavy-font1">
+      <label>Marque</label>
+      <label>Produit</label>
+      <label class="designation">Désignation</label>
+      <label>Qté Commandée</label>
+      <label>Qté à Livrer</label>
+      <label>Expédition Estimée</label>
+    </span>
+    <!-- NGFOR - PRODUITS -->
+    @for (produit of reliquat; track produit.marque) {
+    <div class="produits">
+      <div class="detail-grid">
+        <label class="marque">{{ produit.marque }}</label>
+        <label
+          ><a (click)="linkToProduct(produit.prod)">{{
+            produit.prod
+          }}</a></label
+        >
+        <label class="designation-produit">{{ produit.designation }}</label>
+        <label>{{ produit.quantitecommande }}</label>
+        <label>{{ produit.quantitealivrer }}</label>
+        @if ((produit.datelivraisonprevu == '')) {
+        <label>N.C.</label>
+        } @else { @if (!(produit.datelivraisonprevu == NC)) {
+        <label>{{ produit.datelivraisonprevu | date : "dd/MM/yyyy" }}</label>
+        } }
+        <ng-template #prod>
+          @if (!(produit.datelivraisonprevu == NC)) {
+          <label>{{ produit.datelivraisonprevu | date : "dd/MM/yyyy" }}</label>
+          }
+        </ng-template>
+      </div>
+    </div>
+    }
+  </div>
+  <!-- DEMANDE DE DELAIS -->
+  <!-- <fa-icon class="prefix icon size-big" [icon]="['fas', 'plus-circle']"></fa-icon> -->
+  <div
+    class="demandeDeDelaisButton"
+    [ngClass]="{ demandeDeDelaisButtonDeactivated: sentDelay.includes(i) }"
+    (click)="
+      envoiDemandeDeDelai(
+        reliquat[0].numcommande,
+        reliquat[0].referencecommande,
+        reliquat[0].datecommande,
+        i
+      )
+    "
+  >
+    <span class="texte" style="font-size: 1rem"
+      ><fa-icon class="envelope" [icon]="faEnvelope"></fa-icon
+      >&nbsp;&nbsp;Demande de délai</span
+    >
+  </div>
+  @if (delayInError == i) {
+  <div class="demandeDeDelaisFailure">Demande de delai échouée</div>
+  } @if (sentDelay.includes(i)) {
+  <div class="demandeDeDelaisSuccess">Demande de delai envoyée</div>
+  }
+</div>
+} }

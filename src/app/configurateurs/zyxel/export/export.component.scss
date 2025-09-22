@@ -1,0 +1,10 @@
+@use "../zyxel.scss" as zyxel;
+
+$header-background: zyxel.$color-red-1;
+$hr-color: zyxel.$color-red-4;
+$background-bloc: zyxel.$color-grey;
+
+$border-prix: zyxel.$color-red-4;
+$color-font: zyxel.$color-red-4;
+
+@import "../../export/base.scss";

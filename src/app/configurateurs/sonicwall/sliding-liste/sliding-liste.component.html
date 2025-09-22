@@ -1,0 +1,59 @@
+<ng-template #buttons>
+  @if (produits.length > nbItems) {
+    <div class="buttons" >
+      <button id="previous" class="button previous left-arrow" (click)="onPrevious()" [disabled]="scrollState === SCROLL.LEFT">
+        <fa-icon [icon]="faChevronRight"></fa-icon>
+      </button>
+      <button id="next" class="button next" (click)="onNext()" [disabled]="scrollState === SCROLL.RIGHT">
+        <fa-icon [icon]="faChevronRight"></fa-icon>
+      </button>
+    </div>
+  }
+</ng-template>
+
+@if (produits) {
+  <ng-template [ngTemplateOutlet]="buttons"></ng-template>
+  <div id="slider" #slider>
+    <div id="slider-container" #sliderContainer>
+      @for (produit of produits$ | async; track produit.reference) {
+        <div #item class="item" style="min-width: 0px">
+          @if (isModeles) {
+            <a class="bloc-image" [routerLink]="[ produit.produit, 'options' ]">
+              <h4>{{ produit.produit }}</h4>
+              <img loading="lazy" [src]="environment.vignettesUrl + produit.photo + '.webp'" [alt]="produit.label" />
+            </a>
+            <p class="critere">{{ produit.crits['Users'].value }} utilisateurs</p>
+            <a class="flat-button rounded-corner bg-red-{{ color }} hover-bigger button-config" [routerLink]="[ produit.produit, 'options' ]">
+              @if (svg.getIcon('ico_customize', environment.configurateurZyxel + '/icones/SVG/') | async; as mecanisme) {
+                <div class="icon">
+                  <svg [innerHTML]="mecanisme" preserveAspectRatio="xMinYMin slice" viewBox="0 0 117 64" height="100%"></svg>
+                </div>
+              }
+              Configurer
+            </a>
+            <p class="fonction">{{ stringFromDetails(produit.details) }}</p>
+            @if (produit.pdfs?.[0]) {
+              <a class="fiche-technique" [href]="environment.produitPdfUrl + produit.pdfs[0]['url'] + '.pdf'" target="_blank" rel="noreferrer noopener">
+                <fa-icon [icon]="faFilePdf"></fa-icon>{{ produit.pdfs[0]['label'] }}
+              </a>
+            }
+          } @else {
+            <a class="bloc-image raised-2" [routerLink]="produitService.lienProduit(produit)">
+              <h4>{{ produit.reference }}</h4>
+              <img loading="lazy" [src]="environment.vignettesUrl + produit.photo.split('.')[0] + '.webp'" [alt]="produit.reference" />
+            </a>
+            <p class="prix weight-bold">{{ produit.prix | currency:'EUR':'symbol':'1.2-2':'fr' }}<span class="size-smaller"> HT</span></p>
+            <p class="ref">Réf: {{ produit.reference }}</p>
+            <conf-input-number [number]="quantiteOf(produit.reference, produit['niveaulibelle3'] || produit['niveaulibelle4'])" (value)="equipementValueChange($event, produit)"></conf-input-number>
+            <p class="fonction">{{ stringFromDetails(produit.details) }}</p>
+            @if (produit.pdfs[0]) {
+              <a class="fiche-technique" [href]="environment.produitPdfUrl + produit.pdfs[0]['url'] + '.pdf'" target="_blank" rel="noreferrer noopener">
+                <fa-icon [icon]="faFilePdf"></fa-icon>{{ produit.pdfs[0]['label'] }}
+              </a>
+            }
+          }
+        </div>
+      }
+    </div>
+  </div>
+}

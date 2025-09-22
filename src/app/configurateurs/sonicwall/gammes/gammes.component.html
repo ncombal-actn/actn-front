@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="header raised-1">
+    <conf-header-stepper [step]="1"></conf-header-stepper>
+  </div>
+
+  <div class="content-padding main">
+    <div class="gammes">
+      @for (gamme of gammes; track gamme.titre; let index = $index) {
+        <div class="gamme">
+          @if (svg.getIcon(gamme.titre, environment.configurateurSonicWall + '/icones/SVG/') | async; as logo) {
+            <div class="icone-gamme">
+              <svg [innerHTML]="logo" preserveAspectRatio="xMinYMin slice" viewBox="0 0 48 48" width="100%"></svg>
+            </div>
+          }
+          <!-- <img [src]="environment.configurateurSonicWall + 'img/' + gamme.titre + '.webp'" [alt]="'Gamme ' + gamme.titre"/> -->
+          <div class="titre">
+            <h3 class="col-2">{{ ss.get(gamme.titre) }}</h3>
+            <h4 class="col-g-2">Série {{ gamme.titre }}</h4>
+          </div>
+          <p class="description size-smaller">
+            {{ gamme.texte }}
+          </p>
+          @if (modelesCount[index] > 0) {
+            <a class="flat-button rounded-corner bg-black hover-bigger" [routerLink]="[gamme.titre, 'modeles']">
+              @if (svg.getIcon('ico_customize', environment.configurateurSonicWall + '/icones/SVG/') | async; as mecanisme) {
+                <div class="icon">
+                  <svg [innerHTML]="mecanisme" preserveAspectRatio="xMinYMin slice" viewBox="0 0 117 64" height="100%"></svg>
+                </div>
+              }
+              Configurez un produit {{ gamme.titre }}
+            </a>
+          } @else {
+            <a class="flat-button rounded-corner bg-g-1 prochainement">
+              @if (svg.getIcon('ico_customize', environment.configurateurSonicWall + '/icones/SVG/') | async; as mecanisme) {
+                <div class="icon prochainement">
+                  <svg [innerHTML]="mecanisme" preserveAspectRatio="xMinYMin slice" viewBox="0 0 117 64" height="100%"></svg>
+                </div>
+              }
+              Disponible prochainement
+            </a>
+          }
+          <ng-template #prochainement>
+            <a class="flat-button rounded-corner bg-g-1 prochainement">
+              @if (svg.getIcon('ico_customize', environment.configurateurSonicWall + '/icones/SVG/') | async; as mecanisme) {
+                <div class="icon prochainement">
+                  <svg [innerHTML]="mecanisme" preserveAspectRatio="xMinYMin slice" viewBox="0 0 117 64" height="100%"></svg>
+                </div>
+              }
+              Disponible prochainement
+            </a>
+          </ng-template>
+          <img loading="lazy" class="image-gamme" [src]="environment.configurateurSonicWall + 'img/' + gamme.titre + '.webp'" [alt]="'Image représentant un pare-feu ' + gamme.titre" />
+          <div class="bg-g-1 bg critere">
+            @if (svg.getIcon('Crit - ' + gamme.titre, environment.configurateurSonicWall + '/icones/SVG/') | async; as mecanisme) {
+              <div class="crit-icon">
+                <svg [innerHTML]="mecanisme" preserveAspectRatio="xMinYMin slice" viewBox="0 0 512 512" height="100%"></svg>
+              </div>
+            }
+            <p>{{ crit.get(gamme.titre) }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

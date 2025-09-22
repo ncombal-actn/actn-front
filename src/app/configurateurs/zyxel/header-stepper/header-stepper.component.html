@@ -1,0 +1,14 @@
+<ul class="steps">
+    <li class="step" (click)="onClick(1)" [ngClass]="{'step--selected': step === 1, 'step--clickable': step > 1}">
+        <div class="number">1</div>Je choisis ma gamme
+    </li>
+    <li class="step" (click)="onClick(2)" [ngClass]="{'step--selected': step === 2, 'step--clickable': step > 2}">
+        <div class="number">2</div>Je choisis mon modèle
+    </li>
+    <li class="step" (click)="onClick(3)" [ngClass]="{'step--selected': step === 3, 'step--clickable': step > 3}">
+        <div class="number">3</div>Je configure mes options
+    </li>
+    <li class="step" [ngClass]="{'step--selected': step === 4}">
+        <div class="number">4</div>Récapitulatif
+    </li>
+</ul>

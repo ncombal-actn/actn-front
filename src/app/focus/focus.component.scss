@@ -1,0 +1,12 @@
+.img-logo {
+	cursor: pointer;
+	filter: grayscale(100%);
+}
+.img-logo-color {
+	filter: grayscale(0%);
+}
+
+.hidden {
+	max-height: 0;
+	overflow: hidden;
+}
