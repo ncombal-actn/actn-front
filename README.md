@@ -46,3 +46,4 @@ Run `npm run compodoc` to build and serve the documentation on `http://localhost
 ## Récupérer la dernière version de la branche principale avec git
 
 À la racine du projet, run `git pull origin master`
+
