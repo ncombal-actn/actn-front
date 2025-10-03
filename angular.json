@@ -71,43 +71,12 @@
             }
           },
           "configurations": {
-            "alpha": {
+            "development": {
               "outputPath": "dist/actn-front-end",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environmentAlpha.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": {
-                "scripts": true,
-                "styles": true,
-                "hidden": true,
-                "vendor": true
-              },
-              "namedChunks": false,
-              "extractLicenses": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "400mb",
-                  "maximumError": "1000mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "10kb"
-                }
-              ]
-            },
-            "alpha-prod": {
-              "outputPath": "dist/actn-front-end",
-
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environmentAlpha.prod.ts"
+                  "with": "src/environments/environment.ts"
                 }
               ],
               "optimization": true,
@@ -133,6 +102,8 @@
               ]
             },
             "production": {
+              "outputPath": "dist/actn-front-end",
+
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -226,12 +197,8 @@
             "production": {
               "buildTarget": "actn-front-end:build:production"
             },
-            "alpha": {
-              "buildTarget": "actn-front-end:build:alpha"
-            },
-            "alpha-prod": {
-            
-              "buildTarget": "actn-front-end:build:alpha-prod"
+            "development": {
+              "buildTarget": "actn-front-end:build:development"
             },
             "alpha-test": {
               "buildTarget": "actn-front-end:build:alpha-test"
@@ -291,7 +258,7 @@
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
             "devServerTarget": "actn-front-end:serve"
-           
+
           },
           "configurations": {
             "production": {
