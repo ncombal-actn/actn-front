@@ -1,19 +1,20 @@
-import { Routes, RouterModule } from '@angular/router';
-import { CatalogueComponent } from './catalogue.component';
-import { CatalogueResolverService } from '@/_core/_services/catalogue-resolver.service';
-import { NouveautesResolverService } from '@/_core/_resolvers/nouveautes-resolver.service';
-import { DestockageResolverService } from '@/_core/_resolvers/destockage-resolver.service';
-import { PacksResolverService } from '@/_core/_resolvers/packs-resolver.service';
-import { PromosResolverService } from '@/_core/_resolvers/promos-resolver.service';
-import { SimilairesResolverService } from '@/_core/_resolvers/similaires-resolver.service';
-import { ProduitResolverService } from './produit/produit-resolver.service';
-import { NgModule } from '@angular/core';
-import { ProduitComponent } from './produit/produit.component';
-import { CategorieComponent } from '@/catalogue/categorie/categorie.component';
-import { NosMarquesComponent } from './nos-marques/nos-marques.component';
-import { MetiersComponent } from './metiers/metiers.component';
-import { SpecialsResolverService } from '../_core/_resolvers/specials-resolver.service';
-import { RecondionnerResolverService } from '@/_core/_resolvers/recondionner-resolver.service';
+import {Routes, RouterModule} from '@angular/router';
+import {CatalogueComponent} from './catalogue.component';
+import {CatalogueResolverService} from '@/_core/_services/catalogue-resolver.service';
+import {NouveautesResolverService} from '@/_core/_resolvers/nouveautes-resolver.service';
+import {DestockageResolverService} from '@/_core/_resolvers/destockage-resolver.service';
+import {PacksResolverService} from '@/_core/_resolvers/packs-resolver.service';
+import {PromosResolverService} from '@/_core/_resolvers/promos-resolver.service';
+import {SimilairesResolverService} from '@/_core/_resolvers/similaires-resolver.service';
+import {ProduitResolverService} from './produit/produit-resolver.service';
+import {NgModule} from '@angular/core';
+import {ProduitComponent} from './produit/produit.component';
+import {CategorieComponent} from '@/catalogue/categorie/categorie.component';
+import {NosMarquesComponent} from './nos-marques/nos-marques.component';
+import {MetiersComponent} from './metiers/metiers.component';
+import {SpecialsResolverService} from '../_core/_resolvers/specials-resolver.service';
+import {RecondionnerResolverService} from '@/_core/_resolvers/recondionner-resolver.service';
+import {PromoResolverService} from "@core/_resolvers/promo-resolver.service";
 
 
 const routes: Routes = [
@@ -24,7 +25,7 @@ const routes: Routes = [
     component: CategorieComponent,
     data: {
       filDArianne: [
-        { url: 'catalogue', label: 'Catalogue', guarded: true },
+        {url: 'catalogue', label: 'Catalogue', guarded: true},
       ]
     }
   },
@@ -37,11 +38,11 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     data: {
       filDArianne: [
-        { url: 'catalogue', label: 'Catalogue' },
-        { url: '?search', label: 'Recherche' },
+        {url: 'catalogue', label: 'Catalogue'},
+        {url: '?search', label: 'Recherche'},
         // { url: '?search', label: 'Recherche "?"' },
-        { url: '?niv1', label: 'Métier "?"' },
-        { url: '?marque', label: 'Marque "?"' }
+        {url: '?niv1', label: 'Métier "?"'},
+        {url: '?marque', label: 'Marque "?"'}
       ]
     }
   },
@@ -50,8 +51,22 @@ const routes: Routes = [
     component: ProduitComponent,
     data: {
       filDArianne: [
-        { url: 'fiche-produit', label: 'Fiche produit' },
-        { url: ':ref', label: '' },
+        {url: 'fiche-produit', label: 'Fiche produit'},
+        {url: ':ref', label: ''},
+      ]
+    }
+  },
+  {
+    path: 'promo/:type',
+    component: CatalogueComponent,
+    resolve: {
+      currentCatalogueState: PromoResolverService
+    },
+    runGuardsAndResolvers: 'always',
+    data: {
+      filDArianne: [
+        {url: 'catalogue', label: 'Catalogue', guarded: true},
+        {url: 'promo', label: 'Promo', guarded: true},
       ]
     }
   },
@@ -64,8 +79,8 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     data: {
       filDArianne: [
-        { url: 'catalogue', label: 'Catalogue', guarded: true },
-        { url: 'nouveautes', label: 'Nouveautés', guarded: true },
+        {url: 'catalogue', label: 'Catalogue', guarded: true},
+        {url: 'nouveautes', label: 'Nouveautés', guarded: true},
       ]
     }
   },
@@ -78,8 +93,8 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     data: {
       filDArianne: [
-        { url: 'catalogue', label: 'Catalogue', guarded: true },
-        { url: 'destockage', label: 'Destockage', guarded: true },
+        {url: 'catalogue', label: 'Catalogue', guarded: true},
+        {url: 'destockage', label: 'Destockage', guarded: true},
       ]
     }
   },
@@ -92,8 +107,8 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     data: {
       filDArianne: [
-        { url: 'catalogue', label: 'Catalogue', guarded: true },
-        { url: 'packs', label: 'Packs', guarded: true },
+        {url: 'catalogue', label: 'Catalogue', guarded: true},
+        {url: 'packs', label: 'Packs', guarded: true},
       ]
     }
   },
@@ -106,8 +121,8 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     data: {
       filDArianne: [
-        { url: 'catalogue', label: 'Catalogue' },
-        { url: 'promotions', label: 'Promotions', guarded: true },
+        {url: 'catalogue', label: 'Catalogue'},
+        {url: 'promotions', label: 'Promotions', guarded: true},
       ]
     }
   },
@@ -119,9 +134,9 @@ const routes: Routes = [
     },
     data: {
       filDArianne: [
-        { url: 'catalogue', label: 'Catalogue'},
-        { url: 'similaire', label: 'Produits similaires', guarded: true},
-        { url: ':id', label: ':id', guarded: true },
+        {url: 'catalogue', label: 'Catalogue'},
+        {url: 'similaire', label: 'Produits similaires', guarded: true},
+        {url: ':id', label: ':id', guarded: true},
       ]
     }
   },
@@ -134,8 +149,8 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     data: {
       filDArianne: [
-        { url: 'catalogue', label: 'Spécials', guarded: true },
-        { url: 'spécials', label: 'Spécials', guarded: true },
+        {url: 'catalogue', label: 'Spécials', guarded: true},
+        {url: 'spécials', label: 'Spécials', guarded: true},
       ]
     }
   },
@@ -148,8 +163,8 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     data: {
       filDArianne: [
-        { url: 'catalogue', label: 'Catalogue', guarded: true },
-        { url: 'reconditionne', label: 'Seconde vie', guarded: true },
+        {url: 'catalogue', label: 'Catalogue', guarded: true},
+        {url: 'reconditionne', label: 'Seconde vie', guarded: true},
       ]
     }
   },
@@ -158,8 +173,8 @@ const routes: Routes = [
     component: NosMarquesComponent,
     data: {
       filDArianne: [
-        { url: 'catalogue', label: 'Catalogue' },
-        { url: 'nos-marques', label: 'Nos marques', guarded: true },
+        {url: 'catalogue', label: 'Catalogue'},
+        {url: 'nos-marques', label: 'Nos marques', guarded: true},
       ]
     }
   },
@@ -168,8 +183,8 @@ const routes: Routes = [
     component: MetiersComponent,
     data: {
       filDArianne: [
-        { url: 'catalogue', label: 'Catalogue' },
-        { url: 'nos-metiers', label: 'Nos Métiers', guarded: true },
+        {url: 'catalogue', label: 'Catalogue'},
+        {url: 'nos-metiers', label: 'Nos Métiers', guarded: true},
       ]
     }
   },
@@ -183,8 +198,8 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     data: {
       filDArianne: [
-        { url: 'catalogue', label: 'Catalogue' },
-        { url: ':niv1', label: '', guarded: true },
+        {url: 'catalogue', label: 'Catalogue'},
+        {url: ':niv1', label: '', guarded: true},
       ]
     }
   },
@@ -197,11 +212,11 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     data: {
       filDArianne: [
-        { url: 'catalogue', label: 'Catalogue' },
-        { url: ':niv1', label: '' },
-        { url: ':niv2', label: '', guarded: true },
-        { url: '?search', label: 'Recherche "?"' },
-        { url: '?marque', label: 'Marque "?"' }
+        {url: 'catalogue', label: 'Catalogue'},
+        {url: ':niv1', label: ''},
+        {url: ':niv2', label: '', guarded: true},
+        {url: '?search', label: 'Recherche "?"'},
+        {url: '?marque', label: 'Marque "?"'}
       ]
     }
   },
@@ -215,14 +230,14 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     data: {
       filDArianne: [
-        { url: 'catalogue', label: 'Catalogue' },
-        { url: ':niv1', label: '' },
-        { url: ':niv2', label: '', guarded: true },
+        {url: 'catalogue', label: 'Catalogue'},
+        {url: ':niv1', label: ''},
+        {url: ':niv2', label: '', guarded: true},
       ]
     }
   },
   //Au cas ou la categorie n'a pas de niveau 3, lancer la recherche de produit
-  
+
   {
     path: ':niv1/:niv2/:niv3',
     component: CatalogueComponent,
@@ -232,12 +247,12 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     data: {
       filDArianne: [
-        { url: 'catalogue', label: 'Catalogue' },
-        { url: ':niv1', label: '' },
-        { url: ':niv2', label: '' },
-        { url: ':niv3', label: '', guarded: true },
-        { url: '?search', label: 'Recherche "?"' },
-        { url: '?marque', label: 'Marque "?"' }
+        {url: 'catalogue', label: 'Catalogue'},
+        {url: ':niv1', label: ''},
+        {url: ':niv2', label: ''},
+        {url: ':niv3', label: '', guarded: true},
+        {url: '?search', label: 'Recherche "?"'},
+        {url: '?marque', label: 'Marque "?"'}
       ]
     }
   },
@@ -250,11 +265,11 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     data: {
       filDArianne: [
-        { url: 'catalogue', label: 'Catalogue' },
-        { url: ':niv1', label: '' },
-        { url: ':niv2', label: '' },
-        { url: ':niv3', label: '' },
-        { url: ':ref', label: '', guarded: true },
+        {url: 'catalogue', label: 'Catalogue'},
+        {url: ':niv1', label: ''},
+        {url: ':niv2', label: ''},
+        {url: ':niv3', label: ''},
+        {url: ':ref', label: '', guarded: true},
       ]
     }
   },
@@ -264,4 +279,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class CatalogueRoutingModule { }
+export class CatalogueRoutingModule {
+}
