@@ -303,6 +303,7 @@ export class ValidationPanierComponent implements OnInit, OnDestroy {
     this.transportService.chargerGrille().subscribe(data => {
       this.grilleTrans = data;
     });
+    if (!this.txTVA) this.router.navigate(['/panier']);
     this.txTVA = this.user.TauxTVA;
     this.panierForm.controls["email"].setValue(this.transportService.getMail());
 
@@ -319,7 +320,7 @@ export class ValidationPanierComponent implements OnInit, OnDestroy {
       //this.fraisCcb = Math.round(this.panierPort.totalHt * (Number(this.user.FraisCBmt) * 0.01) * 100) / 100;//data[0] a la place de 1
       this.bic = data[1].toString();
       this.iban = data[2].toString();
-     // this.adresses = data[3] as unknown as Adresse[]; 
+     // this.adresses = data[3] as unknown as Adresse[];
     });
 
     this.cartService
@@ -566,16 +567,16 @@ export class ValidationPanierComponent implements OnInit, OnDestroy {
   //Function pour savoir si on  peut livré en ldf ou si on passe en grisé ce référer à eric pour les idées à la con
 
  evaluerConditions(tableau: { etat: string, marque: string }[]): any {
-  
- /* Sa fais passé toutes les livraisons en LDF mais aparament c'est plus ce qu'on veut vraiment la je suis fatigué 
+
+ /* Sa fais passé toutes les livraisons en LDF mais aparament c'est plus ce qu'on veut vraiment la je suis fatigué
    if (tableau.length === 1 && !this.livraisonEmail) {
     return true;
   }
    */
   console.log(tableau);
-  
 
-  
+
+
   if (tableau.length >= 1) {
     const auMoinsUnLDF = tableau.some(item => item.etat == 'LDF');
     const toutesLesMarquesIdentiques = tableau.every((element) => element.marque === 'NITR'); //Pour l'instant on fais que nitram jusqua ce qua sa change pour x raison
