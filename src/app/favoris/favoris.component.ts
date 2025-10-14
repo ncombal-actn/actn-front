@@ -70,14 +70,9 @@ export class FavorisComponent implements OnInit, OnDestroy {
                 (ret) => {
                     this.referencesOfFavoris = ret;
                     // mets à jour la list de Produits 'produitsCompare' s'il y a eu du changement dans la liste des références 'referencesOfProduitsCompare'
-                   console.log(ret );
-                   
-                    // console.log('FavorisComponent: produitsFavoris mis à jour', this.produitsFavoris);
+
                     this.updateProduitsFavorisFromReferencesOfProduitsCompare();
-                },
-                (error) => {
-                }
-            );
+                });
     }
 
     /** Destruction de FavorisComponent */
@@ -141,7 +136,7 @@ export class FavorisComponent implements OnInit, OnDestroy {
                 }
             }
         }
-      
+
     }
 
     /** Change le format d'affichage des produits favoris */

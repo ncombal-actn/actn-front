@@ -30,7 +30,7 @@ export class ReliquatsComponent implements OnInit {
 
   // FORMULAIRE DE RELIQUAT
   filterForm :FormGroup = new FormGroup({});
-  
+
   marqueArray: Array<string> = [];
 
   constructor(
@@ -51,15 +51,14 @@ export class ReliquatsComponent implements OnInit {
     //RECUPERATION DES RELIQUATS
     setTimeout(() => {
       this.requestReliquats()
-       
-      
+
+
     }, 100);
 
     this.filterForm.valueChanges.subscribe((val) => {
 
       const upperCaseValues = this.transformToUpperCase(val);
-      console.log(val);
-      
+
       this.filterReliquat(upperCaseValues);
     })
   }
@@ -113,7 +112,7 @@ export class ReliquatsComponent implements OnInit {
       .subscribe((ret) => {
         //this.reliquat$.next(ret);
 
-        
+
 
         // CALLBACK (setdisplay)
         this.formatReliquats(ret);
@@ -122,24 +121,21 @@ export class ReliquatsComponent implements OnInit {
   formatReliquats(reliquats: any[]) {
     let i = 0;
     const sortedReliquats:any[] = [];
-   
+
       if (reliquats !== null) {
         while (reliquats.length > 0) {
           // reset buffer
-          let buffer:any[] = [];	
+          let buffer:any[] = [];
           // fill buffer with first element from cmd
           buffer.push(reliquats.splice(0, 1)[0]);
-          // console.log(buffer);
 
           // search for other elements of the same command and push then in the buffer
           i = 0;
           while (i < reliquats.length) {
-            // console.log(this.cmd[i].numcommande, buffer[0].numcommande);
             while (
               i < reliquats.length &&
               reliquats[i].numcommande == buffer[0].numcommande
             ) {
-              // console.log("num : " + this.reliquats[i].numcommande + " corresponding");
               buffer.push(reliquats.splice(i, 1)[0]);
             }
 
@@ -148,16 +144,15 @@ export class ReliquatsComponent implements OnInit {
           sortedReliquats.push(buffer);
         }
       }
-      //console.log("Relicats triés : ", sortedReliquats);
      // this.reliquats = sortedReliquats;
 	  this.reliquat$.next(sortedReliquats);
     this.filteredReliquat$.next(sortedReliquats);
 
    this.updateMarqueArray(sortedReliquats);
-	  
+
       this.setDisplay(sortedReliquats);
       this.loadingOver();
-    
+
   }
   setDisplay(ret:any[] ) {
     let i = 0;
@@ -191,7 +186,7 @@ export class ReliquatsComponent implements OnInit {
 
   loadingOver() {
     this.loading = false;
-   
+
   }
 
   unrollDetails(entete) {
@@ -203,7 +198,6 @@ export class ReliquatsComponent implements OnInit {
    * Revois le lien de la fiche du produit à partir de sa/son seul(e) reference/ID :string
    */
   linkToProduct(produitId: string) {
-    // console.log("link", produit.produit);
     this.produitService
       .getProduitById(produitId)
       .pipe(take(1))

@@ -49,7 +49,6 @@ export class PaniersEnregistresComponent implements OnInit {
 
 	ngOnInit()
 	{
-		//console.log("PaniersEnregistresComponent recieved :", this.paniersSauvegardes);
 		if (this.paniersSauvegardes == null)
 		{
 			this.getSavedPaniers()
@@ -58,7 +57,6 @@ export class PaniersEnregistresComponent implements OnInit {
 
 	editIndex(index: number): void
 	{
-		// console.log("index", index);
 		this.editingIndex = index;
 		this.editedCartTitle = this.paniersSauvegardes[index].values[0].referencecommande;
 		this.editError = -1;
@@ -74,9 +72,7 @@ export class PaniersEnregistresComponent implements OnInit {
 	confirmEdit(index: number)
 	{
     const formatedCartTitle = this.rmaService.removeAccents(this.editedCartTitle);
-    // console.log(index, this.paniersSauvegardes[index].key, this.editedCartTitle);
 		this.editError = -1;
-		// console.log(formatedCartTitle);
 		if (/^[a-zA-Z0-9 ]{1,25}$/.test(formatedCartTitle))
 			{
 				this.http
@@ -86,7 +82,7 @@ export class PaniersEnregistresComponent implements OnInit {
 					params: {
 						nopanier : this.paniersSauvegardes[index].key,
 						refcde: encodeURIComponent(formatedCartTitle)
-						
+
 					}
 				})
 				.pipe(takeLast(1))
@@ -126,7 +122,6 @@ export class PaniersEnregistresComponent implements OnInit {
 		.subscribe(
 			(ret) =>
 			{
-				// console.log("paniersSauvegardes :", ret);
 				// this.paniersSauvegardes = this.groupByArray(this.listePanier, 'numcommande');
 
 				this.paniersSauvegardes = this.groupByPanier(ret, 'numcommande');
@@ -209,7 +204,6 @@ export class PaniersEnregistresComponent implements OnInit {
 	 */
 	deletePanier(numPanier, refPanier)
 	{
-		// console.log('Deleting Panier : ', numPanier);
 		this.http
 			.get(`${environment.apiUrl}/Deletepanier.php`, {
 				withCredentials: true,
@@ -221,7 +215,6 @@ export class PaniersEnregistresComponent implements OnInit {
 			.pipe(takeLast(1))
 			.subscribe(
 				(ret) => {
-					// console.log('Deletepanier =', ret);
 
 
 					for (let i = this.paniersSauvegardes.length - 1; i >= 0; i--) {
@@ -240,7 +233,6 @@ export class PaniersEnregistresComponent implements OnInit {
 
 	goToPageProduit(produitId :string): void
 	{
-		// console.log("link", produit.produit);
 		this.produitService.goToProduitById(produitId);
 	}
 

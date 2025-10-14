@@ -371,7 +371,6 @@ this.currentUrl.subscribe(data => {
       this.router.navigate([string], { relativeTo: this.route });
       this.HideAndSeekArray = [];
       this.HideAndSeekArray.push(string);
-     // console.log(this.HideAndSeekArray);
     }
   }
   toCamelCase(str: string): string {

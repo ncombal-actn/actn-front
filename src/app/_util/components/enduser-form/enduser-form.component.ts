@@ -92,7 +92,7 @@ export class EnduserFormComponent implements OnInit, OnDestroy {
             .subscribe(data => {
                 const produit = this._produits.find(p => p.gabarit === 'V');
                 if (produit && !this.serialNumber.mandatory) {
-                    
+
                     this.serialNumber.mandatory =
                     data
                     .get(produit.marque)
@@ -102,9 +102,9 @@ export class EnduserFormComponent implements OnInit, OnDestroy {
                     .some(
                         v => v === 'RENEW'
                     );
-                    
+
                     this.serialNumber.name = data.get(produit.marque)?.get('serie')?.['nom'];
-                  
+
                 }
                 this.formDirective = data;
                 this.reset();
@@ -127,7 +127,6 @@ export class EnduserFormComponent implements OnInit, OnDestroy {
 
     IsTvaNbr(champ: FormControl)
     {
-        // console.log(this.IsTva("FR81441914272"));
         if (champ.value == "" || champ.value == null) {
             return (true);
         }

@@ -116,10 +116,8 @@ export class CdrComponent implements OnInit,  OnDestroy,AfterViewInit {
           data.dateappel2 = new Date(data.dateappel2);
           data.dateappel2.setHours(0,0,0,0);
         });
-        //console.log(data);
         this.listeClients = data;
        this.clientsUniques = this.getUniqueValues(this.listeClients, "nom");
-        //console.log('LAAA',this.clients);
         this.processedCdr$.next(data);
         this.processedCdr$.pipe(takeUntil(this._destroy$))
         .subscribe((d) => {
@@ -208,7 +206,6 @@ export class CdrComponent implements OnInit,  OnDestroy,AfterViewInit {
   } */
 
   calculerTotalPrixVente() {
-    // console.log(this.sort);
     this.totalPrixVente = 0; // Réinitialiser le total à 0 avant le calcul
 
     this.totalTemps = 0;
@@ -218,7 +215,6 @@ export class CdrComponent implements OnInit,  OnDestroy,AfterViewInit {
     }
   }
   /* calculerTotalTemps() {
-    // console.log(this.sort);
     // Réinitialiser le total à 0 avant le calcul
 
      // Parcourir la liste des clients et accumuler les valeurs de "client.prixvente"
@@ -279,7 +275,6 @@ export class CdrComponent implements OnInit,  OnDestroy,AfterViewInit {
       setTimeout(() => this.processedCdr$.next(this.saf.onFiltre('cdr', target, type, method, this[values], this.listeClients)), 1);
       //setTimeout(() => this.processedFiltre$.next(this.saf.onFiltre('filtre', target, type, method, this[values], this.selection.selected)), 1);
       //  this.selection.select(...this.saf.onFiltre('cdr', target, type, method, this[values], this.listeClients));
-      //console.log(this.selection.selected);
       this.selection.clear();
       this.totalPrixVente = 0; // Réinitialiser le total à 0 avant le calcul
 
@@ -328,7 +323,6 @@ export class CdrComponent implements OnInit,  OnDestroy,AfterViewInit {
    // this.calculerTotalPrixVente();
 
     //this.tests = this.getUniqueValues(this.listeClients,'nomuser')
-   // console.log(this.tests);
   //}
  /*  applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -423,7 +417,6 @@ export class CdrComponent implements OnInit,  OnDestroy,AfterViewInit {
       const dateFin = this.dateappel2 //this.filtresForm.get("end").value;
 
      // dateFin = new Date(dateFin);
-    //console.log(dateClient, dateDebut, dateFin);
     // Comparer si la date du client se situe entre les dates de début et de fin
     // Le résultat de la comparaison est true si la date du client est égale ou postérieure à la date de début et inférieure ou égale à la date de fin
       if (dateClient >= dateDebut && dateClient <= dateFin) {
@@ -448,7 +441,6 @@ export class CdrComponent implements OnInit,  OnDestroy,AfterViewInit {
   toggleAllRows() {
    // this.processedCdr$.subscribe((d)=>{
     //this.dataSource.data = d;
-   // console.log('zozozozo',this.dataSource.data, this.selection.selected.length);
 
     if (this.isAllSelected()) {
       this.selection.clear();
@@ -457,22 +449,18 @@ export class CdrComponent implements OnInit,  OnDestroy,AfterViewInit {
     }
 
     this.calculerTotalPrixVente();
-   // console.log(2,this.dataSource.data );
 
     this.selection.select(...this.dataSource.data);
-   //console.log(this.selection);
   //})
   }
 
   /** The label for the checkbox on the passed row */
   checkboxLabel(row?: any): string {
     if (!row) {
-      //console.log(this.selection);
       this.calculerTotalPrixVente();
       return `${this.isAllSelected() ? "deselect" : "select"} all`;
     }
     this.calculerTotalPrixVente();
-    //console.log(this.selection);
     return `${this.selection.isSelected(row) ? "deselect" : "select"} row ${
       row.position + 1
     }`;
@@ -557,5 +545,5 @@ for (const obj of data) {
   }
 
 
- 
+
 }

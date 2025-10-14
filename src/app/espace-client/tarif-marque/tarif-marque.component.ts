@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
   AuthenticationService,
-  CatalogueService, 
+  CatalogueService,
 } from '@core/_services';
 import { environment } from '@env';
 import { Subject } from 'rxjs';
@@ -54,7 +54,6 @@ export class TarifMarqueComponent implements OnInit {
         let firstCharsSet: Map<string, string> = new Map<string, string>();
         this.marques.forEach(marque => {
           if (marque[0] && (!firstCharsSet.get(marque[0][0])) ) {
-             // console.log(marque[0][0], marque[0].replace(/\s/g, ''));
               firstCharsSet.set(marque[0][0], marque[0].replace(/\s/g, ''));
           }
       });
@@ -68,7 +67,7 @@ export class TarifMarqueComponent implements OnInit {
     this.http.get<any[]>(`${environment.apiUrl}/Listexlstarifmarque.php`, {
       params: {
         tsearchMrq: marque[1],
-       
+
       },
       withCredentials: true,
     }).subscribe((data) => {

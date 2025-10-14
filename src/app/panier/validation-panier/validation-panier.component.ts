@@ -458,8 +458,6 @@ export class ValidationPanierComponent implements OnInit, OnDestroy {
 
   }
 
-    // console.log(frais,'CAN YOU FEEL MY HEART',this.grilleTrans,"grilleFiltre", grilleFiltre,'typeenvoie',typeEnvoi ,' transporteur', transporteur, 'nbHorsGab', nbHorsGab, 'codepostal', codepostal);
-
     if (grilleFiltre) {
       ({
         portP,
@@ -573,14 +571,12 @@ export class ValidationPanierComponent implements OnInit, OnDestroy {
     return true;
   }
    */
-  console.log(tableau);
 
 
 
   if (tableau.length >= 1) {
     const auMoinsUnLDF = tableau.some(item => item.etat == 'LDF');
     const toutesLesMarquesIdentiques = tableau.every((element) => element.marque === 'NITR'); //Pour l'instant on fais que nitram jusqua ce qua sa change pour x raison
-console.log(toutesLesMarquesIdentiques);
 
 
     if (toutesLesMarquesIdentiques && this.panierPort.totalht >= 600) {

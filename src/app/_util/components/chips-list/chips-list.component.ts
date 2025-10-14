@@ -76,7 +76,6 @@ export class ChipsListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   /** Initialisation de ChipsListComponent */
   ngOnInit(): void {
-    // console.log("get chipped");
     /*fromEvent(this.window.window, 'resize')
       .pipe(takeUntil(this._destroy$), debounceTime(20))
       .subscribe(() => {

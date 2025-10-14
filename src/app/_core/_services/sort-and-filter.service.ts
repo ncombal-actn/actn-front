@@ -82,7 +82,6 @@ export class SortAndFilterService {
 
         if (filters) {
             for (const filter of filters.values()) {
-                // console.log("filter", filter, filter.type);
                 switch (filter.type) {
                     case 'array':
                         arr = this._filtrerArray(filter, arr);

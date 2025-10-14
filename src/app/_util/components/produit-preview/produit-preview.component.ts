@@ -16,7 +16,7 @@ import {  Router } from '@angular/router';
 	selector: 'app-produit-preview',
 	templateUrl: './produit-preview.component.html',
 	styleUrls: ['./produit-preview.component.scss'],
-	
+
 })
 /**
  *
@@ -148,7 +148,7 @@ export class ProduitPreviewComponent implements OnInit, OnDestroy, OnChanges
 	}
 	/**Methode qui gère l'affichage*/
 	getMode():'normal' | 'simple'| 'licences' {
-		
+
 		if (this.simple) {
 			return 'simple';
 		} if(this.modeLicences) {
@@ -159,10 +159,10 @@ export class ProduitPreviewComponent implements OnInit, OnDestroy, OnChanges
 
 	/* Initialisation du ProduitPreviewComponent */
 	ngOnInit(): void
-	{ 
-		
+	{
+
 		/* if (this.authService.currentUser) {
-				this.doesProductHaveCotation();			
+				this.doesProductHaveCotation();
 		} */
 	if(this.modeLicences){
 		// Si le mode licences est activé, on charge les cotations depuis le local storage
@@ -197,8 +197,8 @@ export class ProduitPreviewComponent implements OnInit, OnDestroy, OnChanges
           }, 1000)*/
 				}
 			);
-			
-			
+
+
 
 	}
 
@@ -237,7 +237,6 @@ export class ProduitPreviewComponent implements OnInit, OnDestroy, OnChanges
 
 	/** Edite et renvoit this.produit.photo utilisable dans une URL pour afficher l'image */
 	urlImage(): string {
-		//console.log('this.produit.photo', this.produit.photo);
 		if (this.produit.photo.endsWith('.webp')) {
 			return this.produit.photo.substring(0, this.produit.photo.length - 5);
 		}
@@ -248,7 +247,7 @@ export class ProduitPreviewComponent implements OnInit, OnDestroy, OnChanges
 		}
 	}
 
-	
+
 	/**
 	 * Verifie avec le service de cotation si le client a une cotation pour ce produit
 	 * et applique les modification nécéssaires à l'affichage si c'est le cas
@@ -260,8 +259,7 @@ export class ProduitPreviewComponent implements OnInit, OnDestroy, OnChanges
 		.subscribe(
 			(ret) =>
 			{
-			console.log('ProduitPreviewComponent - doesProductHaveCotation - ret', ret);
-				
+
         ret.forEach((d) => {
           if(d.perm == 'O'){
             this.catationLa = d;
@@ -273,8 +271,8 @@ export class ProduitPreviewComponent implements OnInit, OnDestroy, OnChanges
 }
 			}
 		);
-		
-		
+
+
 	}
 
 	/**On passe le local storage à la fonction */
@@ -285,14 +283,12 @@ export class ProduitPreviewComponent implements OnInit, OnDestroy, OnChanges
 				this.catationLa = cotation;
 
 				this.hasCotation = true;
-				console.log('ProduitPreviewComponent - doesProductHaveCotationLicences - cotation', cotation);
-				
+
 			}
 			//this.hasCotation = cotation.length >= 1;
 
 
 	//	this.cotationLaParent = fullCot.allCotations;
-	//	console.log('Cotation chargée:', this.cotationLaParent);
 
 		})
 	}
@@ -310,13 +306,11 @@ export class ProduitPreviewComponent implements OnInit, OnDestroy, OnChanges
 	getQtePriceAppliedIndex(event: number)
 	{
 		this.qtePriceAppliedIndex = this.cartService.cart.items[this.produit.reference]?.priceByQtyAppliedIndex;
-		
+
 		if (this.qtePriceAppliedIndex == undefined)
 			{
 				this.qtePriceAppliedIndex = 0;
 			}
-		//console.log('ProduitPreviewComponent - getQtePriceAppliedIndex - this.qtePriceAppliedIndex', this.qtePriceAppliedIndex, this.cartService.cart.items);
-		// console.log(this.qtePriceAppliedIndex, event, this.produit.qtePrice);
 	}
 
   fullString(s: string){

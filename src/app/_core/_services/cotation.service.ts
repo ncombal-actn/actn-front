@@ -89,8 +89,8 @@ export class CotationService {
       if (storedCotations) {
         // Parse the stored data if it exists
         const parsedData = JSON.parse(storedCotations);
-     
-        
+
+
         // Assuming cotations is a property of the parsed data
         if (parsedData && parsedData.cotations) {
           cotations = parsedData.cotations;
@@ -169,13 +169,11 @@ export class CotationService {
   public getCotationsFromSession(): any | null {
     if (isPlatformBrowser(this.platformId)) {
       // Only access localStorage if running in the browser
-      console.log("getCotationsFromSession called on client side");
-      
+
       const cotations = localStorage.getItem("cotationData");
       return cotations ? JSON.parse(cotations) : null;
     }
-    console.log("getCotationsFromSession called on server side, returning null");
-    
+
      const cotations = localStorage.getItem("cotationData");
       return cotations ? JSON.parse(cotations) : null;
   }

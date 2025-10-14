@@ -60,8 +60,7 @@ export class PanierRowComponent implements OnInit, OnDestroy, AfterContentInit {
 
 
       this.cartService.cart$.pipe(takeUntil(this._destroy$)).subscribe((d) => {
-        //console.log('dans panier-row cartService.cart$', d);
-        
+
         this.wrongValue = (this.cartService.cart.items[this.cartItem.produit.reference]?.cotation?.qtecdemax - this.cartService.cart.items[this.cartItem.produit.reference]?.cotation?.qtecde) < this.cartService.getQteProduit(this.cartItem.produit);
         this.warningOnCotationQte = ( (this.cartService.cart.items[this.cartItem.produit.reference]?.cotation?.qtecdemax - this.cartService.cart.items[this.cartItem.produit.reference]?.cotation?.qtecde) < this.cartService.getQteProduit(this.cartItem.produit) );
       });

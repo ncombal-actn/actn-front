@@ -51,8 +51,6 @@ export class TicketComponent implements OnInit
 	onFormSubmit()
 	{
 
-
-		// console.log("this.ticketForm.valid", this.ticketForm.valid);
 		if (this.ticketForm.valid)
 		{
 			this.submitRequest();

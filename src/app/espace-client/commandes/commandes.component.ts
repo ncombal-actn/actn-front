@@ -119,8 +119,8 @@ export class CommandesComponent implements OnInit {
 
     setTimeout(() => {
       this.filtres.set('marque', []);
-     
-      
+
+
       if (this.route.snapshot.data.filDArianne[0].url === 'retours') {
         this.page = 'rma';
       } else {
@@ -145,7 +145,6 @@ export class CommandesComponent implements OnInit {
       .subscribe(
         (c) => {
           this.cmd = c;
-          // console.log("CommandesEntete", c);
           callback();
         },
         (error) => {
@@ -213,9 +212,9 @@ export class CommandesComponent implements OnInit {
   }
 
   resetFilterMarque(filtreName: string ) {
-   
+
     this.filtres.delete(filtreName);
-   
+
     this.onSearch(filtreName, '');
 
   }
@@ -243,7 +242,7 @@ export class CommandesComponent implements OnInit {
       .get<any>(`${environment.apiUrl}/CommandesTrackingColis.php`, {
         withCredentials: true,
         responseType: 'json'
-        
+
       });
     /* Subscribe */
     this.numColi$ = this.numColi$.subscribe((ret) => {
@@ -300,13 +299,11 @@ export class CommandesComponent implements OnInit {
         }
         /* Stocker les colis par BL */
         blBuffer.set(currentBl.toString(), colisBuffer);
-        // console.log(blBuffer);
       }
       /* Stocker la liste des colis trié par BL dans une des cases par commande */
       this.sortedNumColis.set(currentCmd.toString(), blBuffer);
     });
 
-    // console.log('Numero de Colis formaté : ', this.sortedNumColis);
     this.loadingOver();
   }
 
@@ -315,7 +312,6 @@ export class CommandesComponent implements OnInit {
     let ret = this.cmdNumSeries.filter((serial) => {
       return (serial.bp == livraison.numbp);
     });
-    // console.log("Livraison Serials : ", ret);
 
     return (ret);
   }
@@ -323,7 +319,6 @@ export class CommandesComponent implements OnInit {
     let ret = serials.filter((serial) => {
       return (serial.produit == produit.produit);
     });
-    // console.log("Produit Serials : ", ret);
 
     return (ret);
   }
@@ -386,8 +381,6 @@ export class CommandesComponent implements OnInit {
       }
     );
 
-    // console.log("commande", commande);
-
     this.cartService.addSavedCart(commande);
   }
 
@@ -397,21 +390,16 @@ export class CommandesComponent implements OnInit {
 
   loadingOver() {
     this.loading = false;
-    // console.log("Loading Over");
   }
 
   /**
    * Revois le lien de la fiche du produit à partir de sa/son seul(e) reference/ID :string
    */
   linkToProduct(produitId: string) {
-    // console.log("link", produit.produit);
     this.produitService.getProduitById(produitId)
       .pipe(take(1))
       .subscribe(
         (ret) => {
-          // console.log("ret link", ret);
-          // console.log("test link 1", String(this.produitService.lienProduit(ret)));
-          // console.log("test link 2", String(this.produitService.lienProduit(ret)).replace(/,/g, "/"));
           this.router.navigateByUrl(
             String(this.produitService.lienProduit(ret))
               .replace(/,/g, "/")
@@ -505,7 +493,6 @@ export class CommandesComponent implements OnInit {
 
   quantChange(event) {
     this.quant = parseInt(event);
-    // console.log(this.quant);
   }
 
   selectProduit(produit, valid?) {
@@ -620,7 +607,6 @@ export class CommandesComponent implements OnInit {
       return ((arr as string).toUpperCase());
     }
     if (typearr == "Array") {
-      // console.log("array detected");
       return ((arr as Array<string>).map(
         (elem) => {
           return (elem.toUpperCase());
@@ -632,14 +618,10 @@ export class CommandesComponent implements OnInit {
 
   filtrerCommandes(): void {
     let commandes = this.untouchedFormatCmd;
-    // console.warn("this.filtres.keys()", this.filtres.keys());
     for (const target of this.filtres.keys()) { // pour chaque filtre
-      // console.warn("target", target);
       commandes = commandes.filter((commande: Array<any>) => {
         let pass = false;
-        // console.warn("commande", commande);
         for (const livraison of commande) { // avec chaque commande
-          // console.warn("livraison", livraison);
           if (!pass && Object.keys(livraison).find(key => key === target) != null) {
             pass = this.filtres.get(target) != null ? this.arrayToUpper(livraison[target]).includes(this.arrayToUpper(this.filtres.get(target))) : true;
           } else {
@@ -655,7 +637,6 @@ export class CommandesComponent implements OnInit {
               } else {
                 this.arrayToUpper(details[target]);
                 if (!pass && this.arrayToUpper(details[target]).includes(this.arrayToUpper(this.filtres.get(target)))) {
-                  // console.log("go");
                   pass = true;
                 }
               }
@@ -679,7 +660,7 @@ export class CommandesComponent implements OnInit {
     this.currentSearchId = setTimeout(
       () =>
       {
-      
+
         this.filtres.set(target, event);
         this.filtrerCommandes();
       },
@@ -698,7 +679,6 @@ export class CommandesComponent implements OnInit {
   }
 
   getServerData(event?: PageEvent) {
-    // console.log(event);
     if (event) {
       this.pageIndex = event.pageIndex;
       this.pageSize = event.pageSize;

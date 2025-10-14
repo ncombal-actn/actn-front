@@ -34,7 +34,7 @@ export class ContratModificationComponent implements OnInit, OnDestroy, AfterVie
 
     newLicence: Produit = null;
     newLicenceArray: Produit[] = [];
-    selectedLicence: Produit = null; 
+    selectedLicence: Produit = null;
     // Gestion des licences multiplicatives
     mul = false;
     max = Number.MAX_SAFE_INTEGER;
@@ -44,7 +44,7 @@ export class ContratModificationComponent implements OnInit, OnDestroy, AfterVie
     added = false;
 
     //MIDI MINUIT FAUT FAIRE TOURNER LE REFOUR
-    
+
     licenceForm: FormGroup = new FormGroup({});
     swapCart = new Map<string, CartItem>();
 
@@ -87,7 +87,7 @@ export class ContratModificationComponent implements OnInit, OnDestroy, AfterVie
             this.findLicence();
         }
 
-    } 
+    }
     */
 
     continue = false;
@@ -113,15 +113,15 @@ export class ContratModificationComponent implements OnInit, OnDestroy, AfterVie
         private cotationService: CotationService,
         //private tempCartService: TempCartService,
         private tempCartService: CartService,
-       
+
         private fb: FormBuilder,
-    ) { 
+    ) {
         effect(() => {
             const value = this.ajoutPoste();
-        
+
             this.selectedPosteMul = 0;
             this.noContinue();
-        
+
             if (!value) {
               this.resetNbPoste();
               this.findLicence();
@@ -133,8 +133,7 @@ export class ContratModificationComponent implements OnInit, OnDestroy, AfterVie
  /*    onCotationLoaded() {
   const fullCot = this.cotationService.getCotationsFromSession();
   this.cotationLaParent = fullCot.allCotations;
-  console.log('Cotation chargée:', this.cotationLaParent);
-  
+
   // Ici, tu es sûr que la cotation est bien définie !
 } */
 
@@ -148,7 +147,7 @@ export class ContratModificationComponent implements OnInit, OnDestroy, AfterVie
      //   this.onCotationLoaded();
 
       /*   this.licenceForm.get('produit')?.valueChanges.subscribe((produit: Produit) => {
-         
+
            // this.durees = produit?.criterevalue20 ||'';
            // this.postes = produit?.postes || [];
             this.licenceForm.get('duree')?.reset(); // Réinitialiser le champ durée
@@ -166,21 +165,21 @@ export class ContratModificationComponent implements OnInit, OnDestroy, AfterVie
             this.filtresMarque = history.state.filtresMarque;
 
             this.tempCartService.emptyCart();
-                       
-           
+
+
             this.selectedDuree = this.licenceOfFiltres?.[this.entries.duree];
-          
-          
+
+
             this.produitService.getProduitsRenouvellement(this.licence.produit.reference).subscribe(data=>{
-            
+
                 this.newLicenceArray = data
-               
+
                 this.getCritereValue(this.newLicenceArray);
         })
-           
+
 
           // on verra après  this.resetNbPoste();
-          
+
           //avant
           //this.populateFormulaire();
           // this.findLicence();
@@ -190,15 +189,15 @@ export class ContratModificationComponent implements OnInit, OnDestroy, AfterVie
             // this.upgradable = this.filtresMarqueOf.find(el => el[this.entries.type] === 'UPGRADE' && el['val02'] !== this.licenceOfFiltres['val02']) != null;
             // Nouvelle acquisition pareil on laisse ?
             // this.type = this.licenceService.isRenewable(this.licence) ? '' : 'new';
-            
-            
+
+
             // Notion de renew ?
             this.renew = true //this.filtresMarqueOf.find(filtreMarqueOf => filtreMarqueOf[this.entries.type] === 'RENEW') != null;
 
 
             this.userService.getProfil().subscribe(data => {
-                
-                
+
+
                 this.transportService.setTVA(data.TauxTVA);
                 this.transportService.setMail(data.TIERSMEL);
                 this.transportService.chargerGrille().subscribe(data => {
@@ -207,31 +206,27 @@ export class ContratModificationComponent implements OnInit, OnDestroy, AfterVie
             });
             this.ready = true;
         }
-       
+
     }
 
     /**
      * Remplis ce putain de formulaire avec les valeurs de la licence à renouveler par rapport au produit selectionner.
      */
     popFormulaire(): void {
-        console.log('POPFORMULAIURE',this.entries,this._type, this.renew );
-        
 
         this.postes.clear();
         this.durees.clear();
         const array = []
         array.push(this.selectedLicence)
-        console.log('array',array);
-        
+
         array
-       /* 
+       /*
        COMPRENDRE CETTE MERDE (g pas réussi fuck it)
        .filter(filtreMarque =>
             (this.entries.type !== '' ? (!this.renew || filtreMarque[this.entries.type] === this._type.toUpperCase()) : true)
             && this.checkOtherFilters(filtreMarque)) */
-            .forEach(filtreMarque => {          
-                console.log('popFormulaire', filtreMarque, this.entries.duree);
-                
+            .forEach(filtreMarque => {
+
                 if (this.entries.postes !== '') {
                     this.postes.add(filtreMarque[this.entries.postes]);
                 }
@@ -240,20 +235,19 @@ export class ContratModificationComponent implements OnInit, OnDestroy, AfterVie
                 }
             });
 
-            
+
     }
 
-   
+
 
 
 
 /* getCritereValue(array: any[]): any {
-    console.log('getCritereValue', array);
-  
+
     array.forEach((obj, index) => {
       for (const [key, value] of Object.entries(obj)) {
         const valKey = 'val' + String(index).padStart(2, '0');
-  
+
         switch (value) {
           case 'Nombre':
             this.entries.postes = valKey;
@@ -265,36 +259,35 @@ export class ContratModificationComponent implements OnInit, OnDestroy, AfterVie
             this.entries.duree =  'val10'//valKey;
             break;
         }
-  
-        console.log('key:', key, 'value:', value, 'entries:', this.entries);
+
       }
     });
-  
+
   } */
 
 
     /**
-     * 
+     *
      * Prend en paramètre un tableau d'object est remplis les critère du formulaire ,
      */
     getCritereValue(array: any[]): any{
         const test = array[0]
-       
+
         for (const [key, value] of Object.entries(test)) {
 
             switch (value) {
                 case 'Nombre':
                     this.entries.postes = 'criterevalue' + key.substr(key.length - 2, 2);
-                    
-                    
+
+
                     break;
                 case 'Type d\'achat':
                     this.entries.type = 'criterevalue' + key.substr(key.length - 2, 2);
-                    
+
                     break;
                 case 'Durée':
                     this.entries.duree = 'criterevalue' + key.substr(key.length - 2, 2);
-                   
+
                     break;
             }
         }
@@ -307,7 +300,7 @@ export class ContratModificationComponent implements OnInit, OnDestroy, AfterVie
      */
     filtreDuree(): string[] {
         return Array.from(this.durees).filter(d => !!d && d.trim() !== '');
-   
+
     }
 
 
@@ -317,8 +310,8 @@ export class ContratModificationComponent implements OnInit, OnDestroy, AfterVie
             .subscribe((vc: QueryList<ValidationPanierComponent>) => {
                 if (!this._enduserSet && vc.first != null) {
                     setTimeout(() => {
-                      
-                        
+
+
                         //vc.first.setCartService(this.tempCartService);
                         vc.first.panierForm.value.transporteur = 'MAI';
                         this.licence.client.serie = this.licence.serie;
@@ -378,12 +371,9 @@ export class ContratModificationComponent implements OnInit, OnDestroy, AfterVie
      */
     onContinue(): void {
 
-      //  console.log('NON MAMAN JE ME DROGUE PAS',this.cartService.cart.items); 
-     
         this.lockCommande = true;
         this.continue = true;
         this.tempCartService.emptyCart();
-        console.log('Bonjour les ergonomes du numériques.',this.mul ,this.selectedPosteMul,this.selectedLicence, this.seletedCotation);
 
         if (this.mul === false) {
             this.tempCartService.addProduit(this.selectedLicence, this.selectedPosteMul,this.seletedCotation); //this.newLicence
@@ -413,9 +403,9 @@ export class ContratModificationComponent implements OnInit, OnDestroy, AfterVie
         this.ajoutPoste.set(value);
         this.selectedPosteMul = 0;
         this.noContinue();
-      
+
         const posteCtrl = this.licenceForm.get('postes');
-      
+
         if (value) {
           posteCtrl?.enable();
         } else {
@@ -429,9 +419,9 @@ export class ContratModificationComponent implements OnInit, OnDestroy, AfterVie
       toggleAjoutPoste() {
         this.setAjoutPoste(!this.ajoutPoste());
       }
-      
 
-      
+
+
 
     /**
      * Initialise le nombre de poste à la valeur de la licence à renouveler.
@@ -446,7 +436,6 @@ export class ContratModificationComponent implements OnInit, OnDestroy, AfterVie
             }
         }
 
-        //console.log('exit');
         this.selectedPosteMul = +this.licence.quantite || 1;
     }
 
@@ -454,15 +443,15 @@ export class ContratModificationComponent implements OnInit, OnDestroy, AfterVie
      * Remplit le formulaire avec les valeurs de la licence à renouveler.
      */
     populateFormulaire(): void {
-        
+
         this.postes.clear();
         this.durees.clear();
         this.filtresMarqueOf
         .filter(filtreMarque =>
             (this.entries.type !== '' ? (!this.renew || filtreMarque[this.entries.type] === this._type.toUpperCase()) : true)
             && this.checkOtherFilters(filtreMarque))
-            .forEach(filtreMarque => {          
-                
+            .forEach(filtreMarque => {
+
                 if (this.entries.postes !== '') {
                     this.postes.add(filtreMarque[this.entries.postes]);
                 }
@@ -470,10 +459,10 @@ export class ContratModificationComponent implements OnInit, OnDestroy, AfterVie
                     this.durees.add(filtreMarque[this.entries.duree]);
                 }
             });
-         
+
     }
 
-   
+
 
     /**
      * Retrouve la licence correspondante aux valeurs du formulaire
@@ -525,7 +514,7 @@ export class ContratModificationComponent implements OnInit, OnDestroy, AfterVie
 
          //Ce if était en commentaire, mais il sert maintenant. A voir si il fait pas tout crash
           if (licence['produit'] != null) {
- 
+
                 if (this.entries.postes !== '') {
                     this.mul = licence[this.entries.postes].includes('à');
 
@@ -587,7 +576,7 @@ export class ContratModificationComponent implements OnInit, OnDestroy, AfterVie
         }
     }
 
-   
+
 
     /**
      * Vérifie qu'une licence match tous les critères de la licence à renouveler.

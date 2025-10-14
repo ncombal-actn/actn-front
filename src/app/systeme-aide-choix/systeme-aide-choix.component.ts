@@ -359,18 +359,14 @@ export class SystemeAideChoixComponent implements OnInit {
                     description
                 });
             }
-            // console.log("seqSet", seqSet);
             this.legendeGamme = Array.from(seqSet).sort((s1, s2) => s1[1]['order'] - s2[1]['order']).map(seq => seq[1]);
             this.legendeGamme = this.legendeGamme.filter(
                 (elem) =>
                 {
-                    // console.log(elem, !!elem.libelle);
                     return (!!elem.libelle);
                 }
             );
-            // console.log("legendeGamme", this.legendeGamme);
             this.listNomCom.sort((el1, el2) => el1.sequence - el2.sequence);
-            // console.log("listNomCom", this.listNomCom);
         });
     }
 
@@ -499,7 +495,6 @@ export class SystemeAideChoixComponent implements OnInit {
         this.filtresForm = this.fb.group({});
         const ligne2 = this.source2.filter(element => element.val01 === this.nomComActive.libelle && element.val02 === this.nomSubComActive.libelle);
         const ligne1 = this.source1.filter(element => element.marque === this.marqueActive.code && element.NIV1 === ligne2[0].NIV1 && element.NIV2 === ligne2[0].NIV2 && element.NIV3 === ligne2[0].NIV3);
-        // console.log(ligne2);
         for (let i = 3; i < 21; i++) {
             let iter: string;
             if (i < 10) {
@@ -668,10 +663,10 @@ export class SystemeAideChoixComponent implements OnInit {
         }
         this.userService.getProduits(this.numProduits).subscribe(ret => {
            if (ret) {
-            
+
                this.produits = ret.sort((p1, p2) => +p1.prix - +p2.prix);
            }
-            
+
             this.loading = false;
         });
     }

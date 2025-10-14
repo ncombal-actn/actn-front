@@ -104,7 +104,6 @@ export class FactureComponent  implements OnInit, OnDestroy{
       setTimeout(() => this.processedClient$.next(this.saf.onFiltre('facture', target, type, method, this[values], this.listeFactures)), 1);
     //setTimeout(() => this.processedFiltre$.next(this.saf.onFiltre('filtre', target, type, method, this[values], this.selection.selected)), 1);
     //this.selection.select(...this.saf.onFiltre('cdr', target, type, method, this[values], this.listeClients));
-    //console.log(this.selection.selected);
       this.selection.clear();
       this.total.totalHT = 0; // Réinitialiser le total à 0 avant le calcul
       this.total.totalTTC = 0
@@ -187,11 +186,9 @@ toggleAllRows() {
 /** The label for the checkbox on the passed row */
 checkboxLabel(row?: any): string {
   if (!row) {
-    //console.log(this.selection);
 
     return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
   }
-  //console.log(this.selection);
   return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
 }
 

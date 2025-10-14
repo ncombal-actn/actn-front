@@ -91,7 +91,7 @@ export class OuvertureDeCompteComponent implements OnInit {
 
   ngOnInit() {
 
-   // this.loadReCaptcha(); 
+   // this.loadReCaptcha();
 
     this.ouvertureDeCompteForm = this.fb.group({
       societe: this.fb.group({
@@ -192,12 +192,6 @@ export class OuvertureDeCompteComponent implements OnInit {
   onSubmit() {
     this.displaySuccess = '';
     let formValid = true;
-
-    // console.log("test TVA");
-    // console.log(this.IsTva("FR81441914272"));
-    // console.log("test SIRET");
-    // console.log(this.IsSiret("83426861700018"));
-    // console.log("Submiting", this.ouvertureDeCompteForm);
 
     if (!this.checkboxState) {
       this.showMessageCheckbox = true;
@@ -612,7 +606,7 @@ export class OuvertureDeCompteComponent implements OnInit {
 
   editValidatorsDependingOnBase(data): void
 	{
-		
+
 		const siretCtrl = this.ouvertureDeCompteForm.get("societe.siret");
 		const codePostalCtrl = this.ouvertureDeCompteForm.get("facturation.codePostal");
 		//Si on est en france on doit avoir un siret et un codepostal valide sinon on desactive les champs
@@ -629,7 +623,7 @@ export class OuvertureDeCompteComponent implements OnInit {
 
 			codePostalCtrl.enable();
 			codePostalCtrl.setValidators([Validators.required, Validators.maxLength(5)]);
-			
+
 		}
 		else
 		{
@@ -637,7 +631,7 @@ export class OuvertureDeCompteComponent implements OnInit {
 			siretCtrl.clearValidators();
 			siretCtrl.setValue(null);
 			siretCtrl.disable();
-			
+
 			codePostalCtrl.clearValidators();
 			codePostalCtrl.setValue(null);
 			codePostalCtrl.disable();
@@ -646,7 +640,7 @@ export class OuvertureDeCompteComponent implements OnInit {
 		siretCtrl.updateValueAndValidity();
 	}
 
-  // lien avec le fichier texte de la bulle d'aide pour les numéros EAN  
+  // lien avec le fichier texte de la bulle d'aide pour les numéros EAN
   chargerAideEmail(): Observable<string> {
     if (environment.production) {
       return this.http.get(`${environment.backend}/aideOuvertureDeCompte/aideEmaildématérialisés.txt`,

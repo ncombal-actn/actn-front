@@ -71,11 +71,9 @@ export class CatalogueService implements OnInit {
           this.listCat.set([categorie.value.id, categorie.value.label], subCat); //, categorie.value.label2
         }
       }
-     
-      
+
+
       return this.listCat; // après formatage de la liste en map recursive, on la renvoi dans observable
-    }, err => {
-      //console.log(err);
     }));
   }
 
@@ -99,7 +97,7 @@ export class CatalogueService implements OnInit {
         key = keys.next();
       }
     };
-    
+
     return search(labels, this.listCat, []);
   }
 
@@ -107,7 +105,7 @@ export class CatalogueService implements OnInit {
    * Récupère la structure du catalogue.
    */
   getStructure() {
-    
+
     this.mapCategoriesLabelxID = this._structures$.pipe(
       map(tree => this.generateCategoriesIDsMap(tree, new Map())));
     return this._structures$;
@@ -146,7 +144,6 @@ export class CatalogueService implements OnInit {
     acc: Map<string, string>
   ): Map<string, string> {
     tree.nodes.forEach(node => {
-      //console.log('STAY IN ',node);
 
       acc.set(node.value.label, node.value.id);
       if (node.nodes) {
@@ -219,7 +216,6 @@ export class CatalogueService implements OnInit {
    * @param marque Chaine de caractère filtrant les produits desquels on retourne les filtres par marque
    */
   private _getAvailableFiltres(position: CataloguePosition, search: string, marque: string) {
-    // console.log('niv1', position.category, 'niv2', position.subCategory, 'niv3', position.subSubCategory);
     return this.httpClient.get<Filtre[]>(`${environment.apiUrl}/Filtres.php`,
       {
         params: new HttpParams().set('search', search || '')

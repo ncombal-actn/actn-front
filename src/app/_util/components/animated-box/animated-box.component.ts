@@ -31,7 +31,6 @@ export class AnimatedBoxComponent implements OnInit
 		{
 			this.couleur = "#003264";
 		}
-		// console.log("type", this.type, " , linkUrl", this.linkUrl, " , imgUrl", this.imgUrl, " , titre", this.titre, " , libelle", this.libelle, " , description", this.description);
 	}
 
 }

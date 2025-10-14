@@ -109,14 +109,12 @@ export class SuiviRetourComponent implements OnInit, OnDestroy {
     const attente = new Subject<void>();
     this.rmaService.chargerSuivi().subscribe(
       data => {
-        //console.log(data);
         this.suiviList = data;
         this.suiviList = this.suiviList.filter(element => {
           return this.isValidSuivi(element);
         });
         this.suiviList.sort(this.compareDates);
         this.suiviList.forEach(element => element.marque);
-        //console.log(this.suiviList);
         attente.next();
         attente.complete();
       },

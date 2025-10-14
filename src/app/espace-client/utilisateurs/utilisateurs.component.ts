@@ -160,13 +160,13 @@ export class UtilisateursComponent implements OnInit {
     //this.webForm.get('mdp').updateValueAndValidity();
   }
 
- 
+
 
   refreshList() {
     this.accesWeb = [];
     this.contacts = [];
     this.userService.getClients().subscribe((data) => {
-     
+
       this.contacts = data;
       this.contacts.forEach((contact) => {
         this.accesWeb.push(contact);
@@ -316,7 +316,7 @@ export class UtilisateursComponent implements OnInit {
    * Vérifie et valide le formulaire 'webForm' pour ajouter un compte utilisateur au client
    */
   onSubmitAddWeb() {
-    
+
     if(this.idForm.value.ident === null){
       this.idForm.value.ident = ""
     }
@@ -332,7 +332,7 @@ export class UtilisateursComponent implements OnInit {
               this.overlayElement.nativeElement.click();
               this.refreshList();
               this.refresh();
-              
+
             } else {
               this.refresh();
               this.textBtnErr = ret[0].message;
@@ -409,7 +409,6 @@ export class UtilisateursComponent implements OnInit {
       }
     });
     this.adminNbr = nbrOfAdmins;
-    // console.log("nbrOfAdmins", nbrOfAdmins);
     return nbrOfAdmins;
   }
 

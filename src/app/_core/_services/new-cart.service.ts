@@ -23,7 +23,6 @@ export class NewCartService {
     if(this.cookieService.get('jwt')){
       let decoded = jwtDecode(this.cookieService.get('jwt')) as any;
       this.idUser = decoded.data.user.id;
-      //console.log(this.idUser, this.cart());
     }
 
   }
@@ -46,7 +45,6 @@ export class NewCartService {
   }
 
   addItem(item: CartItem) {
-    //console.log("zozo",this.cart);
 
     this.cart.update((currentCart) => {
       const existingItem = currentCart.items.find(

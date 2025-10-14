@@ -137,7 +137,6 @@ export class PrestationsComponent implements OnInit, OnDestroy {
         return this.http.get<Produit[]>(`${environment.apiUrl}//ListeProduits.php?search=&marque=&niv1=SER&niv2=PRE&niv3=`)
             .subscribe(
                 data => {
-                    //console.log('test',data);
 
                     this.prestations = data;
                     this.TableauCategory(data)
@@ -192,12 +191,11 @@ export class PrestationsComponent implements OnInit, OnDestroy {
         setTimeout(() => {
             if (this.prestationForm.valid){
                 this.prestationsService.sendForm(this.prestationForm, this.panier)
-                    
+
                     .subscribe(
                         (ret) =>
                         {
-                            console.log('ret',ret);
-                            
+
                             this.sendError = ret;
                             if (ret) {
                                 this.router.navigate(['confirmation'], { relativeTo: this.route });
@@ -217,21 +215,16 @@ export class PrestationsComponent implements OnInit, OnDestroy {
       let test = null;
       //sousTableau =[]
       this.TrieTableau(array)
-      //console.log('ICI',array);
 
       array.forEach(element => {
           index++
           if (element.niveaucode3 != test){ // Si change de catégorie dans le tableau
-              //console.log('CHO',sousTableau)
-              //console.log('test',sousTableau);
 
               sousTableau = [];
               sousTableau.push(element);
-              //console.log('SOUSOUP',sousTableau);
 
               //Fin
               test = element.niveaucode3
-              //console.log('OKKK',test);
 
               if (sousTableau) { // on enregistre le tableau de produits précédent
 
@@ -239,15 +232,12 @@ export class PrestationsComponent implements OnInit, OnDestroy {
                   categories.push(sousTableau);
               }
           }else{ // on est toujours dans la même catégorie de produits dans 'array'
-              //console.log(index, element);
 
               sousTableau.push(element);
 
           }
 
       });
-      //console.log('LALAL',sousTableau);
-      //console.log('CAT',categories);
       //categories = this.categories
 
     }

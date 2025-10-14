@@ -36,15 +36,13 @@ export class ExternalFileComponent implements OnInit, OnDestroy {
       const headers = new HttpHeaders({
         'Content-Type': 'text/plain'
       });
-      // console.log("page1", this.page);
       if (this.page == "null")
       {
         this.page = this.route.snapshot.url[this.route.snapshot.url.length - 1].path;
       }
-      // console.log("page2", this.page);
       if (this.page === 'Promotions')
       {
-        
+
         this.request = this.http.get(`${environment.htmlLibre}/${this.page}.html`,
           {
             responseType: 'text'
@@ -57,7 +55,7 @@ export class ExternalFileComponent implements OnInit, OnDestroy {
       }
       else if (this.page === 'contacts')
       {
-        
+
         this.request = this.http.get(`${environment.htmlLibre}/${this.page}.htm`,
           {
             responseType: 'text'
@@ -89,7 +87,6 @@ export class ExternalFileComponent implements OnInit, OnDestroy {
             },
             (error) =>
             {
-              // console.log("nope", error);
               this.requestSuccess = false;
             }
           )

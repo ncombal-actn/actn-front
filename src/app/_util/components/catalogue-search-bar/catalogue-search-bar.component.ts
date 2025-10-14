@@ -28,7 +28,7 @@ import { UtilModule } from '@/_util/util.module';
 		MatButtonModule,
 		UtilModule
 	  ]
-	
+
 })
 export class CatalogueSearchBarComponent implements OnInit, OnDestroy {
 
@@ -120,7 +120,6 @@ export class CatalogueSearchBarComponent implements OnInit, OnDestroy {
 			this.localStorage.setItem('searchHistory', JSON.stringify([...this._historique]));
 			this.search.emit(this.searchInput.value);
 			this.router.navigate(['/catalogue/search'], { queryParams: { search: this.removeSpecialChar(this.searchInput.value) } });
-			// console.log("Emit ?");
 			this.predictionService.emitNewCatalogueSearch(this.searchInput.value);
 		}
 	}

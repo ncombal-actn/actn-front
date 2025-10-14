@@ -299,7 +299,6 @@ export class UserService {
 	 */
 	private _parseContacts(): void {
 		this.authService.currentUser$.subscribe(user => {
-			//console.log("user", user);
 			const contacts = [];
 			if (user) {
 				let i = 1;
@@ -328,7 +327,6 @@ export class UserService {
 				contacts.push(this._defaultContact);
 			}
 			this._contacts$.next(contacts);
-			// console.log("contacts", contacts);
 		});
 	}
 }

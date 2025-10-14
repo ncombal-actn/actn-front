@@ -26,7 +26,7 @@ export class ProduitsComponent implements OnInit {
 
   @Input() listMarque: Array<string>;
   /**
-   * Nombre de produits actuellement affichés  
+   * Nombre de produits actuellement affichés
    */
   @Input() toDisplay = 15;
   // Est-ce que l'affichage des produits doit être simplifié ?
@@ -45,10 +45,10 @@ export class ProduitsComponent implements OnInit {
 
   ngOnInit() {
     //this.produits$.next(this.produits);
-    
+
     this.produits.sort((a, b) => Number(b.classe) - Number(a.classe));
-   
-    
+
+
     //this.loadData();
     /* this.produits$.pipe(
      map((produits) => produits.sort((a, b) => Number(b.classe) - Number(a.classe)))
@@ -70,7 +70,6 @@ export class ProduitsComponent implements OnInit {
 
   onScrollDown() {
     this.toDisplay += 5;
-    console.log('ProduitsComponent: onScrollDown', this.produits);
 
     if (this.banniereCompList) {
       //this.banniereCompList.forEach(comp => comp.load());

@@ -19,22 +19,18 @@ export class WindowService  {
     }
   }
   public get innerWidth(): number {
-    //console.log(1)
     return this.isBrowser() ? window.innerWidth : undefined;
   }
 
   public get length(): number {
-    //console.log(2)
     return this.isBrowser() ? window.length : undefined;
   }
 
   public get scrollY(): number {
-    //console.log(3)
     return this.isBrowser() ? window.scrollY : undefined;
   }
 
   public get pageYOffset(): number {
-    //console.log(4)
     return this.isBrowser() ? window.pageYOffset : undefined;
   }
 
@@ -44,13 +40,11 @@ export class WindowService  {
 
 
   public scroll(x: number, y: number): void {
-    //console.log(5)
     if (this.isBrowser()) {
       window.scroll(x, y);
     }
   }
   public open(url: string, target?: string, features?: string): Window | null {
-    //console.log(6)
     return this.isBrowser() ? window.open(url, target, features) : null;
   }
 
@@ -66,36 +60,30 @@ export class WindowService  {
     }
   }
   public alert(message?: any): void {
-    //console.log(8)
     if (this.isBrowser()) {
       window.alert(message);
     }
   }
 
   public setTimeout(handler: TimerHandler, timeout?: number): number {
-    //console.log(9)
     return this.isBrowser() ? window.setTimeout(handler, timeout) : undefined;
   }
 
   public setInterval(handler: TimerHandler, timeout?: number): number {
-    //console.log(10)
     return this.isBrowser() ? window.setInterval(handler, timeout) : undefined;
   }
 
   public clearTimeout(handle?: number): void {
-    //console.log(11)
     if (this.isBrowser()) {
       window.clearTimeout(handle);
     }
   }
 
   public isBrowser(): boolean {
-    //console.log(12, this.platformId, isPlatformBrowser(this.platformId))
     return this.platformId && isPlatformBrowser(this.platformId);
   }
 
   public clearInterval(handle?: number): void {
-    //console.log(13)
     if (this.isBrowser()) {
       window.clearInterval(handle);
     }

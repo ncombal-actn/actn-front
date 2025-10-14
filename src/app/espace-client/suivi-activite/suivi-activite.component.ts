@@ -138,7 +138,7 @@ export class SuiviActiviteComponent implements AfterViewInit, OnInit {
         }
       });
     });
-        
+
   }
 
   /**
@@ -148,7 +148,7 @@ export class SuiviActiviteComponent implements AfterViewInit, OnInit {
     this.http
       .get<any>(`${environment.apiUrl}/ClientCA.php`, {
         withCredentials: true,
-        
+
       })
       .pipe(take(1))
       .subscribe(
@@ -174,8 +174,8 @@ export class SuiviActiviteComponent implements AfterViewInit, OnInit {
     this.http
       .get<any[]>(`${environment.apiUrl}/ClientCAmois.php`, {
         withCredentials: true,
-       
-        
+
+
       })
       .pipe(take(1))
       .subscribe((ret: any) => {
@@ -347,8 +347,8 @@ const uniqueColors = filteredValueData.map((_, index) => getRandomColor(index, f
         this.http
           .get<any>(`${environment.apiUrl}/ClientCAcategorie.php`, {
             withCredentials: true,
-            
-            
+
+
           })
           .pipe(take(1))
           .subscribe((ret) => {
@@ -447,11 +447,9 @@ const uniqueColors = filteredValueData.map((_, index) => getRandomColor(index, f
     let index = this.suiviMarqueFormat.indexOf(keyOfElement);
     if (index != -1) {
       // keyOfElement est dans le tableau
-      // console.log(keyOfElement +" is in the array, removing...")
       this.suiviMarqueFormat.splice(index, 1);
     } // keyOfElement n'est pas dans le tableau
     else {
-      // console.log(keyOfElement +" is not in the array, adding...")
       this.suiviMarqueFormat.push(keyOfElement);
     }
   }
@@ -557,8 +555,8 @@ const uniqueColors = filteredValueData.map((_, index) => getRandomColor(index, f
     this.http
       .get<any>(`${environment.apiUrl}/ClientHitProduit.php`, {
         withCredentials: true,
-        
-        
+
+
 
       })
       .pipe(take(1))

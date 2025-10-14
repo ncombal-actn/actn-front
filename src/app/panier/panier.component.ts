@@ -75,7 +75,7 @@ export class PanierComponent implements OnInit, OnDestroy
      * - Récupère la liste des paniers sauvegardés
      * - Vérifie la possibilité de louer le panier
      */
- 
+
     ngOnInit()
     {
         this.user = this.authenticationService.currentUser;
@@ -110,7 +110,7 @@ export class PanierComponent implements OnInit, OnDestroy
     actualiserPanier() {
         this.disableValidation = true;
         setTimeout(() => {
-         
+
         },100)
         /* recupérer les éléments du panier et les formater pour la requette */
         const cartSave = Object.values(this.cartService.cart.items).map(
@@ -128,8 +128,6 @@ export class PanierComponent implements OnInit, OnDestroy
         const rf = cartSave.map((sc) => (sc.reference));
         const qt = cartSave.map((sc) => (sc.quantite));
       // const cot = cartSave.map((sc) => (sc.cotation));
-      //console.log("rf", rf);
-      //console.log("qt", qt);
         /* Requette 'PanierCalcul.php' */
         if (rf.length > 0) {
             this.http.post<any>(
@@ -145,8 +143,8 @@ export class PanierComponent implements OnInit, OnDestroy
             .pipe(take(1))
             .subscribe(
                     (ret) => {
-                      
-                        
+
+
                         this.updateCart(this.cartService.formSavedProducts(ret), qt);
                         this.loadingCart = false;
                     },
@@ -227,7 +225,6 @@ export class PanierComponent implements OnInit, OnDestroy
                     this.savingCart = false;
                 }
             );
-        /*console.log(ret);*/
     }
 
     /**
@@ -245,12 +242,7 @@ export class PanierComponent implements OnInit, OnDestroy
             })
             .subscribe(
                 (ret) => {
-                    /*console.log("listePanier =", ret);*/
                     // this.listePanier = ret;
-
-                    /*console.log(typeof(this.listePanier));
-*/
-                    // console.log(this.groupByArray(this.listePanier, 'numcommande'));
                     this.listePanier = this.groupByArray(ret, 'numcommande');
                 }
             );
@@ -324,10 +316,6 @@ export class PanierComponent implements OnInit, OnDestroy
     /** Fonction de debug
      * Affiche des informations clefs dans la console du navigateur */
     log() {
-        // console.log('Paniers sauvegardés :', this.listePanier);
-        //console.log('Produit du Panier :', this.cartService.cart.items);
-        // console.log('showDeletePopUp = ', this.showDeletePopUp);
-        // console.log('Longeur du Panier :', this.cartService.cart.length);
     }
 
     /** Applique la valeur booleene donnée à l'index donnée de la liste d'erreur des lignes du panier 'this.panierRowErrors'

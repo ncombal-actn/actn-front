@@ -65,11 +65,10 @@ export class CotationComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._destroy$))
       .subscribe((cotations: Cotation[]) => {
         const cotationMap = this.cotationMap.value;
-        // console.log("cotations", cotations);
         //	this.cotationMap = new Map<string, any[]>(); // reset cotationMap at each trigger of the subscribe
         this.dateMap = new Map<string, number>();
         cotations.forEach((cotation) => {
-          
+
           const produit = new Produit();
           produit.reference = cotation.produit as string;
           produit.qtemaxi = cotation.qtecdemax - cotation.qtecde;
@@ -88,7 +87,7 @@ export class CotationComponent implements OnInit, OnDestroy {
           }
           this.cotationMap.next(cotationMap);
 	this.filteredCotationMap.next(cotationMap);
-	
+
           this.dateMap.set(
             cotation.numcotation.toString(),
             this.cotationService.dateDifferenceInDays(
@@ -97,7 +96,6 @@ export class CotationComponent implements OnInit, OnDestroy {
             )
           );
         });
-        //console.log("cotationMap", this.cotationMap);
       });
     this.cotationService.disabledCotations$ // SUB TO DISABLED COTATIONS
       .pipe(takeUntil(this._destroy$))
@@ -198,7 +196,7 @@ private getCotationData(map: Map<string, any[]>, activeStatus: string) {
     return Array.from(map.entries()).flatMap(([key, value]) => value.map(item => ({
       NumCotation: `${item.cotation.numfrs} - ${key}`,
       Reference: item.produit.reference,
-      Marque: item.cotation.marquelib, // on prend la marque de la cotation, car le produit est pas défini 
+      Marque: item.cotation.marquelib, // on prend la marque de la cotation, car le produit est pas défini
       Designation: item.produit.designation,
       Prix: item.produit.prix,
       QuantiteMaxi: item.produit.qtemaxi,
@@ -217,7 +215,7 @@ private getCotationData(map: Map<string, any[]>, activeStatus: string) {
       prod: "",
     });
     this.showDisabledCotation = false; // Reset the toggle state
-    
+
   }
   showDisabledCotationToggle(): void {
     this.showDisabledCotation = !this.showDisabledCotation;
@@ -245,11 +243,11 @@ private getCotationData(map: Map<string, any[]>, activeStatus: string) {
 
 
   filterCotations(values: any): void {
-  
+
 	const filteredCotations = new Map<string, { produit: Produit; cotation: Cotation }[]>();
 	this.cotationMap.value.forEach((value, key) => {
 	const filteredValue = value.filter(item => {
-		
+
 		return (!values.cotation || item.cotation.numcotation.toLowerCase().includes(values.cotation.toLowerCase())) &&
 			(!values.refCotation || item.cotation.refcot.toLowerCase().includes(values.refCotation.toLowerCase())) &&
 			(!values.marque.length || values.marque.includes(item.produit.marque)) &&
@@ -260,7 +258,7 @@ private getCotationData(map: Map<string, any[]>, activeStatus: string) {
 		filteredCotations.set(key, filteredValue);
 	}
 	});
-  
+
 	const filteredDisabledCotations = new Map<string, { produit: Produit; cotation: Cotation }[]>();
 	this.disabledCotationMap.value.forEach((value, key) => {
 	const filteredValue = value.filter(item => {
@@ -274,7 +272,7 @@ private getCotationData(map: Map<string, any[]>, activeStatus: string) {
 		filteredDisabledCotations.set(key, filteredValue);
 	}
 	});
-  
+
 	this.filteredCotationMap.next(filteredCotations);
 	this.filteredDisabledCotationMap.next(filteredDisabledCotations);
   }
@@ -310,6 +308,6 @@ private getCotationData(map: Map<string, any[]>, activeStatus: string) {
   }
 
   unrollDisabledDetails(index: number): void {
-    this.disabledDisplay[index] = !this.disabledDisplay[index]; 
+    this.disabledDisplay[index] = !this.disabledDisplay[index];
   }
 }

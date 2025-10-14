@@ -293,9 +293,6 @@ export class RmaService {
           this.loadedProduits.next();
           this.currentID = this.authService.currentUser.id;
         },
-        (err) => {
-          //console.log(err);
-        },
         () => {}
       );
     }

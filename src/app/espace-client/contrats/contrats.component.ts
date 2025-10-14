@@ -134,7 +134,7 @@ export class ContratsComponent implements OnInit, OnDestroy, AfterViewInit {
     }));
   }
 
-  ngOnInit(): void {  
+  ngOnInit(): void {
     this.filtresForm = this.fb.group({});
     this.saf.setTri(this._pageID, this._defaultSort, 'date', 'desc');
 
@@ -146,8 +146,8 @@ export class ContratsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.paginator.pageIndex = 0;
       });
     this.licenceService.getLicences()
-    
-      
+
+
     this.licenceService.licences$.pipe(
         map((licences: Array<Licence>) => licences.filter((licence: Licence) => licence.produit.reference !== '')),
         takeUntil(this._destroy$)
@@ -182,7 +182,7 @@ export class ContratsComponent implements OnInit, OnDestroy, AfterViewInit {
         });
     });
 
-   
+
   }
 
   ngOnDestroy(): void {
@@ -391,9 +391,7 @@ export class ContratsComponent implements OnInit, OnDestroy, AfterViewInit {
   modifier(licence: Licence): void {
     this.produits = {a: CartItem.fromObject({produit: {marque: licence.produit.marque, gabarit: 'V'}, qte: 1})};
 
-    console.log("licence", licence);
-    
-    this.licencePopup = licence; 
+    this.licencePopup = licence;
     this.licenceNonTrouvee(licence);
     //Quand les cotations serons ok on pourra supprimer cette ligne
     return;
@@ -404,11 +402,10 @@ export class ContratsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.produitService.getProduitsRenouvellement(licence.produit.reference)// apt700 m300 acn001 atp200
       .pipe(take(1))
       .subscribe(produits => {
-        console.log("produits", produits);
         if (produits.length === 0) {
           this.licenceNonTrouvee(licence);
           return;
-          
+
         }else{
         const lic = {
           produit: {
@@ -442,7 +439,6 @@ export class ContratsComponent implements OnInit, OnDestroy, AfterViewInit {
             // Recherche le filtreMarquedetails correspondant
             const licenceOfFiltres = filtresMarqueOf.find(fmo => fmo['produit'] === lic.produit.reference);
 
-            // console.log("licenceOfFiltres", licenceOfFiltres);
             if (licenceOfFiltres != null) {
               this.router.navigate(['modification'], {
                 relativeTo: this.activatedRoute,
@@ -505,8 +501,6 @@ export class ContratsComponent implements OnInit, OnDestroy, AfterViewInit {
 
             if (produits.length > 0) {
 
-              console.log("NOK OF THE BLOCK", produits);
-              
               const licenceOfFiltres3 = {
                 NIV1: produits[0]['niveaucode1'],
                 NIV2: produits[0]['niveaucode2'],
@@ -662,8 +656,6 @@ export class ContratsComponent implements OnInit, OnDestroy, AfterViewInit {
    * @param licence La licence à rechercher
    */
   licenceNonTrouvee(licence: Licence): void {
-    console.log("licenceNonTrouvee", licence);
-    
     const ready = new Subject<void>();
     this.produitsSimilaires = [];
     ready.pipe(skip(1), take(1)).subscribe(() => this.showHelpPopup = true);
@@ -671,8 +663,6 @@ export class ContratsComponent implements OnInit, OnDestroy, AfterViewInit {
       new CataloguePosition(licence.niv1, licence.niv2, licence.niv3),
       licence.produit.marque == 'ESET' ? licence.produit.reference.substr(0, 3) : '',
       licence.produit.marque).subscribe(produits => {
-        console.log("produits", produits);
-        
       if (produits[0]?.marque != null) {
         this.produitsSimilaires = produits;
       }
@@ -815,15 +805,10 @@ export class ContratsComponent implements OnInit, OnDestroy, AfterViewInit {
    * Revois le lien de la fiche du produit à partir de sa/son seul(e) reference/ID :string
    */
   linkToProduct(produitId: string) {
-    // console.log("produitId", produitId);
-    // console.log("link", produit.produit);
     this.produitService.getProduitById(produitId)
       .pipe(take(1))
       .subscribe(
         (ret) => {
-          // console.log("ret link", ret);
-          // console.log("test link 1", String(this.produitService.lienProduit(ret)));
-          // console.log("test link 2", String(this.produitService.lienProduit(ret)).replace(/,/g, "/"));
           this.router.navigateByUrl(
             String(this.produitService.lienProduit(ret))
               .replace(/,/g, "/")

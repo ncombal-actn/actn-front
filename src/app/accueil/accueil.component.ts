@@ -53,8 +53,7 @@ export class AccueilComponent implements OnInit, OnDestroy {
     this.produits$ = this.produit.getPromos('N', '').pipe(take(1));
     this.news$ = this.getLatestNews();
 
-    this.produits$.subscribe((produits) => {console.log('Produits récupérés:', produits);
-    })
+    this.produits$.subscribe();
     // CHARGEMENT DES DATAS DU CARROUSEL
     //   et reload lors du changement d'état de l'utilisateur
     this.authenticationService.currentUser$
@@ -75,32 +74,32 @@ export class AccueilComponent implements OnInit, OnDestroy {
         });
   }
 
-  getLatestNews(): Observable<Array<News>> { 
+  getLatestNews(): Observable<Array<News>> {
           return this.http.get(`${environment.cacheApiUrl}/xmllecture.php`, {
               withCredentials: true
           }).pipe(
               take(1),
-              map((fetchedNews) => {    
+              map((fetchedNews) => {
                   const news = new Array<News>();
                   for (const _news of Object.values(fetchedNews)) {
                       const actu = new News();
                       actu.title = _news.title;
                       actu.link = _news.link;
                       actu.comments = _news.link;
-                      actu.date = _news.date; 
+                      actu.date = _news.date;
                       actu.description = _news.image;
                       news.push(actu);
                   }
-                 
+
                   return news;
               }),
               catchError((error) => {
                 console.error('Error fetching news:', error);
                 return of([]); // Return an empty array in case of error
               })
-              
+
           );
-    
+
   }
 
 
@@ -117,4 +116,3 @@ export class AccueilComponent implements OnInit, OnDestroy {
   }
 
 
-  

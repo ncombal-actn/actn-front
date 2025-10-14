@@ -102,7 +102,7 @@ export class LicenceService {
    * Retourne les licences d'un client.
    */
   public getLicences(): void {
-  
+
 
     this.licences$ = this.httpClient
       .get<Array<RawLicence>>(`${environment.apiUrl}/ListeLicences.php`, {
@@ -158,7 +158,7 @@ export class LicenceService {
 
           return licencesData.licences;
         }),
-        
+
       );
 
     // Subscribe to the observable to trigger the HTTP request
@@ -271,7 +271,7 @@ export class LicenceService {
   }
 
   public getEnduserFormulaireRaw(): Observable<any> {
-    
+
     return this.httpClient.get<Map<string, any>>(
       `${environment.apiUrl}/EnduserFormulaire.php`,
       {
@@ -302,7 +302,6 @@ export class LicenceService {
    */
   public postEnduser(client: Client, numCommande?: string): Observable<any> {
     if (client != null) {
-      // console.log("postEnduser client", client);
       return this.httpClient.post(
         `${environment.apiUrl}EnduserSET.php`,
         {
@@ -323,7 +322,7 @@ export class LicenceService {
             'Content-Type': 'application/json',
           }),
         },
-        
+
       );
     }
   }

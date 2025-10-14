@@ -69,11 +69,11 @@ export class AddFormComponent implements OnInit {
     if(this.checkAddForm()){
       this.addAddressFormate()
       this.addAddressRequest(
-       
+
       )
     }
     else {
-    console.log('Formulaire invalide');
+      console.log('Formulaire invalide');
      /*  this.addrFormSaved.value.nomAddr,
         this.addrFormSaved.value.addr1,
         this.addrFormSaved.value.addr2,
@@ -103,8 +103,7 @@ export class AddFormComponent implements OnInit {
     this.addrFormSaved.value.ville = this.rmaService.removeAccents(this.addrForm.value.ville).toUpperCase();
     this.addrFormSaved.value.telephone = this.rmaService.removeAccents(this.addrForm.value.telephone).toUpperCase();
     this.addrFormSaved.value.pays = this.rmaService.removeAccents(this.addrForm.value.pays).toUpperCase();
-    console.log(this.addrFormSaved.value);
-    
+
   }
 
   addAddressRequest() {

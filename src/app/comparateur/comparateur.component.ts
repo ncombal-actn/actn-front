@@ -50,7 +50,7 @@ export class ComparateurComponent implements OnInit {
     public cotationService: CotationService,
     private http: HttpClient
   ) {
-    
+
   }
 
   /**
@@ -60,7 +60,7 @@ export class ComparateurComponent implements OnInit {
    * - S'abonne au ComparateurService pour mettre à jours les liste
    */
    ngOnInit() {
-       
+
     // setup and get 'referencesOfProduitsCompare'
     this.referencesOfProduitsCompare = this.comparateurService.setUp();
 
@@ -68,15 +68,15 @@ export class ComparateurComponent implements OnInit {
     this.notEmpty = this.referencesOfProduitsCompare[0] != "";
 
     // get product for each 'referencesOfProduitsCompare' and push them in 'produitsCompare'
-   
+
       for (let i = this.referencesOfProduitsCompare.length - 1; i >= 0; i--) {
         this.addProduitObjFromReference(this.referencesOfProduitsCompare[i]);
       }
-    
+
 
     this.compareSubscription = this.comparateurService.compare().subscribe(
       (ret) => {
-         
+
         this.referencesOfProduitsCompare = ret;
         // mets à jour la list de Produits 'produitsCompare' s'il y a eu du changement dans la liste des références 'referencesOfProduitsCompare'
         this.updateProduitsCompareFromReferencesOfProduitsCompare();
@@ -101,9 +101,7 @@ export class ComparateurComponent implements OnInit {
     let lenth = 0;
     for (let i = 0; i < this.produitsCompare.length; i++) {
       lenth += 1;
-      // console.log("compare", this.produitsCompare[i].prix, produit.prix);
       if (this.produitsCompare[i].prix >= produit.prix) {
-        // console.log("passed !");
         this.produitsCompare.splice(i, 0, produit);
         break;
       }
@@ -111,7 +109,6 @@ export class ComparateurComponent implements OnInit {
     if (lenth >= this.produitsCompare.length) {
       this.produitsCompare.push(produit);
     }
-    // console.log("CCAT");
     this.produitsCompare = this.produitsCompare.concat([]);
   }
 
@@ -126,10 +123,9 @@ export class ComparateurComponent implements OnInit {
       .subscribe(
         (ret) => {
           if (ret.reference !== "") {
-            // console.log("adding to comparateur :", ret);
             // this.produitsCompare.push(ret);
             // this.produitsCompare = this.produitsCompare.concat([ret]);
-            
+
           this.addToProduitsCompareByPrice(ret);
           } else {
             this.comparateurService.removeFromCompare(reference);
@@ -155,10 +151,7 @@ export class ComparateurComponent implements OnInit {
         )
       ) {
         this.produitsCompare.splice(i, 1);
-        // console.log("CCAT");
         this.produitsCompare = this.produitsCompare.concat([]);
-        // console.log("dynamicly removing a product from the list");
-        // console.log("splice :", this.produitsCompare);
       }
     }
     // ajouter les produits ajoutés au comparateur
@@ -176,7 +169,6 @@ export class ComparateurComponent implements OnInit {
       }
 
       if (!alreadyHaveTheReferencesProduct) {
-        // console.log("dynamicly adding product to list");
         this.addProduitObjFromReference(this.referencesOfProduitsCompare[j]);
       }
     }

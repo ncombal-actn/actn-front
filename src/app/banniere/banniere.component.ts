@@ -120,9 +120,8 @@ export class BanniereComponent implements OnInit {
     );
   }
   emitSeo(){
-    console.log('smich');
-    
-    this.seoService.logEvent('click_banniere', { 
+
+    this.seoService.logEvent('click_banniere', {
     client: this.authService.currentUser,
     banniere: this.banniereActive,
   });

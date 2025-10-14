@@ -33,8 +33,7 @@ export class CartItem {
     for (const [property, value] of Object.entries(obj)) {
       cartItem[property] = value;
     }
-    console.log('CartItem.fromObject - cartItem', cartItem);
-    
+
     return cartItem;
   } */
 /* static fromObject(obj: any): CartItem {
@@ -56,7 +55,6 @@ export class CartItem {
       cartItem[key] = val;
     }
   }
-console.log('CartItem.fromObject - cartItem', cartItem, fieldsWithTransform);
 
   return cartItem;
 } */
@@ -123,8 +121,7 @@ toJSON() {
    */
   get priceByQtyAppliedIndex()
   {
-    console.log('CartItem - priceByQtyAppliedIndex - produit', this.produit);
-    
+
     if (this.produit.hasPriceByQte)
     {
       let qpai = 0;
