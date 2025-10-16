@@ -1,8 +1,13 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import {WindowService} from "@core/_services";
+import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
 
 @Component({
   selector: 'app-test-eli',
+  standalone: true,
+  imports: [
+    TitleWLineComponent
+  ],
   templateUrl: './test-eli.component.html',
   styleUrls: ['./test-eli.component.scss']
 })

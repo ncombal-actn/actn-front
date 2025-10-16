@@ -4,9 +4,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SauvegardeService } from '../sauvegarde.service'
 
 @Component({
-	selector: 'conf-sauvegarde',
-	templateUrl: './sauvegarde.component.html',
-	styleUrls: ['./sauvegarde.component.scss']
+  selector: 'conf-sauvegarde',
+  standalone: true,
+  templateUrl: './sauvegarde.component.html',
+  styleUrls: ['./sauvegarde.component.scss']
 })
 export class SauvegardeComponent implements OnInit {
 

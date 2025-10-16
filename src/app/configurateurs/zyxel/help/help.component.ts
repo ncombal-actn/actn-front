@@ -7,11 +7,18 @@ import { AuthenticationService } from '@core/_services';
 import { environment } from '@env';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
+import {MatTooltip} from "@angular/material/tooltip";
+import {ChipsListComponent} from "@/configurateurs/zyxel/chips-list/chips-list.component";
 
 const phoneRegex = /^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/;
 
 @Component({
 	selector: 'conf-help',
+  standalone: true,
+  imports: [
+    ChipsListComponent,
+    MatTooltip
+  ],
 	templateUrl: './help.component.html',
 	styleUrls: ['./help.component.scss', '../zyxel.scss']
 })
@@ -32,7 +39,7 @@ export class HelpComponent implements OnInit, OnDestroy {
 		protected http: HttpClient
 	) {
 	}
-	
+
 	ngOnInit(): void {
 		this.creationFormulaire();
 		this.authService.currentUser$.pipe(takeUntil(this._destroy$)).subscribe(user => { this.user = user; this.creationFormulaire(); });

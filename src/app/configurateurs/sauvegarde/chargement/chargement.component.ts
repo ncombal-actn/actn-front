@@ -7,9 +7,10 @@ import { SauvegardeService } from '../sauvegarde.service';
 import {faClipboardList, faCommentDots, faTrash} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
-	selector: 'conf-chargement',
-	templateUrl: './chargement.component.html',
-	styleUrls: ['./chargement.component.scss']
+  selector: 'conf-chargement',
+  standalone: true,
+  templateUrl: './chargement.component.html',
+  styleUrls: ['./chargement.component.scss']
 })
 export class ChargementComponent implements OnInit {
 

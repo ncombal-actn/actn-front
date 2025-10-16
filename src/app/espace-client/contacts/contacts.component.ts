@@ -5,9 +5,14 @@ import {HttpClient} from '@angular/common/http';
 import {take} from 'rxjs/operators';
 import {environment} from '@env';
 import {faUserTie} from "@fortawesome/free-solid-svg-icons";
+import {AsyncPipe} from "@angular/common";
 
 @Component({
 	selector: 'app-contacts',
+  standalone: true,
+  imports: [
+    AsyncPipe
+  ],
 	templateUrl: './contacts.component.html',
 	styleUrls: ['./contacts.component.scss']
 })

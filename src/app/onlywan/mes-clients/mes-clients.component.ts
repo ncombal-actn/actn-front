@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-mes-clients',
+  standalone: true,
   templateUrl: './mes-clients.component.html',
   styleUrls: ['./mes-clients.component.scss']
 })

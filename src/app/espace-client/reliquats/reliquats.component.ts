@@ -1,15 +1,28 @@
 import { Component, OnInit } from "@angular/core";
-import { BehaviorSubject, Observable, Subject } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 import { take } from "rxjs/operators";
 import { ProduitService } from "@core/_services/produit.service";
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "@env";
 import { faEnvelope, faFilePdf } from "@fortawesome/free-solid-svg-icons";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {MatCard, MatCardContent, MatCardHeader} from "@angular/material/card";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatIcon} from "@angular/material/icon";
 
 @Component({
   selector: "app-reliquats",
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    MatCard,
+    MatCardContent,
+    MatCardHeader,
+    MatFormField,
+    MatIcon,
+    MatLabel
+  ],
   templateUrl: "./reliquats.component.html",
   styleUrls: ["./reliquats.component.scss"],
 })

@@ -1,16 +1,13 @@
-import {Injectable, OnDestroy} from '@angular/core';
+import {Injectable, Injector, OnDestroy} from '@angular/core';
 import {Adresse, Cart, CartItem, Client, Cotation, Produit} from '@/_util/models';
 import { HttpClient } from '@angular/common/http';
 import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
 import { environment } from '@env';
 import { LicenceService } from './licence.service';
 import { AuthenticationService } from './authentication.service';
-import { CookieService } from 'ngx-cookie-service';
 import {Description} from "@/_util/models/Description";
-import {Cacheable} from "ts-cacheable";
 import {LocalStorageService} from "@services/localStorage/local-storage.service";
-import {AbstractControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
-import {take, takeUntil} from "rxjs/operators";
+import {AbstractControl, FormGroup, ValidationErrors, ValidatorFn} from "@angular/forms";
 
 @Injectable({
   providedIn: 'root'
@@ -27,14 +24,25 @@ export class CartService implements OnDestroy{
   private tempCart: Cart = new Cart();
   private usingTempCart: boolean = false;
 
+  /** Lazy injection pour LicenceService et AuthenticationService */
+  private _licenceService: any = null;
+  private _authService: any = null;
+
+  private get licenceService() {
+    if (!this._licenceService) this._licenceService = this.injector.get<any>(LicenceService);
+    return this._licenceService;
+  }
+
+  private get authService() {
+    if (!this._authService) this._authService = this.injector.get<any>(AuthenticationService);
+    return this._authService;
+  }
+
   constructor(
     protected httpClient: HttpClient,
-    protected licenceService: LicenceService,
-    //protected cookieService: CookieService,
     protected localStorage: LocalStorageService,
-    protected authService: AuthenticationService
-  ) {
-  }
+    protected injector: Injector
+  ) {}
 
   get cart(): Cart {
     return this._cart.value;
@@ -192,7 +200,7 @@ export class CartService implements OnDestroy{
   }
 
   updateCart(): void {
-    /*const currentUserId = this.authService.currentUser?.id?.toString(); 
+    /*const currentUserId = this.authService.currentUser?.id?.toString();
     if (currentUserId) {
       this._cart.next(this.cart);
       this.qteProduits = this.cart.qteProduits;
@@ -202,10 +210,10 @@ export class CartService implements OnDestroy{
       }));
       this.cookieService.set(`cart_${currentUserId}`, JSON.stringify(minimalCart), 7, '/');
     }*/
-    
+
     this._cart.next(this.cart);
     this.qteProduits = this.cart.qteProduits;
-   
+
     this.localStorage.setItem('cart', JSON.stringify(this.cart.toJSON()));
   }
 
@@ -227,9 +235,9 @@ export class CartService implements OnDestroy{
     return this.httpClient
       .get<number>(`${environment.apiUrl}/fraisCcb.php`, {
         withCredentials: true,
-        
+
       });
-     
+
   }
 
   getAdresses(){
@@ -246,7 +254,7 @@ export class CartService implements OnDestroy{
       responseType: 'json',
       params: { id: id}
     });
-    
+
   }
 
    static fromObject(obj: any): Cart {
@@ -256,7 +264,7 @@ export class CartService implements OnDestroy{
   }
 
 
-  
+
   public getQteProduit(produit: Produit): number {
     return this.cart.items[produit?.reference]?.qte || 0;
   }
@@ -478,7 +486,7 @@ export class CartService implements OnDestroy{
     let allPoids: number = 0;
     let arrReturned: poidsCart;
     Object.values(cart.items)
-      .map((item) => {      
+      .map((item) => {
         totalD3E += item.qte * item.produit.prixD3E;
         switch (
           item.produit.gabarit
@@ -504,7 +512,7 @@ export class CartService implements OnDestroy{
   }
 
   determineTypeEnvoi(transporteur: string, nbHorsGab: number, nbVirtuel: number, nbStd: number, codepostal: string): string {
-  
+
 
     if (["ENL", "VTP", "LDF"].includes(transporteur)) return "E";
     if (nbHorsGab > 0) return "H";
@@ -515,7 +523,7 @@ export class CartService implements OnDestroy{
   }
 
   determineFrais(typeEnvoi: string, transporteur: string, nbHorsGab: number, codepostal: string, codeSchenkerTransport: string, codeCorseTransport: string, codeDefautTransport: string): string {
-   
+
 
     if (typeEnvoi === "H") return codeSchenkerTransport;
     if (codepostal.startsWith("20") && transporteur === "CHR") return codeCorseTransport;
@@ -524,7 +532,7 @@ export class CartService implements OnDestroy{
   }
 
   calculFrais(grilleFiltre: any, totPoids: number, portP: number, maxFranco: number, typeEnvoi: string){
-   
+
     const cart = this.isUsingTempCart() ? this.getTempCart() : this.cart;
     let franco = +grilleFiltre.mtfranco >= maxFranco ? +Infinity : +grilleFiltre.mtfranco;
     if (totPoids <= +grilleFiltre.kgmax && portP === 0) {
@@ -533,12 +541,12 @@ export class CartService implements OnDestroy{
         portP = 0;
         franco = 0;
       }
-      
-      
+
+
       return { portP, franco, fraisERP: grilleFiltre.CodeERP };
     }
 
-      
+
     return { portP, franco, fraisERP: "" };
   }
 
@@ -612,11 +620,11 @@ export class CartService implements OnDestroy{
     client: number
   ): any {
     const cart = this.isUsingTempCart() ? this.getTempCart() : this.cart;
-   
-    
-   
-   
-    
+
+
+
+
+
     return {
       ref: encodeURIComponent(
         JSON.stringify(
@@ -661,7 +669,7 @@ export class CartService implements OnDestroy{
       mail: panierForm.value.email,
       transport: panierForm.value.transporteur,
       port: panierPort.port,
-      fraisCB: fraisCcb, 
+      fraisCB: fraisCcb,
       livdir: panierForm.value.livraison,
       nom: this.sanitizForEric(submitAdress.nom || ''),
       ad1: this.sanitizForEric(submitAdress.adresse1 || ''),

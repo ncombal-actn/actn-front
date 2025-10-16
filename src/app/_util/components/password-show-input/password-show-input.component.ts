@@ -1,11 +1,25 @@
 import { Component, Input, HostBinding, Optional, Self, OnDestroy, DoCheck } from '@angular/core';
-import { ControlValueAccessor, NgControl, FormGroup, FormBuilder } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  NgControl,
+  FormGroup,
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Subject } from 'rxjs';
 import {MatFormFieldControl} from "@angular/material/form-field";
+import {MatInput} from "@angular/material/input";
 
 @Component({
   selector: 'app-password-show-input',
+  standalone: true,
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    MatInput
+  ],
   templateUrl: './password-show-input.component.html',
   styleUrls: ['./password-show-input.component.scss'],
   providers: [

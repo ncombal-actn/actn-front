@@ -7,11 +7,26 @@ import { Produit, Cotation } from "@/_util/models";
 import { BehaviorSubject, Subject } from "rxjs";
 import { takeUntil, take } from "rxjs/operators";
 import { HttpClient } from "@angular/common/http";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import * as XLSX from "xlsx";
+import {MatSlideToggle} from "@angular/material/slide-toggle";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatCard, MatCardContent, MatCardHeader} from "@angular/material/card";
+import {MatIcon} from "@angular/material/icon";
 
 @Component({
   selector: "app-cotation",
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    MatCardContent,
+    MatCard,
+    MatCardHeader,
+    MatFormField,
+    MatIcon,
+    MatLabel,
+    MatSlideToggle
+  ],
   templateUrl: "./cotation.component.html",
   styleUrls: ["./cotation.component.scss"],
 })

@@ -1,4 +1,4 @@
-import {NoPreloading, PreloadAllModules, RouterModule, Routes} from '@angular/router';
+import {Routes} from '@angular/router';
 import {RecrutementComponent} from "./recrutement/recrutement.component";
 import {CharteComponent} from "./charte/charte.component";
 import {ValidationRecrutementComponent} from "./recrutement/validation-recrutement/validation-recrutement.component";
@@ -32,7 +32,6 @@ import {ObjDisplayComponent} from "./obj-display/obj-display.component";
 import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 import {FocusComponent} from "./focus/focus.component";
 import {AccueilComponent} from "./accueil/accueil.component";
-import {NgModule} from '@angular/core';
 import {NewCartComponent} from "@/new-cart/new-cart.component";
 import { ProcedureTicketComponent } from './procedure-ticket/procedure-ticket.component';
 
@@ -42,14 +41,11 @@ export const routes: Routes = [
     component: NewCartComponent,
     canActivate: [AuthGuard]
   },
- 
   {
     path: 'onlywan',
-
     loadChildren: () =>
-      import('./onlywan/onlywan.module').then((mod) => mod.OnlywanModule)
+      import('./onlywan/onlywan.routes').then((mod) => mod.ONLYWAN_ROUTES)
   },
-
   {
     path: 'charte',
     component: CharteComponent,
@@ -109,12 +105,12 @@ export const routes: Routes = [
   {
     path: 'mot-de-passe',
     loadChildren: () =>
-      import('./mot-de-passe/mot-de-passe.module').then((mod) => mod.MotDePasseModule)
+      import('./mot-de-passe/mot-de-passe.routes').then((mod) => mod.MOT_DE_PASSE_ROUTES)
   },
   {
     path: 'catalogue',
     loadChildren: () =>
-      import('./catalogue/catalogue.module').then((mod) => mod.CatalogueModule),
+      import('./catalogue/catalogue.routes').then((mod) => mod.CATALOGUE_ROUTES),
   },
   {
     path: 'comparateur',
@@ -130,13 +126,11 @@ export const routes: Routes = [
       filDArianne: [{url: 'favoris', label: 'Favoris', guarded: true}],
     },
   },
-
   {
     path: 'prestations',
     loadChildren: () =>
-      import('./prestations/prestations.module').then((mod) => mod.PrestationsModule)
+      import('./prestations/prestations.routes').then((mod) => mod.PRESTATIONS_ROUTES)
   },
-
   // Section Ressources.
   // Plusieurs pages à venir (présentation formations, sélecteurs, fiches tarifs par marque, ...).
   // Créer un module lazy loaded si la section devient conséquente.
@@ -224,8 +218,8 @@ export const routes: Routes = [
   {
     path: 'panier',
     loadChildren: () =>
-      import('./panier/panier.module').then(
-        (mod) => mod.PanierModule
+      import('./panier/panier.routes').then(
+        (mod) => mod.PANIER_ROUTES
       ),
   },
   {
@@ -274,7 +268,7 @@ export const routes: Routes = [
   {
     path: 'licences-cybersecurite',
     loadChildren: () =>
-      import('./systeme-aide-choix/systeme-aide-choix.module').then((mod) => mod.SystemeAideChoixModule)
+      import('./systeme-aide-choix/systeme-aide-choix.routes').then((mod) => mod.SYSTEME_AIDE_CHOIX_ROUTES)
   },
   {
     path: 'focus/:target',
@@ -289,13 +283,13 @@ export const routes: Routes = [
     path: 'configurateur',
     canActivate: [AuthGuard],
     loadChildren: () =>
-      import('./configurateurs/configurateurs.module').then((mod) => mod.ConfigurateursModule),
+      import('./configurateurs/configurateurs.routes').then((mod) => mod.CONFIGURATEURS_ROUTES),
   },
   {
     path: 'espace-client',
     loadChildren: () =>
-      import('./espace-client/espace-client.module').then(
-        (mod) => mod.EspaceClientModule
+      import('./espace-client/espace-client.routes').then(
+        (mod) => mod.ESPACE_CLIENT_ROUTES
       ),
   },
   {
@@ -319,22 +313,3 @@ export const routes: Routes = [
       filDArianne: [{url: '404', label: 'Page non trouvée', guarded: true}],
     },
   }];
-
-
-@NgModule({
-  imports: [
-    RouterModule.forRoot(routes, {
-      preloadingStrategy: NoPreloading,
-      onSameUrlNavigation: 'reload',
-      useHash: false,
-      enableTracing: false,
-      initialNavigation: 'enabledNonBlocking',
-      scrollPositionRestoration: 'enabled',
-      anchorScrolling: 'enabled',
-      
-    })
-  ],
-  exports: [RouterModule]
-})
-export class AppRoutingModule {
-}

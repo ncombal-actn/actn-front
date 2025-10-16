@@ -1,21 +1,25 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import {FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '@core/_services';
 import { environment } from '@env';
 import { Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { faCamera } from '@fortawesome/free-solid-svg-icons';
-
-//import { ScrollToDirective } from '@nicky-lenaers/ngx-scroll-to';
-
+import { take } from 'rxjs/operators';
+import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
+import {MatFormField} from "@angular/material/form-field";
 
 
 @Component({
   selector: 'app-formulaire-projet-videosurveillance',
+  standalone: true,
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    TitleWLineComponent,
+    MatFormField
+  ],
   templateUrl: './formulaire-projet-videosurveillance.component.html',
   styleUrls: ['./formulaire-projet-videosurveillance.component.scss']
 })

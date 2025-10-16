@@ -2,9 +2,14 @@ import { ConfigurateurService, Modele } from '@/configurateurs/configurateur.ser
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import {InputNumberComponent} from "@/configurateurs/zyxel/input-number/input-number.component";
 
 @Component({
 	selector: 'conf-free-input',
+  standalone: true,
+  imports: [
+    InputNumberComponent
+  ],
 	templateUrl: './free-input.component.html',
 	styleUrls: ['./free-input.component.scss']
 })
@@ -67,7 +72,7 @@ export class FreeInputComponent implements OnInit, OnDestroy {
 		const max = this.maxOfInput();
 		this.n = value;
 		if (value > max) value = max;
-		if (this.lockMin && value <= min) value = min + 1; 
+		if (this.lockMin && value <= min) value = min + 1;
 		let inputs: { value: number; prix: number; produit: string }[] = this.options.options.map(option => { return { value: +option[option['Cible'].value].value, prix: +option.prix.value, produit: option.produit.value.reference ?? option.produit.value } });
 		inputs = inputs.sort((a, b) => b.prix - a.prix);
 		const choices: { [key: string]: number } = {};

@@ -68,12 +68,12 @@
         @if (catalogueLinkIndex == 'defaut') {
           @if (defaultProducts) {
             <app-title-w-line id="catalogueTitre" title="Notre sélection du moment"></app-title-w-line>
-            <app-sliding-liste [random]="random" [nbProduits]="defaultProducts.length" [produits]="defaultProducts" type="produit" [simplePreviewProduct]="true"></app-sliding-liste>
+            <app-sliding-liste [nbProduits]="defaultProducts.length" [produits]="defaultProducts" type="produit" [simplePreviewProduct]="true"></app-sliding-liste>
           }
         } @else {
           <!-- TITRE DE LA CATEGORIE -->
           <app-title-w-line  [title]="catalogueLinkList[catalogueLinkIndex].titre"></app-title-w-line>
-          @for (catalogueLinkKey of catalogueLinksListOfKeys; track catalogueLinkKey.url) {
+          @for (catalogueLinkKey of catalogueLinksListOfKeys; track catalogueLinkKey) {
             @if (catalogueLinkIndex == catalogueLinkKey) {
               <app-sliding-list-from-link [catalogueLink]="catalogueLinkList[catalogueLinkKey].url" [maxLength]="20"></app-sliding-list-from-link>
             }

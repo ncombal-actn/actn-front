@@ -1,9 +1,14 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { environment } from "@env";
+import {ImgFallbackDirective} from "@/_util/directives/img-fallback.directive";
 
 @Component({
   selector: 'app-sav-popup',
+  standalone: true,
+  imports: [
+    ImgFallbackDirective
+  ],
   templateUrl: './sav-popup.component.html',
   styleUrl: './sav-popup.component.scss'
 })
@@ -13,8 +18,8 @@ export class SavPopupComponent {
     public dialogRef: MatDialogRef<SavPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-   
-    
+
+
   }
 
   onClose(): void {

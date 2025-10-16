@@ -4,6 +4,10 @@ import {BehaviorSubject} from 'rxjs';
 import {BanniereComponent} from '@/banniere/banniere.component';
 import {WindowService} from '@core/_services';
 import {InfiniteScrollService} from '@core/_services/infinite-scroll.service';
+import {CommonModule} from "@angular/common";
+import {InfiniteScrollDirective} from "ngx-infinite-scroll";
+import {RouterLink} from "@angular/router";
+import {ProduitPreviewComponent} from "@/_util/components/produit-preview/produit-preview.component";
 
 
 /**
@@ -11,6 +15,8 @@ import {InfiniteScrollService} from '@core/_services/infinite-scroll.service';
  */
 @Component({
   selector: 'app-produits',
+  standalone: true,
+  imports: [CommonModule, InfiniteScrollDirective, RouterLink, ProduitPreviewComponent, BanniereComponent],
   templateUrl: './produits.component.html',
   styleUrls: ['./produits.component.scss']
 })

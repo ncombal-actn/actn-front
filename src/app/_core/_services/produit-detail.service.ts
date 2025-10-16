@@ -76,7 +76,7 @@ export class ProduitDetailService {
     });
   } */
 
-    
+
     getProduit(
       callback: (
         produit: Produit,
@@ -125,10 +125,10 @@ export class ProduitDetailService {
                 descriptionMap.get(desc.type).push(desc.description.trim());
               }
             });
-    
+
             // Construction de l'URL de l'image
             const imgUrl = environment.photosUrl + this._urlImage(produit.photo);
-    
+
             // Appel du callback avec les données
             callback(
               produit,
@@ -162,7 +162,7 @@ export class ProduitDetailService {
  /*  getProduitsSimilaires(callback: (produitsSimilaires: Array<Produit>) => void): void {
     this.route.data.subscribe((data: { produit: ProduitWithDescription }) => {
       const produitsSimilaires$ = data.produit.produitsSimilaires$;
-  
+
       produitsSimilaires$.pipe(take(1)).subscribe((produitsSimilaires) => {
         callback(produitsSimilaires);
       });
@@ -187,12 +187,12 @@ export class ProduitDetailService {
     const path = [
       "/catalogue/similaire/",
       produit.reference,
-     
-    
+
+
     ]
-   
+
     this.router.navigate(path)
-   
+
   }
 
   fullString(strings: Array<string>): string {
@@ -223,6 +223,7 @@ export class ProduitDetailService {
   }
 
   getProduitPdf(reference: string): Observable<Fiche[]> {
+    console.log(reference);
    return this.http.get<Fiche[]>(`${environment.apiUrl}/ProduitPDF.php`,{
       params: { pdf: reference },
       responseType: 'json'

@@ -11,7 +11,7 @@ import {Observable, Subject, BehaviorSubject, Subscription, of, combineLatest} f
 import { debounceTime, switchMap, filter, delay, withLatestFrom, takeUntil, tap, skip, take } from 'rxjs/operators';
 import { Tree, Categorie } from '@/_util/models';
 import { ExposeHeightSetterDirective } from '@/_util/directives/expose-height-setter.directive';
-import { Router } from '@angular/router';
+import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 import { AuthenticationService, CartService, CatalogueService, ComponentsInteractionService, SvgService, UserService, WindowService } from '@core/_services';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { HttpClient } from '@angular/common/http';
@@ -26,15 +26,12 @@ import { KeyboardFocusDirective } from '@/_util/directives/keyboard-focus.direct
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatTooltip } from '@angular/material/tooltip';
-import { UtilModule } from "@/_util/util.module";
-import {Cacheable} from "ts-cacheable";
 import { CatalogueSearchBarComponent } from '@/_util/components/catalogue-search-bar/catalogue-search-bar.component';
-//import {NewCartService} from "@services/new-cart.service";
 
 @Component({
   selector: 'app-header',
-  imports: [KeyboardFocusDirective, CommonModule, FontAwesomeModule, MatTooltip, CatalogueSearchBarComponent, UtilModule],
   standalone: true,
+  imports: [KeyboardFocusDirective, CommonModule, FontAwesomeModule, MatTooltip, CatalogueSearchBarComponent, RouterLink, RouterLinkActive, ExposeHeightSetterDirective],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
@@ -98,11 +95,9 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     private http: HttpClient,
     private rmaService: RmaService,
     public licenceService: LicenceService,
-    private window: WindowService,
     private comparateurService: ComparateurService,
     private favorisService: FavorisService,
     public svg: SvgService,
-    public cotationService: CotationService,
     public userService: UserService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
@@ -117,18 +112,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.structureCatalogue = this.catalogueService.getStructure();
 
-    //this.authService.currentUser$.pipe(takeUntil(this.destroy$)).subscribe(() => this.getRequestRessources());
-
     this.breakpointObserver.observe(['(max-width: 767.98px)']).pipe(takeUntil(this.destroy$)).subscribe(state => {
       this._subNavSmall.next(state.matches);
       if (this.exposeHeightSetter && state.matches) this.exposeHeightSetter.setHeight('auto');
     });
-
-    /*setTimeout(() => {
-      if (this.authService.currentUser && this.authService.currentUser.name.length > 35) {
-        window.document.getElementById('userName').style.fontSize = '0.9rem';
-      }
-    }, 2000);*/
 
     combineLatest(this.onCatalogueCategorieHoveredIndex, this.onCatalogueSousCategoriesContainerHoveredIndex)
       .pipe(
@@ -172,8 +159,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       if (storedCotations) {
         const cotations = JSON.parse(storedCotations);
         this.nbrOfCriticalCotations = cotations.nbrOfCriticalCotations;
-       
-        
+
+
       }
     }
   }
@@ -270,7 +257,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
     }
-  
+
     onMouseLeaveMenu(): void {
       if (this.mouseEnterTimeout) {
         clearTimeout(this.mouseEnterTimeout);

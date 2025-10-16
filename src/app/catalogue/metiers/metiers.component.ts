@@ -3,9 +3,17 @@ import { environment } from '@env';
 import { CatalogueService, WindowService } from '@core/_services';
 
 import { take } from 'rxjs/operators';
-import { KeyValue } from '@angular/common';
+import {KeyValue, KeyValuePipe} from '@angular/common';
+import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
+import {RouterLink} from "@angular/router";
 @Component({
 	selector: 'app-metiers',
+  standalone: true,
+  imports: [
+    TitleWLineComponent,
+    RouterLink,
+    KeyValuePipe
+  ],
 	templateUrl: './metiers.component.html',
 	styleUrls: ['./metiers.component.scss']
 })
@@ -28,9 +36,7 @@ export class MetiersComponent implements OnInit {
 		return (aValue ? +aValue.sequence : 0) - (bValue ? +bValue.sequence : 0);
 	}
 
-	constructor(
-		private catalogueService: CatalogueService,
-		private window: WindowService) { }
+	constructor(private catalogueService: CatalogueService) { }
 
 	ngOnInit(): void {
 
@@ -49,7 +55,7 @@ export class MetiersComponent implements OnInit {
 						}
 
 					});
-					
+
 					this.isReady = true;
 				}
 			);

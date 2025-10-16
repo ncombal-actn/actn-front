@@ -1,7 +1,7 @@
-import {AfterViewInit, Component,  Input, OnDestroy, OnInit,  ViewChild} from "@angular/core";
+import {Component,  Input, OnDestroy, OnInit,  ViewChild} from "@angular/core";
 import {distinctUntilChanged, forkJoin, Subject} from "rxjs";
 import {debounceTime, take, takeUntil} from "rxjs/operators";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {Adresse, CartItem, Client, Produit, User} from "@/_util/models";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
@@ -14,18 +14,61 @@ import {ComponentsInteractionService} from "@/_core/_services/components-interac
 import {environment} from "@env";
 import {RmaService} from "@core/_services/rma.service";
 import {TransportService} from "@core/_services/transport.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {EnduserFormComponent} from "@/_util/components/enduser-form/enduser-form.component";
 import {ProduitService} from "@services/produit.service";
 import { FinanceService } from "@core/_services/finance.service";
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomSnackbarComponent } from '@/_util/components/snackbar/custom-snackbar.component';
+import {StepperComponent} from "@/panier/stepper/stepper.component";
+import {LabelsPanierComponent} from "@/panier/labels-panier/labels-panier.component";
+import {PanierRowComponent} from "@/panier/panier-row/panier-row.component";
+import {CurrencyPipe, DecimalPipe, KeyValuePipe} from "@angular/common";
+import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatIcon} from "@angular/material/icon";
+import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
+import {MatDivider} from "@angular/material/divider";
+import {
+  MatAccordion,
+  MatExpansionPanel,
+  MatExpansionPanelHeader,
+  MatExpansionPanelTitle
+} from "@angular/material/expansion";
+import {MatInput} from "@angular/material/input";
+import {MatCheckbox} from "@angular/material/checkbox";
+import {MatButton} from "@angular/material/button";
 
 /**
  * Page de validation du panier et redirection vers le module externe de paiement. En cours.
  */
 @Component({
   selector: "app-validation-panier",
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    StepperComponent,
+    LabelsPanierComponent,
+    PanierRowComponent,
+    KeyValuePipe,
+    MatError,
+    EnduserFormComponent,
+    CurrencyPipe,
+    DecimalPipe,
+    MatIcon,
+    MatRadioButton,
+    MatDivider,
+    MatAccordion,
+    MatExpansionPanel,
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle,
+    MatFormField,
+    MatInput,
+    MatCheckbox,
+    MatRadioGroup,
+    MatButton,
+    MatLabel,
+    RouterLink
+  ],
   templateUrl: "./validation-panier.component.html",
   styleUrls: ["./validation-panier.component.scss"],
 })

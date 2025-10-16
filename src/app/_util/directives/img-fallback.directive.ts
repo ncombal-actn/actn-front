@@ -1,7 +1,8 @@
-import { Directive, Input, HostBinding } from '@angular/core';
+import { Directive, Input } from '@angular/core';
 
 @Directive({
   selector: 'img [default]',
+  standalone: true,
   host: {
     '(error)': 'updateUrl()',
     '[src]': 'src'

@@ -1,18 +1,14 @@
 import {
   Directive,
-  Input,
   ElementRef,
   Renderer2,
-  HostListener,
-  OnDestroy
 } from '@angular/core';
-import { max, takeUntil } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
 
 /**
  * Directive permettant d'exposer un setter pour l'attribut 'min-height' de l'hôte.
  */
 @Directive({
+  standalone: true,
   selector: '[appExposeHeightSetter]'
 })
 export class ExposeHeightSetterDirective {

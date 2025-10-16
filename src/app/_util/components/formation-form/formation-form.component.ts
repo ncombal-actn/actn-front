@@ -11,6 +11,7 @@ import { Produit } from '@/_util/models';
 
 @Component({
   selector: 'app-formation-form',
+  standalone: true,
   templateUrl: './formation-form.component.html',
   styleUrls: ['./formation-form.component.scss']
 })

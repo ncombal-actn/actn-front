@@ -21,15 +21,15 @@ export class FavorisService {
 
     constructor(
         private localStorage: LocalStorageService,
-        private window: WindowService,
+        private windowService: WindowService,
         @Inject(PLATFORM_ID) private platformId: any
     ) {
         // get localStorage if there is already one
         this.updateFavoris();
 
-        if (isPlatformBrowser(this.platformId) && window && window.window) {
+        if (isPlatformBrowser(this.platformId) && windowService && windowService.nativeWindow) {
             // listen to other tabs' updating the localStorage
-            this.tabUpdate = fromEvent<StorageEvent>(window.window, 'storage')
+            this.tabUpdate = fromEvent<StorageEvent>(windowService.nativeWindow, 'storage')
                 .pipe(
                     tap(() => {
                         this.updateFavoris();

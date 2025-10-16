@@ -1,12 +1,10 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { Routes } from '@angular/router';
 import { ListClientsComponent } from './list-clients/list-clients.component';
 import { NewClientComponent } from './new-client/new-client.component';
 import { DetailClientComponent } from './detail-client/detail-client.component';
 
 
-const routes: Routes = [
+export const MES_CLIENTS_ROUTES: Routes = [
   {
     path: 'listeDeMesClients',
     component: ListClientsComponent,
@@ -29,10 +27,3 @@ const routes: Routes = [
     }
   }
 ];
-
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
-})
-export class MesClientsRoutingModule { }

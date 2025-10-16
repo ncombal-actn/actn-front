@@ -1,11 +1,10 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { SipTrunkComponent } from './sip-trunk/sip-trunk.component';
 import { CartesSimComponent } from './cartes-sim/cartes-sim.component';
 import { HebergementWebComponent } from './hebergement-web/hebergement-web.component';
 import { CloudPbxCentrexComponent } from './cloud-pbx-centrex/cloud-pbx-centrex.component';
 
-const routes: Routes = [
+export const NOS_OFFRES_ROUTES: Routes = [
   {
     path: 'sipTrunk',
     component: SipTrunkComponent,
@@ -35,11 +34,3 @@ const routes: Routes = [
     }
   }
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [
-    RouterModule
-  ]
-})
-export class NosOffresRoutingModule { }

@@ -17,7 +17,7 @@
         </div>
       }
       <div class="liste-produits raised-1 bgwhite">
-        <app-labels-panier modeAffichage=1></app-labels-panier>
+        <app-labels-panier [modeAffichage]=1></app-labels-panier>
         @if (!renewLicence) {
           @if(this.cartService.isUsingTempCart()){
             @for (cartItem of this.cartService.getTempCart().items | keyvalue; track cartItem.value; let i = $index) {
@@ -69,18 +69,18 @@
         </div>
       }
       <div class="liste-produits raised-1 bgwhite">
-        @if ([page] != 'devis'; ) {
+        @if (page != 'devis'; ) {
           <h2 style="margin-top: 20px">Informations de commande</h2>
         }
-        @if ([page] == 'devis'; ) {
+        @if (page == 'devis'; ) {
           <h2 style="margin-top: 20px">Informations du devis</h2>
         }
         <!-- REFERENCE -->
         <mat-form-field class="full-width size-default">
-          @if ([page] != 'devis' && page != 'devisReglement') {
+          @if (page != 'devis' && page != 'devisReglement') {
             <mat-label>Votre référence de commande</mat-label>
           }
-          @if ([page] == 'devis' || page == 'devisReglement' ) {
+          @if (page == 'devis' || page == 'devisReglement' ) {
             <mat-label>Votre référence du devis</mat-label>
           }
           <input matInput required formControlName="ref" name="sauveref" id="ref" type="text"/>
@@ -248,7 +248,7 @@
             </mat-error>
           }
         </div>
-        @if ([page] != 'devis' && !((needCotationTransport) && (panierForm.get('transporteur').value == 'CHR' ||
+        @if (page != 'devis' && !((needCotationTransport) && (panierForm.get('transporteur').value == 'CHR' ||
           panierForm.get('transporteur').value == 'COL' || panierForm.get('transporteur').value === 'SCH' || panierForm.get('transporteur').value
           == 'VTP' || panierForm.get('transporteur').value === 'TRA'))) {
           <div class="raised-1 liste-produits no_m_top bgwhite">
@@ -367,10 +367,10 @@
           </div>
         }
         <!-- DIV alignement devis -->
-        @if ([page] == 'devis') {
+        @if (page == 'devis') {
           <div></div>
         }
-        @if ([page] != 'devis' && ((needCotationTransport) && (panierForm.get('transporteur').value == 'CHR' ||
+        @if (page != 'devis' && ((needCotationTransport) && (panierForm.get('transporteur').value == 'CHR' ||
           panierForm.get('transporteur').value == 'COL' || panierForm.get('transporteur').value === 'SCH' || panierForm.get('transporteur').value
           == 'VTP' || panierForm.get('transporteur').value === 'TRA'))) {
           <div>
@@ -446,13 +446,13 @@
               <input type="hidden" value="{{ panierPort.totalht  + fraisCcb}}" readonly/>
             </div>
           }
-          @if ([page] == 'devis'; ) {
+          @if (page == 'devis'; ) {
             <div class="total TVA">
               <div>TVA</div>
               <div> {{ panierPort.tva | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
             </div>
           }
-          @if ([page] == 'devis'; ) {
+          @if (page == 'devis'; ) {
             <div class="total TTC">
               <div>Total TTC</div>
               <div>{{ panierPort.ttc  | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
@@ -482,7 +482,7 @@
             </div>
           }
           <!-- Fake btn il sert de placeholder  -->
-          @if (!(this.panierForm.get('paiement').value) && [page] != 'devis') {
+          @if (!(this.panierForm.get('paiement').value) && page != 'devis') {
             <div>
               <div class="total TVA">
                 <div>TVA</div>
@@ -683,11 +683,11 @@
           <!-- NO REFERENCE -->
           @if (panierForm.get('ref').errors?.required) {
             <mat-error>
-              <label for="ref">Vous n'avez pas saisi votre référence @if ([page] != 'devis'; ) {
+              <label for="ref">Vous n'avez pas saisi votre référence @if (page != 'devis'; ) {
                 <span>de
         commande</span>
               }
-                @if ([page] == 'devis'; ) {
+                @if (page == 'devis'; ) {
                   <span>du devis</span>
                 }</label>
             </mat-error>

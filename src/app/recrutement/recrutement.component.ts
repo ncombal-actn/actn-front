@@ -1,15 +1,32 @@
 import {HttpClient, HttpParams, HttpRequest} from '@angular/common/http';
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {environment} from '@env';
 import {Subject} from 'rxjs';
 import {take} from 'rxjs/operators';
+import {MatIcon} from "@angular/material/icon";
+import {MatFormField, MatLabel, MatSuffix} from "@angular/material/form-field";
+import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
+import {MatOption, MatSelect} from "@angular/material/select";
+import {MatInput} from "@angular/material/input";
 
 @Component({
   selector: 'app-recrutement',
+  standalone: true,
+  imports: [
+    MatIcon,
+    MatLabel,
+    MatFormField,
+    ReactiveFormsModule,
+    TitleWLineComponent,
+    MatSelect,
+    MatOption,
+    MatInput,
+    MatSuffix
+  ],
   templateUrl: './recrutement.component.html',
-  styleUrls: ['./recrutement.component.scss']
+  styleUrls: ['./recrutement.component.scss'],
 })
 export class RecrutementComponent implements OnInit, OnDestroy {
 

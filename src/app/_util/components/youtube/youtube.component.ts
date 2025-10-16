@@ -3,11 +3,16 @@ import { Subject, Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CookieService, WindowService } from '@core/_services';
+import {AsyncPipe} from "@angular/common";
 
 @Component({
-    selector: 'app-youtube',
-    templateUrl: './youtube.component.html',
-    styleUrls: ['./youtube.component.scss']
+  selector: 'app-youtube',
+  standalone: true,
+  imports: [
+    AsyncPipe
+  ],
+  templateUrl: './youtube.component.html',
+  styleUrls: ['./youtube.component.scss']
 })
 export class YoutubeComponent implements OnInit {
 
@@ -46,7 +51,7 @@ export class YoutubeComponent implements OnInit {
     }
 
     constructor(
-        private window: WindowService,
+        private windowService: WindowService,
         private cookieService: CookieService
     ) { }
 
@@ -55,11 +60,11 @@ export class YoutubeComponent implements OnInit {
     }
 
     youtubeLink(videoID: string): string {
-        return (window.location.protocol
+        return (this.windowService.nativeWindow.location.protocol
             + '//www.youtube.com/embed/'
             + videoID
             + '?enablejsapi=1&origin='
-            + window.location.protocol
+            + this.windowService.nativeWindow.location.protocol
             + '//www.actn.fr');
     }
 
@@ -80,7 +85,7 @@ interface Link {
     type: 'YT' | 'IFRAME' | 'TITLE';
 }
 
-@Pipe({ name: 'safe' })
+@Pipe({standalone: true, name: 'safe'})
 export class SafePipe implements PipeTransform {
     constructor(private sanitizer: DomSanitizer) { }
     transform(url: string): SafeResourceUrl {

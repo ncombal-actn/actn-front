@@ -73,33 +73,10 @@
           "configurations": {
             "development": {
               "outputPath": "dist/actn-front-end",
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": {
-                "scripts": true,
-                "styles": true,
-                "hidden": true,
-                "vendor": true
-              },
-              "namedChunks": false,
-              "extractLicenses": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "400mb",
-                  "maximumError": "1000mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "10kb"
-                }
-              ]
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false,
+              "namedChunks": true
             },
             "production": {
               "outputPath": "dist/actn-front-end",

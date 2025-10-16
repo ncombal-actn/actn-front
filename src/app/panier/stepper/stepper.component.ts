@@ -1,8 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-stepper',
+  standalone: true,
+  imports: [CommonModule, RouterLink],
   templateUrl: './stepper.component.html',
   styleUrls: ['./stepper.component.scss']
 })
@@ -14,10 +17,9 @@ export class StepperComponent implements OnInit {
   page: string;
 
   constructor(
-    private router: Router,
     protected route: ActivatedRoute) { }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.page =  decodeURIComponent(this.route.snapshot.url[this.route.snapshot.url.length - 1]?.path ?? '');
   }
 }

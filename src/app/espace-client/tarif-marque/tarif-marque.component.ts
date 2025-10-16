@@ -8,9 +8,18 @@ import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 import { utils, writeFile }  from 'xlsx';
 import {HttpClient} from "@angular/common/http";
+import {MatChipListbox} from "@angular/material/chips";
+import {KeyValuePipe} from "@angular/common";
+import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
 
 @Component({
   selector: 'app-tarif-marque',
+  standalone: true,
+  imports: [
+    KeyValuePipe,
+    TitleWLineComponent,
+    MatChipListbox
+  ],
   templateUrl: './tarif-marque.component.html',
   styleUrls: ['./tarif-marque.component.scss']
 })

@@ -10,9 +10,10 @@ import { ActivatedRoute, Router, NavigationEnd, ActivatedRouteSnapshot, UrlTree 
 import { map, tap, takeUntil, publishReplay, refCount, switchMap, startWith, take, skip } from 'rxjs/operators';
 
 @Component({
-	selector: 'app-sliding-list-from-link',
-	templateUrl: './sliding-list-from-link.component.html',
-	styleUrls: ['./sliding-list-from-link.component.scss']
+  selector: 'app-sliding-list-from-link',
+  standalone: true,
+  templateUrl: './sliding-list-from-link.component.html',
+  styleUrls: ['./sliding-list-from-link.component.scss']
 })
 export class SlidingListFromLinkComponent implements OnInit {
 

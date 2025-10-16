@@ -6,7 +6,7 @@ import {
 	ComponentsInteractionService,
 	UserService
 } from '@core/_services';
-import { Router } from "@angular/router";
+import {Router, RouterLink, RouterLinkActive} from "@angular/router";
 import { LicenceService } from '@core/_services/licence.service';
 import { CotationService } from '@core/_services/cotation.service';
 import {
@@ -20,16 +20,18 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { UtilModule } from '@/_util/util.module';
+import {MatTab, MatTabGroup} from "@angular/material/tabs";
+import {MatTooltip} from "@angular/material/tooltip";
+import {LoginFormComponent} from "@/_util/components/login-form/login-form.component";
 
 /**
  * Panneau de navigation latéral
  */
 @Component({
 	selector: 'app-side-nav',
+  standalone: true,
+  imports: [FontAwesomeModule, CommonModule, RouterLink, MatTabGroup, MatTab, RouterLinkActive, MatTooltip, LoginFormComponent],
 	templateUrl: './side-nav.component.html',
-	standalone: true,
-	imports: [FontAwesomeModule,CommonModule,UtilModule],
 	styleUrls: ['./side-nav.component.scss']
 })
 export class SideNavComponent implements OnInit, OnDestroy {
@@ -126,9 +128,9 @@ export class SideNavComponent implements OnInit, OnDestroy {
 				if (storedCotations) {
 				  const cotations = JSON.parse(storedCotations);
 				  this.nbrOfCriticalCotations = cotations.nbrOfCriticalCotations;
-				 
-				 
-				  
+
+
+
 				}
 			  }
 	}

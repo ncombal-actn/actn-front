@@ -1,7 +1,14 @@
 import {Component, OnDestroy, OnInit, ViewChildren} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {BehaviorSubject, combineLatest, Observable, of, Subject} from 'rxjs';
-import {AbstractControlOptions, FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {
+  AbstractControlOptions,
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule
+} from '@angular/forms';
 import {CatalogueSample, Filtre, Produit, User} from '@/_util/models';
 import {map, publishReplay, refCount, skip, startWith, switchMap, take, takeUntil, tap} from 'rxjs/operators';
 import {animate, state, style, transition, trigger} from '@angular/animations';
@@ -11,8 +18,20 @@ import {SearchService} from '@core/_services/search.service';
 import {AuthenticationService, LocalStorageService} from '@/_core/_services';
 import {environment} from '@env';
 import {BanniereComponent} from '@/banniere/banniere.component';
-import {Chips} from '@/_util/components/chips-list/chips-list.component';
+import {Chips, ChipsListComponent} from '@/_util/components/chips-list/chips-list.component';
 import {faThLarge, faThList} from "@fortawesome/free-solid-svg-icons";
+import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
+import {AsyncPipe, NgClass} from "@angular/common";
+import {MatIcon} from "@angular/material/icon";
+import {MatDivider} from "@angular/material/divider";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatOption, MatSelect} from "@angular/material/select";
+import {AddClassOnChangeDirective} from "@/_util/directives/add-class-on-change.directive";
+import {ShareComponent} from "@/_util/components/share/share.component";
+import {KeyboardFocusDirective} from "@/_util/directives/keyboard-focus.directive";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {ProduitsComponent} from "@/_util/components/produits/produits.component";
+import {MatButton} from "@angular/material/button";
 
 type Format = 'list' | 'grid';
 
@@ -21,8 +40,31 @@ type Format = 'list' | 'grid';
  */
 @Component({
   selector: 'app-catalogue',
+  standalone: true,
   templateUrl: './catalogue.component.html',
   styleUrls: ['./catalogue.component.scss'],
+  imports: [
+    NgxSkeletonLoaderModule,
+    BanniereComponent,
+    NgClass,
+    MatIcon,
+    MatDivider,
+    AsyncPipe,
+    MatFormField,
+    MatSelect,
+    ReactiveFormsModule,
+    MatOption,
+    MatLabel,
+    ChipsListComponent,
+    AddClassOnChangeDirective,
+    ShareComponent,
+    KeyboardFocusDirective,
+    FaIconComponent,
+    ProduitsComponent,
+    MatButton,
+    RouterLink,
+    RouterLinkActive
+  ],
   animations: [
     /**
      * Animation sur la hauteur de l'élément, alterne entre 0 et sa hauteur par défaut.

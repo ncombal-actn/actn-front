@@ -1,13 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Router, RouterLink} from '@angular/router';
 import { AuthenticationService } from '@core/_services';
 import { RmaService } from '@core/_services/rma.service';
 import { environment } from '@env';
+import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatHint} from "@angular/material/select";
+import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
 
 @Component({
   selector: 'app-new-client',
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    TitleWLineComponent,
+    MatFormField,
+    MatHint,
+    MatLabel,
+    MatError
+  ],
   templateUrl: './new-client.component.html',
   styleUrls: ['./new-client.component.scss']
 })

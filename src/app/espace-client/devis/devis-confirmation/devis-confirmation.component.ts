@@ -2,9 +2,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LicenceService, TempCartService } from '@core/_services';
 import { take } from 'rxjs/operators';
+import {CategorieComponent} from "@/catalogue/categorie/categorie.component";
 
 @Component({
 	selector: 'app-devis-confirmation',
+  standalone: true,
+  imports: [
+    CategorieComponent
+  ],
 	templateUrl: './devis-confirmation.component.html',
 	styleUrls: ['./devis-confirmation.component.scss']
 })

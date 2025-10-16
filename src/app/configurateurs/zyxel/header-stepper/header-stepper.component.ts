@@ -1,10 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import {CommonModule} from "@angular/common";
 
 @Component({
-    selector: 'conf-header-stepper',
-    templateUrl: './header-stepper.component.html',
-    styleUrls: ['./header-stepper.component.scss']
+  selector: 'conf-header-stepper',
+  standalone: true,
+  imports: [
+    CommonModule
+  ],
+  templateUrl: './header-stepper.component.html',
+  styleUrls: ['./header-stepper.component.scss']
 })
 export class HeaderStepperComponent implements OnInit {
 

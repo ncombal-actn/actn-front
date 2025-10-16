@@ -3,9 +3,20 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { environment } from '@env';
 import { take } from 'rxjs/operators';
+import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle} from "@angular/material/card";
+import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
 
 @Component({
   selector: 'app-contact',
+  standalone: true,
+  imports: [
+    TitleWLineComponent,
+    MatCard,
+    MatCardContent,
+    MatCardHeader,
+    MatCardSubtitle,
+    MatCardTitle
+  ],
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss']
 })
@@ -35,7 +46,7 @@ export class ContactComponent implements OnInit {
           const htmlString = res;
           this.contactsHTML = this.sanitizer.bypassSecurityTrustHtml(htmlString);
         }
-        
+
       );
   }
 

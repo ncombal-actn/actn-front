@@ -39,14 +39,14 @@
             <!-- {{ cartItem.qte | number: '1.0-0' }} sur -->
             <span class="for-phone" style="color:black;">Disponible:&nbsp; </span>
             {{ cartItem.partQteDisponible | number: '1.0-0' }} en stock
-      
-          
+
+
             <ng-container  *ngIf="cartItem.produit.dateConfReapproStatut ==='Date prévisonnelle' || 'Date confirmée' ">
             <br>{{cartItem.produit.qteEnReappro}} en Réappro.
               <app-horizon-delais [produit]="[cartItem.produit.reference, cartItem.produit.marque]"></app-horizon-delais>
             </ng-container>
           </div>
-      
+
         </div>
       } @else {
         <p class="demat-msg">Produit dématérialisé</p>
@@ -144,7 +144,7 @@
             </p>
           }
           <app-input-number
-            min="1"
+            [min]=1
             [max]="maximum(cartItem.produit)"
             [number]="cartItem.qte"
             (value)="quantiteChange(cartItem, $event)"

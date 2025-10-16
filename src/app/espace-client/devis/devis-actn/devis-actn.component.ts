@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, NgZone, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, NgZone, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '@core/_services/authentication.service';
 import { CartService } from '@core/_services/cart.service';
@@ -10,9 +10,37 @@ import { fromEvent } from 'rxjs';
 import { debounceTime, skip, take, takeUntil } from 'rxjs/operators';
 import { DevisComponent } from '../devis.component';
 import {faCheck, faFilePdf, faMinus, faPlus, faRedoAlt} from "@fortawesome/free-solid-svg-icons";
+import {TabSortComponent} from "@/_util/components/tab-sort/tab-sort.component";
+import {AsyncPipe, CurrencyPipe, DatePipe, KeyValuePipe, NgClass, NgStyle, SlicePipe} from "@angular/common";
+import {FormsModule} from "@angular/forms";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatPaginator} from "@angular/material/paginator";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {TooltipComponent} from "@/_util/components/tooltip/tooltip.component";
+import {MatTooltip} from "@angular/material/tooltip";
+import {MatIcon} from "@angular/material/icon";
 
 @Component({
 	selector: 'app-devis-actn',
+  standalone: true,
+  imports: [
+    AsyncPipe,
+    KeyValuePipe,
+    FormsModule,
+    TabSortComponent,
+    MatFormField,
+    MatLabel,
+    MatPaginator,
+    FaIconComponent,
+    NgStyle,
+    CurrencyPipe,
+    NgClass,
+    TooltipComponent,
+    DatePipe,
+    MatTooltip,
+    MatIcon,
+    SlicePipe
+  ],
 	templateUrl: './devis-actn.component.html',
 	styleUrls: ['../devis.component.scss']
 })
@@ -42,20 +70,20 @@ export class DevisActnComponent extends DevisComponent implements OnInit {
 		this.Edit.emit(devis);
 	}
 
-    
-   
+
+
     cleanFilter(type: string, array:string): void {
         /**Filtre marque */
         if (type === 'produits.marquelib'){
             this.marquesSelected = [];
             this.onSearch(type, 'array', 'includes', '', array)
 
-        }else{  
+        }else{
             /**Filtre status */
             setTimeout(() => this.processedDevis$.next(this.saf.onFiltre('devis', 'statut', 'string', 'includes', '', this._devis)), 1);
         }
     }
-    
+
 	ngOnInit(): void {
         this.processedDevis$
             .pipe(skip(1), takeUntil(this._destroy$))

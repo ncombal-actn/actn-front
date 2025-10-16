@@ -9,10 +9,13 @@
             <div class="status{{ produit.codePromo }}">{{ produit.libPromo }}</div>
           </div>
         } -->
-        
-        <app-sliding-liste *ngIf="nbrPhotos > 0" style="max-width: 110px;min-width: 110px; margin-top: 30px" class="galerie" type="galerie"
-                           [nbProduits]="nbrPhotos" [produit]="produit.photo"
-                           (select)="changePhoto($event)"></app-sliding-liste>
+
+        @if (nbrPhotos > 0) {
+          <app-sliding-liste style="max-width: 110px;min-width: 110px; margin-top: 30px"
+                             class="galerie" type="galerie"
+                             [nbProduits]="nbrPhotos" [produit]="produit.photo"
+                             (select)="changePhoto($event)"></app-sliding-liste>
+        }
         <!-- IMAGE PRODUIT -->
         <div class="image-produit-container" style="width: 90%;">
           <!-- STATUT -->
@@ -21,7 +24,8 @@
             @if (imgUrl) {
               <img [alt]="produit.reference" [redZoom]="imgUrl" [redZoomThumb]="imgUrl" redZoomBehavior="hover"
                    class="image-produit" [src]="imgUrl" [redZoomClass]="'red-zoom--style--magnifier'"
-                   (error)="imgUrl = produitDetailService.errorImg(produit)" fill="" [redZoomLazy]="false" loading="lazy"
+                   (error)="imgUrl = produitDetailService.errorImg(produit)" fill="" [redZoomLazy]="false"
+                   loading="lazy"
                    redZoomErrorMessage="test" [redZoomMouseWheel]="false">
             }
           </div>
@@ -32,7 +36,8 @@
             <!-- REFERENCE ACTN -->
             <h2 class="reference-actn">
               {{ produit.reference }}
-              <img [src]="environment.logoMarquesCouleurs200x80 + produit.marque + '.gif'" alt="{{produit.marque}}" loading="lazy"/>
+              <img [src]="environment.logoMarquesCouleurs200x80 + produit.marque + '.gif'" alt="{{produit.marque}}"
+                   loading="lazy"/>
               <div class="buttons">
                 <!-- PARTAGER -->
                 <app-share title="Partager" [textToClipboard]="textToClipboard" class="marge-button"></app-share>
@@ -58,17 +63,17 @@
                   </a>
                 }
                 <!-- PDFS -->
-                 
-                
-                @for (fiche of fiches; track fiches.label) {
-                 
+
+
+                @for (fiche of fiches; track fiche) {
+
                   <a [href]="environment.produitPdfUrl +'/'+ fiche.url+'.pdf'" target="_blank">
                     <app-tooltip class="marge-button" type="pdf" [text]="fiche.label"></app-tooltip>
                   </a>
 
                 }
               </div>
-             
+
 
               <!-- <img [src]="environment.logoMarquesCouleurs200x80 + produit.marquelib + '.gif'" alt="{{produit.marquelib}}" /> -->
             </h2>
@@ -88,15 +93,17 @@
                     : {{ produit.genCod }}</p>
                 }
               </div>
-              <div *ngIf="produit.codePromo != ''" class="info-statut2">
-                @if(produit.codePromo == 'R'){
-                <div title="{{produit.libPromo}}" class="status{{ produit.codePromo }}">{{ produit.libPromo }}</div>
-                }@else{
-                <div title="{{produit.libPromo}}" class="status{{ produit.codePromo }}">{{ produit.libPromo }}
-                  {{ produit.prixdatepromo != '' ? ' jusqu\'au ' + produit.prixdatepromo : '' }}
+              @if (produit.codePromo != '') {
+                <div class="info-statut2">
+                  @if (produit.codePromo == 'R') {
+                    <div title="{{produit.libPromo}}" class="status{{ produit.codePromo }}">{{ produit.libPromo }}</div>
+                  } @else {
+                    <div title="{{produit.libPromo}}" class="status{{ produit.codePromo }}">{{ produit.libPromo }}
+                      {{ produit.prixdatepromo != '' ? ' jusqu\'au ' + produit.prixdatepromo : '' }}
+                    </div>
+                  }
                 </div>
-                }
-              </div>
+              }
             </div>
             @if (produit.division !== '') {
 
@@ -273,18 +280,20 @@
                     <div [ngClass]="{ active: produit.qteEnReappro > 0 }">
                       <div class="state">
                         En réappro.
-                        
-                        <br/>
-                        @if(produit.qteEnReappro > 0 && (produit.dateConfReapproStatut === 'Date prévisonnelle' || produit.dateConfReapproStatut === 'Date confirmée')) {
-                            <p class="size-small">  <app-horizon-delais [produit]="[produit.reference,produit.marque]"></app-horizon-delais></p> 
 
-                          }
-                         
+                        <br/>
+                        @if (produit.qteEnReappro > 0 && (produit.dateConfReapproStatut === 'Date prévisonnelle' || produit.dateConfReapproStatut === 'Date confirmée')) {
+                          <p class="size-small">
+                            <app-horizon-delais [produit]="[produit.reference,produit.marque]"></app-horizon-delais>
+                          </p>
+
+                        }
+
                       </div>
 
                       <div class="state-value">
                         {{ produit.qteEnReappro | number: '1.0-0' }}
-                       
+
                       </div>
                     </div>
 
@@ -308,17 +317,21 @@
                                             [cotation]="ajoutPanierCotation()" direction="column"
                                             (qtyInCart)="getQtePriceAppliedIndex()"></app-add-to-cart-form>
                     </div>
-                    
+
                   </div>
                 </div>
               </div>
             </div>
-              } @else {
+          } @else {
 
             <div class="unconnected-message">
 
               <div class="unconnected-pdf">
-                <ng-template [ngTemplateOutlet]="pdf"></ng-template>
+                <ng-container>
+                  <!-- PDF -->
+                  <div class="info-pdf">
+                  </div>
+                </ng-container>
               </div>
 
               <div class="connection-required-message">
@@ -334,11 +347,6 @@
             </div>
 
           }
-          <ng-template #pdf>
-            <!-- PDF -->
-            <div class="info-pdf">
-            </div>
-          </ng-template>
 
         </div>
       </div>
@@ -362,11 +370,12 @@
 
     @if (produitsAssocies.length > 0) {
 
-      <app-title-w-line title="Produits associés" collapsible="true" size="verySmall" (click)="toggleCollapseDivById($event, 'produitsAssocies')"></app-title-w-line>
+      <app-title-w-line title="Produits associés" [collapsible]="true" size="verySmall"
+                        (click)="toggleCollapseDivById($event, 'produitsAssocies')"></app-title-w-line>
 
       <span id="produitsAssocies"></span>
       <div class="collapsible" [@expandVertical]="collapsedIdsArray.includes('produitsAssocies') ? 'closed' : 'open'"
-      [ngClass]="{ hide: collapsedIdsArray.includes('produitsAssocies') }">
+           [ngClass]="{ hide: collapsedIdsArray.includes('produitsAssocies') }">
 
         <app-produits [produits]="produitsAssocies" [format]="formatProduitsAssocieVente"
                       [simple]="simpleProduitsAssocieVente">
@@ -376,13 +385,15 @@
 
     }
 
-      @if (produitsRenouvellement.length > 0) {
-      
-      <app-title-w-line title="Produits de renouvellement" collapsible="true" size="verySmall" (click)="toggleCollapseDivById($event, 'produitsRenouvellement')"></app-title-w-line>
+    @if (produitsRenouvellement.length > 0) {
+
+      <app-title-w-line title="Produits de renouvellement" [collapsible]="true" size="verySmall"
+                        (click)="toggleCollapseDivById($event, 'produitsRenouvellement')"></app-title-w-line>
 
       <span id="produitsRenouvellement"></span>
-      <div class="collapsible" [@expandVertical]="collapsedIdsArray.includes('produitsRenouvellement') ? 'closed' : 'open'"
-      [ngClass]="{ hide: collapsedIdsArray.includes('produitsRenouvellement') }">
+      <div class="collapsible"
+           [@expandVertical]="collapsedIdsArray.includes('produitsRenouvellement') ? 'closed' : 'open'"
+           [ngClass]="{ hide: collapsedIdsArray.includes('produitsRenouvellement') }">
 
         <app-produits [produits]="produitsRenouvellement" [format]="formatProduitsAssocieVente"
                       [simple]="simpleProduitsRenouvellement">
@@ -404,7 +415,8 @@
         <app-sliding-liste [produits]="produitsSimilaire" [title]="'Produits similaires'"
                            [nbProduits]="15" [croissant]="true"></app-sliding-liste>
         <div class="voir-tout">
-          <a (click)="produitDetailService.navigateToSimilar(produit)" class="raised-button">Voir tous les produits similaires</a>
+          <a (click)="produitDetailService.navigateToSimilar(produit)" class="raised-button">Voir tous les produits
+            similaires</a>
         </div>
       </div>
     }

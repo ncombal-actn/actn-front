@@ -34,13 +34,13 @@
           <mat-option *ngFor="let poste of postes" [value]="poste.intitule">{{ poste.intitule }}</mat-option>
         </mat-select>
       </mat-form-field>
-  
+
   <!--  </div>
      <mat-form-field>
       <mat-label>Select me</mat-label>
       <mat-select>
         <mat-option value="option">Option</mat-option>
-      </mat-select> 
+      </mat-select>
     </mat-form-field> -->
     <label>Nom :</label>
     <mat-form-field>
@@ -62,7 +62,7 @@
       <mat-label>Téléphone</mat-label>
       <input matInput formControlName="telephone" autocomplete="tel" required/>
     </mat-form-field>
-    
+
     <!-- <mat-form-field appearance="outline">
       <mat-label>Votre CV</mat-label>
       <ngx-mat-file-input class="input" formControlName="file" placeholder="Basic Input" required
@@ -85,7 +85,7 @@
       <mat-icon matSuffix>attach_file</mat-icon>
     </mat-form-field>
   </div>
-  
+
   </div>
   <button type="button" class="raised-button" (click)="onSubmit()" (tap)="onSubmit()">Envoyer ma candidature</button>
   @if (erreur) {

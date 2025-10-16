@@ -2,9 +2,14 @@ import { Adresse } from '@/_util/models';
 import { EventEmitter, Output } from '@angular/core';
 import { Component, Input, OnInit } from '@angular/core';
 import { RmaService } from '@core/_services/rma.service';
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-change-adresse',
+  standalone: true,
+  imports: [
+    CommonModule
+  ],
   templateUrl: './change-adresse.component.html',
   styleUrls: ['./change-adresse.component.scss']
 })

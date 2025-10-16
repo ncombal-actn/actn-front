@@ -2,9 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from '@core/_services/storage.service';
 import { Observable } from 'rxjs';
+import {SafePipe} from "@/_util/components/youtube/youtube.component";
 
 @Component({
   selector: 'app-i-frame',
+  standalone: true,
+  imports: [
+    SafePipe
+  ],
   templateUrl: './i-frame.component.html',
   styleUrls: ['./i-frame.component.scss']
 })

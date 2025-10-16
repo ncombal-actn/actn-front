@@ -3,7 +3,6 @@ import { combineLatest } from 'rxjs';
 import { Subject } from 'rxjs';
 import {
   defaultIfEmpty,
-  skip,
   withLatestFrom,
   debounceTime
 } from 'rxjs/operators';
@@ -12,8 +11,8 @@ import {
  * Toggle la classe 'focus' sur l'élément si l'élément est ou non dans l'état focused à la suite d'un évènement clavier.
  */
 @Directive({
-  selector: '[appKeyboardFocus]',
-  standalone: true
+  standalone: true,
+  selector: '[appKeyboardFocus]'
 })
 export class KeyboardFocusDirective {
 

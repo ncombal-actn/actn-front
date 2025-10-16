@@ -1,16 +1,17 @@
-import { HttpClient } from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {
   ChangeDetectorRef,
   Component,
   Input,
   OnInit,
 } from "@angular/core";
-import { AuthenticationService, SeoService } from "@core/_services";
-import { environment } from "@env";
-import { Observable } from "rxjs";
+import {AuthenticationService, SeoService} from "@core/_services";
+import {environment} from "@env";
+import {Observable} from "rxjs";
 
 @Component({
   selector: "app-banniere",
+  standalone: true,
   templateUrl: "./banniere.component.html",
   styleUrls: ["./banniere.component.scss"],
 })
@@ -25,7 +26,8 @@ export class BanniereComponent implements OnInit {
   affichage = false;
 
 
-  constructor(private http: HttpClient, private cdr: ChangeDetectorRef, private seoService: SeoService,        private authService:  AuthenticationService) {}
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef, private seoService: SeoService, private authService: AuthenticationService) {
+  }
 
   private _marques: Array<string> = [];
 
@@ -34,6 +36,7 @@ export class BanniereComponent implements OnInit {
   }
 
   imageExists = false;
+
   @Input() public set marques(value: Array<string>) {
     this._marques = value;
     this.load();
@@ -76,7 +79,7 @@ export class BanniereComponent implements OnInit {
 
   checkImageExists(): void {
     const imageUrl = `${environment.banniereUrl}${this.banniereActive}.webp`;
-    this.http.head(imageUrl, { observe: "response" }).subscribe(
+    this.http.head(imageUrl, {observe: "response"}).subscribe(
       (response) => {
         if (response.status === 200) {
           this.imageExists = true;
@@ -119,19 +122,21 @@ export class BanniereComponent implements OnInit {
       }
     );
   }
-  emitSeo(){
+
+  emitSeo() {
 
     this.seoService.logEvent('click_banniere', {
-    client: this.authService.currentUser,
-    banniere: this.banniereActive,
-  });
+      client: this.authService.currentUser,
+      banniere: this.banniereActive,
+    });
   }
-onBanniereClick(event: MouseEvent) {
-  event.preventDefault(); // Empêche la navigation immédiate
-  this.emitSeo();         // Log SEO
 
-  // Redirige manuellement après le log
-  window.location.href = this.linkActive;
-}
+  onBanniereClick(event: MouseEvent) {
+    event.preventDefault(); // Empêche la navigation immédiate
+    this.emitSeo();         // Log SEO
+
+    // Redirige manuellement après le log
+    window.location.href = this.linkActive;
+  }
 
 }

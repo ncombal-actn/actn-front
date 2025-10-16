@@ -1,18 +1,24 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 //import * as $ from 'jquery';
 import { HttpClient } from '@angular/common/http';
-import { tap, map, take, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { environment } from '@env';
 import { StorageService, WindowService, AuthenticationService } from '@core/_services';
 import { Router } from '@angular/router';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { isPlatformBrowser } from '@angular/common';
+import {isPlatformBrowser, NgClass} from '@angular/common';
 import { CarouselData } from '@core/_services/carousel.service';
 import {faCircle} from "@fortawesome/free-solid-svg-icons";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 
 @Component({
   selector: 'app-vertical-carousel',
+  standalone: true,
   templateUrl: './vertical-carousel.component.html',
+  imports: [
+    NgClass,
+    FaIconComponent
+  ],
   styleUrls: ['./vertical-carousel.component.scss']
 })
 export class VerticalCarouselComponent implements OnInit, OnDestroy, AfterViewInit
@@ -59,22 +65,14 @@ export class VerticalCarouselComponent implements OnInit, OnDestroy, AfterViewIn
 
     ngOnInit(): void
     {
-
-
-        // on halte l'animation du carousel si on quite la page
         window.onfocus = () =>
         {
-            /*var d = new Date;
-*/
             this.startTimeOut(this.animation.interval);
         };
         window.onblur = () =>
         {
-            /*var d = new Date;
-*/
             this.stopTimeOut();
         };
-
     }
     /** Destruction du CarouselComponent */
     ngOnDestroy(): void

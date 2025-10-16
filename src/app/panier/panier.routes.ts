@@ -1,5 +1,4 @@
-import { Routes, RouterModule } from '@angular/router';
-import { NgModule } from '@angular/core';
+import { Routes } from '@angular/router';
 
 import { PanierComponent } from './panier.component';
 import { ValidationPanierComponent } from './validation-panier/validation-panier.component';
@@ -7,7 +6,7 @@ import { ConfirmationPanierComponent } from './confirmation-panier/confirmation-
 import { AuthGuard } from '@core/_guards/auth.guard';
 import { PanierValidationGuard } from '@core/_guards';
 
-const routes: Routes = [
+export const PANIER_ROUTES: Routes = [
   {
     path: '',
     pathMatch: 'full',
@@ -51,9 +50,3 @@ const routes: Routes = [
     },
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
-})
-export class PanierRoutingModule { }

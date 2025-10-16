@@ -15,35 +15,41 @@
 
 
 <ng-template #statut>
-  <div *ngIf="produit.codePromo != ''" class="info-statut2">
-    @if(produit.codePromo == 'R'){
-    <div title="{{produit.libPromo}}" class="status{{ produit.codePromo }}">{{ produit.libPromo }}</div>
-    }@else{
-    <div title="{{produit.libPromo}}" class="status{{ produit.codePromo }}">{{ produit.libPromo }}
-      {{ produit.prixdatepromo != '' ? ' jusqu\'au ' + produit.prixdatepromo : '' }}
+  @if (produit.codePromo != '') {
+    <div class="info-statut2">
+      @if (produit.codePromo == 'R') {
+        <div title="{{produit.libPromo}}" class="status{{ produit.codePromo }}">{{ produit.libPromo }}</div>
+      } @else {
+        <div title="{{produit.libPromo}}" class="status{{ produit.codePromo }}">{{ produit.libPromo }}
+          {{ produit.prixdatepromo != '' ? ' jusqu\'au ' + produit.prixdatepromo : '' }}
+        </div>
+      }
     </div>
-    }
-  </div>
-
+  }
 </ng-template>
 
 <!-- IMAGE -->
 <ng-template #image>
   <div class="cotainerImg">
-    <img class="image-produit" [src]="environment.vignettesUrl + urlImage() + '.webp'" 
-      [default]="produitService.errorImg(produit)" [alt]="produit.designation" loading="lazy" />
+    <img class="image-produit" [src]="environment.vignettesUrl + urlImage() + '.webp'"
+         [default]="produitService.errorImg(produit)" [alt]="produit.designation" loading="lazy"/>
   </div>
 </ng-template>
 
 <!-- DETAILS -->
 <ng-template #refActn>
-  <h3 class="ref-actn"> <span> {{ produit.reference }} </span><img [default]="''" loading="lazy"
-      [src]="environment.logoMarquesUrl70x30center + produit.marque + '.gif'" [alt]="produit.marque" /></h3>
-  <span *ngIf="!simple" class="refconstructeur size-smaller">Réf. constructeur : {{ produit.reffournisseur }}</span>
+  <h3 class="ref-actn"><span> {{ produit.reference }} </span><img [default]="''" loading="lazy"
+                                                                  [src]="environment.logoMarquesUrl70x30center + produit.marque + '.gif'"
+                                                                  [alt]="produit.marque"/></h3>
+  @if (!simple) {
+    <span class="refconstructeur size-smaller">Réf. constructeur : {{ produit.reffournisseur }}</span>
+  }
 </ng-template>
 <ng-template #designation>
   <p class="designation weight-bolder">{{ produit.designation }} </p>
-  <div *ngIf="!simple && produit.division" style="color: orange;">{{ produit.division }} </div>
+  @if (!simple && produit.division) {
+    <div style="color: orange;">{{ produit.division }}</div>
+  }
 </ng-template>
 <!-- <ng-template #marque>
   <span class="marque-produit" [ngClass]="{simple: format === 'grid' && simple}">
@@ -60,161 +66,215 @@
 <ng-template #prix>
   <div class="prix-détails">
     <!-- PRIX PUBLIC -->
-    <div *ngIf="!simple || format === 'list'">
-      <div class="libelle">prix public</div>
-      <div *ngIf="produit.prixPublic; else NC1" class="montant">
-        <div>{{ produit.prixPublic | currency:'EUR':'symbol':'1.2-2':'fr' }}<span class="size-smaller">&nbsp;HT</span>
-        </div>
-      </div>
-      <ng-template #NC1>
-        <div class="montant">NC</div>
-      </ng-template>
-    </div>
-    <!-- D3E -->
-    <div *ngIf="produit.prixD3E && (!simple || format === 'list')">
-      <div class="libelle">écopart.</div>
-      <div class="montant">
-        <div>{{ produit.prixD3E | currency:'EUR':'symbol':'1.3-3':'fr' }}<span class="size-smaller">&nbsp;HT</span>
-        </div>
-      </div>
-    </div>
-    <!-- VOTRE PRIX -->
-    <div class="votre-prix" *ngIf="!produit.hasPriceByQte; else prixParQte">
-      <div>votre prix</div>
-      <div *ngIf="produit.prix; else NC2" [ngClass]="{ 'montant' : !cotationWarn }">
-        <span  [class.barre]="produit.cotationValide =='O' && produit.prix > produit.prixPlusBas && produit.prixPlusBas !== 0">{{ produit.prix | currency:'EUR':'symbol':'1.2-2':'fr' }}</span><span class="size-smaller nobarre">&nbsp;HT</span>
-      </div>
-
-      <ng-template #NC2>
-        <div class="montant">NC</div>
-      </ng-template>
-    </div>
-    <div *ngIf="produit.cotationValide =='O'">
-      <a *ngIf="produit.prix > produit.prixPlusBas && produit.prixPlusBas !== 0" [routerLink]="lienProduit" class="prixcot" >
-        Prix cotation
-      </a>
-        <div *ngIf="produit.prix > produit.prixPlusBas && produit.prixPlusBas !== 0; else prixcot" style="font-weight: bold; color:#9b0037 ">{{produit.prixPlusBas | currency:'EUR':'symbol':'1.2-2':'fr' }} €</div>
-
-        <ng-template #prixcot>
-          <div [routerLink]="lienProduit" style="font-weight: bold; color:#9b0037 ">Prix promotion</div>
-        </ng-template>
-    </div>
-
-    <!-- PRIX PAR QUANTITE -->
-    <ng-template #prixParQte>
-      <ng-container *ngFor="let qtp of produit.qtePrice; let i = index;">
-        <div
-          [ngClass]="((qtePriceAppliedIndex == i) || (i == 0 && !cartService.cart.items[produit.reference])) ? 'votre-prix' : ''">
-          <div class="libelle">prix par {{ qtp.qte }}</div>
+    @if (!simple || format === 'list') {
+      <div>
+        <div class="libelle">prix public</div>
+        @if (produit.prixPublic) {
           <div class="montant">
-            <div>{{ qtp.price | currency:'EUR':'symbol':'1.2-2':'fr' }}<span class="size-smaller">&nbsp;HT</span></div>
+            <div>{{ produit.prixPublic | currency:'EUR':'symbol':'1.2-2':'fr' }}<span
+              class="size-smaller">&nbsp;HT</span>
+            </div>
+          </div>
+        } @else {
+          <ng-container>
+            <div class="montant">NC</div>
+          </ng-container>
+        }
+      </div>
+    }
+    <!-- D3E -->
+    @if (produit.prixD3E && (!simple || format === 'list')) {
+      <div>
+        <div class="libelle">écopart.</div>
+        <div class="montant">
+          <div>{{ produit.prixD3E | currency:'EUR':'symbol':'1.3-3':'fr' }}<span class="size-smaller">&nbsp;HT</span>
           </div>
         </div>
+      </div>
+    }
+    <!-- VOTRE PRIX -->
+    @if (!produit.hasPriceByQte) {
+      <div class="votre-prix">
+        <div>votre prix</div>
+        @if (produit.prix) {
+          <div [ngClass]="{ 'montant' : !cotationWarn }">
+          <span
+            [class.barre]="produit.cotationValide =='O' && produit.prix > produit.prixPlusBas && produit.prixPlusBas !== 0">{{ produit.prix | currency:'EUR':'symbol':'1.2-2':'fr' }}</span><span
+            class="size-smaller nobarre">&nbsp;HT</span>
+          </div>
+        } @else {
+          <ng-container>
+            <div class="montant">NC</div>
+          </ng-container>
+        }
+      </div>
+    } @else {
+      <!-- PRIX PAR QUANTITE -->
+      <ng-container>
+        @for (qtp of produit.qtePrice; track qtp; let i = $index) {
+          <ng-container>
+            <div
+              [ngClass]="((qtePriceAppliedIndex == i) || (i == 0 && !cartService.cart.items[produit.reference])) ? 'votre-prix' : ''">
+              <div class="libelle">prix par {{ qtp.qte }}</div>
+              <div class="montant">
+                <div>{{ qtp.price | currency:'EUR':'symbol':'1.2-2':'fr' }}<span class="size-smaller">&nbsp;HT</span>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        }
       </ng-container>
-    </ng-template>
+    }
+    @if (produit.cotationValide == 'O') {
+      <div>
+        @if (produit.prix > produit.prixPlusBas && produit.prixPlusBas !== 0) {
+          <a [routerLink]="lienProduit"
+             class="prixcot">
+            Prix cotation
+          </a>
+        }
+        @if (produit.prix > produit.prixPlusBas && produit.prixPlusBas !== 0) {
+          <div
+            style="font-weight: bold; color:#9b0037 ">{{ produit.prixPlusBas | currency:'EUR':'symbol':'1.2-2':'fr' }}
+            €
+          </div>
+        } @else {
+          <ng-container>
+            <div [routerLink]="lienProduit" style="font-weight: bold; color:#9b0037 ">Prix promotion</div>
+          </ng-container>
+        }
+
+      </div>
+    }
+
+
   </div>
   <!-- PRIX COTATION -->
-  <div *ngIf="cotationWarn && hasCotation" class="votre-prix" style="width: 100%;">
-    <div style="display: flex;justify-content: space-between;">
+  @if (cotationWarn && hasCotation) {
+    <div class="votre-prix" style="width: 100%;">
+      <div style="display: flex;justify-content: space-between;">
 
 
-    <div>prix cotation</div>
-    <div *ngIf="catationLa.prixvente; else NC2" class="montant">
-      <div>{{ catationLa.prixvente | currency:'EUR':'symbol':'1.2-2':'fr' }}<span class="size-smaller">&nbsp;HT</span>
+        <div>prix cotation</div>
+        @if (catationLa.prixvente) {
+          <div class="montant">
+            <div>{{ catationLa.prixvente | currency:'EUR':'symbol':'1.2-2':'fr' }}<span
+              class="size-smaller">&nbsp;HT</span>
+            </div>
+          </div>
+        } @else {
+          <!-- voir si sa fait pt le style hasCotation -->
+          <ng-container>
+            <div class="montant">NC</div>
+          </ng-container>
+        }
       </div>
+      @if (catationLa && hasCotation) {
+        <a routerLink="/espace-client/cotation" style="text-align: center;"
+           class="textCotation">Voir vos cotation(s)</a>
+      }
     </div>
-<!-- voir si sa fait pt le style hasCotation -->
-    <ng-template #NC2>
-      <div class="montant">NC</div>
-    </ng-template>
-  </div>
-    <a *ngIf="catationLa && hasCotation" routerLink="/espace-client/cotation" style="text-align: center;" class="textCotation">Voir vos cotation(s)</a>
-  </div>
+  }
 </ng-template>
 
 <!-- ABONNEMENT -->
 <ng-template #abonnement>
-  <div *ngIf="hasAbonnement">
-    <div class="state bold">Abonnement</div>
-    <div class="state-value bold">{{ dureeAbonnement }}</div>
-  </div>
+  @if (hasAbonnement) {
+    <div>
+      <div class="state bold">Abonnement</div>
+      <div class="state-value bold">{{ dureeAbonnement }}</div>
+    </div>
+  }
 </ng-template>
 
 <!-- DISPO -->
 <ng-template #dispo>
-  <div class="dispo" *ngIf="produit.gabarit != 'V'; else produitVirtuel">
-    <div [ngClass]="{ active: produit.qteStock1 > 0, available: produit.qteStock1 > 0 }">
-      <div class="state">Disponible</div>
-      <div class="state-value">{{ produit.qteStock1  }}</div>
-    </div>
-    <div [ngClass]="{ active: produit.qteStock2 > 0 }">
-      <div class="state">Stock externe</div>
-      <div class="state-value">{{ produit.qteStock2 }}</div>
-    </div>
-    <div [ngClass]="{ active: produit.qteEnReappro > 0 }">
-      <div class="state">En réappro.
-      @if (produit.qteEnReappro > 0) {
-        <br/>
-        <!-- @if (produit.dateConfReapproStatut !='Date prévisonnelle') {
-          <p class="size-small ">{{produit.dateConfReapproStatut}}:</p>
-        } -->
-        @if(produit.qteEnReappro > 0 && (produit.dateConfReapproStatut === 'Date prévisonnelle' || produit.dateConfReapproStatut === 'Date confirmée')) {
-
-          <p  class="size-small " >  <app-horizon-delais [produit]="[produit.reference,produit.marque]"></app-horizon-delais></p> 
-        }
-      }
-    </div>
-      
-      <!-- <div class="state-value">
-        {{ produit.qteEnReappro | number: '1.0-0' }}
-        <ng-container *ngIf="produit.qteEnReappro">
-          <p class="size-small">{{ produit.dateConfReapproStatut }}:</p>
-          <ng-container *ngIf="produit.dateConfReappro; else NC">
-            <p class="size-small">{{ produit.dateConfReappro }}</p>
-          </ng-container>
-          <ng-template #NC>N.C.</ng-template>
-        </ng-container>
+  @if (produit.gabarit != 'V') {
+    <div class="dispo">
+      <div [ngClass]="{ active: produit.qteStock1 > 0, available: produit.qteStock1 > 0 }">
+        <div class="state">Disponible</div>
+        <div class="state-value">{{ produit.qteStock1 }}</div>
       </div>
-    </div>
-    <ng-template [ngTemplateOutlet]="abonnement"></ng-template> -->
-    <div class="state-value">
-      {{ produit.qteEnReappro  }}
-      <ng-container *ngIf="produit.qteEnReappro > 0">
-        <br/>
-        <ng-container *ngIf="produit.dateConfReappro != '' ; else NC">
-          <p *ngIf="produit.dateConfReappro ==='nc'" class="size-small">{{ produit.dateConfReappro }} </p>
-        <!--  <app-horizon-delais [produit]="[produit.reference,produit.marque]"></app-horizon-delais>
-           
-                -->
-        </ng-container>
-        <ng-template #NC>
-          N.C.
-        </ng-template>
-      </ng-container>
-    </div>
-   
-  </div>
-  <ng-template [ngTemplateOutlet]="abonnement"></ng-template>
-  
-  </div>
-  
-  <ng-template #produitVirtuel>
-    <div class="dispo-virtuel">
-      Produit dématérialisé
+      <div [ngClass]="{ active: produit.qteStock2 > 0 }">
+        <div class="state">Stock externe</div>
+        <div class="state-value">{{ produit.qteStock2 }}</div>
+      </div>
+      <div [ngClass]="{ active: produit.qteEnReappro > 0 }">
+        <div class="state">En réappro.
+          @if (produit.qteEnReappro > 0) {
+            <br/>
+            <!-- @if (produit.dateConfReapproStatut !='Date prévisonnelle') {
+              <p class="size-small ">{{produit.dateConfReapproStatut}}:</p>
+            } -->
+            @if (produit.qteEnReappro > 0 && (produit.dateConfReapproStatut === 'Date prévisonnelle' || produit.dateConfReapproStatut === 'Date confirmée')) {
+
+              <p class="size-small ">
+                <app-horizon-delais [produit]="[produit.reference,produit.marque]"></app-horizon-delais>
+              </p>
+            }
+          }
+        </div>
+
+        <!-- <div class="state-value">
+          {{ produit.qteEnReappro | number: '1.0-0' }}
+          <ng-container *ngIf="produit.qteEnReappro">
+            <p class="size-small">{{ produit.dateConfReapproStatut }}:</p>
+            <ng-container *ngIf="produit.dateConfReappro; else NC">
+              <p class="size-small">{{ produit.dateConfReappro }}</p>
+            </ng-container>
+            <ng-template #NC>N.C.</ng-template>
+          </ng-container>
+        </div>
+      </div>
+      <ng-template [ngTemplateOutlet]="abonnement"></ng-template> -->
+        <div class="state-value">
+          {{ produit.qteEnReappro }}
+          @if (produit.qteEnReappro > 0) {
+            <ng-container>
+              <br/>
+              @if (produit.dateConfReappro != '') {
+                <ng-container>
+                  @if (produit.dateConfReappro === 'nc') {
+                    <p class="size-small">{{ produit.dateConfReappro }} </p>
+                  }
+                  <!--  <app-horizon-delais [produit]="[produit.reference,produit.marque]"></app-horizon-delais>
+
+                          -->
+                </ng-container>
+              } @else {
+                <ng-container>
+                  N.C.
+                </ng-container>
+              }
+            </ng-container>
+          }
+        </div>
+
+      </div>
       <ng-template [ngTemplateOutlet]="abonnement"></ng-template>
-    <span class="garantie" >
+
+    </div>
+  } @else {
+    <ng-container>
+      <div class="dispo-virtuel">
+        Produit dématérialisé
+        <ng-template [ngTemplateOutlet]="abonnement"></ng-template>
+        <span class="garantie">
         Durée {{ produit.garantie }} mois
       </span>
-    </div>
-    
-  </ng-template>
+      </div>
+
+    </ng-container>
+  }
+
 </ng-template>
 
 <!-- PANIER -->
 <ng-template #panier>
   <div style="padding: 0 1.1em;">
     <app-add-to-cart-form class="add-to-cart" [cotation]="catationLa" [produit]="produit"
-      [isDisabled]="produit.prix === 0" direction="column" (qtyInCart)="getQtePriceAppliedIndex($event)">
+                          [isDisabled]="produit.prix === 0" direction="column"
+                          (qtyInCart)="getQtePriceAppliedIndex($event)">
     </app-add-to-cart-form>
   </div>
 </ng-template>
@@ -225,198 +285,271 @@
     Connectez-vous pour voir le <b>prix</b>, les <b>disponibilités</b>, ou pour <b>constituer un panier</b>
   </div>
   <button class="swaped-text-button connection-required-button raised-button"
-    (click)="componentsInteractionService.sideNavigationLine.fireOpenSideNav('espaceClient')" appKeyboardFocus>
+          (click)="componentsInteractionService.sideNavigationLine.fireOpenSideNav('espaceClient')" appKeyboardFocus>
     Je me connecte
   </button>
 </ng-template>
 
+<ng-container>
+  @switch (getMode()) {
+    <!-- MODE NORMAL -->
+    @case ('normal') {
+      <ng-container> <!-- *ngIf="!simple; else modeSimple" -->
 
-<ng-container [ngSwitch]="getMode()">
-<!-- MODE NORMAL -->
-<ng-container *ngSwitchCase="'normal'"> <!-- *ngIf="!simple; else modeSimple" -->
-
-  <div class="block">
-    <ng-container *ngIf="displayRemoveProductFromComparateurButton">
-      <app-comparateur-button class="removeProductFromComparateurIcon" [produitReference]="produit.reference"
-        [displayAsXIcon]="true" (click)="handleComparateurClick($event)"></app-comparateur-button>
-    </ng-container>
-    <ng-container *ngIf="displayRemoveProductFromFavorisButton">
-      <app-favoris-button class="removeProductFromComparateurIcon" [produitReference]="produit.reference"
-        [displayAsXIcon]="true"></app-favoris-button>
-    </ng-container>
-    <ng-container *ngIf="!produit.marque; else noError">
-      <div class="erreur">{{ produit.designation }}</div>
-      <app-categorie></app-categorie>
-    </ng-container>
-    <ng-template #noError>
-      <div class="produit raised-1"
-        [ngClass]="{ vignette: format === 'grid', list: format === 'list', config: produit.prodconfig === 'O' }">
-        <a [routerLink]="lienProduit">
-          <ng-template [ngTemplateOutlet]="image"></ng-template>
-        </a>
-        <div id="details" class="id">
-          <div class="right">
-            <app-favoris-button [produitReference]="produit.reference"></app-favoris-button>
-            <app-comparateur-button [produitReference]="produit.reference" (click)="handleComparateurClick($event)">
-            </app-comparateur-button>
-            <a *ngIf="produit.pdf" target="_blank" [href]="environment.produitPdfUrl + produit.pdf + '.pdf'">
-              <app-tooltip [type]="'pdf'" [hideDelay]="0" [showDelay]="0" [text]="'Voir le pdf'"></app-tooltip>
-            </a>
-            <!-- <a *ngIf="hasCotation" [routerLink]="produitService.lienProduit(produit)" fragment="cotation">
-              <app-tooltip [hideDelay]="0" [showDelay]="0" text="Vous avez une cotation sur ce produit"></app-tooltip>
-            </a> -->
-            <a *ngIf="produit.prodattexist == 'O' || produit.gabarit == 'H'" [routerLink]="lienProduit">
-              <app-tooltip [type]="'alert'" [hideDelay]="0" [showDelay]="0" [text]="phraseAttention"
-                (mouseenter)="loadAttention()"></app-tooltip>
-            </a>
-          </div>
-          <a style="width: 100%;" [routerLink]="lienProduit">
-            <ng-template [ngTemplateOutlet]="refActn"></ng-template>
-          </a>
-          <a [routerLink]="lienProduit">
-            <ng-template [ngTemplateOutlet]="designation"></ng-template>
-          </a>
-          <!--<ng-template [ngTemplateOutlet]="marque"></ng-template>-->
-          <ng-template [ngTemplateOutlet]="statut"></ng-template>
+        <div class="block">
+          @if (displayRemoveProductFromComparateurButton) {
+            <ng-container>
+              <app-comparateur-button class="removeProductFromComparateurIcon" [produitReference]="produit.reference"
+                                      [displayAsXIcon]="true"
+                                      (click)="handleComparateurClick($event)"></app-comparateur-button>
+            </ng-container>
+          }
+          @if (displayRemoveProductFromFavorisButton) {
+            <ng-container>
+              <app-favoris-button class="removeProductFromComparateurIcon" [produitReference]="produit.reference"
+                                  [displayAsXIcon]="true"></app-favoris-button>
+            </ng-container>
+          }
+          @if (!produit.marque) {
+            <ng-container>
+              <div class="erreur">{{ produit.designation }}</div>
+              <app-categorie></app-categorie>
+            </ng-container>
+          } @else {
+            <ng-container>
+              <div class="produit raised-1"
+                   [ngClass]="{ vignette: format === 'grid', list: format === 'list', config: produit.prodconfig === 'O' }">
+                <a [routerLink]="lienProduit">
+                  <ng-template [ngTemplateOutlet]="image"></ng-template>
+                </a>
+                <div id="details" class="id">
+                  <div class="right">
+                    <app-favoris-button [produitReference]="produit.reference"></app-favoris-button>
+                    <app-comparateur-button [produitReference]="produit.reference"
+                                            (click)="handleComparateurClick($event)">
+                    </app-comparateur-button>
+                    @if (produit.pdf) {
+                      <a target="_blank" [href]="environment.produitPdfUrl + produit.pdf + '.pdf'">
+                        <app-tooltip [type]="'pdf'" [hideDelay]="0" [showDelay]="0"
+                                     [text]="'Voir le pdf'"></app-tooltip>
+                      </a>
+                    }
+                    <!-- <a *ngIf="hasCotation" [routerLink]="produitService.lienProduit(produit)" fragment="cotation">
+                      <app-tooltip [hideDelay]="0" [showDelay]="0" text="Vous avez une cotation sur ce produit"></app-tooltip>
+                    </a> -->
+                    @if (produit.prodattexist == 'O' || produit.gabarit == 'H') {
+                      <a [routerLink]="lienProduit">
+                        <app-tooltip [type]="'alert'" [hideDelay]="0" [showDelay]="0" [text]="phraseAttention"
+                                     (mouseenter)="loadAttention()"></app-tooltip>
+                      </a>
+                    }
+                  </div>
+                  <a style="width: 100%;" [routerLink]="lienProduit">
+                    <ng-template [ngTemplateOutlet]="refActn"></ng-template>
+                  </a>
+                  <a [routerLink]="lienProduit">
+                    <ng-template [ngTemplateOutlet]="designation"></ng-template>
+                  </a>
+                  <!--<ng-template [ngTemplateOutlet]="marque"></ng-template>-->
+                  <ng-template [ngTemplateOutlet]="statut"></ng-template>
+                </div>
+                @if (authService.currentUser) {
+                  <ng-container>
+                    <ng-template [ngTemplateOutlet]="prix"></ng-template>
+                    <ng-template [ngTemplateOutlet]="dispo"></ng-template>
+                    <ng-template [ngTemplateOutlet]="panier"></ng-template>
+                  </ng-container>
+                } @else {
+                  <ng-template [ngTemplateOutlet]="connectionRequiredTemplate"></ng-template>
+                }
+              </div>
+            </ng-container>
+          }
         </div>
-        <ng-container *ngIf="authService.currentUser; else connectionRequiredTemplate">
-          <ng-template [ngTemplateOutlet]="prix"></ng-template>
-          <ng-template [ngTemplateOutlet]="dispo"></ng-template>
-          <ng-template [ngTemplateOutlet]="panier"></ng-template>
-        </ng-container>
-      </div>
-    </ng-template>
-  </div>
 
-</ng-container>
-
-<!-- MODE SIMPLE -->
-<ng-container *ngSwitchCase="'simple'"> <!-- #modeSimple -->
-  <ng-container *ngIf="format === 'grid'; else simpleList">
-    <a [routerLink]="lienProduit" routerLinkActive="router-link-active" class="id" (click)="handleLinkClick($event)">
-      <div class="produit raised-1 vignette simple">
-
-        <ng-template [ngTemplateOutlet]="image"></ng-template>
-        <div class="details">
-          <ng-template [ngTemplateOutlet]="refActn"></ng-template>
-          <ng-template [ngTemplateOutlet]="designation"></ng-template>
-          <!--<ng-template [ngTemplateOutlet]="marque"></ng-template>-->
-        </div>
-        @if (produit.reffournisseur) {
-
-        <div class="ref-constructeur">Réf. constructeur : {{ produit.reffournisseur }}</div>
-        }
-        <div *ngIf="produit.division" style="color: orange;">{{ produit.division }}</div>
-        <div class="stock" *ngIf="produit.dispo && authService.currentUser">{{ produit.dispo }} <span
-            *ngIf="produit.qteStock1">: {{ produit.qteStock1 }}</span></div>
-        <div class="stock" *ngIf="!produit.dispo && authService.currentUser">Produit indisponible</div>
-        <ng-container *ngIf="authService.currentUser">
-          <ng-template *ngIf="produit.prix > 0" [ngTemplateOutlet]="prix"></ng-template>
-        </ng-container>
-       <!--  <div class="overlay"></div> -->
-      </div>
-    </a>
-  </ng-container>
-  <ng-template #simpleList>
-    <ng-template [ngTemplateOutlet]="statut"></ng-template>
-    <div class="produit raised-1 list simple">
-      <div class="id" style="width: 100%;">
-        <a [routerLink]="lienProduit">
-          <ng-template [ngTemplateOutlet]="refActn"></ng-template>
-        </a>
-        <a [routerLink]="lienProduit">
-          <ng-template [ngTemplateOutlet]="designation"></ng-template>
-        </a>
-        <!--<a [routerLink]="lienProduit">
-          <ng-template [ngTemplateOutlet]="marque"></ng-template>
-        </a>-->
-      </div>
-      <ng-container *ngIf="authService.currentUser; else connectionRequiredTemplate">
-        <ng-template [ngTemplateOutlet]="prix"></ng-template>
-        <ng-template [ngTemplateOutlet]="dispo"></ng-template>
-        <ng-template [ngTemplateOutlet]="panier"></ng-template>
       </ng-container>
-    </div>
-  </ng-template>
-</ng-container>
-
-<!--Mode licences ce template est utilisé uniquement pour la validation des licences-->
-
-<ng-container *ngSwitchCase="'licences'" #modeLicences>
-  
-  <div class="block">
-    <ng-container *ngIf="displayRemoveProductFromComparateurButton">
-      <app-comparateur-button class="removeProductFromComparateurIcon" [produitReference]="produit.reference"
-        [displayAsXIcon]="true" (click)="handleComparateurClick($event)"></app-comparateur-button>
-    </ng-container>
-    <ng-container *ngIf="displayRemoveProductFromFavorisButton">
-      <app-favoris-button class="removeProductFromComparateurIcon" [produitReference]="produit.reference"
-        [displayAsXIcon]="true"></app-favoris-button>
-    </ng-container>
-    <ng-container *ngIf="!produit.marque; else noErrorLicences">
-      <div class="erreur">{{ produit.designation }}</div>
-      <app-categorie></app-categorie>
-    </ng-container>
-    <ng-template #noErrorLicences>
-      <div class="produit raised-1"
-        [ngClass]="{ vignette: format === 'grid', list: format === 'list', config: produit.prodconfig === 'O' }">
-        <a [routerLink]="lienProduit">
-          <ng-template [ngTemplateOutlet]="image"></ng-template>
-        </a>
-        <div id="details" class="id">
-          <div class="right">
-            <!-- <app-favoris-button [produitReference]="produit.reference"></app-favoris-button>
-            <app-comparateur-button [produitReference]="produit.reference" (click)="handleComparateurClick($event)">
-            </app-comparateur-button> -->
+    }
 
 
-            <a *ngIf="produit.pdf" target="_blank" [href]="environment.produitPdfUrl + lastPdfOfPdfs?.url + '.pdf'">
-              <app-tooltip [type]="'pdf'" [hideDelay]="0" [showDelay]="0" [text]="lastPdfOfPdfs?.label"></app-tooltip>
+    <!-- MODE SIMPLE -->
+    @case ('simple') {
+      <ng-container> <!-- #modeSimple -->
+        @if (format === 'grid') {
+          <ng-container>
+            <a [routerLink]="lienProduit" routerLinkActive="router-link-active" class="id"
+               (click)="handleLinkClick($event)">
+              <div class="produit raised-1 vignette simple">
+
+                <ng-template [ngTemplateOutlet]="image"></ng-template>
+                <div class="details">
+                  <ng-template [ngTemplateOutlet]="refActn"></ng-template>
+                  <ng-template [ngTemplateOutlet]="designation"></ng-template>
+                  <!--<ng-template [ngTemplateOutlet]="marque"></ng-template>-->
+                </div>
+                @if (produit.reffournisseur) {
+
+                  <div class="ref-constructeur">Réf. constructeur : {{ produit.reffournisseur }}</div>
+                }
+                @if (produit.division) {
+                  <div style="color: orange;">{{ produit.division }}</div>
+                }
+                @if (produit.dispo && authService.currentUser) {
+                  <div class="stock">{{ produit.dispo }}
+                    @if (produit.qteStock1) {
+                      <span>: {{ produit.qteStock1 }}</span>
+                    }
+                  </div>
+                }
+                @if (!produit.dispo && authService.currentUser) {
+                  <div class="stock">Produit indisponible</div>
+                }
+                @if (authService.currentUser) {
+                  <ng-container>
+                    @if (produit.prix > 0) {
+                      <ng-template [ngTemplateOutlet]="prix"></ng-template>
+                    }
+                  </ng-container>
+                }
+                <!--  <div class="overlay"></div> -->
+              </div>
             </a>
+          </ng-container>
+        } @else {
+          <ng-container>
+            <ng-template [ngTemplateOutlet]="statut"></ng-template>
+            <div class="produit raised-1 list simple">
+              <div class="id" style="width: 100%;">
+                <a [routerLink]="lienProduit">
+                  <ng-template [ngTemplateOutlet]="refActn"></ng-template>
+                </a>
+                <a [routerLink]="lienProduit">
+                  <ng-template [ngTemplateOutlet]="designation"></ng-template>
+                </a>
+                <!--<a [routerLink]="lienProduit">
+                  <ng-template [ngTemplateOutlet]="marque"></ng-template>
+                </a>-->
+              </div>
+              @if (authService.currentUser) {
+                <ng-container>
+                  <ng-template [ngTemplateOutlet]="prix"></ng-template>
+                  <ng-template [ngTemplateOutlet]="dispo"></ng-template>
+                  <ng-template [ngTemplateOutlet]="panier"></ng-template>
+                </ng-container>
+              } @else {
+                <ng-template [ngTemplateOutlet]="connectionRequiredTemplate"></ng-template>
+              }
+            </div>
+          </ng-container>
+        }
+      </ng-container>
+    }
+
+    <!--Mode licences ce template est utilisé uniquement pour la validation des licences-->
+    @case ('licences') {
+      <ng-container>
+
+        <div class="block">
+          @if (displayRemoveProductFromComparateurButton) {
+            <ng-container>
+              <app-comparateur-button class="removeProductFromComparateurIcon" [produitReference]="produit.reference"
+                                      [displayAsXIcon]="true"
+                                      (click)="handleComparateurClick($event)"></app-comparateur-button>
+            </ng-container>
+          }
+          @if (displayRemoveProductFromFavorisButton) {
+            <ng-container>
+              <app-favoris-button class="removeProductFromComparateurIcon" [produitReference]="produit.reference"
+                                  [displayAsXIcon]="true"></app-favoris-button>
+            </ng-container>
+          }
+          @if (!produit.marque) {
+            <ng-container>
+              <div class="erreur">{{ produit.designation }}</div>
+              <app-categorie></app-categorie>
+            </ng-container>
+          } @else {
+            <ng-container>
+              <div class="produit raised-1"
+                   [ngClass]="{ vignette: format === 'grid', list: format === 'list', config: produit.prodconfig === 'O' }">
+                <a [routerLink]="lienProduit">
+                  <ng-template [ngTemplateOutlet]="image"></ng-template>
+                </a>
+                <div id="details" class="id">
+                  <div class="right">
+                    <!-- <app-favoris-button [produitReference]="produit.reference"></app-favoris-button>
+                    <app-comparateur-button [produitReference]="produit.reference" (click)="handleComparateurClick($event)">
+                    </app-comparateur-button> -->
+
+                    @if (produit.pdf) {
+                      <a target="_blank"
+                         [href]="environment.produitPdfUrl + lastPdfOfPdfs?.url + '.pdf'">
+                        <app-tooltip [type]="'pdf'" [hideDelay]="0" [showDelay]="0"
+                                     [text]="lastPdfOfPdfs?.label"></app-tooltip>
+                      </a>
+                    }
+
+                    @if (hasCotation) {
+                      <a [routerLink]="produitService.lienProduit(produit)" fragment="cotation">
+                        <app-tooltip [hideDelay]="0" [showDelay]="0"
+                                     text="Vous avez une cotation sur ce produit"></app-tooltip>
+                      </a>
+                    }
+                    @if (produit.prodattexist == 'O' || produit.gabarit == 'H') {
+                      <a [routerLink]="lienProduit">
+                        <app-tooltip [type]="'alert'" [hideDelay]="0" [showDelay]="0" [text]="phraseAttention"
+                                     (mouseenter)="loadAttention()"></app-tooltip>
+                      </a>
+                    }
+                  </div>
+                  <a style="width: 100%;" [routerLink]="lienProduit">
+                    <ng-template [ngTemplateOutlet]="refActn"></ng-template>
+                  </a>
+                  <a [routerLink]="lienProduit">
+                    <ng-template [ngTemplateOutlet]="designation"></ng-template>
+                  </a>
+                  <!-- <ng-template [ngTemplateOutlet]="marque"></ng-template> -->
+                  <ng-template [ngTemplateOutlet]="statut"></ng-template>
+                </div>
+                @if (authService.currentUser) {
+                  <ng-container>
+                    <ng-template [ngTemplateOutlet]="prix"></ng-template>
+                    <ng-template [ngTemplateOutlet]="dispo"></ng-template>
+
+                    @if (hasCotation) {
+                      <div>
+                        @if (produit.prix > produit.prixPlusBas && produit.prixPlusBas !== 0) {
+                          <a
+                            [routerLink]="lienProduit"
+                            class="prixcot">
+                            Prix le plus bas
+                          </a>
+                        }
+                        @if (produit.prix > produit.prixPlusBas && produit.prixPlusBas !== 0) {
+                          <div
+                            style="font-weight: bold; color:#9b0037 ">{{ produit.prixPlusBas }} €
+                          </div>
+                        } @else {
+                          <ng-container>
+                            <div [routerLink]="lienProduit" style="font-weight: bold; color:#9b0037 ">Voir vos cotations
+                            </div>
+                          </ng-container>
+                        }
+                      </div>
+                    }
 
 
-            
-             <a *ngIf="hasCotation" [routerLink]="produitService.lienProduit(produit)" fragment="cotation">
-              <app-tooltip [hideDelay]="0" [showDelay]="0" text="Vous avez une cotation sur ce produit"></app-tooltip>
-            </a> 
-           
-            <a *ngIf="produit.prodattexist == 'O' || produit.gabarit == 'H'" [routerLink]="lienProduit">
-              <app-tooltip [type]="'alert'" [hideDelay]="0" [showDelay]="0" [text]="phraseAttention"
-                (mouseenter)="loadAttention()"></app-tooltip>
-            </a>
-          </div>
-          <a style="width: 100%;" [routerLink]="lienProduit">
-            <ng-template [ngTemplateOutlet]="refActn"></ng-template>
-          </a>
-          <a [routerLink]="lienProduit">
-            <ng-template [ngTemplateOutlet]="designation"></ng-template>
-          </a>
-          <!-- <ng-template [ngTemplateOutlet]="marque"></ng-template> -->
-          <ng-template [ngTemplateOutlet]="statut"></ng-template>
+                    <!--
+                     <ng-template [ngTemplateOutlet]="panier"></ng-template> -->
+                  </ng-container>
+                } @else {
+                  <ng-template [ngTemplateOutlet]="connectionRequiredTemplate"></ng-template>
+                }
+              </div>
+            </ng-container>
+          }
         </div>
-        <ng-container *ngIf="authService.currentUser; else connectionRequiredTemplate">
-          <ng-template [ngTemplateOutlet]="prix"></ng-template>
-          <ng-template [ngTemplateOutlet]="dispo"></ng-template>
-
-          <div *ngIf="hasCotation">
-            <a *ngIf="produit.prix > produit.prixPlusBas && produit.prixPlusBas !== 0" [routerLink]="lienProduit" class="prixcot" >
-              Prix le plus bas
-            </a>
-              <div *ngIf="produit.prix > produit.prixPlusBas && produit.prixPlusBas !== 0; else prixcot" style="font-weight: bold; color:#9b0037 ">{{produit.prixPlusBas}} €</div>
-      
-              <ng-template #prixcot>
-                <div [routerLink]="lienProduit" style="font-weight: bold; color:#9b0037 ">Voir vos cotations</div>
-              </ng-template>
-          </div>
-
-         
-         <!--  
-          <ng-template [ngTemplateOutlet]="panier"></ng-template> -->
-        </ng-container>
-      </div>
-    </ng-template>
-  </div>
-</ng-container>
-
+      </ng-container>
+    }
+  }
 
 </ng-container>

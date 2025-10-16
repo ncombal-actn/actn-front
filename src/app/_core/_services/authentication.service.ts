@@ -1,25 +1,28 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { finalize, map, take } from 'rxjs/operators';
-import { environment } from '@env';
-import { User } from '@/_util/models';
-import { ComponentsInteractionService } from './components-interaction.service';
-import {ActivatedRoute, Router, RouterStateSnapshot} from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
-import { jwtDecode } from 'jwt-decode';
-//import {NewCartService} from "@services/new-cart.service";
-import { CartService } from './cart.service';
+import {Injectable, Injector} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {map, take} from 'rxjs/operators';
+import {environment} from '@env';
+import {User} from '@/_util/models';
+import {ComponentsInteractionService} from './components-interaction.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {CookieService} from 'ngx-cookie-service';
+import {jwtDecode} from 'jwt-decode';
+import {CartService} from './cart.service';
 import {CotationService} from "@services/cotation.service";
-import { LicenceService } from './licence.service';
+import {LicenceService} from "@services/licence.service";
+
 export type Alive = 'alive' | 'dying' | 'dead';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class AuthenticationService {
+
+  private _licenceService: LicenceService;
+  private _cartService: CartService;
 
   public loginLinkStatus$: Subject<string> = new Subject<string>();
 
-  private _currentUser =  new BehaviorSubject<User | null>(null);
+  private _currentUser = new BehaviorSubject<User | null>(null);
   private _alive = new Subject<Alive>();
 
   constructor(
@@ -28,14 +31,24 @@ export class AuthenticationService {
     private route: ActivatedRoute,
     private router: Router,
     private cookieService: CookieService,
-    private cartService: CartService,
     private cotationService: CotationService,
-    private licencesService: LicenceService
+    private injector: Injector
   ) {
-    this.retrieveCurrentSession()
   }
 
+  private get licenceService(): LicenceService {
+    if (!this._licenceService) {
+      this._licenceService = this.injector.get(LicenceService);
+    }
+    return this._licenceService;
+  }
 
+  private get cartService(): CartService {
+    if (!this._cartService) {
+      this._cartService = this.injector.get(CartService);
+    }
+    return this._cartService;
+  }
 
   public get currentUser$(): Observable<User | null> {
     return this._currentUser.asObservable();
@@ -69,7 +82,6 @@ export class AuthenticationService {
       const decoded = jwtDecode(token) as any;
       this._currentUser.next(decoded.data.user as User);
       this.cartService.loadCart();
-      this.cartService.cart;
       this._loginStatus.next(true);
     } else {
       this._loginStatus.next(false);
@@ -77,7 +89,7 @@ export class AuthenticationService {
   }
 
   login(login: string, password: string): Observable<User> {
-    return this.http.post<any>(`${environment.apiUrl}/LogIn.php`, { login, password }, { withCredentials: true })
+    return this.http.post<any>(`${environment.apiUrl}/LogIn.php`, {login, password}, {withCredentials: true})
       .pipe(take(1), map(data => this._login(data)));
   }
 
@@ -92,9 +104,9 @@ export class AuthenticationService {
         this.componentsInteractionService.sideNavigationLine.fireOpenSideNav('toggleEspaceClient');
       }
       this._loginStatus.next(true);
-      
+
       /** On cherche les cotations et les licenses aux login et les stock dans le session storage pour éviter de les cherchers et évité les erreur */
-      this.licencesService.getLicences();
+      this.licenceService.getLicences();
       this.cotationService.getCotations();
 
       return decoded.data.user as User;
@@ -109,7 +121,7 @@ export class AuthenticationService {
   linkLogin(id: string, key: string, tag: string, redirection: string = ""): void {
     this.http.get<any>(`${environment.apiUrl}/useLinkConnect.php`, {
       withCredentials: true,
-      params: { id, key, tag }
+      params: {id, key, tag}
     }).pipe(take(1), map(data => this._login(data)))
       .subscribe(connectionReturn => {
         if (connectionReturn.error) {
@@ -120,16 +132,16 @@ export class AuthenticationService {
       });
   }
 
-  logout(){
+  logout() {
     this._currentUser.next(null);
     this.cookieService.delete('jwt', '/');
-    this.http.get<any>(`${environment.apiUrl}/LogOut.php`, { withCredentials: true })
+    this.http.get<any>(`${environment.apiUrl}/LogOut.php`, {withCredentials: true})
     this._loginStatus.next(false);
     this.cotationService.clearCotations();
-    this.licencesService.clearLicences();
-    if(this.router.url.includes('espace-client')){
+    this.licenceService.clearLicences();
+    if (this.router.url.includes('espace-client')) {
       this.router.navigate(['/']);
-    }else if(this.router.url.includes('panier')){
+    } else if (this.router.url.includes('panier')) {
       this.router.navigate(['/']);
     }
   }
@@ -150,7 +162,7 @@ export class AuthenticationService {
         });
       }
 
-      this.router.navigate([returnUrls[0]], { queryParams: params });
+      this.router.navigate([returnUrls[0]], {queryParams: params});
       return true;
     }
     return false;

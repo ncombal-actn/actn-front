@@ -1,13 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { environment } from '@env';
 import { Observable, Subject } from 'rxjs';
 import { Tree, Categorie } from '@/_util/models';
 import { CatalogueService, UserService, WindowService } from '@core/_services';
 import { Router } from '@angular/router';
+import {MatCheckbox} from "@angular/material/checkbox";
+import {MatError, MatFormField} from "@angular/material/form-field";
 
 @Component({
   selector: 'app-newsletters',
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    MatCheckbox,
+    MatFormField,
+    MatError
+  ],
   templateUrl: './newsletters.component.html',
   styleUrls: ['./newsletters.component.scss']
 })
@@ -28,7 +37,7 @@ export class NewslettersComponent implements OnInit {
   telClient: string;
 
 
-  
+
   newsForm:FormGroup;
   constructor(
     private fb: FormBuilder,
@@ -36,9 +45,9 @@ export class NewslettersComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private window: WindowService
-  ) { 
+  ) {
 
-   
+
   }
 
   ngOnInit() {

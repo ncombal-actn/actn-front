@@ -5,9 +5,14 @@ import { HttpClient } from '@angular/common/http';
 import { take } from 'rxjs/operators';
 // ENV
 import { environment } from '@env';
+import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
 
 @Component({
   selector: 'app-grille-transport',
+  standalone: true,
+  imports: [
+    TitleWLineComponent
+  ],
   templateUrl: './grille-transport.component.html',
   styleUrls: ['./grille-transport.component.scss']
 })

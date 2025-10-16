@@ -7,12 +7,12 @@
     <li class="step"  [ngClass]="{'step--selected': step === 2}">
         <div class="number">2</div>
         <p [ngClass]="{'phone': step !== 2}">Livraison
-            <span *ngIf="[page]!='devis' ;">& Paiement</span>
+            <span *ngIf="page!='devis' ;">& Paiement</span>
         </p>
     </li>
     <li class="step" [ngClass]="{'step--selected': step === 3}">
-        <div class="number">3</div><p [ngClass]="{'phone': step !== 3}" *ngIf="[page]!='devis' ;">Validation</p>
-        <p [ngClass]="{'phone': step !== 3}"*ngIf="[page]=='devis';">Enregistrer</p>
+        <div class="number">3</div><p [ngClass]="{'phone': step !== 3}" *ngIf="page!='devis' ;">Validation</p>
+        <p [ngClass]="{'phone': step !== 3}"*ngIf="page=='devis';">Enregistrer</p>
     </li>
-    
+
 </ul>

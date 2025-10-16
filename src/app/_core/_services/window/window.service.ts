@@ -1,9 +1,10 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+
 function _window(): any {
-  // Return the global native browser window object
-  return window;
+  return typeof window !== 'undefined' ? window : undefined;
 }
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,10 +14,8 @@ export class WindowService  {
   public history = this.isBrowser() ? window.history : undefined;
   //public window = this.isBrowser() ? window : undefined;
   public platformId: any;
-  get window(): any {
-    if(this.isBrowser()){
-      return _window();
-    }
+  get nativeWindow(): any {
+    return _window();
   }
   public get innerWidth(): number {
     return this.isBrowser() ? window.innerWidth : undefined;
@@ -136,12 +135,6 @@ export class WindowService  {
       }
     }
     return false;
-  }
-
-  public historyZbi(){
-    if(this.isBrowser()){
-      return window.history;
-    }
   }
 
   public getElementById(string:string){

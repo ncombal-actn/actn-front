@@ -2,38 +2,40 @@ import { BreakpointObserver } from "@angular/cdk/layout";
 import { HttpClient } from "@angular/common/http";
 import {
   AfterContentInit,
-  AfterViewInit,
   Component,
   OnDestroy,
   OnInit,
   Renderer2,
-  ViewChild,
 } from "@angular/core";
-import { MatSidenav } from "@angular/material/sidenav";
 import { WindowService } from "@core/_services";
 import { environment } from "@env";
 
 import { Observable, Subject, filter, map, takeUntil } from "rxjs";
 
 import { OnlywanService } from "./onlywan.service";
-import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router, RouterOutlet} from "@angular/router";
 import { animate, style, transition, trigger } from "@angular/animations";
+import {MatIcon} from "@angular/material/icon";
 
 @Component({
   selector: "app-onlywan",
+  standalone: true,
   templateUrl: "./onlywan.component.html",
   styleUrls: ["./onlywan.component.scss"],
+  imports: [
+    RouterOutlet,
+    MatIcon
+  ],
   animations: [
     trigger('routerFade', [
       transition('* => *', [
-        style({ opacity: 0 }),
-        animate('0.5s ease', style({ opacity: 1 }))
+        style({opacity: 0}),
+        animate('0.5s ease', style({opacity: 1}))
       ])
     ])
   ]
 })
-export class OnlywanComponent
-  implements OnInit,  AfterContentInit, OnDestroy
+export class OnlywanComponent implements OnInit,  AfterContentInit, OnDestroy
 {
   done = false;
 
@@ -401,7 +403,6 @@ this.currentUrl.subscribe(data => {
       /* const url = this.router.serializeUrl(
     ); */
 
-      //window.open(url, '_blank');
     }
 
     cat = this.toCamelCase(cat);

@@ -7,6 +7,7 @@ import { ComparateurService } from '@/_core/_services/comparateur.service';
 
 @Component({
   selector: 'app-comparateur-button',
+  standalone: true,
   templateUrl: './comparateur-button.component.html',
   styleUrls: ['./comparateur-button.component.scss']
 })

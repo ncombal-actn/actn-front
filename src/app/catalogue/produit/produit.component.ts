@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, OnInit, ViewChild} from "@angular/core";
+import {Component, OnInit, ViewChild} from "@angular/core";
 import {
   AuthenticationService,
   CartService,
@@ -15,22 +15,59 @@ import {Fiche, ProduitDetailService} from "@services/produit-detail.service";
 import {LoadingService} from "@services/loading.service";
 import {UntypedFormControl} from "@angular/forms";
 import {Router} from "@angular/router";
-import {MatTabGroup} from "@angular/material/tabs";
+import {MatTab, MatTabGroup} from "@angular/material/tabs";
 import { ProduitService } from "@core/_services/produit.service";
-import { window } from "rxjs";
-import { url } from "node:inspector";
+import {CurrencyPipe, DecimalPipe, NgClass} from "@angular/common";
+import {SlidingListeComponent} from "@/_util/components/sliding-liste/sliding-liste.component";
+import {RedZoomModule} from "ngx-red-zoom";
+import {ShareComponent} from "@/_util/components/share/share.component";
+import {FavorisButtonComponent} from "@/_util/components/favoris-button/favoris-button.component";
+import {ComparateurButtonComponent} from "@/_util/components/comparateur-button/comparateur-button.component";
+import {TooltipComponent} from "@/_util/components/tooltip/tooltip.component";
+import {MatIcon} from "@angular/material/icon";
+import {HorizonDelaisComponent} from "@/_util/components/horizon-delais/horizon-delais.component";
+import {AddToCartFormComponent} from "@/_util/components/add-to-cart-form/add-to-cart-form.component";
+import {KeyboardFocusDirective} from "@/_util/directives/keyboard-focus.directive";
+import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
+import {CotationRowComponent} from "@/_util/components/cotation-row/cotation-row.component";
+import {ProduitsComponent} from "@/_util/components/produits/produits.component";
+import {PopupObjDisplayComponent} from "@/_util/components/popup-obj-display/popup-obj-display.component";
+import {YoutubeComponent} from "@/_util/components/youtube/youtube.component";
 
 @Component({
   selector: "app-produit",
+  standalone: true,
   templateUrl: "./produit.component.html",
   styleUrls: ["./produit.component.scss"],
   animations: [
     trigger("expandVertical", [
-      state("open", style({ height: "*"})),
-      state("closed", style({ height: "0" })),
+      state("open", style({height: "*"})),
+      state("closed", style({height: "0"})),
       transition("open => closed", animate("300ms ease-in-out")),
       transition("closed => open", animate("300ms ease-in-out")),
     ]),
+  ],
+  imports: [
+    NgClass,
+    SlidingListeComponent,
+    RedZoomModule,
+    ShareComponent,
+    FavorisButtonComponent,
+    ComparateurButtonComponent,
+    TooltipComponent,
+    MatIcon,
+    CurrencyPipe,
+    DecimalPipe,
+    HorizonDelaisComponent,
+    AddToCartFormComponent,
+    KeyboardFocusDirective,
+    TitleWLineComponent,
+    CotationRowComponent,
+    ProduitsComponent,
+    MatTabGroup,
+    MatTab,
+    PopupObjDisplayComponent,
+    YoutubeComponent
   ],
   providers: [ProduitDetailService]
 })
@@ -83,14 +120,14 @@ export class ProduitComponent implements OnInit {
         this.getProduit();
         this.cotationService.getProduitCotations(this.produit.reference).subscribe(cotations => {
           if (cotations.length > 0) {
-            
+
             this.cotations = cotations;
-           
-            
+
+
           }
-                  
+
         })
-       
+
       }
     });
 
@@ -101,13 +138,8 @@ export class ProduitComponent implements OnInit {
       this.getProduit();
     }
 
-   /*  this.loadingService.isLoading$.subscribe(isLoading => {
-      this.isLoading = isLoading;
-      this.windowService.scrollTo(0, 0);
-    }); */
-    
   }
- 
+
 
   getProduit(): void {
     this.produitDetailService.getProduit((
@@ -138,8 +170,8 @@ export class ProduitComponent implements OnInit {
       this.loadProduitPdf();
       this.loadProduitsSimilaires();
     });
-   
-    
+
+
   }
 
   getQtePriceAppliedIndex(): void {
@@ -150,12 +182,12 @@ export class ProduitComponent implements OnInit {
     const element = document.getElementById(anchor);
     this.tabIndex = this.tabGroup._tabs.toArray().findIndex(tab => tab.textLabel === 'Produits de remplacement');
     if (element) {
-      
+
       element.scrollIntoView({behavior: 'smooth'});
     }
   }
   loadProduitsSimilaires(): void {
-    
+
     this.produitService.getProduitSimilaire(this.produit.reference,true).subscribe((produitsSimilaires) => {
       this.produitsSimilaire = produitsSimilaires;
     });
@@ -171,9 +203,7 @@ export class ProduitComponent implements OnInit {
   loadProduitPdf(): void {
     this.produitDetailService.getProduitPdf(this.produit.pdf).subscribe((fiches) => {
       this.fiches = fiches
-      
-      
-    }) 
+    })
   }
   /**
    * Vérifie la taille en largeur de la page et modifie ses paramètre d'affichage en fonction

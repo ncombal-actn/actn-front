@@ -3,11 +3,18 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 // SERVICES
 import { FavorisService } from '@/_core/_services/favoris.service';
+import {TooltipComponent} from "@/_util/components/tooltip/tooltip.component";
+import {MatTooltip} from "@angular/material/tooltip";
 
 @Component({
-    selector: 'app-favoris-button',
-    templateUrl: './favoris-button.component.html',
-    styleUrls: ['./favoris-button.component.scss']
+  selector: 'app-favoris-button',
+  standalone: true,
+  templateUrl: './favoris-button.component.html',
+  imports: [
+    TooltipComponent,
+    MatTooltip
+  ],
+  styleUrls: ['./favoris-button.component.scss']
 })
 export class FavorisButtonComponent implements OnInit, OnDestroy {
 

@@ -6,9 +6,14 @@ import { AuthenticationService, ComponentsInteractionService } from '@core/_serv
 import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 import {faChevronUp, faTimes} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 @Component({
 	selector: 'conf-resume',
+  standalone: true,
+  imports: [
+    FontAwesomeModule
+  ],
 	templateUrl: './resume.component.html',
 	styleUrls: ['./resume.component.scss'],
 	animations: [

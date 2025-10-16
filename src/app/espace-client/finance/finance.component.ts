@@ -1,18 +1,58 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {FinanceService} from "@services/finance.service";
-import {ActivatedRoute} from "@angular/router";
 import {MatSort} from "@angular/material/sort";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AuthenticationService, CartService} from "@core/_services";
 import {faFilePdf} from "@fortawesome/free-solid-svg-icons";
 import {Finance} from "@/_util/models/finance";
 import {SelectionModel} from "@angular/cdk/collections";
-import {takeLast} from "rxjs/operators";
 import {environment} from "@env";
+import {
+  MatCell, MatCellDef,
+  MatColumnDef,
+  MatFooterCell, MatFooterCellDef, MatFooterRow, MatFooterRowDef,
+  MatHeaderCell, MatHeaderCellDef,
+  MatHeaderRow, MatHeaderRowDef,
+  MatRow, MatRowDef,
+  MatTable
+} from "@angular/material/table";
+import {CommonModule} from "@angular/common";
+import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
+import {MatDatepickerToggle, MatDateRangeInput, MatDateRangePicker, MatEndDate} from "@angular/material/datepicker";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
+import {MatInput} from "@angular/material/input";
+import {MatButton} from "@angular/material/button";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {TooltipComponent} from "@/_util/components/tooltip/tooltip.component";
+import {MatCheckbox} from "@angular/material/checkbox";
+import {MatIcon} from "@angular/material/icon";
 
 @Component({
   selector: 'app-finance',
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    TitleWLineComponent,
+    MatDatepickerToggle,
+    MatDateRangeInput,
+    MatDateRangePicker,
+    MatFormField,
+    MatLabel,
+    MatTable,
+    MatRadioGroup,
+    MatRadioButton,
+    FormsModule,
+    MatInput,
+    MatButton,
+    FaIconComponent,
+    TooltipComponent,
+    MatCheckbox,
+    MatIcon,
+    MatEndDate,
+  ],
   templateUrl: './finance.component.html',
   styleUrls: ['./finance.component.scss'],
   animations: [
@@ -49,7 +89,7 @@ export class FinanceComponent  implements OnInit{
     public authService: AuthenticationService,
     public cartService: CartService
   ) {
-    
+
   }
 
   @ViewChild(MatSort) sort: MatSort;

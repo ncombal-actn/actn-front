@@ -3,27 +3,30 @@ import {
   ActivatedRoute,
   Router,
   NavigationEnd,
-  ActivatedRouteSnapshot
+  ActivatedRouteSnapshot, RouterLink
 } from '@angular/router';
-import { filter, take } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { FilDArianneItem } from '@/_util/models';
-import { AuthenticationService, CatalogueService, TitleService, CatalogueSearchPredictionService } from '@/_core/_services';
+import { AuthenticationService, CatalogueService, TitleService } from '@/_core/_services';
 import { ProduitService } from '@core/_services/produit.service';
 import { ComponentsInteractionService } from '@/_core/_services/components-interaction.service';
 import { environment } from 'environments/environment';
 import {faChevronRight, faHome} from "@fortawesome/free-solid-svg-icons";
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { AppRoutingModule } from '@/app-routing.module';
 
 /**
  * Composant représentant le fil d'arianne.
  */
 @Component({
   selector: 'app-fil-d-arianne',
-  templateUrl: './fil-d-arianne.component.html',
   standalone: true,
-  imports: [CommonModule,FontAwesomeModule,AppRoutingModule],
+  imports: [
+    CommonModule,
+    FontAwesomeModule,
+    RouterLink
+  ],
+  templateUrl: './fil-d-arianne.component.html',
   styleUrls: ['./fil-d-arianne.component.scss']
 })
 export class FilDArianneComponent implements OnInit
@@ -44,8 +47,7 @@ export class FilDArianneComponent implements OnInit
     public catalogueService: CatalogueService,
     public produitService: ProduitService,
     public componentsInteractionService: ComponentsInteractionService,
-    private title: TitleService,
-    private searchService: CatalogueSearchPredictionService
+    private title: TitleService
   ) { }
 
   ngOnInit()
@@ -94,7 +96,7 @@ export class FilDArianneComponent implements OnInit
     }
     // iterate over each children
     for (const child of children) {
-      // verify primary route 
+      // verify primary route
       // if (child.outlet !== PRIMARY_OUTLET || child.url.length === 0) {
       // continue;
       // }

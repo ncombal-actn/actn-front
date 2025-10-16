@@ -12,9 +12,14 @@ import {
 import {WindowService} from '@core/_services';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {faChevronDown, faChevronUp} from "@fortawesome/free-solid-svg-icons";
+import {AsyncPipe} from "@angular/common";
 
 @Component({
   selector: 'app-chips-list',
+  standalone: true,
+  imports: [
+    AsyncPipe
+  ],
   templateUrl: './chips-list.component.html',
   styleUrls: ['./chips-list.component.scss']
 })
@@ -39,7 +44,7 @@ export class ChipsListComponent implements OnInit, OnDestroy, AfterViewInit {
   private _maxLines = 1;
 
   constructor(
-    private window: WindowService
+    private windowService: WindowService
   ) {
   }
 
@@ -49,8 +54,8 @@ export class ChipsListComponent implements OnInit, OnDestroy, AfterViewInit {
     this._values.next(values);
     setTimeout(() => {
       const elements = Array.from(this._container?.nativeElement.children ?? []);
-      if(this.window.isBrowser()){
-        this.lastValue = elements.findIndex(element => this.window.getBoundingClientRect(element).top > this.window.getBoundingClientRect(this._container.nativeElement).top + 40 * this._maxLines);
+      if(this.windowService.isBrowser()){
+        this.lastValue = elements.findIndex(element => this.windowService.getBoundingClientRect(element).top > this.windowService.getBoundingClientRect(this._container.nativeElement).top + 40 * this._maxLines);
         //this.lastValue = x === -1 ? 1000 : x - 1;
       }
     });
@@ -76,11 +81,6 @@ export class ChipsListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   /** Initialisation de ChipsListComponent */
   ngOnInit(): void {
-    /*fromEvent(this.window.window, 'resize')
-      .pipe(takeUntil(this._destroy$), debounceTime(20))
-      .subscribe(() => {
-        this.init();
-      });*/
   }
 
   /** Destruction de ChipsListComponent */
@@ -97,7 +97,7 @@ export class ChipsListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   init(): void {
     const elements = Array.from(this._container?.nativeElement.children ?? []);
-    this.x = elements.findIndex(element => this.window.getBoundingClientRect(element).top > this.window.getBoundingClientRect(this._container.nativeElement).top + 40 * this._maxLines);
+    this.x = elements.findIndex(element => this.windowService.getBoundingClientRect(element).top > this.windowService.getBoundingClientRect(this._container.nativeElement).top + 40 * this._maxLines);
     setTimeout(() => {
       this.lastValue = this.x === -1 ? 1000 : this.x - 1;
       this.onClickMoins();
@@ -107,8 +107,8 @@ export class ChipsListComponent implements OnInit, OnDestroy, AfterViewInit {
   onClickPlus(): void {
     const elements = Array.from(this._container?.nativeElement.children);
     if (this._container) {
-      const offset = this.window.getBoundingClientRect(this._container.nativeElement).right - this.window.getBoundingClientRect(elements[elements.length - 1]).right < 60 ? 40 : 0;
-      this._container.nativeElement.style.maxHeight = `${this.window.getBoundingClientRect(elements[elements.length - 1]).top - this.window.getBoundingClientRect(this._container.nativeElement).top + 40 + offset}px`;
+      const offset = this.windowService.getBoundingClientRect(this._container.nativeElement).right - this.windowService.getBoundingClientRect(elements[elements.length - 1]).right < 60 ? 40 : 0;
+      this._container.nativeElement.style.maxHeight = `${this.windowService.getBoundingClientRect(elements[elements.length - 1]).top - this.windowService.getBoundingClientRect(this._container.nativeElement).top + 40 + offset}px`;
     }
     this.repli = false;
   }

@@ -1,10 +1,11 @@
 import { Component, Inject, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
-import { MatDialog, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-horizon-delais',
+  standalone: true,
   templateUrl: './horizon-delais.component.html',
   styleUrls: ['./horizon-delais.component.scss'],
 })
@@ -14,7 +15,7 @@ export class HorizonDelaisComponent  {
   environment = environment;
   constructor(public http: HttpClient,
     public dialog: MatDialog) { }
-  
+
     getHorizonDelais(){
       return this.http.get(`${environment.apiUrl}/horizonDelais.php`,{
         params: {
@@ -23,8 +24,8 @@ export class HorizonDelaisComponent  {
         }
       }).subscribe((data) => {
         this.openDialog(data);
-      
-        
+
+
       });
     }
     openDialog(data): void {
@@ -32,8 +33,8 @@ export class HorizonDelaisComponent  {
         width: '400px',
         data: data
       });
-  
-      
+
+
     }
 }
 
@@ -109,6 +110,6 @@ export class HorizonDelaisComponent  {
   `]
 })
 export class DialogContentComponent {
-  
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 }

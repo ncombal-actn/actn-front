@@ -1,7 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-tab-sort',
+  standalone: true,
+  imports: [
+    CommonModule
+  ],
   templateUrl: './tab-sort.component.html',
   styleUrls: ['./tab-sort.component.scss']
 })

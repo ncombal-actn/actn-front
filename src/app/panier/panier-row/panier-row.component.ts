@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, Input, Output, EventEmitter, AfterContentInit, ViewChild} from '@angular/core';
+import {Component, OnInit, OnDestroy, Input, Output, EventEmitter, AfterContentInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {CartItem, Produit, Client} from '@/_util/models';
 import {takeUntil} from 'rxjs/operators';
@@ -8,9 +8,32 @@ import {environment} from '@env';
 
 import {ProduitService} from '@core/_services/produit.service';
 import {CartService} from '@core/_services';
+import {CotationRowComponent} from "@/_util/components/cotation-row/cotation-row.component";
+import {CommonModule, CurrencyPipe} from "@angular/common";
+import {RouterLink, RouterLinkActive} from "@angular/router";
+import {MatIcon} from "@angular/material/icon";
+import {FormationFormComponent} from "@/_util/components/formation-form/formation-form.component";
+import {InputNumberComponent} from "@/_util/components/input-number/input-number.component";
+import {HorizonDelaisComponent} from "@/_util/components/horizon-delais/horizon-delais.component";
+import {TooltipComponent} from "@/_util/components/tooltip/tooltip.component";
+import {ImgFallbackDirective} from "@/_util/directives/img-fallback.directive";
 
 @Component({
   selector: 'app-panier-row',
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterLink,
+    CotationRowComponent,
+    CurrencyPipe,
+    FormationFormComponent,
+    MatIcon,
+    InputNumberComponent,
+    HorizonDelaisComponent,
+    TooltipComponent,
+    RouterLinkActive,
+    ImgFallbackDirective
+  ],
   templateUrl: './panier-row.component.html',
   styleUrls: ['./panier-row.component.scss']
 })

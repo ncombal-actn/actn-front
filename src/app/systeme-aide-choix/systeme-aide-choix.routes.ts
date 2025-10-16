@@ -1,8 +1,7 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { SystemeAideChoixComponent } from './systeme-aide-choix.component';
 
-const routes: Routes = [
+export const SYSTEME_AIDE_CHOIX_ROUTES: Routes = [
 	{
 		path: '',
 		component: SystemeAideChoixComponent,
@@ -19,9 +18,3 @@ const routes: Routes = [
 		}
 	},
 ];
-
-@NgModule({
-	imports: [RouterModule.forChild(routes)],
-	exports: [RouterModule]
-})
-export class SystemeAideChoixRoutingModule { }

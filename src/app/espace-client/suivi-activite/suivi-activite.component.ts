@@ -19,10 +19,21 @@ import { environment } from "@env";
 import { HttpClient } from "@angular/common/http";
 import { take } from "rxjs";
 import { AuthenticationService } from "@core/_services";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {MatTooltip} from "@angular/material/tooltip";
+import {CommonModule} from "@angular/common";
+import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
 Chart.register(...registerables);
 Chart.register(Colors);
 @Component({
   selector: "app-suivi-activite",
+  standalone: true,
+  imports: [
+    CommonModule,
+    FontAwesomeModule,
+    TitleWLineComponent,
+    MatTooltip
+  ],
   templateUrl: "./suivi-activite.component.html",
   styleUrls: ["./suivi-activite.component.scss"],
   animations: [

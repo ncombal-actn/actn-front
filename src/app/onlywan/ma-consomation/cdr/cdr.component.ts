@@ -11,18 +11,46 @@ import {
 import {
   FormBuilder,
   FormControl,
-  FormGroup,
+  FormGroup, ReactiveFormsModule,
 } from "@angular/forms";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
+import {MatTable, MatTableDataSource} from "@angular/material/table";
 import { SortAndFilterService } from "@core/_services";
 import { environment } from "@env";
 import { BehaviorSubject, Subject, takeUntil } from "rxjs";
 import {WorkBook, WorkSheet, utils, writeFile } from 'xlsx';
+import {SecondesVersMinutesPipe} from "@core/_pipes/seconde-to-minutes.pipe";
+import {CommonModule} from "@angular/common";
+import {MatDivider} from "@angular/material/divider";
+import {MatDatepickerToggle, MatDateRangeInput, MatDateRangePicker} from "@angular/material/datepicker";
+import {MatHint} from "@angular/material/select";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatIcon} from "@angular/material/icon";
+import {MatExpansionPanelTitle} from "@angular/material/expansion";
+import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
 
 @Component({
   selector: "app-cdr",
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    SecondesVersMinutesPipe,
+    TitleWLineComponent,
+    MatDatepickerToggle,
+    MatDateRangeInput,
+    MatDateRangePicker,
+    MatDivider,
+    MatFormField,
+    MatHint,
+    MatIcon,
+    MatLabel,
+    MatPaginator,
+    MatExpansionPanelTitle,
+    MatSort,
+    MatTable
+  ],
   templateUrl: "./cdr.component.html",
   styleUrls: ["./cdr.component.scss"],
 })
@@ -478,20 +506,6 @@ export class CdrComponent implements OnInit,  OnDestroy,AfterViewInit {
 
 
   downlaodCsv() {
-    //get(this.selection._selected)
-    /*const csvContent = this.convertArrayToCSV(
-      this.selection.selected,
-      this.customHeaders
-    );
-    const blob = new Blob([csvContent], { type: "text/csv" });
-
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "donnees_utilisateurs.csv";
-    link.click();
-
-    window.URL.revokeObjectURL(url);*/
     const ws: WorkSheet = utils.json_to_sheet(this.selection.selected);
     const wb: WorkBook = utils.book_new();
     utils.book_append_sheet(wb, ws, 'CDR');

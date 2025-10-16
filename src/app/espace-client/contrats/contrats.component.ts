@@ -4,7 +4,7 @@ import {LicenceService} from '@services/licence.service';
 import {BehaviorSubject, fromEvent, Observable, Subject} from 'rxjs';
 import {debounceTime, map, skip, take, takeUntil, tap} from 'rxjs/operators';
 import {CartItem, CataloguePosition, Client, Filtre, Licence, Produit} from '@/_util/models';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, FormsModule} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ProduitService} from '@core/_services/produit.service';
 import {AdresseService, SortAndFilterService, WindowService} from '@core/_services';
@@ -19,9 +19,22 @@ import {
   faTimesCircle
 } from "@fortawesome/free-solid-svg-icons";
 import {PageEvent} from "@angular/material/paginator";
+import {TabSortComponent} from "@/_util/components/tab-sort/tab-sort.component";
+import {CommonModule} from "@angular/common";
+import {MatTab, MatTabGroup} from "@angular/material/tabs";
+import {ContratsCommandesComponent} from "@/espace-client/contrats/contrats-commandes/contrats-commandes.component";
 
 @Component({
   selector: 'app-contrats',
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ContratsCommandesComponent,
+    TabSortComponent,
+    MatTab,
+    MatTabGroup
+  ],
   templateUrl: './contrats.component.html',
   styleUrls: ['./contrats.component.scss']
 })

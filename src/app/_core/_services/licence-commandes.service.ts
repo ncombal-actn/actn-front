@@ -1,10 +1,9 @@
 import { SnackbarService } from '@/_util/components/snackbar/snackbar.service';
 import { Filtre } from '@/_util/models';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {Injectable, Injector} from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthenticationService } from './authentication.service';
 import { LicenceService } from './licence.service';
 import { LocalStorageService } from './localStorage/local-storage.service';
 import { StorageService } from './storage.service';
@@ -18,12 +17,12 @@ export class LicenceCommandesService extends LicenceService {
         protected httpClient: HttpClient,
         protected storageService: StorageService,
         protected router: Router,
-        protected authService: AuthenticationService,
+        protected injector: Injector,
         protected snackbarService: SnackbarService,
         protected localStorage: LocalStorageService,
        // protected platformId: Object
     ) {
-        super(httpClient, storageService, router, authService, snackbarService, localStorage)// platformId);
+        super(httpClient, storageService, router, injector, snackbarService, localStorage)// platformId);
     }
 
     /**

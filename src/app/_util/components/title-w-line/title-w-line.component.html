@@ -1,8 +1,23 @@
-<div id="title" *ngIf="title" [ngClass]="{ 'cursor-pointer': collapsible }" (click)="toggleCollapsed()">
-	<span class="barre"></span>
-	<fa-icon *ngIf="collapsible" [ngClass]="{'collapse-icon--collapsed': collapsed}" [icon]="faChevronDown" class="collapse-icon"></fa-icon>
-	<h1 [ngClass]="{'makeWrap': doWrap === true, size}" ><span *ngIf="icon"><mat-icon>{{ icon }}</mat-icon> </span> {{ title }}<span *ngIf="annotation"class="annotation">&nbsp;{{ annotation }}</span></h1>
+@if (title) {
+  <div id="title" [ngClass]="{ 'cursor-pointer': collapsible }" (click)="toggleCollapsed()">
+    <span class="barre"></span>
+    @if (collapsible) {
+      <fa-icon [ngClass]="{'collapse-icon--collapsed': collapsed}" [icon]="faChevronDown"
+               class="collapse-icon"></fa-icon>
+    }
+    <h1 [ngClass]="{'makeWrap': doWrap === true, size}">
+      @if (icon) {
+        <span><mat-icon>{{ icon }}</mat-icon> </span>
+      }
+      {{ title }}
+      @if (annotation) {
+        <span class="annotation">&nbsp;{{ annotation }}</span>
+      }
+    </h1>
 
-	<span *ngIf="withLine" class="barre"></span>
+    @if (withLine) {
+      <span class="barre"></span>
+    }
 
-</div>
+  </div>
+}

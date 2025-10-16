@@ -1,22 +1,37 @@
 import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {NavigationEnd, Router, RouterOutlet, Routes} from '@angular/router';
-import {isPlatformBrowser} from "@angular/common";
+import {CommonModule, isPlatformBrowser} from "@angular/common";
 import {filter} from "rxjs/operators";
-import {UtilModule} from "@/_util/util.module";
-import {AppModule} from "@/app.module";
-import { AuthenticationService } from '@core/_services';
+import {AuthenticationService} from '@core/_services';
 import { HeartbeatSensorComponent } from '@/heartbeat-sensor/heartbeat-sensor.component';
 import { BackToTopComponent} from '@/back-to-top/back-to-top.component';
 import { SideNavComponent } from '@core/_layout/side-nav/side-nav.component';
 import { RollingHeaderComponent } from '@core/_layout/rolling-header/rolling-header.component';
 import { FilDArianneComponent } from '@core/_layout/fil-d-arianne/fil-d-arianne.component';
 import { HeaderComponent } from '@core/_layout/header/header.component';
+import {SnackbarComponent} from "@/_util/components/snackbar/snackbar.component";
+import {SpinnerComponent} from "@/_util/components/spinner/spinner.component";
+import {CookiesComponent} from "@/cookies/cookies.component";
+import {FooterComponent} from "@core/_layout/footer/footer.component";
 declare let gtag: Function;
 
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [RouterOutlet, UtilModule, AppModule, HeartbeatSensorComponent,BackToTopComponent,SideNavComponent,RollingHeaderComponent,FilDArianneComponent,HeaderComponent],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    HeartbeatSensorComponent,
+    BackToTopComponent,
+    SideNavComponent,
+    RollingHeaderComponent,
+    FilDArianneComponent,
+    HeaderComponent,
+    SnackbarComponent,
+    SpinnerComponent,
+    CookiesComponent,
+    FooterComponent
+  ],
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
@@ -30,9 +45,10 @@ export class AppComponent implements OnInit {
   constructor(
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: any,
-    public auth: AuthenticationService,
+    public auth: AuthenticationService
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
+    this.auth.retrieveCurrentSession();
   }
 
   getAllRoutes(routes: Routes): Routes {
@@ -57,7 +73,9 @@ export class AppComponent implements OnInit {
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
       // Scroll en haut du body après chaque navigation
-      window.scrollTo({ top: 0, behavior: 'smooth' }); // ou behavior: 'auto'
+      if (typeof window !== 'undefined') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     });
   }
 

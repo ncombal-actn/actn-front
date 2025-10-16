@@ -14,7 +14,7 @@
   <div class="no-result raised-1">
     Aucun résultat ne correspond à votre recherche. <a [routerLink]="['/catalogue']">Retourner au catalogue</a>
   </div>
-  
+
 } @else {
   @for (produit of produits | slice: 0:toDisplay; track produit.reference; let i = $index) {
     <app-produit-preview
@@ -24,7 +24,7 @@
       [displayRemoveProductFromFavorisButton]="isFavorisList"
     ></app-produit-preview>
     @if (i%25 === 0 && i !== 0 && format !=='grid') {
-      <app-banniere emplacement="middle" [listMarque]="listMarque"></app-banniere>
+      <app-banniere emplacement="middle" [marques]="listMarque"></app-banniere>
     }
   }
 }

@@ -15,7 +15,7 @@
 @if (type === 'comparateur') {
   <ng-template [ngTemplateOutlet]="buttons"></ng-template>
 }
-<div id="slider" #slider @fadeIn>
+<div id="slider" #slider>
   <div id="slider-container" [ngClass]="{comparateur: type === 'comparateur', produitdetail: type === 'galerie'}"
        #sliderContainer>
     @switch (type) {
@@ -34,7 +34,7 @@
       @case ('actu') {
         @for (actu of news; track actu.title) {
           <div #item class="item actu raised-1" style="min-width: 0px">
-            <a [href]="actu.link" target="_blank"><img loading="lazy" [src]="actu.description" [alt]="actu.title"/>   
+            <a [href]="actu.link" target="_blank"><img loading="lazy" [src]="actu.description" [alt]="actu.title"/>
          </a>
             <div class="description">
               <h3><a [href]="actu.link" target="_blank">{{ actu.title }}</a></h3>

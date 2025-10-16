@@ -1,11 +1,7 @@
 import {
-  ElementRef,
   AfterViewInit,
   Directive,
-  Host,
-  Optional,
   Renderer2,
-  Self,
   ViewContainerRef,
   Input
 } from '@angular/core';
@@ -21,7 +17,8 @@ interface PageObject {
 }
 
 @Directive({
-  selector: '[style-paginator]'
+  selector: '[style-paginator]',
+  standalone: true,
 })
 export class StylePaginatorDirective implements AfterViewInit{
   private _pageGapTxt = '...';

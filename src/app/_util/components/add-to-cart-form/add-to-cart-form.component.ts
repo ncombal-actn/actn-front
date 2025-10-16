@@ -5,14 +5,21 @@ import { Produit } from '@/_util/models';
 import { CartService } from '@/_core/_services/cart.service';
 import { Cotation } from '@/_util/models/cotation';
 import {ProduitService} from "@services/produit.service";
+import {NgClass} from "@angular/common";
+import {InputNumberComponent} from "@/_util/components/input-number/input-number.component";
 
 /**
  * Formulaire d'ajout au panier. Comprend le bouton "Ajouter au panier", l'input de qte, et les boutons + et - pour régler la qte.
  */
 @Component({
-    selector: 'app-add-to-cart-form',
-    templateUrl: './add-to-cart-form.component.html',
-    styleUrls: ['./add-to-cart-form.component.scss']
+  selector: 'app-add-to-cart-form',
+  standalone: true,
+  templateUrl: './add-to-cart-form.component.html',
+  imports: [
+    NgClass,
+    InputNumberComponent
+  ],
+  styleUrls: ['./add-to-cart-form.component.scss']
 })
 export class AddToCartFormComponent implements  AfterViewInit {
 
@@ -48,7 +55,7 @@ export class AddToCartFormComponent implements  AfterViewInit {
       private produitService: ProduitService,
   ) { }
 
-  
+
 
   ngAfterViewInit(): void {
       setTimeout(() => {

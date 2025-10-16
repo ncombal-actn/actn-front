@@ -2,10 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { CookieService } from '@core/_services';
 import { environment } from '@env';
 import {faCalendarAlt, faNewspaper} from "@fortawesome/free-solid-svg-icons";
+import {RouterLink, RouterLinkActive} from "@angular/router";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 
 @Component({
   selector: 'app-footer',
+  standalone: true,
   templateUrl: './footer.component.html',
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+    FaIconComponent
+  ],
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {

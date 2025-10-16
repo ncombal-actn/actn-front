@@ -1,9 +1,8 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { MdpOublieComponent } from './mdp-oublie/mdp-oublie.component';
 import { MdpRecuperationComponent } from './mdp-recuperation/mdp-recuperation.component';
 
-const routes: Routes = [
+export const MOT_DE_PASSE_ROUTES: Routes = [
 	{
 		path: 'oublie',
 		component: MdpOublieComponent,
@@ -19,9 +18,3 @@ const routes: Routes = [
 		}
 	}
 ];
-
-@NgModule({
-	imports: [RouterModule.forChild(routes)],
-	exports: [RouterModule]
-})
-export class MotDePasseRoutingModule { }

@@ -1,9 +1,18 @@
 import { Component, AfterViewInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { LoadingService } from '@core/_services/loading.service';
 import { Subscription } from 'rxjs';
+import {AsyncPipe} from "@angular/common";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
+import {MatProgressBar} from "@angular/material/progress-bar";
 
 @Component({
 	selector: 'app-spinner',
+  standalone: true,
+  imports: [
+    AsyncPipe,
+    MatProgressSpinner,
+    MatProgressBar
+  ],
 	templateUrl: './spinner.component.html',
 	styleUrls: ['./spinner.component.scss'],
 	encapsulation: ViewEncapsulation.None
@@ -34,7 +43,7 @@ export type ProgressBarState = {
 	isShowing: boolean;
 
 	/** Le pourcentage de progression de 0 à 100 */
-	progression: number; 
+	progression: number;
 
 	/** Une phrase de de description du status */
 	texte: string;

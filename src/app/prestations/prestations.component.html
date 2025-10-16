@@ -48,7 +48,7 @@
       <h2>CARTE DES PRESTATIONS</h2>
       <p class="margin-bottom-x">Sélectionnez dans chaque rubrique la ou les prestations voulues.</p>
       <div id="listeProduct">
-        @for (categorie of categories | slice: 0:toDisplay; track $index; let i = $index) {
+        @for (categorie of categories | slice: 0; track $index; let i = $index) {
           <ng-container class="margin">
             <div class="category">
               <figure class="category__header">
@@ -92,7 +92,7 @@
       } @else {
         <p class="error">&nbsp;</p>
       }
-      <button class="raised-button" type="submit " (click)="show()"
+      <button class="raised-button" type="submit" (click)="show()"
         [ngClass]="{'button-error': formError, 'button-error--secondary-color': formError}">
         Envoyer la demande
       </button>

@@ -10,7 +10,6 @@ import {
   AfterViewInit,
   Inject,
   PLATFORM_ID,
-  ChangeDetectionStrategy,
   inject,
   Renderer2,
 } from "@angular/core";
@@ -21,13 +20,27 @@ import { first, take, takeUntil } from "rxjs/operators";
 import { Subject, lastValueFrom } from "rxjs";
 import { BreakpointObserver } from "@angular/cdk/layout";
 import { BanniereComponent } from "@/banniere/banniere.component";
-import { Router } from "@angular/router";
-import { isPlatformBrowser } from "@angular/common";
+import {Router, RouterLink} from "@angular/router";
+import {AsyncPipe, isPlatformBrowser, KeyValuePipe, NgClass} from "@angular/common";
 import { MatDialog } from "@angular/material/dialog";
 import { SavPopupComponent } from '../sav-popup/sav-popup.component';
+import {MatChipListbox} from "@angular/material/chips";
+import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
+import {ImgFallbackDirective} from "@/_util/directives/img-fallback.directive";
 
 @Component({
   selector: "app-nos-marques",
+  standalone: true,
+  imports: [
+    TitleWLineComponent,
+    MatChipListbox,
+    NgClass,
+    AsyncPipe,
+    ImgFallbackDirective,
+    RouterLink,
+    BanniereComponent,
+    KeyValuePipe
+  ],
   templateUrl: "./nos-marques.component.html",
   styleUrls: ["./nos-marques.component.scss"],
 })
@@ -120,8 +133,8 @@ export class NosMarquesComponent implements OnInit, OnDestroy, AfterViewInit {
       this.catalogueService.getCategoriesByMarques().pipe(take(1))
     );
 
-   
-    
+
+
     Object.values(ret).forEach((marque) => {
       if (marque["marque"]) {
         this._marques.set(marque["marquelib"], marque["marque"]);
@@ -172,11 +185,11 @@ if (!Array.isArray(this.marques)) {
       const dialogRef = this.dialog.open(SavPopupComponent,{
         data: { data},
         width: '600px',
-      }); 
+      });
       dialogRef.afterClosed().subscribe(() => {
         // Restore height: 100% to body
         this.renderer.setStyle(document.body, 'height', '100%');
-      });     
+      });
     });
   }
 
@@ -230,18 +243,9 @@ if (!Array.isArray(this.marques)) {
         this.marqueService.setIndexMarquePicked(index);
         window.setTimeout(() => this.adjustCategoriesMarqueTop(index));
       }
-    }); /*
-        if (this.marquePicked === marque) {
-        } else {
-            this.closeMarque();
-            this.marquePicked = marque;
-            this.indexMarquePicked = index;
-            this.window.setTimeout(() => this.adjustCategoriesMarqueTop(index));
-        } */
+    });
   }
 
-
- 
 
   /** Ferme les div des catégories des marques  */
   closeMarque(): void {
@@ -257,42 +261,43 @@ if (!Array.isArray(this.marques)) {
 
   adjustCategoriesMarqueTop(index: number): void {
     if (isPlatformBrowser(this.platformId)) {
+
       this.ngZone.runOutsideAngular(() => {
         const marque = document.querySelector(".marqueSelected") as HTMLElement;
         const categories = document.querySelector(".categoriesMarque.show") as HTMLElement;
-    
+
         if (!marque || !categories) return;
-     
-      
+
+
         const setMaxHeight = (element: HTMLElement, height: string) => {
           element.style.setProperty("max-height", height);
         };
-      
+
         const setHeight = (element: HTMLElement, height: string) => {
           element.style.setProperty("height", height);
         };
-      
+
         this.marqueService.marquePicked$
           .pipe(first())
           .subscribe((marquePicked) => {
             const foundBanniere = this.bannieres.find((banniere) =>
               banniere.marques.includes(marquePicked)
             );
-      
+
             const maxHeight = `550px`;
             setMaxHeight(categories, maxHeight);
-      
+
             const topValue = `${110 * (Math.floor(index / this.nbMarqueParLigne) + 1) + Math.floor(index / this.nbMarqueParLigne) * 20}px`;
             categories.style.setProperty("top", topValue);
-      
+
             const updateMarqueHeight = () => {
               const newHeight = `${110 + categories.getClientRects()[0].height}px`;
               setMaxHeight(marque, newHeight);
               setHeight(marque, newHeight);
             };
-      
+
             this._loop = window.setInterval(updateMarqueHeight);
-      
+
             this._timeout = window.setTimeout(() => {
               window.clearInterval(this._loop);
               updateMarqueHeight();
@@ -377,7 +382,7 @@ if (!Array.isArray(this.marques)) {
       return '';
     }
   }
-  
+
   openLink(marque: string): void {
     const url = this.isPartenaire(marque);
     window.open(url, '_blank');
@@ -403,7 +408,7 @@ if (!Array.isArray(this.marques)) {
   log() {
   }
 
- 
+
 
 
 normalizeStringForUrl(input: string): string {

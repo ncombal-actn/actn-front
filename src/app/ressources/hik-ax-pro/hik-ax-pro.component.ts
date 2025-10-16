@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { /*Cart, CartItem,*/ Produit/*, Client, Cotation*/ } from '@/_util/models';
+import { Produit } from '@/_util/models';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
-import { Subject, pipe, Observable } from 'rxjs';
-import { map, filter, takeUntil, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { environment } from '@env';
 import {faCircle} from "@fortawesome/free-solid-svg-icons";
 import {WindowService} from "@core/_services";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
+import {SlidingListeComponent} from "@/_util/components/sliding-liste/sliding-liste.component";
+import {NgClass} from "@angular/common";
+import {SlidingListFromLinkComponent} from "@/_util/components/sliding-list-from-link/sliding-list-from-link.component";
 
 class HikaxproCategory {
   titre: string;
@@ -15,9 +19,17 @@ class HikaxproCategory {
 }
 
 @Component({
-	selector: 'app-hik-ax-pro',
-	templateUrl: './hik-ax-pro.component.html',
-	styleUrls: ['./hik-ax-pro.component.scss']
+  selector: 'app-hik-ax-pro',
+  standalone: true,
+  imports: [
+    FontAwesomeModule,
+    TitleWLineComponent,
+    SlidingListeComponent,
+    SlidingListFromLinkComponent,
+    NgClass
+  ],
+  templateUrl: './hik-ax-pro.component.html',
+  styleUrls: ['./hik-ax-pro.component.scss'],
 })
 export class HikAxProComponent implements OnInit
 {

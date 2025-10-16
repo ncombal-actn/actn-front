@@ -8,9 +8,10 @@ import { take, tap, map, takeUntil } from 'rxjs/operators';
 const phoneRegex = /^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/;
 
 @Component({
-    selector: 'app-enduser-form',
-    templateUrl: './enduser-form.component.html',
-    styleUrls: ['./enduser-form.component.scss']
+  selector: 'app-enduser-form',
+  standalone: true,
+  templateUrl: './enduser-form.component.html',
+  styleUrls: ['./enduser-form.component.scss']
 })
 export class EnduserFormComponent implements OnInit, OnDestroy {
 

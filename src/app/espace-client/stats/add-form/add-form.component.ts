@@ -1,14 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import {Form, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Form, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AdresseService, AuthenticationService} from "@core/_services";
 import {shareReplay} from "rxjs/operators";
 import {RmaService} from "@services/rma.service";
 import { HttpClient } from "@angular/common/http";
 import {environment} from '@env';
-import { Router } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
+import {MatCheckbox} from "@angular/material/checkbox";
+import {AsyncPipe} from "@angular/common";
+import {MatHint} from "@angular/material/select";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
 
 @Component({
   selector: 'app-add-form',
+  standalone: true,
+  imports: [
+    RouterLink,
+    ReactiveFormsModule,
+    AsyncPipe,
+    MatCheckbox,
+    MatFormField,
+    MatHint,
+    MatLabel
+  ],
   templateUrl: './add-form.component.html',
   styleUrls: ['./add-form.component.scss']
 })

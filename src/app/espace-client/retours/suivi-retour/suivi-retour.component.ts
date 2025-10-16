@@ -6,9 +6,19 @@ import { Observable, Subject } from 'rxjs';
 import { environment } from '@env';
 import { takeUntil, tap } from 'rxjs/operators';
 import {faFilePdf} from "@fortawesome/free-solid-svg-icons";
+import {MatSelect} from "@angular/material/select";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-suivi-retour',
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatFormField,
+    MatLabel,
+    MatSelect
+  ],
   templateUrl: './suivi-retour.component.html',
   styleUrls: ['./suivi-retour.component.scss']
 })

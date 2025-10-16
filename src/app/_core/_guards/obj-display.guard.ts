@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
-import { environment } from '@env';
 import { take } from 'rxjs/operators';
 import { DematerialisationService } from '@core/_services/dematerialisation.service';
 

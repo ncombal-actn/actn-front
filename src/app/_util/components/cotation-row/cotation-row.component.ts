@@ -18,6 +18,7 @@ import {Router} from '@angular/router';
   selector: "app-cotation-row",
   templateUrl: "./cotation-row.component.html",
   styleUrls: ["./cotation-row.component.scss"],
+  standalone: true
 })
 export class CotationRowComponent implements OnDestroy, OnChanges {
 

@@ -1,10 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { SnackbarService } from './snackbar.service';
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
+import {NgClass} from "@angular/common";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 
 @Component({
   selector: 'app-snackbar',
+  standalone: true,
   templateUrl: './snackbar.component.html',
+  imports: [
+    NgClass,
+    FaIconComponent
+  ],
   styleUrls: ['./snackbar.component.scss']
 })
 export class SnackbarComponent implements OnInit {

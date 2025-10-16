@@ -1,18 +1,18 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { GammesComponent } from './gammes/gammes.component';
+import { Routes } from '@angular/router';
+
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { GammesComponent } from './gammes/gammes.component';
 import { ModelesComponent } from './modeles/modeles.component';
 import { OptionsComponent } from './options/options.component';
 import { RecapitulatifComponent } from './recapitulatif/recapitulatif.component';
 
-const routes: Routes = [
-	{
-		path: '',
-		pathMatch: 'full',
-		component: LandingPageComponent,
-		data: {},
-	},
+export const ZYXEL_ROUTES: Routes = [
+    {
+        path: '',
+        pathMatch: 'full',
+        component: LandingPageComponent,
+        data: {},
+    },
     {
         path: 'gammes',
         pathMatch: 'full',
@@ -38,9 +38,3 @@ const routes: Routes = [
         data: {},
     },
 ];
-
-@NgModule({
-	imports: [RouterModule.forChild(routes)],
-	exports: [RouterModule]
-})
-export class SonicwallRoutingModule { }

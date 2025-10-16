@@ -1,19 +1,36 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommandesService } from '@/_core/_services/commandes.service';
 import { AuthenticationService } from '@/_core/_services';
 import { ProduitService } from '@core/_services/produit.service';
 import { CartService } from '@core/_services/cart.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env';
-import { Produit } from '@/_util/models';
 import { RmaService } from '@core/_services/rma.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { take, elementAt } from 'rxjs/operators';
-import { PageEvent as PageEvent } from '@angular/material/paginator';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import { take } from 'rxjs/operators';
+import {MatPaginator, PageEvent as PageEvent} from '@angular/material/paginator';
 import {faFilePdf, faMinusCircle, faPlusCircle, faTruck} from "@fortawesome/free-solid-svg-icons";
+import {PopupObjDisplayComponent} from "@/_util/components/popup-obj-display/popup-obj-display.component";
+import {CommonModule} from "@angular/common";
+import {TabSortComponent} from "@/_util/components/tab-sort/tab-sort.component";
+import {MatSelect} from "@angular/material/select";
+import {FormsModule} from "@angular/forms";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
 
 @Component({
   selector: 'app-commandes',
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterLink,
+    PopupObjDisplayComponent,
+    TabSortComponent,
+    MatFormField,
+    MatLabel,
+    MatPaginator,
+    MatSelect
+  ],
   templateUrl: './commandes.component.html',
   styleUrls: ['./commandes.component.scss']
 })

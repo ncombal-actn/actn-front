@@ -1,20 +1,30 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env';
-import { take, takeLast } from 'rxjs/operators';
-import { Validators, FormBuilder, FormControl } from '@angular/forms';
+import { takeLast } from 'rxjs/operators';
 
-import { Router } from '@angular/router';
 import { CartService } from '@/_core/_services/cart.service';
 import { ProduitService } from '@/_core/_services/produit.service';
 import { RmaService } from '@/_core/_services/rma.service';
 import {AuthenticationService} from "@core/_services";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {FormsModule} from "@angular/forms";
+import {MatInput} from "@angular/material/input";
+import {MatIcon} from "@angular/material/icon";
 
 
 @Component({
-	selector: 'app-paniers-enregistres',
-	templateUrl: './paniers-enregistres.component.html',
-	styleUrls: ['./paniers-enregistres.component.scss']
+  selector: 'app-paniers-enregistres',
+  standalone: true,
+  templateUrl: './paniers-enregistres.component.html',
+  imports: [
+    MatFormField,
+    FormsModule,
+    MatInput,
+    MatIcon,
+    MatLabel
+  ],
+  styleUrls: ['./paniers-enregistres.component.scss']
 })
 export class PaniersEnregistresComponent implements OnInit {
 

@@ -1,4 +1,4 @@
-import {Routes, RouterModule} from '@angular/router';
+import {Routes} from '@angular/router';
 import {CatalogueComponent} from './catalogue.component';
 import {CatalogueResolverService} from '@/_core/_services/catalogue-resolver.service';
 import {NouveautesResolverService} from '@/_core/_resolvers/nouveautes-resolver.service';
@@ -7,7 +7,6 @@ import {PacksResolverService} from '@/_core/_resolvers/packs-resolver.service';
 import {PromosResolverService} from '@/_core/_resolvers/promos-resolver.service';
 import {SimilairesResolverService} from '@/_core/_resolvers/similaires-resolver.service';
 import {ProduitResolverService} from './produit/produit-resolver.service';
-import {NgModule} from '@angular/core';
 import {ProduitComponent} from './produit/produit.component';
 import {CategorieComponent} from '@/catalogue/categorie/categorie.component';
 import {NosMarquesComponent} from './nos-marques/nos-marques.component';
@@ -17,7 +16,7 @@ import {RecondionnerResolverService} from '@/_core/_resolvers/recondionner-resol
 import {PromoResolverService} from "@core/_resolvers/promo-resolver.service";
 
 
-const routes: Routes = [
+export const CATALOGUE_ROUTES: Routes = [
   // default route of the module
   {
     path: '',
@@ -274,10 +273,3 @@ const routes: Routes = [
     }
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
-})
-export class CatalogueRoutingModule {
-}

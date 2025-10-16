@@ -1,18 +1,18 @@
-import { UtilModule } from '@/_util/util.module';
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-procedure-ticket',
   templateUrl: './procedure-ticket.component.html',
   styleUrl: './procedure-ticket.component.scss',
   standalone: true,
- imports: [UtilModule] 
+  imports: []
 })
 export class ProcedureTicketComponent implements OnInit {
 
-  constructor(){}
+  constructor() {
+  }
 
-  ngOnInit(){
+  ngOnInit() {
 
   }
 }

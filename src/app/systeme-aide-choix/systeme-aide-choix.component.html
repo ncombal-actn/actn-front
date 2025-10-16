@@ -1,5 +1,5 @@
 @if (listMarqueCode) {
-  <app-banniere emplacement="top" [listMarque]="listMarqueCode"></app-banniere>
+  <app-banniere emplacement="top" [marques]="listMarqueCode"></app-banniere>
 }
 @if (listMarque) {
   <div class="cadre">
@@ -62,9 +62,9 @@
     </div>
     <div class="categories" [ngClass]="{'hidden': !showFiltreCom}">
       @for (crit of listNomCom; track crit.libelle; let j = $index) {
-          
+
         @if (crit.libelle && (legendeSelectionne.length === 0 || crit.couleur === legendeSelectionne)) {
-         
+
           <div class="cat" (click)="toggleFiltreCom(crit)" (tap)="toggleFiltreCom(crit)" [ngClass]="{'selected': crit.libelle === nomComActive.libelle}">
             <div class="inner raised-2">
               <div class="front">

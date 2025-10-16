@@ -2,11 +2,29 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
 import {faFacebookSquare, faTwitterSquare} from "@fortawesome/free-brands-svg-icons";
 import {faEnvelope} from "@fortawesome/free-solid-svg-icons";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatIcon} from "@angular/material/icon";
+import {MatInput} from "@angular/material/input";
+import {MatButton} from "@angular/material/button";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {NgClass} from "@angular/common";
+import {TooltipComponent} from "@/_util/components/tooltip/tooltip.component";
 
 @Component({
-    selector: 'app-share',
-    templateUrl: './share.component.html',
-    styleUrls: ['./share.component.scss']
+  selector: 'app-share',
+  standalone: true,
+  templateUrl: './share.component.html',
+  imports: [
+    MatFormField,
+    MatLabel,
+    MatIcon,
+    MatInput,
+    MatButton,
+    FaIconComponent,
+    NgClass,
+    TooltipComponent
+  ],
+  styleUrls: ['./share.component.scss']
 })
 export class ShareComponent implements OnInit {
 

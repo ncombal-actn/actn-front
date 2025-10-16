@@ -1,9 +1,7 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { TestEliComponent } from './test-eli/test-eli.component';
-import { TestARCEPComponent } from './test-arcep/test-arcep.component';
 
-const routes: Routes = [
+export const OUTILS_ROUTES: Routes = [
   {
     path: 'testDEligibilite',
     component: TestEliComponent,
@@ -19,9 +17,3 @@ const routes: Routes = [
     }
   } */
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
-})
-export class OutilsRoutingModule { }

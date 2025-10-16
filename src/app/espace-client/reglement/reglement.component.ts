@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormControl, FormGroupDirective, NgForm, FormGroup } from '@angular/forms';
+import {Validators, FormControl, FormGroupDirective, NgForm, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { take, takeLast } from 'rxjs/operators';
+import { takeLast } from 'rxjs/operators';
 
 import { AuthenticationService, WindowService } from '@/_core/_services';
 import { environment } from '@env';
+import {MatFormField} from "@angular/material/form-field";
+import {MatInput} from "@angular/material/input";
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
 	isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -17,6 +19,12 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 
 @Component({
 	selector: 'app-reglement',
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    MatFormField,
+    MatInput
+  ],
 	templateUrl: './reglement.component.html',
 	styleUrls: ['./reglement.component.scss']
 })
@@ -76,7 +84,7 @@ export class ReglementComponent implements OnInit {
 			.pipe(takeLast(1))
 			.subscribe(
 				(data) =>
-				{					
+				{
 					this.window.open(data[1].url, "_self");
 					return true;
 				},

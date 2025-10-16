@@ -9,7 +9,7 @@
       </mat-error>
     }
     <mat-form-field>
-      <input type="text"  formControlName="login" matInput placeholder="Login"
+      <input type="text" formControlName="login" matInput placeholder="Login"
         (focusin)="inputFocused()"
         (focusout)="inputUnFocused()"/>
         @if (loginForm.get('login').errors?.required) {
@@ -45,5 +45,5 @@
   </form>
 
   <ng-template #reloadLink>
-    <span class="text-link" (click)="document.location.reload(true)" (tap)="document.location.reload(true)">rafraichir</span>
+    <span class="text-link" (click)="windowService.nativeWindow.location.reload()" (tap)="windowService.location.reload()">rafraichir</span>
   </ng-template>

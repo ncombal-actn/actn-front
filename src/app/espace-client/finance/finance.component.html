@@ -52,7 +52,7 @@
       </div>
 
       <div id="echus">
-        <app-title-w-line [title]="'Facture non réglée'" collapsible="true"
+        <app-title-w-line [title]="'Facture non réglée'" [collapsible]="true"
         (click)="toggleCollapseDivById($event, 'echus')"></app-title-w-line>
         <h3 style="margin-left: 1em">{{_financeService.getNbResultEchus() + ' résultats'}}</h3>
         <div class="collapsible" style="padding: 0 1px;"
@@ -145,7 +145,7 @@
       </div>
 
       <div id="avoir">
-        <app-title-w-line [title]="'Avoir & acompte'" collapsible="true"
+        <app-title-w-line [title]="'Avoir & acompte'" [collapsible]="true"
         (click)="toggleCollapseDivById($event, 'avoir')"></app-title-w-line>
         <h3 style="margin-left: 1em">{{_financeService.getNbResultAvoir() + ' résultats'}}</h3>
         <div class="collapsible" style="padding: 0 1px;"
@@ -208,7 +208,7 @@
       </div>
 
       <div id="nonEchus">
-        <app-title-w-line [title]="'Facture non arrivée à échéance'" collapsible="true"
+        <app-title-w-line [title]="'Facture non arrivée à échéance'" [collapsible]="true"
         (click)="toggleCollapseDivById($event, 'nonEchus')"></app-title-w-line>
         <h3 style="margin-left: 1em">{{_financeService.getNbResultNonEchus() + ' résultats'}}</h3>
         <div class="collapsible" style="padding: 0 1px;"
@@ -272,7 +272,7 @@
       </div>
 
       <div id="historique">
-        <app-title-w-line [title]="'Historique'" collapsible="true"
+        <app-title-w-line [title]="'Historique'" [collapsible]="true"
         (click)="toggleCollapseDivById($event, 'historique')"></app-title-w-line>
         <h3 style="margin-left: 1em">{{_financeService.getNbResultHisto() + ' résultats'}}</h3>
         <div class="collapsible" style="padding: 0 1px;"

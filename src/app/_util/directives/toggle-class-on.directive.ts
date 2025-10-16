@@ -8,7 +8,8 @@ import {
 } from '@angular/core';
 
 @Directive({
-  selector: '[appToggleClassOn]'
+  selector: '[appToggleClassOn]',
+  standalone: true,
 })
 export class ToggleClassOnDirective implements AfterViewInit, OnDestroy {
   @Input('appToggleClassOn') events: string;

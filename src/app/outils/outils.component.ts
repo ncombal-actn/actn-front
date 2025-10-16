@@ -10,9 +10,14 @@ import { AuthenticationService } from "@/_core/_services/authentication.service"
 
 // ENVIRONMENT
 import { environment } from "@env";
+import {AnimatedBoxComponent} from "@/_util/components/animated-box/animated-box.component";
 
 @Component({
   selector: "app-outils",
+  standalone: true,
+  imports: [
+    AnimatedBoxComponent
+  ],
   templateUrl: "./outils.component.html",
   styleUrls: ["./outils.component.scss"],
 })

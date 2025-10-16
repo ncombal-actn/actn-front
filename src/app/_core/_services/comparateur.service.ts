@@ -29,14 +29,14 @@ export class ComparateurService {
 
     constructor(
         private localStorage: LocalStorageService,
-        private window: WindowService,
+        private windowService: WindowService,
         @Inject(PLATFORM_ID) private platformId: any
     ) {
         // get localStorage if there is already one
         this.updateCompare();
 
-        if (isPlatformBrowser(this.platformId) && this.window && this.window.window) {
-            this.tabUpdate = fromEvent<StorageEvent>(this.window.window, 'storage')
+        if (isPlatformBrowser(this.platformId) && this.windowService && this.windowService.nativeWindow) {
+            this.tabUpdate = fromEvent<StorageEvent>(this.windowService.nativeWindow, 'storage')
                 .pipe(
                     tap(() => {
                         this.updateCompare();

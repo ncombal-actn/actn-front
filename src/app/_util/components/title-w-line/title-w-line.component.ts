@@ -1,14 +1,23 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {faChevronDown, faFileLines} from "@fortawesome/free-solid-svg-icons";
+import {NgClass} from "@angular/common";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {MatIcon} from "@angular/material/icon";
 
 /**
  * Composant utile
  * Affichant un titre, une annotation optionnelle puis une ligne
  */
 @Component({
-	selector: 'app-title-w-line',
-	templateUrl: './title-w-line.component.html',
-	styleUrls: ['./title-w-line.component.scss']
+  selector: 'app-title-w-line',
+  standalone: true,
+  templateUrl: './title-w-line.component.html',
+  styleUrls: ['./title-w-line.component.scss'],
+  imports: [
+    NgClass,
+    FaIconComponent,
+    MatIcon
+  ]
 })
 export class TitleWLineComponent implements OnInit {
 
@@ -40,5 +49,5 @@ export class TitleWLineComponent implements OnInit {
 
   protected readonly faChevronDown = faChevronDown;
   protected readonly faFileLines = faFileLines;
-  
+
 }

@@ -3,14 +3,21 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from '@env';
+import {MatCard} from "@angular/material/card";
+import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
 
 @Component({
   selector: 'app-detail-client',
+  standalone: true,
+  imports: [
+    TitleWLineComponent,
+    MatCard
+  ],
   templateUrl: './detail-client.component.html',
   styleUrls: ['./detail-client.component.scss']
 })
 export class DetailClientComponent  implements OnInit{
-  
+
 client:any={};
 id:string;
 clientForm:FormGroup;
@@ -52,16 +59,16 @@ constructor(public http: HttpClient, public router: ActivatedRoute, public fb: F
       }
     }).subscribe(
       data => {
-       
+
         data.forEach(client =>{
           if(client.numero === this.id){
             this.client = client;
             this.noClients =false
           }else{
-            
+
            // this.noClients = true;
           }
-                    
+
         })
 
         this.clientForm.patchValue({
@@ -78,7 +85,7 @@ constructor(public http: HttpClient, public router: ActivatedRoute, public fb: F
           services:this.client.services,
           ippublique:this.client.ippublique,
         })
-        
+
       })
     }
 

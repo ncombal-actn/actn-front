@@ -8,6 +8,12 @@ import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 import {catchError, map, take, takeUntil} from 'rxjs/operators';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "@env";
+import {AsyncPipe} from "@angular/common";
+import {CarouselComponent} from "@/accueil/carousel/carousel.component";
+import {VerticalCarouselComponent} from "@/accueil/vertical-carousel/vertical-carousel.component";
+import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
+import {SlidingListeComponent} from "@/_util/components/sliding-liste/sliding-liste.component";
+import {RouterLink} from "@angular/router";
 
 /**
  * Composant représentant la page d'accueil.
@@ -22,6 +28,15 @@ import {environment} from "@env";
  */
 @Component({
   selector: 'app-accueil',
+  standalone: true,
+  imports: [
+    AsyncPipe,
+    CarouselComponent,
+    VerticalCarouselComponent,
+    TitleWLineComponent,
+    SlidingListeComponent,
+    RouterLink
+  ],
   templateUrl: './accueil.component.html',
   styleUrls: ['./accueil.component.scss']
 })

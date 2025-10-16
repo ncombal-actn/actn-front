@@ -2,15 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 // RXJS
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
-// ENVIRONMENT
-import { environment } from '@env';
-// SERVICES
 import { AuthenticationService } from '@/_core/_services';
 
 @Component({
   selector: 'app-link-login',
+  standalone: true,
   templateUrl: './link-login.component.html',
   styleUrls: ['./link-login.component.scss']
 })

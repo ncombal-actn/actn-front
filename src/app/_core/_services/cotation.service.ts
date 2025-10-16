@@ -3,15 +3,10 @@ import { HttpClient } from "@angular/common/http";
 import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
 // ENV
 import { environment } from "@env";
-// SERVICES
-import { AuthenticationService } from "@core/_services/authentication.service";
 // RXJS
 import { BehaviorSubject, Observable, of } from "rxjs";
 import { map, take, tap } from "rxjs/operators";
-import { CookieService } from "ngx-cookie-service";
-import { jwtDecode } from "jwt-decode";
 import { User } from "@/_util/models";
-import { platformBrowser } from "@angular/platform-browser";
 import { isPlatformBrowser } from "@angular/common";
 
 @Injectable({
@@ -25,8 +20,6 @@ export class CotationService {
   user: User;
   constructor(
     private httpClient: HttpClient,
-    private auth: AuthenticationService,
-    private cookieService: CookieService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     /*this.getCotations()

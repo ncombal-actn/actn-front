@@ -1,11 +1,24 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {RmaService} from '@core/_services/rma.service';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {AuthenticationService, WindowService} from '@core/_services';
+import {ChangeAdresseComponent} from "@/_util/components/change-adresse/change-adresse.component";
+import {CommonModule} from "@angular/common";
+import {MatCheckbox} from "@angular/material/checkbox";
+import {MatError} from "@angular/material/form-field";
 
 @Component({
   selector: 'app-confirmation-retour',
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ChangeAdresseComponent,
+    MatCheckbox,
+    RouterLink,
+    MatError
+  ],
   templateUrl: './confirmation-retour.component.html',
   styleUrls: ['./confirmation-retour.component.scss']
 })
@@ -113,15 +126,15 @@ export class ConfirmationRetourComponent implements OnInit, OnDestroy {
       this.chargerAdresse();
       this.chargerForm();
     }
-    
-    
+
+
     this.logFormErrors()
   }
 
 
   logFormErrors(): void {
-  
-    
+
+
     Object.keys(this.rmaForm.controls).forEach(key => {
       this.rmaForm.get(key)?.valueChanges.subscribe(() => {
         console.log(`Erreurs pour le champ ${key}:`, this.rmaForm.get(key)?.errors);
@@ -217,14 +230,14 @@ export class ConfirmationRetourComponent implements OnInit, OnDestroy {
     const file = event.target.files[0];
     if (file) {
       this.fileToUpload = file; // Stocke le fichier en tant qu'objet File
-    
-      
+
+
       this.envoiFileName = file.name; // Stocke uniquement le nom du fichier
       this.rmaForm.patchValue({ file: file.name }); // Mettre à jour le formulaire pour affichage
     }
   }
-  
-  
+
+
   envoiRMA(): void {
 
     // Si un fichier a été sélectionné, on met à jour la variable
@@ -233,16 +246,16 @@ export class ConfirmationRetourComponent implements OnInit, OnDestroy {
       this.envoiFileName = this.fileToUpload.name;  // Nom du fichier
     } else {
       this.envoiFile = '';  // Si pas de fichier, on passe une chaîne vide
-      this.envoiFileName = '';  
+      this.envoiFileName = '';
     }
-  
+
     // Construction de la liste des numéros de série
     if (this.serieForm.value.serie1 !== '') {
       for (const nom of this.serieFormNom) {
         this.noserieList.push(this.serieForm.value[nom]);
       }
     }
-  
+
 
     // Désactivation du bouton pour éviter plusieurs envois
     this.disableBTN = true;

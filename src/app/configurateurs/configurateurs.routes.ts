@@ -1,9 +1,8 @@
-import { Routes, RouterModule } from '@angular/router';
-import { NgModule } from '@angular/core';
+import { Routes } from '@angular/router';
 import { AuthGuard } from '@core/_guards';
 import { ConfigurateursComponent } from './configurateurs.component';
 
-const routes: Routes = [
+export const CONFIGURATEURS_ROUTES: Routes = [
     {
         path: '',
         canActivate: [AuthGuard],
@@ -11,12 +10,12 @@ const routes: Routes = [
             {
                 path: 'zyxel',
                 loadChildren: () =>
-                    import('./zyxel/zyxel.module').then((mod) => mod.ZyxelModule),
+                    import('./zyxel/zyxel.routes').then((mod) => mod.ZYXEL_ROUTES),
             },
             /* {
                 path: 'sonicwall',
                 loadChildren: () =>
-                    import('./sonicwall/sonicwall.module').then((mod) => mod.SonicwallModule),
+                    import('./sonicwall/sonicwall.routes').then((mod) => mod.SONICWALL_ROUTES),
             }, */
             {
                 path: ':reference',
@@ -25,9 +24,3 @@ const routes: Routes = [
         ]
     }
 ];
-
-@NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
-})
-export class ConfigurateursRoutingModule { }

@@ -5,13 +5,11 @@ import {
   ElementRef,
   Renderer2,
   SimpleChanges,
-  OnChanges,
-  HostListener
+  OnChanges
 } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 @Directive({
+  standalone: true,
   selector: '[appAddClassOnChange]'
 })
 export class AddClassOnChangeDirective implements OnChanges, OnDestroy {

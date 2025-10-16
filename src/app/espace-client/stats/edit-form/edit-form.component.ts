@@ -1,13 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from "@angular/forms";
+import {FormGroup, Validators, FormBuilder, ReactiveFormsModule} from "@angular/forms";
 import { ActivatedRoute, Router } from '@angular/router';
 import { RmaService } from "@services/rma.service";
 import { shareReplay } from "rxjs/operators";
 import { AdresseService, AuthenticationService } from "@core/_services";
-import { Location } from '@angular/common';
+import {AsyncPipe, Location} from '@angular/common';
+import {MatHint} from "@angular/material/select";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
 
 @Component({
   selector: 'app-edit-form',
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    AsyncPipe,
+    MatFormField,
+    MatHint,
+    MatLabel
+  ],
   templateUrl: './edit-form.component.html',
   styleUrls: ['./edit-form.component.scss']
 })

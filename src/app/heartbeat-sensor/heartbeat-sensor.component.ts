@@ -1,16 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthenticationService, Alive } from '@core/_services';
-import { filter, switchMap, takeUntil, takeWhile } from 'rxjs/operators';
-import { BehaviorSubject, Observable, Subject, Subscription, timer } from 'rxjs';
-import { Router } from '@angular/router';
-import { CommonModule, Location } from '@angular/common';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {AuthenticationService, Alive} from '@core/_services';
+import {BehaviorSubject, Subject, Subscription} from 'rxjs';
+import {Router} from '@angular/router';
+import {CommonModule, Location} from '@angular/common';
 
 @Component({
-    selector: 'app-heartbeat-sensor',
-    templateUrl: './heartbeat-sensor.component.html',
-    standalone: true,
-    imports:[CommonModule],
-    styleUrls: ['./heartbeat-sensor.component.scss']
+  selector: 'app-heartbeat-sensor',
+  standalone: true,
+  imports: [
+    CommonModule
+  ],
+  templateUrl: './heartbeat-sensor.component.html',
+  styleUrls: ['./heartbeat-sensor.component.scss']
 })
 export class HeartbeatSensorComponent implements OnInit, OnDestroy {
 
@@ -28,12 +29,13 @@ export class HeartbeatSensorComponent implements OnInit, OnDestroy {
 
   timerObservable
   subscription: Subscription;
-  constructor(
-      public auth: AuthenticationService,
-      private router: Router,
-      private location: Location,
 
-  ) { }
+  constructor(
+    public auth: AuthenticationService,
+    private router: Router,
+    private location: Location,
+  ) {
+  }
 
   /** Initialisation du HeartbeatSensorComponent */
   ngOnInit(): void {
@@ -54,21 +56,21 @@ export class HeartbeatSensorComponent implements OnInit, OnDestroy {
 
   /** Destruction du HeartbeatSensorComponent */
   ngOnDestroy(): void {
-      this._destroy$.next();
-      this._destroy$.complete();
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 
-  deconnexion(){
+  deconnexion() {
     this.router.navigate(['/']);
-    this.showPopUp.next(false) ;
-  }
-
-  onReconnect(): void {
-    this.router.navigate(['/login'], { queryParams: { returnUrl: this.location.path() } });
     this.showPopUp.next(false);
   }
 
-  stayAlive(){
+  onReconnect(): void {
+    this.router.navigate(['/login'], {queryParams: {returnUrl: this.location.path()}});
+    this.showPopUp.next(false);
+  }
+
+  stayAlive() {
     /*this.auth.idleWarn.next('alive');
     this.auth.isIdleOrNot();*/
     this.showPopUp.next(false);

@@ -7,6 +7,9 @@ import {
   faStar,
   faTimesCircle, faTrash
 } from "@fortawesome/free-solid-svg-icons";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {MatTooltip} from "@angular/material/tooltip";
+import {SvgIconComponent} from "angular-svg-icon";
 
 /**
  * Composant permettant d'afficher une selections d'icones différentes
@@ -19,9 +22,15 @@ import {
  */
 @Component({
   selector: 'app-tooltip',
+  standalone: true,
   templateUrl: './tooltip.component.html',
   styleUrls: ['./tooltip.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  imports: [
+    FaIconComponent,
+    MatTooltip,
+    SvgIconComponent
+  ],
+  encapsulation: ViewEncapsulation.None
 })
 export class TooltipComponent  {
 
@@ -41,7 +50,7 @@ export class TooltipComponent  {
   /** Lien relatif à l'application d'un .svg */
   svgLocationPath = "assets/svg/ico-location-last.svg";
 
- 
+
   protected readonly faQuestionCircle = faQuestionCircle;
   protected readonly faExclamationTriangle = faExclamationTriangle;
   protected readonly faTimesCircle = faTimesCircle;

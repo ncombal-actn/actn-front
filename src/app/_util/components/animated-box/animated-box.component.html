@@ -1,50 +1,59 @@
-<ng-container [ngSwitch]="type">
+<ng-container>
 
-	<div *ngIf="loginBarrier" class="raised-button login-barrier" (click)="componentsInteractionService.sideNavigationLine.fireOpenSideNav('espaceClient')">
-		<button class="raised-button" appKeyboardFocus>
-			Je me connecte
-		</button>
-	</div>
+  @if (loginBarrier) {
+    <div class="raised-button login-barrier"
+         (click)="componentsInteractionService.sideNavigationLine.fireOpenSideNav('espaceClient')">
+      <button class="raised-button" appKeyboardFocus>
+        Je me connecte
+      </button>
+    </div>
+  }
+  @switch (type) {
 
-	<a *ngSwitchCase="'routerlink'" class="cat" [routerLink]="linkUrl" >
-	    <div class="inner raised-2">
+    @case ('routerlink') {
+      <a class="cat" [routerLink]="linkUrl">
+        <div class="inner raised-2">
 
-	        <div class="front">
-	            <p class="title">{{ titre }}</p>
-	            <div class="front-img-container">
-		            <!-- <img default="/assets/img/maxresdefault.webp" alt="animated-box-image" [src]="imgUrl"/> -->
-		            <img loading="lazy" alt="animated-box image" [src]="imgUrl"/>
-		        </div>
-	        </div>
+          <div class="front">
+            <p class="title">{{ titre }}</p>
+            <div class="front-img-container">
+              <!-- <img default="/assets/img/maxresdefault.webp" alt="animated-box-image" [src]="imgUrl"/> -->
+              <img loading="lazy" alt="animated-box image" [src]="imgUrl"/>
+            </div>
+          </div>
 
-	        <div class="back">
-	            <p class="title">{{ libelle }}</p>
-	            <p class="size-small description">
-	                {{ description }}
-	            </p>
-	        </div>
+          <div class="back">
+            <p class="title">{{ libelle }}</p>
+            <p class="size-small description">
+              {{ description }}
+            </p>
+          </div>
 
-	    </div>
-	</a>
+        </div>
+      </a>
+    }
+    @default {
+      <a class="cat" target="_blank" href="{{ linkUrl }}">
+        <div class="inner raised-2">
 
-	<a *ngSwitchDefault class="cat" target="_blank" href="{{ linkUrl }}" >
-	    <div class="inner raised-2">
+          <div class="front">
+            <p class="title">{{ titre }}</p>
+            <div class="front-img-container">
+              <img loading="lazy" alt="animated-box image" [src]="imgUrl"/>
+            </div>
+          </div>
 
-			<div class="front">
-				<p class="title">{{ titre }}</p>
-				<div class="front-img-container">
-					<img loading="lazy" alt="animated-box image" [src]="imgUrl"/>
-				</div>
-	        </div>
+          <div class="back">
+            <p class="title">{{ libelle }}</p>
+            <p class="size-small description">
+              {{ description }}
+            </p>
+          </div>
 
-	        <div class="back">
-	            <p class="title">{{ libelle }}</p>
-	            <p class="size-small description">
-	                {{ description }}
-	            </p>
-	        </div>
+        </div>
+      </a>
+    }
 
-	    </div>
-	</a>
 
+  }
 </ng-container>

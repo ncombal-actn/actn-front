@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Inject, Input, OnDestroy, PLATFORM_ID } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { environment } from '@env';
 import { StorageService, WindowService } from '@core/_services';
@@ -11,6 +11,7 @@ import {faCircle} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-carousel',
+  standalone: true,
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.scss']
 })
@@ -57,8 +58,8 @@ export class CarouselComponent implements  OnDestroy, AfterViewInit
     private storageService: StorageService,
 
     private router: Router,
-   
-    private window: WindowService,
+
+    private windowService: WindowService,
     private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
@@ -70,7 +71,7 @@ export class CarouselComponent implements  OnDestroy, AfterViewInit
    * THEN Slider settings and parameters
    * THEN Start the automatic sliding
    */
- 
+
 
   /** Destruction du CarouselComponent */
   ngOnDestroy()
@@ -91,7 +92,7 @@ export class CarouselComponent implements  OnDestroy, AfterViewInit
           this.carouselData = newCarouselData;
           this.initCarousel();
 
-         
+
 
         }
       );
@@ -154,7 +155,7 @@ export class CarouselComponent implements  OnDestroy, AfterViewInit
     }  this.cdr.detectChanges();
 
     this.startTimeOut(this.animation.interval);
-  
+
   };
 
   /**
@@ -256,7 +257,7 @@ export class CarouselComponent implements  OnDestroy, AfterViewInit
   public openLink(index: number) {
     if (this.images[index].mode === 'BLANK') {
       if (this.images[index].url !== '') {
-        this.window.open(this.images[index].url);
+        this.windowService.open(this.images[index].url);
       }
     } else {
       if (this.images[index].url !== '') {
@@ -275,7 +276,7 @@ export class CarouselComponent implements  OnDestroy, AfterViewInit
   }
 
   onVisibilityChange(): void {
-    if (this.window.document?.hidden) {
+    if (this.windowService.nativeWindow.document?.hidden) {
       this.stopTimeOut();
     } else {
       this.startTimeOut(this.animation.duration + this.animation.interval);

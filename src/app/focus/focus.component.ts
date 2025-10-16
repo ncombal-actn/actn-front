@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
-import { Produit, Filtre, CatalogueSample, CataloguePosition } from '@/_util/models';
 import { environment } from '@env';
 // constructor
-import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 import { DomSanitizer } from '@angular/platform-browser';
@@ -11,9 +8,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { take } from 'rxjs/operators';
 
 @Component({
-	selector: 'app-focus',
-	templateUrl: './focus.component.html',
-	styleUrls: ['./focus.component.scss']
+  selector: 'app-focus',
+  standalone: true,
+  templateUrl: './focus.component.html',
+  styleUrls: ['./focus.component.scss']
 })
 export class FocusComponent implements OnInit {
 
@@ -38,7 +36,6 @@ export class FocusComponent implements OnInit {
 	loadSlidingListFromLinkArray: boolean[] = [];
 
 	constructor(
-        private route: ActivatedRoute,
         private http: HttpClient,
         private sanitizer: DomSanitizer
 	) { }

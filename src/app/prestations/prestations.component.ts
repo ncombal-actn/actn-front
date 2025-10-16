@@ -1,29 +1,49 @@
 import { Produit } from '@/_util/models';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {
-    FormGroup,
-    ValidatorFn,
-    ValidationErrors
+  FormGroup,
+  ValidatorFn,
+  ValidationErrors, ReactiveFormsModule
 } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '@core/_services/authentication.service';
 import { environment } from '@env';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
-import { Prestation, PrestationsService } from './prestations.service';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { PrestationsService } from './prestations.service';
+import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
+import {CurrencyPipe, NgClass, SlicePipe} from "@angular/common";
+import {MatDivider} from "@angular/material/divider";
+import {MatFormField} from "@angular/material/form-field";
+import {MatInput} from "@angular/material/input";
+import {CdkTextareaAutosize} from "@angular/cdk/text-field";
+import {MatCheckbox} from "@angular/material/checkbox";
 type Format = 'list' | 'grid';
 type test = 'wrap' | 'nowrap';
 /**
  * Page et formulaire de demande de prestations
  */
 @Component({
-    selector: 'app-prestations',
-    templateUrl: './prestations.component.html',
-    styleUrls: ['./prestations.component.scss']
+  selector: 'app-prestations',
+  standalone: true,
+  imports: [
+    TitleWLineComponent,
+    NgClass,
+    MatDivider,
+    MatFormField,
+    MatInput,
+    CdkTextareaAutosize,
+    MatCheckbox,
+    CurrencyPipe,
+    ReactiveFormsModule,
+    SlicePipe
+  ],
+  templateUrl: './prestations.component.html',
+  styleUrls: ['./prestations.component.scss'],
 })
 export class PrestationsComponent implements OnInit, OnDestroy {
 

@@ -1,7 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,6 +12,10 @@ import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-facture',
+  standalone: true,
+  imports: [
+    MatPaginator
+  ],
   templateUrl: './facture.component.html',
   styleUrls: ['./facture.component.scss']
 })

@@ -12,12 +12,17 @@ import { ProduitService } from "@core/_services/produit.service";
 import { HttpClient } from "@angular/common/http";
 import { AuthenticationService, CotationService, WindowService } from "@core/_services";
 import { environment } from "@env";
+import {SlidingListeComponent} from "@/_util/components/sliding-liste/sliding-liste.component";
 /////////////////////////////////
 
 @Component({
   selector: "app-comparateur",
+  standalone: true,
   templateUrl: "./comparateur.component.html",
   styleUrls: ["./comparateur.component.scss"],
+  imports: [
+    SlidingListeComponent
+  ]
 })
 export class ComparateurComponent implements OnInit {
   environment = environment;
@@ -47,8 +52,6 @@ export class ComparateurComponent implements OnInit {
     private comparateurService: ComparateurService,
     private window: WindowService,
     public authService: AuthenticationService,
-    public cotationService: CotationService,
-    private http: HttpClient
   ) {
 
   }

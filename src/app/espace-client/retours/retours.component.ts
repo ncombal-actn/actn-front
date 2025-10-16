@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, OnInit, Input, OnDestroy, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import { RmaService } from '@core/_services/rma.service';
 import { environment } from '@env';
 import { Observable, Subject } from 'rxjs';
@@ -10,6 +10,13 @@ import { tap, takeUntil } from 'rxjs/operators';
 import { AuthenticationService, WindowService } from '@core/_services';
 import {PageEvent} from "@angular/material/paginator";
 import e from 'express';
+import {MatTab, MatTabGroup} from "@angular/material/tabs";
+import {CommandesComponent} from "@/espace-client/commandes/commandes.component";
+import {TabSortComponent} from "@/_util/components/tab-sort/tab-sort.component";
+import {MatSelect} from "@angular/material/select";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {CommonModule} from "@angular/common";
+import {MatIcon} from "@angular/material/icon";
 
 interface PageObject {
   length: number;
@@ -21,6 +28,19 @@ interface PageObject {
 @Component({
   encapsulation: ViewEncapsulation.None,
   selector: 'app-retours',
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterLink,
+    CommandesComponent,
+    TabSortComponent,
+    MatFormField,
+    MatIcon,
+    MatLabel,
+    MatSelect,
+    MatTab,
+    MatTabGroup
+  ],
   templateUrl: './retours.component.html',
   styleUrls: ['./retours.component.scss']
 })
@@ -231,13 +251,6 @@ export class RetoursComponent implements OnInit, OnDestroy {
   }
 
   triggerScrollTo(id: string): void {
-    /* const config: ScrollToConfigOptions = {
-      target: id,
-      offset: this.windowScrolled ? -325 : -325 - (this.window.document.getElementById('marqueTog')?.getClientRects().item(0).height ?? 0),
-      duration: 500
-    }; */
-
-   // this.scrollToService.scrollTo(config);
   }
 
   // appelé uniquement par la fonction filter, elle definit les filtres et leurs options
@@ -448,7 +461,7 @@ export class RetoursComponent implements OnInit, OnDestroy {
    * ET sa désignation
    */
   filtrerRef(produit: any): boolean {
-   
+
     if (!!this.filtreRef) {
       return produit.produit.toUpperCase().includes(this.filtreRef.toUpperCase())
       || produit.designation.toUpperCase().includes(this.filtreRef.toUpperCase());
@@ -533,8 +546,8 @@ export class RetoursComponent implements OnInit, OnDestroy {
 
   scrollSerie() {
     const id = this.filtrerNoSerie();
-   
-    
+
+
     if (id !== '') {
       setTimeout(
         () => {
@@ -561,8 +574,8 @@ export class RetoursComponent implements OnInit, OnDestroy {
 
   // fonction appelé par le html qui déclenche les autres fonction permettant le filtre sur le numéro de série
   rechercheNoSerie(event: any): void {
-   
-    
+
+
     this._filtreNoSerie$.next(event);
   }
 

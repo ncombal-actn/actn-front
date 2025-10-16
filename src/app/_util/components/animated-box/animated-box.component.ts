@@ -1,11 +1,18 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { environment } from '@env';
 import { ComponentsInteractionService } from '@/_core/_services/components-interaction.service';
+import {RouterLink} from "@angular/router";
+import {KeyboardFocusDirective} from "@/_util/directives/keyboard-focus.directive";
 
 @Component({
-	selector: 'app-animated-box',
-	templateUrl: './animated-box.component.html',
-	styleUrls: ['./animated-box.component.scss']
+  selector: 'app-animated-box',
+  standalone: true,
+  templateUrl: './animated-box.component.html',
+  imports: [
+    RouterLink,
+    KeyboardFocusDirective
+  ],
+  styleUrls: ['./animated-box.component.scss']
 })
 export class AnimatedBoxComponent implements OnInit
 {

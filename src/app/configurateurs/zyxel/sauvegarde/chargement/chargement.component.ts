@@ -5,9 +5,10 @@ import { ConfigurateurService } from '@/configurateurs/configurateur.service';
 import { Router } from '@angular/router';
 
 @Component({
-	selector: 'conf-chargement',
-	templateUrl: '../../../sauvegarde/chargement/chargement.component.html',
-	styleUrls: ['./chargement.component.scss', '../../styles/popup.scss', '../../../sauvegarde/chargement/chargement.component.scss'],
+  selector: 'conf-chargement',
+  templateUrl: '../../../sauvegarde/chargement/chargement.component.html',
+  styleUrls: ['./chargement.component.scss', '../../styles/popup.scss', '../../../sauvegarde/chargement/chargement.component.scss'],
+  standalone: true
 })
 export class ChargementComponent extends BaseChargementComponent implements OnInit {
 

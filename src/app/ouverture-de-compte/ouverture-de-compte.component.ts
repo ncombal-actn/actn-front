@@ -1,6 +1,14 @@
 import {Component, inject, OnInit, Renderer2} from '@angular/core';
-import {Router} from '@angular/router';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
+import {Router, RouterLink} from '@angular/router';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
 // import { ControlValueAccessor } from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {CaptchaService} from '../_core/_services/captcha.service';
@@ -9,10 +17,17 @@ import {RmaService} from '@core/_services/rma.service';
 import {AdresseService, CatalogueService, WindowService} from '@core/_services';
 import {map, take} from 'rxjs/operators';
 import {Observable} from 'rxjs';
-import {MatCheckboxChange} from "@angular/material/checkbox";
+import {MatCheckbox, MatCheckboxChange} from "@angular/material/checkbox";
 import {RECAPTCHA_V3_SITE_KEY, RecaptchaModule, RecaptchaV3Module, ReCaptchaV3Service} from 'ng-recaptcha';
-import {UtilModule} from "@/_util/util.module";
 import {CommonModule} from "@angular/common";
+import {MatError, MatHint, MatSelect} from "@angular/material/select";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatInput} from "@angular/material/input";
+import {MatTooltip} from "@angular/material/tooltip";
+import {TooltipComponent} from "@/_util/components/tooltip/tooltip.component";
+import {MatRadioButton} from "@angular/material/radio";
+import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
 /*function confirmPasswordValidator(control: AbstractControl): {[key: string]: boolean} | null
 {
 	if (control.value !== undefined && (isNaN(control.value) || control.value != this.password)) {
@@ -26,10 +41,22 @@ import {CommonModule} from "@angular/common";
   selector: 'app-ouverture-de-compte',
   standalone: true,
   imports: [
+    ReactiveFormsModule,
     RecaptchaV3Module,
-    UtilModule,
     CommonModule,
     RecaptchaModule,
+    TitleWLineComponent,
+    TooltipComponent,
+    MatAutocompleteModule,
+    MatCheckbox,
+    MatFormField,
+    MatHint,
+    MatInput,
+    MatLabel,
+    MatRadioButton,
+    MatSelect,
+    RouterLink,
+    MatError
   ],
   providers: [
     ReCaptchaV3Service,
@@ -531,24 +558,6 @@ export class OuvertureDeCompteComponent implements OnInit {
     this.captcha_code = captchaResponse;
     this.loading = true;
     this.captcha_response = true;
-    //Creation de la promesse de retour de vérification du token, et abonnement à la réponse du php
-    /* 		this.verifCaptchaResponse(this.captcha_code).subscribe(
-      data => {
-
-          this.captcha_response = true;
-        } else {
-          this.captcha_response = true;
-        }
-        this.loading = false;
-      },
-      err => {
-
-        //window.alert("Captcha refusé");
-        this.captcha_response = true;
-        this.loading = false;
-      },
-      () => { }
-    ); */
   }
 
 

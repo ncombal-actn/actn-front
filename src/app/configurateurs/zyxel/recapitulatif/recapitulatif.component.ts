@@ -10,9 +10,20 @@ import { filter, take, takeUntil } from 'rxjs/operators';
 import { ConfigurateurService, Modele, Option } from '../../configurateur.service';
 import { ExportComponent } from '../export/export.component';
 import {faFilePdf, faPlayCircle, faTimes} from "@fortawesome/free-solid-svg-icons";
+import {HelpComponent} from "@/configurateurs/zyxel/help/help.component";
+import {ChargementComponent} from "@/configurateurs/sauvegarde/chargement/chargement.component";
+import {SauvegardeComponent} from "@/configurateurs/sauvegarde/sauvegarde/sauvegarde.component";
+import {HeaderStepperComponent} from "@/configurateurs/zyxel/header-stepper/header-stepper.component";
 
 @Component({
 	selector: 'app-recapitulatif',
+  standalone: true,
+  imports: [
+    ChargementComponent,
+    HeaderStepperComponent,
+    HelpComponent,
+    SauvegardeComponent
+  ],
 	templateUrl: './recapitulatif.component.html',
 	styleUrls: ['./recapitulatif.component.scss', '../options/options.component.scss', '../modeles/modeles.component.scss'],
 	animations: [

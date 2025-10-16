@@ -4,13 +4,29 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { AuthenticationService } from '@core/_services';
 import { environment } from '@env';
-import { Router } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import {MatTableDataSource} from "@angular/material/table";
+import {MatTable, MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
+import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {TooltipComponent} from "@/_util/components/tooltip/tooltip.component";
+import {MatInput} from "@angular/material/input";
 
 @Component({
   selector: 'app-list-clients',
+  standalone: true,
+  imports: [
+    TitleWLineComponent,
+    RouterLink,
+    MatTable,
+    MatSort,
+    MatFormField,
+    MatLabel,
+    MatPaginator,
+    TooltipComponent,
+    MatInput
+  ],
   templateUrl: './list-clients.component.html',
   styleUrls: ['./list-clients.component.scss']
 })
@@ -27,18 +43,18 @@ export class ListClientsComponent implements OnInit , AfterViewInit {
 
   hasErreur = false;
   erreurMessage = '';
-  
+
   constructor(private http: HttpClient, private authService: AuthenticationService, private router: Router,) { }
   clients: OnlywanClient[];
   ngOnInit(): void {
 
   }
   ngAfterViewInit(){
-   
+
 
       this.getClient();
 
-    
+
 
   }
   getClient() {
@@ -64,8 +80,8 @@ if (data.length > 0 && 'erreur' in data[0]) {
 this.processedClient$.next(data)
 this.processedClient$.subscribe((d)=>{
 
-    
-  
+
+
   this.dataSource.data = d;
   this.initializeDefaultSort();
   this.dataSource.sort = this.sort;

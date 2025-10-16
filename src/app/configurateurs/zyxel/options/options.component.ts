@@ -11,9 +11,16 @@ import { filter, skip, take, takeUntil } from 'rxjs/operators';
 import { Configuration } from '../../configuration.model';
 import { ConfigurateurService, Modele } from '../../configurateur.service';
 import {faFilePdf, faPlayCircle, faTimes, faTimesCircle} from "@fortawesome/free-solid-svg-icons";
+import {HelpComponent} from "@/configurateurs/zyxel/help/help.component";
+import {HeaderStepperComponent} from "@/configurateurs/zyxel/header-stepper/header-stepper.component";
 
 @Component({
 	selector: 'app-options',
+  standalone: true,
+  imports: [
+    HeaderStepperComponent,
+    HelpComponent
+  ],
 	templateUrl: './options.component.html',
 	styleUrls: ['./options.component.scss', '../modeles/modeles.component.scss'],
 	animations: [
