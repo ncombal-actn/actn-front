@@ -78,9 +78,6 @@ import {provideNativeDateAdapter} from "@angular/material/core";
     MatRowDef,
     MatError
   ],
-  providers: [
-    provideNativeDateAdapter()
-  ],
   templateUrl: './finance.component.html',
   styleUrls: ['./finance.component.scss'],
   animations: [

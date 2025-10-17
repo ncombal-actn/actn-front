@@ -6,12 +6,15 @@ import { take } from 'rxjs/operators';
 // ENV
 import { environment } from '@env';
 import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
+import {CurrencyPipe, DecimalPipe} from "@angular/common";
 
 @Component({
   selector: 'app-grille-transport',
   standalone: true,
   imports: [
-    TitleWLineComponent
+    TitleWLineComponent,
+    DecimalPipe,
+    CurrencyPipe
   ],
   templateUrl: './grille-transport.component.html',
   styleUrls: ['./grille-transport.component.scss']

@@ -30,9 +30,15 @@ import {WorkBook, WorkSheet, utils, writeFile } from 'xlsx';
 import {SecondesVersMinutesPipe} from "@core/_pipes/seconde-to-minutes.pipe";
 import {CommonModule} from "@angular/common";
 import {MatDivider} from "@angular/material/divider";
-import {MatDatepickerToggle, MatDateRangeInput, MatDateRangePicker} from "@angular/material/datepicker";
+import {
+  MatDatepickerToggle,
+  MatDateRangeInput,
+  MatDateRangePicker,
+  MatEndDate,
+  MatStartDate
+} from "@angular/material/datepicker";
 import {MatHint, MatOption, MatSelect} from "@angular/material/select";
-import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatFormField, MatLabel, MatSuffix} from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
 import {MatExpansionPanelTitle} from "@angular/material/expansion";
 import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
@@ -73,7 +79,10 @@ import {MatIconButton} from "@angular/material/button";
     MatRowDef,
     MatOption,
     MatIconButton,
-    MatSelect
+    MatSelect,
+    MatStartDate,
+    MatEndDate,
+    MatSuffix
   ],
   templateUrl: "./cdr.component.html",
   styleUrls: ["./cdr.component.scss"],

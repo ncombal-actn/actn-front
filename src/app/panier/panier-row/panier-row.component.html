@@ -2,184 +2,196 @@
   <div class="image">
     <a [routerLink]="produitService.lienProduit(cartItem.produit)" routerLinkActive="router-link-active">
       @if (cartItem.produit.photo) {
-        <img  loading="lazy" [alt]="cartItem.produit.photo" [default]="produitService.errorImg(cartItem.produit)" class="image-produit"
-          [src]="environment.vignettesUrl + cartItem.produit.photo + '.webp'" />
+        <img loading="lazy" [alt]="cartItem.produit.photo" [default]="produitService.errorImg(cartItem.produit)"
+             class="image-produit"
+             [src]="environment.vignettesUrl + cartItem.produit.photo + '.webp'"/>
       } @else {
         <img loading="lazy" [default]="produitService.errorImg(cartItem.produit)" class="image-produit"
-          [src]="environment.produitDefautImgUrl + '.webp'" />
+             [src]="environment.produitDefautImgUrl + '.webp'"/>
+      }
+
+    </a>
+  </div>
+
+  <!-- INFO PRODUIT -->
+  <div class="details">
+    <a [routerLink]="produitService.lienProduit(cartItem.produit)" routerLinkActive="router-link-active">
+      <p class="for-phone">Produit/Marque:</p>
+      <h3 class="reference">
+        {{ cartItem.produit.reference }}
+        <img loading="lazy" [src]="environment.logoMarquesCouleurs200x80 + cartItem.produit.marquelib + '.gif'"
+             alt="{{cartItem.produit.marque}}"/>
+        @if (cartItem.desc) {
+          @if (cartItem.desc.type == 'ATT') {
+            <app-tooltip [type]="'alert'" [text]="cartItem.desc.description"></app-tooltip>
+          }
         }
+      </h3>
+      <div class="designation">
+        {{ cartItem.produit.designation }}
+      </div>
+    </a>
+  </div>
 
-      </a>
-    </div>
+  <!-- STOCK -->
+  @if (cartItem.produit.gabarit !== 'V') {
+    <div class="dispo weight-bolder">
+      <div class="state-value" [ngClass]="{ active: cartItem.partQteDisponible >= cartItem.qte }">
+        <!-- {{ cartItem.qte | number: '1.0-0' }} sur -->
+        <span class="for-phone" style="color:black;">Disponible:&nbsp; </span>
+        {{ cartItem.partQteDisponible | number: '1.0-0' }} en stock
 
-    <!-- INFO PRODUIT -->
-    <div class="details">
-      <a [routerLink]="produitService.lienProduit(cartItem.produit)" routerLinkActive="router-link-active">
-        <p class="for-phone">Produit/Marque:</p>
-        <h3 class="reference">
-          {{ cartItem.produit.reference }}
-          <img loading="lazy" [src]="environment.logoMarquesCouleurs200x80 + cartItem.produit.marquelib + '.gif'"
-            alt="{{cartItem.produit.marque}}" />
-            @if (cartItem.desc) {
-              @if (cartItem.desc.type == 'ATT') {
-                <app-tooltip [type]="'alert'" [text]="cartItem.desc.description"></app-tooltip>
-              }
-            }
-          </h3>
-          <div class="designation">
-            {{ cartItem.produit.designation }}
-          </div>
-        </a>
+
+        @if (cartItem.produit.dateConfReapproStatut === 'Date prévisonnelle' || 'Date confirmée') {
+          <ng-container>
+            <br>{{ cartItem.produit.qteEnReappro }} en Réappro.
+            <app-horizon-delais [produit]="[cartItem.produit.reference, cartItem.produit.marque]"></app-horizon-delais>
+          </ng-container>
+        }
       </div>
 
-      <!-- STOCK -->
-      @if (cartItem.produit.gabarit !== 'V') {
-        <div class="dispo weight-bolder">
-          <div class="state-value" [ngClass]="{ active: cartItem.partQteDisponible >= cartItem.qte }">
-            <!-- {{ cartItem.qte | number: '1.0-0' }} sur -->
-            <span class="for-phone" style="color:black;">Disponible:&nbsp; </span>
-            {{ cartItem.partQteDisponible | number: '1.0-0' }} en stock
+    </div>
+  } @else {
+    <p class="demat-msg">Produit dématérialisé</p>
+  }
+  <ng-template #demat>
+    <p class="demat-msg">Produit dématérialisé</p>
+  </ng-template>
 
-
-            <ng-container  *ngIf="cartItem.produit.dateConfReapproStatut ==='Date prévisonnelle' || 'Date confirmée' ">
-            <br>{{cartItem.produit.qteEnReappro}} en Réappro.
-              <app-horizon-delais [produit]="[cartItem.produit.reference, cartItem.produit.marque]"></app-horizon-delais>
-            </ng-container>
+  <!-- PRIX -->
+  <div class="prix-détails size-smaller">
+    <div class="prix-public">
+      <div class="libelle">prix public</div>
+      @if ((cartItem.produit.prixPublic > 0)) {
+        <div class="montant">
+          <div>{{ cartItem.produit.prixPublic | currency:'EUR':'symbol':'1.2-2':'fr' }}<span class="size-smaller">&nbsp;HT</span>
           </div>
-
         </div>
       } @else {
-        <p class="demat-msg">Produit dématérialisé</p>
-      }
-      <ng-template #demat>
-        <p class="demat-msg">Produit dématérialisé</p>
-      </ng-template>
-
-      <!-- PRIX -->
-      <div class="prix-détails size-smaller">
-        <div class="prix-public">
-          <div class="libelle">prix public</div>
-          @if ((cartItem.produit.prixPublic > 0)) {
-            <div class="montant">
-              <div>{{ cartItem.produit.prixPublic | currency:'EUR':'symbol':'1.2-2':'fr' }}<span class="size-smaller">&nbsp;HT</span></div>
-            </div>
-          } @else {
-            n.c.
-          }
-        </div>
-        <div class="ecopart">
-          <div class="libelle">écopart</div>
-          <div class="montant">
-            <div>{{ cartItem.produit.prixD3E | currency:'EUR':'symbol':'1.3-3':'fr' }}<span class="size-smaller">&nbsp;HT</span></div>
-          </div>
-        </div>
-        @if (!cartItem.produit.hasPriceByQte) {
-          <div
-            class="prix-pro"
-            [ngClass]="{'prix-public': (cartItem.cotation?.prixvente ?? 0) !== 0 && (cartItem.cotation.prixvente != cartItem.produit.prix)}">
-            @if ((cartItem.cotation && cartItem.cotation?.prixvente != cartItem.produit.prix ) || !cartItem.cotation ) {
-              <div class="libelle">votre prix</div>
-              @if (isReducQt(cartItem)) {
-                <div class="montant"
-                  [ngClass]="{'size-bigger': (cartItem.cotation?.prixvente ?? 0) === 0, 'bold': (cartItem.cotation?.prixvente ?? 0) === 0}">
-                  <div>{{ cartItem.produit.prix | currency:'EUR':'symbol':'1.2-2':'fr' }}<span class="size-smaller">&nbsp;HT</span></div>
-                </div>
-              } @else {
-                <div class="montant bold size-bigger">
-                  <div>{{ cartItem.produit.prixPar | currency:'EUR':'symbol':'1.2-2':'fr' }}<span class="size-smaller">&nbsp;HT</span></div>
-                </div>
-              }
-            } @else {
-              <div class="libelle">votre prix cotation</div>
-              @if (isReducQt(cartItem)) {
-                <div class="montant"
-                  [ngClass]="{'size-bigger': (cartItem.cotation?.prixvente ?? 0) === 0, 'bold': (cartItem.cotation?.prixvente ?? 0) === 0}">
-                  <div>{{ cartItem.produit.prix | currency:'EUR':'symbol':'1.2-2':'fr' }}<span class="size-smaller">&nbsp;HT</span></div>
-                </div>
-              } @else {
-                <div class="montant bold size-bigger">
-                  <div>{{ cartItem.produit.prixPar | currency:'EUR':'symbol':'1.2-2':'fr' }}<span class="size-smaller">&nbsp;HT</span></div>
-                </div>
-              }
-            }
-          </div>
-        } @else {
-          @for (qtp of cartItem.produit?.qtePrice; track $index; let i = $index) {
-            <div [ngClass]="(cartService.cart.items[cartItem.produit.reference]?.priceByQtyAppliedIndex == i) ? 'prix-pro' : 'prix-public'">
-              <div class="libelle">prix par {{ qtp.qte }}</div>
-              <div class="montant">
-                <div>{{ qtp.price | currency:'EUR':'symbol':'1.2-2':'fr' }}<span class="size-smaller">&nbsp;HT</span></div>
-              </div>
-            </div>
-          }
-        }
-        <!-- PRIX COTATION -->
-        @if (cartItem.cotation && (cartItem.cotation?.prixvente != cartItem.produit.prix)) {
-          @if ( (cartItem.cotation?.prixvente ?? 0) != 0) {
-            <div class="prix-pro">
-              <div class="libelle ">prix cotation</div>
-              <div  class="montant">
-                <div>{{ cartItem.cotation?.prixvente| currency:'EUR':'symbol':'1.2-2':'fr' }}<span class="size-smaller">&nbsp;HT</span></div>
-              </div>
-            </div>
-          }
-        }
-      </div>
-      <!-- PRIX PAR QUANTITÉ -->
-
-      <!-- VERTICAL DIVIDER -->
-      <div class="vertical-divider"></div>
-
-      <!-- QUANTITE -->
-      <div>
-        @if (showInputNumber) {
-          @if (+cartItem.produit.qtemini !== 0 && +cartItem.produit.qtemini < +cartItem.produit.qtemaxi) {
-            <p class="small-texte">
-              De {{ cartItem.produit.qtemini }} à {{ cartItem.produit.qtemaxi }}
-            </p>
-          }
-          @if (+cartItem.produit.qtemini !== 0 && +cartItem.produit.qtemini !== 1 && +cartItem.produit.qtemini > +cartItem.produit.qtemaxi) {
-            <p class="small-texte">
-              Au moins {{ cartItem.produit.qtemini }}
-            </p>
-          }
-          <app-input-number
-            [min]=1
-            [max]="maximum(cartItem.produit)"
-            [number]="cartItem.qte"
-            (value)="quantiteChange(cartItem, $event)"
-            [wrongValue]="wrongValue"
-            size="small">
-          </app-input-number>
-          @if (_wrongValue) {
-            <p class="small-texte errorQte">Quantité invalide</p>
-          }
-          @if (_wrongValueMin) {
-            <p class="small-texte errorQte">Minimum de commande cotation
-            {{this.cartService.cart.items[this.cartItem.produit.reference]?.cotation?.qtecdemini}}</p>
-          }
-        } @else {
-          <div class="size-huge weight-bold">{{ cartItem.qte }}</div>
-        }
-      </div>
-
-      <!-- TOTAL -->
-      <div class="total-produit weight-bold">
-        <span class="for-phone">Total article(s):&nbsp; </span>
-        <div>{{ cartItem.total | currency:'EUR':'symbol':'1.2-2':'fr' }}<span class="size-smaller">&nbsp;HT</span></div>
-      </div>
-
-      <!-- DELETE -->
-      @if (showInputNumber) {
-        <div class="delete">
-          <button class="text-button cursor-pointer" (click)="removeProduit(cartItem);">
-            <mat-icon aria-hidden="false" aria-label="Supprimer">delete</mat-icon>
-          </button>
-        </div>
+        n.c.
       }
     </div>
-
-    <app-cotation-row [produit]="cartItem.produit" [uneditable]="cotationNotEditable" [warningOnQte]="warningOnCotationQte"></app-cotation-row>
-    @if (displayFormationForm && isFormation) {
-      <app-formation-form [produit]="cartItem.produit" [cartQte]="cartItem.qte"></app-formation-form>
+    <div class="ecopart">
+      <div class="libelle">écopart</div>
+      <div class="montant">
+        <div>{{ cartItem.produit.prixD3E | currency:'EUR':'symbol':'1.3-3':'fr' }}<span
+          class="size-smaller">&nbsp;HT</span></div>
+      </div>
+    </div>
+    @if (!cartItem.produit.hasPriceByQte) {
+      <div
+        class="prix-pro"
+        [ngClass]="{'prix-public': (cartItem.cotation?.prixvente ?? 0) !== 0 && (cartItem.cotation.prixvente != cartItem.produit.prix)}">
+        @if ((cartItem.cotation && cartItem.cotation?.prixvente != cartItem.produit.prix) || !cartItem.cotation) {
+          <div class="libelle">votre prix</div>
+          @if (isReducQt(cartItem)) {
+            <div class="montant"
+                 [ngClass]="{'size-bigger': (cartItem.cotation?.prixvente ?? 0) === 0, 'bold': (cartItem.cotation?.prixvente ?? 0) === 0}">
+              <div>{{ cartItem.produit.prix | currency:'EUR':'symbol':'1.2-2':'fr' }}<span
+                class="size-smaller">&nbsp;HT</span></div>
+            </div>
+          } @else {
+            <div class="montant bold size-bigger">
+              <div>{{ cartItem.produit.prixPar | currency:'EUR':'symbol':'1.2-2':'fr' }}<span class="size-smaller">&nbsp;HT</span>
+              </div>
+            </div>
+          }
+        } @else {
+          <div class="libelle">votre prix cotation</div>
+          @if (isReducQt(cartItem)) {
+            <div class="montant"
+                 [ngClass]="{'size-bigger': (cartItem.cotation?.prixvente ?? 0) === 0, 'bold': (cartItem.cotation?.prixvente ?? 0) === 0}">
+              <div>{{ cartItem.produit.prix | currency:'EUR':'symbol':'1.2-2':'fr' }}<span
+                class="size-smaller">&nbsp;HT</span></div>
+            </div>
+          } @else {
+            <div class="montant bold size-bigger">
+              <div>{{ cartItem.produit.prixPar | currency:'EUR':'symbol':'1.2-2':'fr' }}<span class="size-smaller">&nbsp;HT</span>
+              </div>
+            </div>
+          }
+        }
+      </div>
+    } @else {
+      @for (qtp of cartItem.produit?.qtePrice; track $index; let i = $index) {
+        <div
+          [ngClass]="(cartService.cart.items[cartItem.produit.reference]?.priceByQtyAppliedIndex == i) ? 'prix-pro' : 'prix-public'">
+          <div class="libelle">prix par {{ qtp.qte }}</div>
+          <div class="montant">
+            <div>{{ qtp.price | currency:'EUR':'symbol':'1.2-2':'fr' }}<span class="size-smaller">&nbsp;HT</span></div>
+          </div>
+        </div>
+      }
     }
+    <!-- PRIX COTATION -->
+    @if (cartItem.cotation && (cartItem.cotation?.prixvente != cartItem.produit.prix)) {
+      @if ((cartItem.cotation?.prixvente ?? 0) != 0) {
+        <div class="prix-pro">
+          <div class="libelle ">prix cotation</div>
+          <div class="montant">
+            <div>{{ cartItem.cotation?.prixvente| currency:'EUR':'symbol':'1.2-2':'fr' }}<span class="size-smaller">&nbsp;HT</span>
+            </div>
+          </div>
+        </div>
+      }
+    }
+  </div>
+  <!-- PRIX PAR QUANTITÉ -->
+
+  <!-- VERTICAL DIVIDER -->
+  <div class="vertical-divider"></div>
+
+  <!-- QUANTITE -->
+  <div>
+    @if (showInputNumber) {
+      @if (+cartItem.produit.qtemini !== 0 && +cartItem.produit.qtemini < +cartItem.produit.qtemaxi) {
+        <p class="small-texte">
+          De {{ cartItem.produit.qtemini }} à {{ cartItem.produit.qtemaxi }}
+        </p>
+      }
+      @if (+cartItem.produit.qtemini !== 0 && +cartItem.produit.qtemini !== 1 && +cartItem.produit.qtemini > +cartItem.produit.qtemaxi) {
+        <p class="small-texte">
+          Au moins {{ cartItem.produit.qtemini }}
+        </p>
+      }
+      <app-input-number
+        [min]=1
+        [max]="maximum(cartItem.produit)"
+        [number]="cartItem.qte"
+        (value)="quantiteChange(cartItem, $event)"
+        [wrongValue]="wrongValue"
+        size="small">
+      </app-input-number>
+      @if (_wrongValue) {
+        <p class="small-texte errorQte">Quantité invalide</p>
+      }
+      @if (_wrongValueMin) {
+        <p class="small-texte errorQte">Minimum de commande cotation
+          {{ this.cartService.cart.items[this.cartItem.produit.reference]?.cotation?.qtecdemini }}</p>
+      }
+    } @else {
+      <div class="size-huge weight-bold">{{ cartItem.qte }}</div>
+    }
+  </div>
+
+  <!-- TOTAL -->
+  <div class="total-produit weight-bold">
+    <span class="for-phone">Total article(s):&nbsp; </span>
+    <div>{{ cartItem.total | currency:'EUR':'symbol':'1.2-2':'fr' }}<span class="size-smaller">&nbsp;HT</span></div>
+  </div>
+
+  <!-- DELETE -->
+  @if (showInputNumber) {
+    <div class="delete">
+      <button class="text-button cursor-pointer" (click)="removeProduit(cartItem);">
+        <mat-icon aria-hidden="false" aria-label="Supprimer">delete</mat-icon>
+      </button>
+    </div>
+  }
+</div>
+
+<app-cotation-row [produit]="cartItem.produit" [uneditable]="cotationNotEditable"
+                  [warningOnQte]="warningOnCotationQte"></app-cotation-row>
+@if (displayFormationForm && isFormation) {
+  <app-formation-form [produit]="cartItem.produit" [cartQte]="cartItem.qte"></app-formation-form>
+}

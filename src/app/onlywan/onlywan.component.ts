@@ -1,5 +1,4 @@
 import { BreakpointObserver } from "@angular/cdk/layout";
-import { HttpClient } from "@angular/common/http";
 import {
   AfterContentInit,
   Component,
@@ -12,7 +11,6 @@ import { environment } from "@env";
 
 import { Observable, Subject, filter, map, takeUntil } from "rxjs";
 
-import { OnlywanService } from "./onlywan.service";
 import {ActivatedRoute, NavigationEnd, Router, RouterOutlet} from "@angular/router";
 import { animate, style, transition, trigger } from "@angular/animations";
 import {MatIcon} from "@angular/material/icon";
@@ -253,11 +251,8 @@ export class OnlywanComponent implements OnInit,  AfterContentInit, OnDestroy
    */
 
   constructor(
-    private http: HttpClient,
     private router: Router,
-    private observer: BreakpointObserver,
     private renderer: Renderer2,
-    public onlywanService: OnlywanService,
     public breakpointObserver: BreakpointObserver,
     public window: WindowService,
 

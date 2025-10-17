@@ -9,7 +9,7 @@
   </div>
 </div> -->
 <!-- <div ng-include="'/assets/grilles-transport.html'"></div> -->
-<app-title-w-line title="Frais de livraison" size="small" ></app-title-w-line>
+<app-title-w-line title="Frais de livraison" size="small"></app-title-w-line>
 
 <div [innerHtml]="htmlTransportInfos"></div>
 
@@ -39,7 +39,7 @@
       }
       <!-- FRANCO -->
       <div class="grille-box strong">
-        @if (( (getMontant(grilleTransport, type, 'mtfranco') < francoCap) && (getMontant(grilleTransport, type, 'mtfranco') != 0) )) {
+        @if (((getMontant(grilleTransport, type, 'mtfranco') < francoCap) && (getMontant(grilleTransport, type, 'mtfranco') != 0))) {
           Montant franco : {{ getMontant(grilleTransport, type, 'mtfranco') | currency:'EUR':'symbol':'1.2-2':'fr' }}
         } @else {
           Pas de franco
@@ -49,7 +49,6 @@
     </div>
   }
 </div>
-
 
 
 <!-- <div class="wrapper">

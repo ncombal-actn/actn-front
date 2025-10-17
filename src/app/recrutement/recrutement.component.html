@@ -31,7 +31,9 @@
       <mat-form-field appearance="fill">
         <mat-label>Nom du poste</mat-label>
         <mat-select formControlName="poste" required>
-          <mat-option *ngFor="let poste of postes" [value]="poste.intitule">{{ poste.intitule }}</mat-option>
+          @for (poste of postes; track poste) {
+            <mat-option [value]="poste.intitule">{{ poste.intitule }}</mat-option>
+          }
         </mat-select>
       </mat-form-field>
 

@@ -7,6 +7,7 @@ import { CatalogueService, UserService, WindowService } from '@core/_services';
 import { Router } from '@angular/router';
 import {MatCheckbox} from "@angular/material/checkbox";
 import {MatError, MatFormField} from "@angular/material/form-field";
+import {MatInput} from "@angular/material/input";
 
 @Component({
   selector: 'app-newsletters',
@@ -15,7 +16,8 @@ import {MatError, MatFormField} from "@angular/material/form-field";
     ReactiveFormsModule,
     MatCheckbox,
     MatFormField,
-    MatError
+    MatError,
+    MatInput
   ],
   templateUrl: './newsletters.component.html',
   styleUrls: ['./newsletters.component.scss']

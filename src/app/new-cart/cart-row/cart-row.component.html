@@ -1,35 +1,41 @@
 <mat-card class="product-info" [ngClass]="{'no-cot': !item.cotation}">
-  <img class="img-product" loading="lazy" [src]="'https://www.actn.fr/backend/photos/vignettes/'+ item.productName + '.webp'" alt="">
+  <img class="img-product" loading="lazy"
+       [src]="'https://www.actn.fr/backend/photos/vignettes/'+ item.productName + '.webp'" alt="">
   <div class="disgn">
     <div class="top-design">
       <p class="product-name">{{ item.productName }}</p>
-      <img loading="lazy" class="img-marque" [src]="'https://www.actn.fr/backend/marque/200x80/COULEUR/' + item.marquelib + '.gif'" alt="">
+      <img loading="lazy" class="img-marque"
+           [src]="'https://www.actn.fr/backend/marque/200x80/COULEUR/' + item.marquelib + '.gif'" alt="">
     </div>
 
     <p>{{ item.designation }}</p>
     <p class="stock" [ngClass]="{'red': item.stock === 0}">{{ item.stock }} En stock</p>
   </div>
   <div class="prix-product">
-    <div class="price grey"><p>Prix public</p>{{ item.prixPublic ? item.prixPublic : 'NC'}} € HT</div>
+    <div class="price grey"><p>Prix public</p>{{ item.prixPublic ? item.prixPublic : 'NC' }} € HT</div>
     <div class="price grey"><p>Écopart</p>{{ item.prixD3E ? item.prixD3E : 'NC' }} € HT</div>
-    @if((item.cotation && item.cotIndex != -1) || !item.cotation) {
+    @if ((item.cotation && item.cotIndex != -1) || !item.cotation) {
       <div class="price grey"><p>Votre prix</p>{{ item.price ? item.price : 'NC' }} € HT</div>
-    }@else{
+    } @else {
       <div class="price bold"><p>Votre prix</p><strong>{{ item.price ? item.price : 'NC' }} € HT</strong></div>
     }
-    <div class="price bold" *ngIf="item.cotIndex != -1"><p>Votre prix cotation</p><strong>{{ item.cotation[item.cotIndex].prixvente }} € HT</strong></div>
+    @if (item.cotIndex != -1) {
+      <div class="price bold"><p>Votre prix cotation</p>
+        <strong>{{ item.cotation[item.cotIndex].prixvente }} € HT</strong></div>
+    }
   </div>
   <div class="total-qte">
-    <app-input-number class="input-number" [number]="item.quantity" (value)="changeNumberOfProduct($event)"></app-input-number>
-    @if(item.cotIndex != -1) {
+    <app-input-number class="input-number" [number]="item.quantity"
+                      (value)="changeNumberOfProduct($event)"></app-input-number>
+    @if (item.cotIndex != -1) {
       <p><strong>{{ item.quantity * item.cotation[item.cotIndex].prixvente }} € HT</strong></p>
-    }@else{
+    } @else {
       <p><strong>{{ item.quantity * item.price }} € HT</strong></p>
     }
     <mat-icon class="remove-button" (click)="cartService.removeItem(item.productName)">close</mat-icon>
   </div>
 </mat-card>
-@if(item.cotation) {
+@if (item.cotation) {
   <mat-expansion-panel class="cot" [expanded]="true">
     <mat-expansion-panel-header>
       <mat-panel-title> {{ item.cotation.length }} {{ item.cotation.length > 1 ? 'Cotations disponibles' : 'Cotation disponible' }}</mat-panel-title>

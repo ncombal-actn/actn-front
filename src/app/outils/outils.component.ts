@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 
 // RXJS
 import { Subject } from "rxjs";
-import { take, share, takeUntil } from "rxjs/operators";
+import { take, takeUntil } from "rxjs/operators";
 
 // SERVICES
 import { AuthenticationService } from "@/_core/_services/authentication.service";
