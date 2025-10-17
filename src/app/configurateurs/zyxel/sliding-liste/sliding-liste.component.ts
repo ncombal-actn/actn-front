@@ -8,11 +8,24 @@ import { ProduitService } from '@core/_services/produit.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SlidingListeComponent as BaseSlidingListeComponent } from '@/_util/components/sliding-liste/sliding-liste.component';
 import {faChevronRight, faFilePdf} from "@fortawesome/free-solid-svg-icons";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {AsyncPipe, CurrencyPipe, NgTemplateOutlet} from "@angular/common";
+import {RouterLink} from "@angular/router";
+import {InputNumberComponent} from "@/configurateurs/zyxel/input-number/input-number.component";
 
 @Component({
-    selector: 'conf-sliding-liste',
-    templateUrl: './sliding-liste.component.html',
-    styleUrls: ['./sliding-liste.component.scss']
+  selector: 'conf-sliding-liste',
+  standalone: true,
+  templateUrl: './sliding-liste.component.html',
+  imports: [
+    FaIconComponent,
+    NgTemplateOutlet,
+    AsyncPipe,
+    RouterLink,
+    InputNumberComponent,
+    CurrencyPipe
+  ],
+  styleUrls: ['./sliding-liste.component.scss']
 })
 export class SlidingListeComponent extends BaseSlidingListeComponent implements OnInit {
 

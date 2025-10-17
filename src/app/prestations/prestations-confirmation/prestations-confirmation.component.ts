@@ -3,12 +3,12 @@ import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.
 
 @Component({
   selector: 'app-prestations-confirmation',
-  templateUrl: './prestations-confirmation.component.html',
-  styleUrls: ['./prestations-confirmation.component.scss'],
   standalone: true,
   imports: [
     TitleWLineComponent
-  ]
+  ],
+  templateUrl: './prestations-confirmation.component.html',
+  styleUrls: ['./prestations-confirmation.component.scss'],
 })
 export class PrestationsConfirmationComponent implements OnInit {
 

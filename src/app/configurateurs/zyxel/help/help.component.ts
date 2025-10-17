@@ -2,13 +2,14 @@ import { ConfigurateurService } from '@/configurateurs/configurateur.service';
 import { User } from '@/_util/models/user';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { AuthenticationService } from '@core/_services';
 import { environment } from '@env';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 import {MatTooltip} from "@angular/material/tooltip";
 import {ChipsListComponent} from "@/configurateurs/zyxel/chips-list/chips-list.component";
+import {NgClass} from "@angular/common";
 
 const phoneRegex = /^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/;
 
@@ -17,7 +18,9 @@ const phoneRegex = /^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?
   standalone: true,
   imports: [
     ChipsListComponent,
-    MatTooltip
+    MatTooltip,
+    NgClass,
+    ReactiveFormsModule
   ],
 	templateUrl: './help.component.html',
 	styleUrls: ['./help.component.scss', '../zyxel.scss']

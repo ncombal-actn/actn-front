@@ -6,9 +6,10 @@ import { AuthenticationService } from '@core/_services';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-	selector: 'conf-help',
-	templateUrl: '../../zyxel/help/help.component.html',
-	styleUrls: ['./help.component.scss', '../sonicwall.scss']
+  selector: 'conf-help',
+  standalone: true,
+  templateUrl: '../../zyxel/help/help.component.html',
+  styleUrls: ['./help.component.scss', '../sonicwall.scss']
 })
 export class HelpComponent extends ZyxeHelpComponent implements OnInit, OnDestroy {
 

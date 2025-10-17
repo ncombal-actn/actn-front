@@ -1,14 +1,18 @@
 import { Filtre } from '@/_util/models';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RmaService } from '@core/_services/rma.service';
 import { Observable, Subject } from 'rxjs';
 import { environment } from '@env';
 import { takeUntil, tap } from 'rxjs/operators';
 import {faFilePdf} from "@fortawesome/free-solid-svg-icons";
-import {MatSelect} from "@angular/material/select";
+import {MatOption, MatSelect} from "@angular/material/select";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {CommonModule} from "@angular/common";
+import {KeyboardFocusDirective} from "@/_util/directives/keyboard-focus.directive";
+import {MatInput} from "@angular/material/input";
+import {TooltipComponent} from "@/_util/components/tooltip/tooltip.component";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 
 @Component({
   selector: 'app-suivi-retour',
@@ -17,7 +21,14 @@ import {CommonModule} from "@angular/common";
     CommonModule,
     MatFormField,
     MatLabel,
-    MatSelect
+    MatSelect,
+    KeyboardFocusDirective,
+    MatOption,
+    ReactiveFormsModule,
+    MatInput,
+    FormsModule,
+    TooltipComponent,
+    FaIconComponent
   ],
   templateUrl: './suivi-retour.component.html',
   styleUrls: ['./suivi-retour.component.scss']

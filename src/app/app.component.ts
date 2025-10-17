@@ -3,21 +3,22 @@ import {NavigationEnd, Router, RouterOutlet, Routes} from '@angular/router';
 import {CommonModule, isPlatformBrowser} from "@angular/common";
 import {filter} from "rxjs/operators";
 import {AuthenticationService} from '@core/_services';
-import { HeartbeatSensorComponent } from '@/heartbeat-sensor/heartbeat-sensor.component';
-import { BackToTopComponent} from '@/back-to-top/back-to-top.component';
-import { SideNavComponent } from '@core/_layout/side-nav/side-nav.component';
-import { RollingHeaderComponent } from '@core/_layout/rolling-header/rolling-header.component';
-import { FilDArianneComponent } from '@core/_layout/fil-d-arianne/fil-d-arianne.component';
-import { HeaderComponent } from '@core/_layout/header/header.component';
+import {HeartbeatSensorComponent} from '@/heartbeat-sensor/heartbeat-sensor.component';
+import {BackToTopComponent} from '@/back-to-top/back-to-top.component';
+import {SideNavComponent} from '@core/_layout/side-nav/side-nav.component';
+import {RollingHeaderComponent} from '@core/_layout/rolling-header/rolling-header.component';
+import {FilDArianneComponent} from '@core/_layout/fil-d-arianne/fil-d-arianne.component';
+import {HeaderComponent} from '@core/_layout/header/header.component';
 import {SnackbarComponent} from "@/_util/components/snackbar/snackbar.component";
 import {SpinnerComponent} from "@/_util/components/spinner/spinner.component";
 import {CookiesComponent} from "@/cookies/cookies.component";
 import {FooterComponent} from "@core/_layout/footer/footer.component";
+
 declare let gtag: Function;
 
 @Component({
-    selector: 'app-root',
-    standalone: true,
+  selector: 'app-root',
+  standalone: true,
   imports: [
     CommonModule,
     RouterOutlet,
@@ -32,12 +33,12 @@ declare let gtag: Function;
     CookiesComponent,
     FooterComponent
   ],
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
 
-  isBrowser:boolean;
+  isBrowser: boolean;
   title = 'actn';
   selectedSideNavMenu = '';
   user: boolean = true;
@@ -74,7 +75,7 @@ export class AppComponent implements OnInit {
     ).subscribe(() => {
       // Scroll en haut du body après chaque navigation
       if (typeof window !== 'undefined') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({top: 0, behavior: 'smooth'});
       }
     });
   }

@@ -4,7 +4,14 @@ import {MatPaginator} from "@angular/material/paginator";
 import {environment} from "../../../environments/environment";
 import * as XLSX from "xlsx";
 import {SelectionModel} from "@angular/cdk/collections";
-import {MatCell, MatColumnDef, MatHeaderCell, MatTable, MatTableDataSource} from "@angular/material/table";
+import {
+  MatCell, MatCellDef,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderCellDef, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
+  MatTable,
+  MatTableDataSource
+} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {MatCard} from "@angular/material/card";
 import {MatSelect} from "@angular/material/select";
@@ -13,6 +20,7 @@ import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {CommonModule} from "@angular/common";
 import {MatCheckbox} from "@angular/material/checkbox";
+import {MatInput} from "@angular/material/input";
 
 @Component({
   selector: 'app-numeros-de-serie',
@@ -31,7 +39,14 @@ import {MatCheckbox} from "@angular/material/checkbox";
     MatSort,
     MatColumnDef,
     MatHeaderCell,
-    MatCell
+    MatCell,
+    MatInput,
+    MatHeaderCellDef,
+    MatCellDef,
+    MatHeaderRow,
+    MatRow,
+    MatHeaderRowDef,
+    MatRowDef
   ],
   templateUrl: './numeros-de-serie.component.html',
   styleUrls: ['./numeros-de-serie.component.scss']

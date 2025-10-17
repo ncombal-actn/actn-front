@@ -8,6 +8,7 @@ import { environment } from '@env';
 import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatHint} from "@angular/material/select";
 import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
+import {MatInput} from "@angular/material/input";
 
 @Component({
   selector: 'app-new-client',
@@ -19,7 +20,8 @@ import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.
     MatFormField,
     MatHint,
     MatLabel,
-    MatError
+    MatError,
+    MatInput
   ],
   templateUrl: './new-client.component.html',
   styleUrls: ['./new-client.component.scss']

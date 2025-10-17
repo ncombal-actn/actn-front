@@ -94,12 +94,6 @@ export class WindowService  {
     }
   }
 
-  public tonPereLeGigolo(message: any){
-    if(this.isBrowser()){
-      //return window.addEventListener('message', message, false);
-    }
-  }
-
   public scrollToElement(selector: string, offsetDesktop: number, offsetMobile: number): void {
     if (this.isBrowser()) {
       const element = window.document.querySelector(selector);

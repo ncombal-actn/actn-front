@@ -8,12 +8,12 @@ import {NgClass} from "@angular/common";
 @Component({
   selector: 'app-cookies',
   standalone: true,
-  templateUrl: './cookies.component.html',
   imports: [
     MatSlideToggle,
     FormsModule,
     NgClass
   ],
+  templateUrl: './cookies.component.html',
   styleUrls: ['./cookies.component.scss']
 })
 export class CookiesComponent implements OnInit {

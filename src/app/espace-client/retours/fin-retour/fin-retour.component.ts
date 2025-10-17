@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-fin-retour',
+  standalone: true,
   templateUrl: './fin-retour.component.html',
   styleUrls: ['./fin-retour.component.scss']
 })

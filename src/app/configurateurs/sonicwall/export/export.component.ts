@@ -8,10 +8,11 @@ import { AuthenticationService } from '@core/_services';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 
 @Component({
-	selector: 'conf-pdf',
-	templateUrl: '../../export/export.component.html',
-	styleUrls: ['../styles/popup.scss', './export.component.scss'],
-	providers: [DatePipe, CurrencyPipe]
+  selector: 'conf-pdf',
+  standalone: true,
+  templateUrl: '../../export/export.component.html',
+  styleUrls: ['../styles/popup.scss', './export.component.scss'],
+  providers: [DatePipe, CurrencyPipe]
 })
 export class ExportComponent extends BaseExportComponent implements OnInit, OnDestroy, AfterViewInit {
 

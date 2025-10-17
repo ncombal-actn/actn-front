@@ -1,16 +1,15 @@
 import { Component, OnInit } from "@angular/core";
-import { AllCotations, Produit } from "@/_util/models";
+import {  Produit } from "@/_util/models";
 // RXJS
-import { Observable, Subscription } from "rxjs";
-import { distinctUntilChanged, take, firstValueFrom } from "rxjs";
+import { Subscription } from "rxjs";
+import { take } from "rxjs";
 // SERVICES
 import { ComparateurService } from "@/_core/_services/comparateur.service";
 import { ProduitService } from "@core/_services/produit.service";
 
 // TO DELETE LATER ?
 /////////////////////////////////
-import { HttpClient } from "@angular/common/http";
-import { AuthenticationService, CotationService, WindowService } from "@core/_services";
+import { AuthenticationService, WindowService } from "@core/_services";
 import { environment } from "@env";
 import {SlidingListeComponent} from "@/_util/components/sliding-liste/sliding-liste.component";
 /////////////////////////////////
@@ -18,11 +17,11 @@ import {SlidingListeComponent} from "@/_util/components/sliding-liste/sliding-li
 @Component({
   selector: "app-comparateur",
   standalone: true,
-  templateUrl: "./comparateur.component.html",
-  styleUrls: ["./comparateur.component.scss"],
   imports: [
     SlidingListeComponent
-  ]
+  ],
+  templateUrl: "./comparateur.component.html",
+  styleUrls: ["./comparateur.component.scss"],
 })
 export class ComparateurComponent implements OnInit {
   environment = environment;

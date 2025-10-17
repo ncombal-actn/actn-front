@@ -41,8 +41,6 @@ type Format = 'list' | 'grid';
 @Component({
   selector: 'app-catalogue',
   standalone: true,
-  templateUrl: './catalogue.component.html',
-  styleUrls: ['./catalogue.component.scss'],
   imports: [
     NgxSkeletonLoaderModule,
     BanniereComponent,
@@ -65,6 +63,8 @@ type Format = 'list' | 'grid';
     RouterLink,
     RouterLinkActive
   ],
+  templateUrl: './catalogue.component.html',
+  styleUrls: ['./catalogue.component.scss'],
   animations: [
     /**
      * Animation sur la hauteur de l'élément, alterne entre 0 et sa hauteur par défaut.

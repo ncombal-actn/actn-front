@@ -3,12 +3,17 @@ import { EventEmitter, Output } from '@angular/core';
 import { Component, Input, OnInit } from '@angular/core';
 import { RmaService } from '@core/_services/rma.service';
 import {CommonModule} from "@angular/common";
+import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-change-adresse',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    MatRadioGroup,
+    FormsModule,
+    MatRadioButton
   ],
   templateUrl: './change-adresse.component.html',
   styleUrls: ['./change-adresse.component.scss']

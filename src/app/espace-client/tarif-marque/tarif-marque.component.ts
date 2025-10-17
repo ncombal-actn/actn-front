@@ -9,8 +9,9 @@ import { take, takeUntil } from 'rxjs/operators';
 import { utils, writeFile }  from 'xlsx';
 import {HttpClient} from "@angular/common/http";
 import {MatChipListbox} from "@angular/material/chips";
-import {KeyValuePipe} from "@angular/common";
+import {KeyValuePipe, UpperCasePipe} from "@angular/common";
 import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
+import {ImgFallbackDirective} from "@/_util/directives/img-fallback.directive";
 
 @Component({
   selector: 'app-tarif-marque',
@@ -18,7 +19,9 @@ import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.
   imports: [
     KeyValuePipe,
     TitleWLineComponent,
-    MatChipListbox
+    MatChipListbox,
+    ImgFallbackDirective,
+    UpperCasePipe
   ],
   templateUrl: './tarif-marque.component.html',
   styleUrls: ['./tarif-marque.component.scss']

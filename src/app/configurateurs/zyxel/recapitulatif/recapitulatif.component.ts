@@ -14,6 +14,14 @@ import {HelpComponent} from "@/configurateurs/zyxel/help/help.component";
 import {ChargementComponent} from "@/configurateurs/sauvegarde/chargement/chargement.component";
 import {SauvegardeComponent} from "@/configurateurs/sauvegarde/sauvegarde/sauvegarde.component";
 import {HeaderStepperComponent} from "@/configurateurs/zyxel/header-stepper/header-stepper.component";
+import {AsyncPipe, CurrencyPipe, KeyValuePipe, NgClass, NgStyle} from "@angular/common";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
+import {BanniereComponent} from "@/banniere/banniere.component";
+import {BlocPrixComponent} from "@/configurateurs/zyxel/bloc-prix/bloc-prix.component";
+import {ChipsListComponent} from "@/configurateurs/zyxel/chips-list/chips-list.component";
+import {FreeInputComponent} from "@/configurateurs/zyxel/free-input/free-input.component";
+import {InputNumberComponent} from "@/configurateurs/zyxel/input-number/input-number.component";
 
 @Component({
 	selector: 'app-recapitulatif',
@@ -22,7 +30,21 @@ import {HeaderStepperComponent} from "@/configurateurs/zyxel/header-stepper/head
     ChargementComponent,
     HeaderStepperComponent,
     HelpComponent,
-    SauvegardeComponent
+    SauvegardeComponent,
+    AsyncPipe,
+    FaIconComponent,
+    KeyValuePipe,
+    CurrencyPipe,
+    NgClass,
+    MatRadioGroup,
+    MatRadioButton,
+    NgStyle,
+    BanniereComponent,
+    BlocPrixComponent,
+    ChipsListComponent,
+    FreeInputComponent,
+    InputNumberComponent,
+    ExportComponent
   ],
 	templateUrl: './recapitulatif.component.html',
 	styleUrls: ['./recapitulatif.component.scss', '../options/options.component.scss', '../modeles/modeles.component.scss'],

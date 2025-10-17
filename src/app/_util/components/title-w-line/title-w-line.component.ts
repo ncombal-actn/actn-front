@@ -11,13 +11,13 @@ import {MatIcon} from "@angular/material/icon";
 @Component({
   selector: 'app-title-w-line',
   standalone: true,
-  templateUrl: './title-w-line.component.html',
-  styleUrls: ['./title-w-line.component.scss'],
   imports: [
     NgClass,
     FaIconComponent,
     MatIcon
-  ]
+  ],
+  templateUrl: './title-w-line.component.html',
+  styleUrls: ['./title-w-line.component.scss']
 })
 export class TitleWLineComponent implements OnInit {
 

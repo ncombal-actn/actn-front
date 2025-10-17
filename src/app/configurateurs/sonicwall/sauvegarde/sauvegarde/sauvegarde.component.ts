@@ -5,9 +5,10 @@ import { SauvegardeComponent as BaseSauvegardeComponent } from '@/configurateurs
 import { ConfigurateurService } from '@/configurateurs/configurateur.service';
 
 @Component({
-	selector: 'conf-sauvegarde',
-	templateUrl: '../../../sauvegarde/sauvegarde/sauvegarde.component.html',
-	styleUrls: ['./sauvegarde.component.scss', '../../styles/popup.scss']
+  selector: 'conf-sauvegarde',
+  standalone: true,
+  templateUrl: '../../../sauvegarde/sauvegarde/sauvegarde.component.html',
+  styleUrls: ['./sauvegarde.component.scss', '../../styles/popup.scss']
 })
 export class SauvegardeComponent extends BaseSauvegardeComponent implements OnInit {
 

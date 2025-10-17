@@ -8,8 +8,9 @@ import {environment} from '@env';
 import {Router, RouterLink} from '@angular/router';
 import {MatCheckbox} from "@angular/material/checkbox";
 import {AsyncPipe} from "@angular/common";
-import {MatHint} from "@angular/material/select";
-import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatHint, MatOption, MatSelect} from "@angular/material/select";
+import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatInput} from "@angular/material/input";
 
 @Component({
   selector: 'app-add-form',
@@ -21,7 +22,11 @@ import {MatFormField, MatLabel} from "@angular/material/form-field";
     MatCheckbox,
     MatFormField,
     MatHint,
-    MatLabel
+    MatLabel,
+    MatInput,
+    MatOption,
+    MatSelect,
+    MatError
   ],
   templateUrl: './add-form.component.html',
   styleUrls: ['./add-form.component.scss']

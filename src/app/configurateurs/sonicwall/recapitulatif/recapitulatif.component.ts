@@ -8,27 +8,28 @@ import { takeUntil, filter, take } from 'rxjs/operators';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
-	selector: 'app-recapitulatif',
-	templateUrl: '../../zyxel/recapitulatif/recapitulatif.component.html',
-	styleUrls: ['./recapitulatif.component.scss', '../options/options.component.scss'],
-	animations: [
-		trigger('expandVertical', [
-			state(
-				'open',
-				style({
-					height: '*'
-				})
-			),
-			state(
-				'closed',
-				style({
-					height: '0'
-				})
-			),
-			transition('open => closed', animate('300ms ease-in-out')),
-			transition('closed => open', animate('300ms ease-in-out'))
-		])
-	]
+  selector: 'app-recapitulatif',
+  standalone: true,
+  templateUrl: '../../zyxel/recapitulatif/recapitulatif.component.html',
+  styleUrls: ['./recapitulatif.component.scss', '../options/options.component.scss'],
+  animations: [
+    trigger('expandVertical', [
+      state(
+        'open',
+        style({
+          height: '*'
+        })
+      ),
+      state(
+        'closed',
+        style({
+          height: '0'
+        })
+      ),
+      transition('open => closed', animate('300ms ease-in-out')),
+      transition('closed => open', animate('300ms ease-in-out'))
+    ])
+  ]
 })
 export class RecapitulatifComponent extends ZyxeRecapitulatifComponent implements OnInit {
 

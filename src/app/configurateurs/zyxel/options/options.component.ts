@@ -1,8 +1,8 @@
 import { Produit, User } from '@/_util/models';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { AuthenticationService, ComponentsInteractionService, SvgService } from '@core/_services';
 import { ProduitService } from '@core/_services/produit.service';
 import { environment } from '@env';
@@ -13,13 +13,37 @@ import { ConfigurateurService, Modele } from '../../configurateur.service';
 import {faFilePdf, faPlayCircle, faTimes, faTimesCircle} from "@fortawesome/free-solid-svg-icons";
 import {HelpComponent} from "@/configurateurs/zyxel/help/help.component";
 import {HeaderStepperComponent} from "@/configurateurs/zyxel/header-stepper/header-stepper.component";
+import {AsyncPipe, CurrencyPipe, NgClass, NgStyle} from "@angular/common";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {BlocPrixComponent} from "@/configurateurs/zyxel/bloc-prix/bloc-prix.component";
+import {ChipsListComponent} from "@/configurateurs/zyxel/chips-list/chips-list.component";
+import {ResumeComponent} from "@/configurateurs/zyxel/options/resume/resume.component";
+import {MatCheckbox} from "@angular/material/checkbox";
+import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
+import {SlidingListeComponent} from "@/configurateurs/zyxel/sliding-liste/sliding-liste.component";
+import {FreeInputComponent} from "@/configurateurs/zyxel/free-input/free-input.component";
 
 @Component({
 	selector: 'app-options',
   standalone: true,
   imports: [
     HeaderStepperComponent,
-    HelpComponent
+    HelpComponent,
+    AsyncPipe,
+    FaIconComponent,
+    BlocPrixComponent,
+    ReactiveFormsModule,
+    ChipsListComponent,
+    NgClass,
+    CurrencyPipe,
+    ResumeComponent,
+    MatCheckbox,
+    NgStyle,
+    MatRadioGroup,
+    MatRadioButton,
+    SlidingListeComponent,
+    FreeInputComponent,
+    RouterLink
   ],
 	templateUrl: './options.component.html',
 	styleUrls: ['./options.component.scss', '../modeles/modeles.component.scss'],

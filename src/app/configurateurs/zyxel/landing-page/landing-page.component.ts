@@ -5,11 +5,24 @@ import { environment } from '@env';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import {faUpload} from "@fortawesome/free-solid-svg-icons";
+import {AsyncPipe} from "@angular/common";
+import {RouterLink} from "@angular/router";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {BanniereComponent} from "@/banniere/banniere.component";
+import {ChargementComponent} from "@/configurateurs/sauvegarde/chargement/chargement.component";
 
 @Component({
-    selector: 'app-landing-page',
-    templateUrl: './landing-page.component.html',
-    styleUrls: ['./landing-page.component.scss']
+  selector: 'app-landing-page',
+  standalone: true,
+  templateUrl: './landing-page.component.html',
+  imports: [
+    AsyncPipe,
+    RouterLink,
+    FaIconComponent,
+    BanniereComponent,
+    ChargementComponent
+  ],
+  styleUrls: ['./landing-page.component.scss']
 })
 export class LandingPageComponent implements OnInit, OnDestroy {
 

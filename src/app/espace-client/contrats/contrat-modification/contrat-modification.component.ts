@@ -11,7 +11,11 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {TooltipComponent} from "@/_util/components/tooltip/tooltip.component";
 import {CommonModule} from "@angular/common";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
-import {MatRadioGroup} from "@angular/material/radio";
+import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
+import {ProduitPreviewComponent} from "@/_util/components/produit-preview/produit-preview.component";
+import {CotationRowComponent} from "@/_util/components/cotation-row/cotation-row.component";
+import {MatOption} from "@angular/material/core";
+import {MatFormField, MatLabel, MatSelect} from "@angular/material/select";
 
 @Component({
   selector: 'app-contrat-modification',
@@ -21,7 +25,15 @@ import {MatRadioGroup} from "@angular/material/radio";
     ReactiveFormsModule,
     TooltipComponent,
     MatRadioGroup,
-    MatSlideToggle
+    MatSlideToggle,
+    MatRadioButton,
+    ProduitPreviewComponent,
+    CotationRowComponent,
+    MatOption,
+    MatSelect,
+    MatLabel,
+    MatFormField,
+    ValidationPanierComponent
   ],
   templateUrl: './contrat-modification.component.html',
   styleUrls: ['./contrat-modification.component.scss']

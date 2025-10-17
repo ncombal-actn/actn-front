@@ -11,8 +11,8 @@ import {
  * Toggle la classe 'focus' sur l'élément si l'élément est ou non dans l'état focused à la suite d'un évènement clavier.
  */
 @Directive({
-  standalone: true,
-  selector: '[appKeyboardFocus]'
+  selector: '[appKeyboardFocus]',
+  standalone: true
 })
 export class KeyboardFocusDirective {
 

@@ -13,9 +13,15 @@ import {faFilePdf, faMinusCircle, faPlusCircle, faTruck} from "@fortawesome/free
 import {PopupObjDisplayComponent} from "@/_util/components/popup-obj-display/popup-obj-display.component";
 import {CommonModule} from "@angular/common";
 import {TabSortComponent} from "@/_util/components/tab-sort/tab-sort.component";
-import {MatSelect} from "@angular/material/select";
+import {MatOption, MatSelect} from "@angular/material/select";
 import {FormsModule} from "@angular/forms";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatIcon} from "@angular/material/icon";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {TooltipComponent} from "@/_util/components/tooltip/tooltip.component";
+import {MatCheckbox} from "@angular/material/checkbox";
+import {InputNumberComponent} from "@/_util/components/input-number/input-number.component";
+import {MatInput} from "@angular/material/input";
 
 @Component({
   selector: 'app-commandes',
@@ -29,7 +35,14 @@ import {MatFormField, MatLabel} from "@angular/material/form-field";
     MatFormField,
     MatLabel,
     MatPaginator,
-    MatSelect
+    MatSelect,
+    MatOption,
+    MatIcon,
+    FaIconComponent,
+    TooltipComponent,
+    MatCheckbox,
+    InputNumberComponent,
+    MatInput
   ],
   templateUrl: './commandes.component.html',
   styleUrls: ['./commandes.component.scss']

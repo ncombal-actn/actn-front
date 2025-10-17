@@ -5,8 +5,9 @@ import { RmaService } from "@services/rma.service";
 import { shareReplay } from "rxjs/operators";
 import { AdresseService, AuthenticationService } from "@core/_services";
 import {AsyncPipe, Location} from '@angular/common';
-import {MatHint} from "@angular/material/select";
+import {MatError, MatHint, MatOption, MatSelect} from "@angular/material/select";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatInput} from "@angular/material/input";
 
 @Component({
   selector: 'app-edit-form',
@@ -16,7 +17,11 @@ import {MatFormField, MatLabel} from "@angular/material/form-field";
     AsyncPipe,
     MatFormField,
     MatHint,
-    MatLabel
+    MatLabel,
+    MatError,
+    MatInput,
+    MatOption,
+    MatSelect
   ],
   templateUrl: './edit-form.component.html',
   styleUrls: ['./edit-form.component.scss']

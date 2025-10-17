@@ -5,9 +5,10 @@ import { ActivatedRoute } from '@angular/router';
 import { ComponentsInteractionService, AuthenticationService } from '@core/_services';
 
 @Component({
-	selector: 'conf-bloc-prix',
-	templateUrl: '../../zyxel/bloc-prix/bloc-prix.component.html',
-	styleUrls: ['./bloc-prix.component.scss']
+  selector: 'conf-bloc-prix',
+  standalone: true,
+  templateUrl: '../../zyxel/bloc-prix/bloc-prix.component.html',
+  styleUrls: ['./bloc-prix.component.scss']
 })
 export class BlocPrixComponent extends ZyxeBlocPrixComponent implements OnInit, OnDestroy {
 

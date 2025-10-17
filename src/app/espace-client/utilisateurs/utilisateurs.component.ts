@@ -1,11 +1,11 @@
-import { Location } from "@angular/common";
+import {Location, NgClass} from "@angular/common";
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import {
   FormBuilder,
   FormGroupDirective,
   Validators,
   FormGroup,
-  FormControl,
+  FormControl, ReactiveFormsModule,
 } from "@angular/forms";
 import { Router } from "@angular/router";
 import {
@@ -13,14 +13,52 @@ import {
   UserService,
   WindowService,
 } from "@core/_services";
-import { User } from "@/_util/models";
-import { MatTableDataSource } from "@angular/material/table";
+import {
+  MatCell, MatCellDef,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderCellDef, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
+  MatTable,
+  MatTableDataSource
+} from "@angular/material/table";
 import { MatSort } from "@angular/material/sort";
 import { BehaviorSubject } from "rxjs/internal/BehaviorSubject";
 import { MatPaginator } from "@angular/material/paginator";
+import {OuiNonAdminPipe} from "@core/_pipes/ouiNonAdmin.pipe";
+import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatInput} from "@angular/material/input";
+import {MatOption, MatSelect} from "@angular/material/select";
+import {MatCheckbox} from "@angular/material/checkbox";
+import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
 
 @Component({
   selector: "app-utilisateurs",
+  standalone: true,
+  imports: [
+    MatTable,
+    MatSort,
+    MatColumnDef,
+    MatHeaderCell,
+    MatHeaderCellDef,
+    MatCell,
+    MatCellDef,
+    OuiNonAdminPipe,
+    MatHeaderRow,
+    MatHeaderRowDef,
+    MatRow,
+    MatRowDef,
+    NgClass,
+    ReactiveFormsModule,
+    MatLabel,
+    MatError,
+    MatFormField,
+    MatInput,
+    MatSelect,
+    MatOption,
+    MatCheckbox,
+    MatRadioGroup,
+    MatRadioButton
+  ],
   templateUrl: "./utilisateurs.component.html",
   styleUrls: ["./utilisateurs.component.scss"],
 })

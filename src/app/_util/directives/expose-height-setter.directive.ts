@@ -8,8 +8,8 @@ import {
  * Directive permettant d'exposer un setter pour l'attribut 'min-height' de l'hôte.
  */
 @Directive({
-  standalone: true,
-  selector: '[appExposeHeightSetter]'
+  selector: '[appExposeHeightSetter]',
+  standalone: true
 })
 export class ExposeHeightSetterDirective {
 

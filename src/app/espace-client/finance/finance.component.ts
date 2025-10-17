@@ -19,15 +19,22 @@ import {
 } from "@angular/material/table";
 import {CommonModule} from "@angular/common";
 import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
-import {MatDatepickerToggle, MatDateRangeInput, MatDateRangePicker, MatEndDate} from "@angular/material/datepicker";
-import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {
+  MatDatepickerToggle,
+  MatDateRangeInput,
+  MatDateRangePicker,
+  MatEndDate,
+  MatStartDate
+} from "@angular/material/datepicker";
+import {MatError, MatFormField, MatLabel, MatSuffix} from "@angular/material/form-field";
 import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
 import {MatInput} from "@angular/material/input";
-import {MatButton} from "@angular/material/button";
+import {MatButton, MatIconButton} from "@angular/material/button";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {TooltipComponent} from "@/_util/components/tooltip/tooltip.component";
 import {MatCheckbox} from "@angular/material/checkbox";
 import {MatIcon} from "@angular/material/icon";
+import {provideNativeDateAdapter} from "@angular/material/core";
 
 @Component({
   selector: 'app-finance',
@@ -39,6 +46,8 @@ import {MatIcon} from "@angular/material/icon";
     MatDatepickerToggle,
     MatDateRangeInput,
     MatDateRangePicker,
+    MatStartDate,
+    MatEndDate,
     MatFormField,
     MatLabel,
     MatTable,
@@ -51,7 +60,26 @@ import {MatIcon} from "@angular/material/icon";
     TooltipComponent,
     MatCheckbox,
     MatIcon,
+    MatSuffix,
     MatEndDate,
+    MatIconButton,
+    MatColumnDef,
+    MatHeaderCell,
+    MatCell,
+    MatFooterCell,
+    MatFooterCellDef,
+    MatCellDef,
+    MatHeaderCellDef,
+    MatHeaderRow,
+    MatRow,
+    MatFooterRow,
+    MatFooterRowDef,
+    MatHeaderRowDef,
+    MatRowDef,
+    MatError
+  ],
+  providers: [
+    provideNativeDateAdapter()
   ],
   templateUrl: './finance.component.html',
   styleUrls: ['./finance.component.scss'],

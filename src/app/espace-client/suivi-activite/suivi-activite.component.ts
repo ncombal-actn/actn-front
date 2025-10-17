@@ -23,6 +23,8 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {MatTooltip} from "@angular/material/tooltip";
 import {CommonModule} from "@angular/common";
 import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
+import {KeyboardFocusDirective} from "@/_util/directives/keyboard-focus.directive";
+import {RouterLink} from "@angular/router";
 Chart.register(...registerables);
 Chart.register(Colors);
 @Component({
@@ -32,7 +34,9 @@ Chart.register(Colors);
     CommonModule,
     FontAwesomeModule,
     TitleWLineComponent,
-    MatTooltip
+    MatTooltip,
+    KeyboardFocusDirective,
+    RouterLink
   ],
   templateUrl: "./suivi-activite.component.html",
   styleUrls: ["./suivi-activite.component.scss"],

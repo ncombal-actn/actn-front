@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { WindowService } from '@core/_services';
 import { environment } from '@env';
 import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
+import {MatButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-conditions-sav',
   standalone: true,
   imports: [
-    TitleWLineComponent
+    TitleWLineComponent,
+    MatButton
   ],
   templateUrl: './conditions-sav.component.html',
   styleUrls: ['./conditions-sav.component.scss']

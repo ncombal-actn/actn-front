@@ -6,6 +6,7 @@ import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-accueil',
+  standalone: true,
   templateUrl: './accueil.component.html',
   styleUrls: ['./accueil.component.scss']
 })

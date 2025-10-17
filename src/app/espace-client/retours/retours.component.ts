@@ -3,20 +3,27 @@ import {Router, RouterLink} from '@angular/router';
 import { RmaService } from '@core/_services/rma.service';
 import { environment } from '@env';
 import { Observable, Subject } from 'rxjs';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { Filtre } from '@/_util/models';
 import { tap, takeUntil } from 'rxjs/operators';
 //import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 import { AuthenticationService, WindowService } from '@core/_services';
-import {PageEvent} from "@angular/material/paginator";
+import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import e from 'express';
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
 import {CommandesComponent} from "@/espace-client/commandes/commandes.component";
 import {TabSortComponent} from "@/_util/components/tab-sort/tab-sort.component";
-import {MatSelect} from "@angular/material/select";
+import {MatOption, MatSelect} from "@angular/material/select";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {CommonModule} from "@angular/common";
 import {MatIcon} from "@angular/material/icon";
+import {KeyboardFocusDirective} from "@/_util/directives/keyboard-focus.directive";
+import {MatInput} from "@angular/material/input";
+import {TooltipComponent} from "@/_util/components/tooltip/tooltip.component";
+import {AddClassOnChangeDirective} from "@/_util/directives/add-class-on-change.directive";
+import {StylePaginatorDirective} from "@/_util/directives/style-paginator.directive";
+import {MatCheckbox} from "@angular/material/checkbox";
+import {InputNumberComponent} from "@/_util/components/input-number/input-number.component";
 
 interface PageObject {
   length: number;
@@ -39,7 +46,18 @@ interface PageObject {
     MatLabel,
     MatSelect,
     MatTab,
-    MatTabGroup
+    MatTabGroup,
+    KeyboardFocusDirective,
+    MatOption,
+    ReactiveFormsModule,
+    MatInput,
+    FormsModule,
+    TooltipComponent,
+    AddClassOnChangeDirective,
+    MatPaginator,
+    StylePaginatorDirective,
+    MatCheckbox,
+    InputNumberComponent
   ],
   templateUrl: './retours.component.html',
   styleUrls: ['./retours.component.scss']

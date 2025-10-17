@@ -16,7 +16,13 @@ import {ProduitPreviewComponent} from "@/_util/components/produit-preview/produi
 @Component({
   selector: 'app-produits',
   standalone: true,
-  imports: [CommonModule, InfiniteScrollDirective, RouterLink, ProduitPreviewComponent, BanniereComponent],
+  imports: [
+    CommonModule,
+    InfiniteScrollDirective,
+    RouterLink,
+    ProduitPreviewComponent,
+    BanniereComponent
+  ],
   templateUrl: './produits.component.html',
   styleUrls: ['./produits.component.scss']
 })

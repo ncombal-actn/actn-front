@@ -10,6 +10,10 @@ import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {MatCard, MatCardContent, MatCardHeader} from "@angular/material/card";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
+import {MatIconButton} from "@angular/material/button";
+import {MatInput} from "@angular/material/input";
+import {AsyncPipe, DatePipe, NgClass} from "@angular/common";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 
 @Component({
   selector: "app-reliquats",
@@ -21,7 +25,13 @@ import {MatIcon} from "@angular/material/icon";
     MatCardHeader,
     MatFormField,
     MatIcon,
-    MatLabel
+    MatLabel,
+    MatIconButton,
+    MatInput,
+    NgClass,
+    AsyncPipe,
+    FaIconComponent,
+    DatePipe
   ],
   templateUrl: "./reliquats.component.html",
   styleUrls: ["./reliquats.component.scss"],

@@ -14,11 +14,11 @@ import {InputNumberComponent} from "@/_util/components/input-number/input-number
 @Component({
   selector: 'app-add-to-cart-form',
   standalone: true,
-  templateUrl: './add-to-cart-form.component.html',
   imports: [
     NgClass,
     InputNumberComponent
   ],
+  templateUrl: './add-to-cart-form.component.html',
   styleUrls: ['./add-to-cart-form.component.scss']
 })
 export class AddToCartFormComponent implements  AfterViewInit {

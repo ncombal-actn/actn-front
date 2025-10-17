@@ -5,11 +5,24 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { SauvegardeService } from '../sauvegarde.service';
 import {faClipboardList, faCommentDots, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {AsyncPipe, CurrencyPipe, DatePipe, NgClass} from "@angular/common";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {MatTooltip} from "@angular/material/tooltip";
+import {ChipsListComponent} from "@/configurateurs/zyxel/chips-list/chips-list.component";
 
 @Component({
   selector: 'conf-chargement',
   standalone: true,
   templateUrl: './chargement.component.html',
+  imports: [
+    NgClass,
+    FaIconComponent,
+    MatTooltip,
+    DatePipe,
+    CurrencyPipe,
+    ChipsListComponent,
+    AsyncPipe
+  ],
   styleUrls: ['./chargement.component.scss']
 })
 export class ChargementComponent implements OnInit {

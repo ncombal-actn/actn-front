@@ -7,11 +7,11 @@ import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 @Component({
   selector: 'app-snackbar',
   standalone: true,
-  templateUrl: './snackbar.component.html',
   imports: [
     NgClass,
     FaIconComponent
   ],
+  templateUrl: './snackbar.component.html',
   styleUrls: ['./snackbar.component.scss']
 })
 export class SnackbarComponent implements OnInit {

@@ -3,16 +3,16 @@ import {AdresseService, AuthenticationService} from '@core/_services';
 import {Adresse} from "@/_util/models";
 import {ConfirmAddressComponent} from "@/espace-client/stats/confirm-address/confirm-address.component";
 import {MatDialog} from "@angular/material/dialog";
-import {ReactiveFormsModule} from "@angular/forms";
 import {RouterLink} from "@angular/router";
-import {AsyncPipe} from "@angular/common";
+import {MatIcon} from "@angular/material/icon";
 
 
 @Component({
   selector: 'app-stats',
   standalone: true,
   imports: [
-    RouterLink
+    RouterLink,
+    MatIcon
   ],
   templateUrl: './stats.component.html',
   styleUrls: ['./stats.component.scss']

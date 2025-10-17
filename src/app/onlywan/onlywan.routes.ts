@@ -24,9 +24,6 @@ export const ONLYWAN_ROUTES: Routes = [
 
       },
       {
-        path: 'outils', loadChildren: () => import('./outils/outils.routes').then(m => m.OUTILS_ROUTES)
-      },
-      {
         path: 'nosOffres', loadChildren: () => import('./nos-offres/nos-offres.routes').then(m => m.NOS_OFFRES_ROUTES)
       },
       {

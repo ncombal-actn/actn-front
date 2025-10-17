@@ -3,12 +3,14 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import {InputNumberComponent} from "@/configurateurs/zyxel/input-number/input-number.component";
+import {CurrencyPipe} from "@angular/common";
 
 @Component({
 	selector: 'conf-free-input',
   standalone: true,
   imports: [
-    InputNumberComponent
+    InputNumberComponent,
+    CurrencyPipe
   ],
 	templateUrl: './free-input.component.html',
 	styleUrls: ['./free-input.component.scss']

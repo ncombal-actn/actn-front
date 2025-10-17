@@ -1,17 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import { environment } from '@env';
 import {MatCard} from "@angular/material/card";
 import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatInput} from "@angular/material/input";
 
 @Component({
   selector: 'app-detail-client',
   standalone: true,
   imports: [
     TitleWLineComponent,
-    MatCard
+    MatCard,
+    ReactiveFormsModule,
+    MatFormField,
+    MatInput,
+    RouterLink,
+    MatLabel
   ],
   templateUrl: './detail-client.component.html',
   styleUrls: ['./detail-client.component.scss']

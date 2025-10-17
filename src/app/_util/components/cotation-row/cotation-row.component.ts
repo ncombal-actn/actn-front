@@ -13,12 +13,20 @@ import {Subject} from "rxjs";
 import {CartService, CotationService} from "@core/_services";
 import {takeUntil} from "rxjs/operators";
 import {Router} from '@angular/router';
+import {CurrencyPipe, DatePipe, NgClass} from "@angular/common";
+import {MatCheckbox} from "@angular/material/checkbox";
 
 @Component({
   selector: "app-cotation-row",
+  standalone: true,
+  imports: [
+    NgClass,
+    DatePipe,
+    CurrencyPipe,
+    MatCheckbox
+  ],
   templateUrl: "./cotation-row.component.html",
-  styleUrls: ["./cotation-row.component.scss"],
-  standalone: true
+  styleUrls: ["./cotation-row.component.scss"]
 })
 export class CotationRowComponent implements OnDestroy, OnChanges {
 

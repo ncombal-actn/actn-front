@@ -7,8 +7,9 @@ import { takeLast } from 'rxjs/operators';
 
 import { AuthenticationService, WindowService } from '@/_core/_services';
 import { environment } from '@env';
-import {MatFormField} from "@angular/material/form-field";
+import {MatError, MatFormField, MatSuffix} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
+import {MatButton} from "@angular/material/button";
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
 	isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -23,7 +24,10 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   imports: [
     ReactiveFormsModule,
     MatFormField,
-    MatInput
+    MatInput,
+    MatError,
+    MatButton,
+    MatSuffix
   ],
 	templateUrl: './reglement.component.html',
 	styleUrls: ['./reglement.component.scss']

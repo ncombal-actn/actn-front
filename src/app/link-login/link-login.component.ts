@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 // RXJS
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
@@ -10,6 +10,9 @@ import { AuthenticationService } from '@/_core/_services';
   selector: 'app-link-login',
   standalone: true,
   templateUrl: './link-login.component.html',
+  imports: [
+    RouterLink
+  ],
   styleUrls: ['./link-login.component.scss']
 })
 export class LinkLoginComponent implements OnInit, OnDestroy

@@ -20,7 +20,6 @@ import {
   VideosurveillanceConfirmationComponent
 } from "./formulaire-projet-videosurveillance/videosurveillance-confirmation/videosurveillance-confirmation.component";
 import {HikAxProComponent} from "./ressources/hik-ax-pro/hik-ax-pro.component";
-import {RessourcesComponent} from "./ressources/ressources.component";
 import {OutilsComponent} from "./outils/outils.component";
 import {GrilleTransportComponent} from "./_util/components/grille-transport/grille-transport.component";
 import {EchecReglementComponent} from "./echec-reglement/echec-reglement.component";
@@ -189,13 +188,6 @@ export const routes: Routes = [
   {
     path: 'ressources/:res',
     component: ExternalFileComponent,
-    data: {
-      filDArianne: [{url: 'ressources', label: 'Ressources', guarded: true}],
-    },
-  },
-  {
-    path: 'ressources',
-    component: RessourcesComponent,
     data: {
       filDArianne: [{url: 'ressources', label: 'Ressources', guarded: true}],
     },

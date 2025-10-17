@@ -15,7 +15,14 @@ import {
 } from "@angular/forms";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
-import {MatTable, MatTableDataSource} from "@angular/material/table";
+import {
+  MatCell, MatCellDef,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderCellDef, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
+  MatTable,
+  MatTableDataSource
+} from "@angular/material/table";
 import { SortAndFilterService } from "@core/_services";
 import { environment } from "@env";
 import { BehaviorSubject, Subject, takeUntil } from "rxjs";
@@ -24,11 +31,14 @@ import {SecondesVersMinutesPipe} from "@core/_pipes/seconde-to-minutes.pipe";
 import {CommonModule} from "@angular/common";
 import {MatDivider} from "@angular/material/divider";
 import {MatDatepickerToggle, MatDateRangeInput, MatDateRangePicker} from "@angular/material/datepicker";
-import {MatHint} from "@angular/material/select";
+import {MatHint, MatOption, MatSelect} from "@angular/material/select";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
 import {MatExpansionPanelTitle} from "@angular/material/expansion";
 import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
+import {MatCheckbox} from "@angular/material/checkbox";
+import {MatTooltip} from "@angular/material/tooltip";
+import {MatIconButton} from "@angular/material/button";
 
 @Component({
   selector: "app-cdr",
@@ -49,7 +59,21 @@ import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.
     MatPaginator,
     MatExpansionPanelTitle,
     MatSort,
-    MatTable
+    MatTable,
+    MatCheckbox,
+    MatTooltip,
+    MatHeaderCell,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatCell,
+    MatCellDef,
+    MatHeaderRow,
+    MatHeaderRowDef,
+    MatRow,
+    MatRowDef,
+    MatOption,
+    MatIconButton,
+    MatSelect
   ],
   templateUrl: "./cdr.component.html",
   styleUrls: ["./cdr.component.scss"],

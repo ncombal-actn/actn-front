@@ -4,6 +4,7 @@ import { ConfigurateurService } from '@/configurateurs/configurateur.service';
 
 @Component({
   selector: 'conf-free-input',
+  standalone: true,
   templateUrl: '../../zyxel/free-input/free-input.component.html',
   styleUrls: ['./free-input.component.scss']
 })

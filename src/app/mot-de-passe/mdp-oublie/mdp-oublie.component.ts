@@ -1,19 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import {Validators, FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import { PasswordService } from '@core/_services/password.service';
 import { take } from 'rxjs/operators';
+import {MatError, MatFormField} from "@angular/material/form-field";
 
 /**
  * Formulaire de demande de renouvellement de mot de passe.
  */
 @Component({
-	selector: 'app-mdp-oublie',
-	templateUrl: './mdp-oublie.component.html',
-	styleUrls: ['./mdp-oublie.component.scss']
+  selector: 'app-mdp-oublie',
+  standalone: true,
+  templateUrl: './mdp-oublie.component.html',
+  imports: [
+    ReactiveFormsModule,
+    MatError,
+    MatFormField
+  ],
+  styleUrls: ['./mdp-oublie.component.scss']
 })
 export class MdpOublieComponent implements OnInit {
 
-	
+
 	mdpOublieForm: FormGroup;
 	isLoading = false;
 	isSubmitted = false;
@@ -24,7 +31,7 @@ export class MdpOublieComponent implements OnInit {
 		private mdp: PasswordService
 	) { }
 
-	
+
 	ngOnInit(): void {
 		this.mdpOublieForm = this.fb.group({
 			email: ['', [Validators.required, Validators.maxLength(70), Validators.email]]

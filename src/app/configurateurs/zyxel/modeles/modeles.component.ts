@@ -5,12 +5,14 @@ import {Subject} from 'rxjs';
 import {filter, take, takeUntil} from 'rxjs/operators';
 import {ConfigurateurService, Modele} from '../../configurateur.service';
 import {HeaderStepperComponent} from "@/configurateurs/zyxel/header-stepper/header-stepper.component";
+import {SlidingListeComponent} from "@/configurateurs/zyxel/sliding-liste/sliding-liste.component";
 
 @Component({
   selector: 'app-modeles',
   standalone: true,
   imports: [
-    HeaderStepperComponent
+    HeaderStepperComponent,
+    SlidingListeComponent
   ],
   templateUrl: './modeles.component.html',
   styleUrls: ['./modeles.component.scss']

@@ -13,7 +13,6 @@ import {TooltipComponent} from "@/_util/components/tooltip/tooltip.component";
 @Component({
   selector: 'app-share',
   standalone: true,
-  templateUrl: './share.component.html',
   imports: [
     MatFormField,
     MatLabel,
@@ -24,6 +23,7 @@ import {TooltipComponent} from "@/_util/components/tooltip/tooltip.component";
     NgClass,
     TooltipComponent
   ],
+  templateUrl: './share.component.html',
   styleUrls: ['./share.component.scss']
 })
 export class ShareComponent implements OnInit {

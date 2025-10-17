@@ -9,8 +9,8 @@ import {
 } from '@angular/core';
 
 @Directive({
-  standalone: true,
-  selector: '[appAddClassOnChange]'
+  selector: '[appAddClassOnChange]',
+  standalone: true
 })
 export class AddClassOnChangeDirective implements OnChanges, OnDestroy {
   @Input('appAddClassOnChange') className: string;

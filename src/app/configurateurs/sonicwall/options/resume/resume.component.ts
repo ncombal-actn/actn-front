@@ -4,9 +4,10 @@ import { ConfigurateurService } from '@/configurateurs/configurateur.service';
 import { AuthenticationService, ComponentsInteractionService } from '@core/_services';
 
 @Component({
-	selector: 'conf-resume',
-	templateUrl: '../../../zyxel/options/resume/resume.component.html',
-	styleUrls: ['./resume.component.scss']
+  selector: 'conf-resume',
+  standalone: true,
+  templateUrl: '../../../zyxel/options/resume/resume.component.html',
+  styleUrls: ['./resume.component.scss']
 })
 export class ResumeComponent extends BaseResumeComponent implements OnInit {
 

@@ -5,7 +5,10 @@ import {CommonModule} from "@angular/common";
 @Component({
   selector: 'app-stepper',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [
+    CommonModule,
+    RouterLink
+  ],
   templateUrl: './stepper.component.html',
   styleUrls: ['./stepper.component.scss']
 })

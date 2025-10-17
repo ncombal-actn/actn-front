@@ -10,7 +10,10 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
   selector: 'app-back-to-top',
   templateUrl: './back-to-top.component.html',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
+  imports: [
+    CommonModule,
+    FontAwesomeModule
+  ],
   styleUrls: ['./back-to-top.component.scss']
 })
 export class BackToTopComponent implements OnDestroy, AfterViewInit {

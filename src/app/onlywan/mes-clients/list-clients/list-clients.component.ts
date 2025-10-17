@@ -1,17 +1,27 @@
 import { OnlywanClient } from '@/onlywan/onlywan.service';
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
+import {MatSort, MatSortHeader} from '@angular/material/sort';
 import { AuthenticationService } from '@core/_services';
 import { environment } from '@env';
 import {Router, RouterLink} from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import {MatTable, MatTableDataSource} from "@angular/material/table";
+import {
+  MatCell,
+  MatCellDef,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderCellDef, MatHeaderRow, MatHeaderRowDef, MatNoDataRow, MatRow, MatRowDef,
+  MatTable,
+  MatTableDataSource
+} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {TooltipComponent} from "@/_util/components/tooltip/tooltip.component";
 import {MatInput} from "@angular/material/input";
+import {ZerosPipe} from "@core/_pipes/zero.pipe";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 
 @Component({
   selector: 'app-list-clients',
@@ -20,12 +30,25 @@ import {MatInput} from "@angular/material/input";
     TitleWLineComponent,
     RouterLink,
     MatTable,
+    MatCell,
     MatSort,
     MatFormField,
     MatLabel,
     MatPaginator,
     TooltipComponent,
-    MatInput
+    MatInput,
+    ZerosPipe,
+    FaIconComponent,
+    MatSortHeader,
+    MatColumnDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatHeaderCellDef,
+    MatHeaderRow,
+    MatHeaderRowDef,
+    MatRow,
+    MatRowDef,
+    MatNoDataRow
   ],
   templateUrl: './list-clients.component.html',
   styleUrls: ['./list-clients.component.scss']

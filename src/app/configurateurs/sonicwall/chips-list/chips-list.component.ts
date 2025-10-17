@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'conf-chips-list',
+  standalone: true,
   templateUrl: '../../zyxel/chips-list/chips-list.component.html',
   styleUrls: ['./chips-list.component.scss']
 })

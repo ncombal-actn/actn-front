@@ -4,7 +4,7 @@ import { ConfigurateurService, Modele } from '../configurateur.service';
 import { Configuration } from '../configuration.model';
 import { jsPDF } from 'jspdf';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { filter, skip, take, takeUntil, tap } from 'rxjs/operators';
+import { filter, skip, take, takeUntil } from 'rxjs/operators';
 import { Produit } from '@/_util/models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProduitService } from '@core/_services/produit.service';
@@ -17,6 +17,7 @@ const TrebuchetMS = 'AAEAAAAXAQAABABwRFNJR7jvDKYAA1kkAAAdtEdERUYAJgSgAAN22AAAAB5
 
 @Component({
 	selector: 'conf-export',
+  standalone: true,
 	templateUrl: './export.component.html',
 	styleUrls: ['./export.component.scss'],
 	providers: [DatePipe, CurrencyPipe]

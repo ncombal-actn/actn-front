@@ -4,12 +4,24 @@ import { take } from 'rxjs/operators';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CookieService, WindowService } from '@core/_services';
 import {AsyncPipe} from "@angular/common";
+import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
+
+@Pipe({standalone: true, name: 'safe'})
+export class SafePipe implements PipeTransform {
+  constructor(private sanitizer: DomSanitizer) { }
+  transform(url: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+}
+
 
 @Component({
   selector: 'app-youtube',
   standalone: true,
   imports: [
-    AsyncPipe
+    AsyncPipe,
+    SafePipe,
+    TitleWLineComponent
   ],
   templateUrl: './youtube.component.html',
   styleUrls: ['./youtube.component.scss']
@@ -83,12 +95,4 @@ export class YoutubeComponent implements OnInit {
 interface Link {
     link: string;
     type: 'YT' | 'IFRAME' | 'TITLE';
-}
-
-@Pipe({standalone: true, name: 'safe'})
-export class SafePipe implements PipeTransform {
-    constructor(private sanitizer: DomSanitizer) { }
-    transform(url: string): SafeResourceUrl {
-        return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-    }
 }

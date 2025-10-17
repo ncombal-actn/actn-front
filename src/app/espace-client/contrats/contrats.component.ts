@@ -1,11 +1,11 @@
 import {environment} from '@env';
-import {AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, NgZone, OnDestroy, OnInit} from '@angular/core';
 import {LicenceService} from '@services/licence.service';
 import {BehaviorSubject, fromEvent, Observable, Subject} from 'rxjs';
 import {debounceTime, map, skip, take, takeUntil, tap} from 'rxjs/operators';
-import {CartItem, CataloguePosition, Client, Filtre, Licence, Produit} from '@/_util/models';
-import {FormBuilder, FormControl, FormGroup, FormsModule} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
+import {CartItem, CataloguePosition, Client, Filtre, Licence} from '@/_util/models';
+import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {ProduitService} from '@core/_services/produit.service';
 import {AdresseService, SortAndFilterService, WindowService} from '@core/_services';
 import {
@@ -18,11 +18,20 @@ import {
   faPlusCircle,
   faTimesCircle
 } from "@fortawesome/free-solid-svg-icons";
-import {PageEvent} from "@angular/material/paginator";
+import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {TabSortComponent} from "@/_util/components/tab-sort/tab-sort.component";
 import {CommonModule} from "@angular/common";
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
 import {ContratsCommandesComponent} from "@/espace-client/contrats/contrats-commandes/contrats-commandes.component";
+import {MatOptgroup, MatOption} from "@angular/material/core";
+import {MatFormField, MatLabel, MatSelect} from "@angular/material/select";
+import {MatInput} from "@angular/material/input";
+import {MatCheckbox} from "@angular/material/checkbox";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {TooltipComponent} from "@/_util/components/tooltip/tooltip.component";
+import {EnduserFormComponent} from "@/_util/components/enduser-form/enduser-form.component";
+import {CdkTextareaAutosize} from "@angular/cdk/text-field";
+import {ContratsBaseComponent} from "@/espace-client/contrats/contrats-base.component";
 
 @Component({
   selector: 'app-contrats',
@@ -33,33 +42,38 @@ import {ContratsCommandesComponent} from "@/espace-client/contrats/contrats-comm
     ContratsCommandesComponent,
     TabSortComponent,
     MatTab,
-    MatTabGroup
+    MatTabGroup,
+    ReactiveFormsModule,
+    MatOption,
+    MatSelect,
+    MatLabel,
+    MatFormField,
+    MatInput,
+    MatOptgroup,
+    MatCheckbox,
+    MatPaginator,
+    RouterLink,
+    FaIconComponent,
+    TooltipComponent,
+    EnduserFormComponent,
+    CdkTextareaAutosize
   ],
   templateUrl: './contrats.component.html',
   styleUrls: ['./contrats.component.scss']
 })
-export class ContratsComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ContratsComponent extends ContratsBaseComponent implements OnInit, OnDestroy, AfterViewInit {
 
   environment = environment;
   historyShow: Array<boolean> = [];
   editShow: Array<boolean> = [];
   stringsNoSerie: Array<string> = [];
-  filtres$: Observable<Array<Filtre>>;
   selectedTab = new FormControl(0);
-  filtreMarque: Filtre;
   prioritaire = true;
   showPopup = false;
-  licencePopup: Licence;
-  produits: { [reference: string]: CartItem; };
-  clientPopup: Client;
   showHelpPopup = false;
   isAskingForHelp = false;
   demandeAideEnvoyee = false;
   commentaire = '';
-  produitHelpPopup: Produit;
-  produitsSimilaires: Array<Produit>;
-  filtresForm: FormGroup;
-  @ViewChildren('licence') protected _listeLicences: QueryList<ElementRef>;
   protected _destroy$ = new Subject<void>();
   protected _licences: Array<Licence> = [];
   protected _now = new Date();
@@ -86,7 +100,7 @@ export class ContratsComponent implements OnInit, OnDestroy, AfterViewInit {
     protected window: WindowService,
     protected saf: SortAndFilterService,
   ) {
-
+    super(licenceService, produitService, fb, router, activatedRoute, adresseService, ngZone, window, saf);
   }
 
   get filtreValues(): Array<unknown> {

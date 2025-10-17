@@ -5,12 +5,16 @@ import {Subject} from 'rxjs';
 import {filter, takeUntil} from 'rxjs/operators';
 import {faSlidersH} from "@fortawesome/free-solid-svg-icons";
 import {HeaderStepperComponent} from "@/configurateurs/zyxel/header-stepper/header-stepper.component";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-gammes',
   standalone: true,
   imports: [
-    HeaderStepperComponent
+    HeaderStepperComponent,
+    FaIconComponent,
+    RouterLink
   ],
   templateUrl: './gammes.component.html',
   styleUrls: ['./gammes.component.scss']

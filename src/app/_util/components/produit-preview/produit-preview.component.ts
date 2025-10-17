@@ -24,7 +24,6 @@ import {TooltipComponent} from "@/_util/components/tooltip/tooltip.component";
 @Component({
   selector: 'app-produit-preview',
   standalone: true,
-  templateUrl: './produit-preview.component.html',
   imports: [
     ComparateurButtonComponent,
     ImgFallbackDirective,
@@ -39,6 +38,7 @@ import {TooltipComponent} from "@/_util/components/tooltip/tooltip.component";
     NgTemplateOutlet,
     RouterLinkActive
   ],
+  templateUrl: './produit-preview.component.html',
   styleUrls: ['./produit-preview.component.scss']
 })
 /**

@@ -2,10 +2,19 @@ import {Component, Input} from '@angular/core';
 import {NewCartService} from "@services/new-cart.service";
 import {Produit} from "@/_util/models";
 import {CartItem} from "@/_util/models/cart-item.interface";
+import {InputNumberComponent} from "@/_util/components/input-number/input-number.component";
+import {MatButton} from "@angular/material/button";
+import {MatBadge} from "@angular/material/badge";
 
 @Component({
   selector: 'app-new-add-to-cart',
+  standalone: true,
   templateUrl: './new-add-to-cart.component.html',
+  imports: [
+    InputNumberComponent,
+    MatButton,
+    MatBadge
+  ],
   styleUrl: './new-add-to-cart.component.scss'
 })
 export class NewAddToCartComponent {

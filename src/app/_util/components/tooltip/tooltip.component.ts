@@ -23,13 +23,13 @@ import {SvgIconComponent} from "angular-svg-icon";
 @Component({
   selector: 'app-tooltip',
   standalone: true,
-  templateUrl: './tooltip.component.html',
-  styleUrls: ['./tooltip.component.scss'],
   imports: [
     FaIconComponent,
     MatTooltip,
     SvgIconComponent
   ],
+  templateUrl: './tooltip.component.html',
+  styleUrls: ['./tooltip.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class TooltipComponent  {

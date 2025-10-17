@@ -1,14 +1,27 @@
 import { ConfirmedValidator } from '@/_util/validators/confirmed.validator';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PasswordService } from '@core/_services/password.service';
 import { take } from 'rxjs/operators';
+import {MatError, MatFormField} from "@angular/material/form-field";
+import {PasswordShowInputComponent} from "@/_util/components/password-show-input/password-show-input.component";
+import {MatInput} from "@angular/material/input";
+import {MatHint} from "@angular/material/select";
 
 @Component({
-	selector: 'app-mdp-recuperation',
-	templateUrl: './mdp-recuperation.component.html',
-	styleUrls: ['./mdp-recuperation.component.scss']
+  selector: 'app-mdp-recuperation',
+  standalone: true,
+  templateUrl: './mdp-recuperation.component.html',
+  imports: [
+    ReactiveFormsModule,
+    MatFormField,
+    PasswordShowInputComponent,
+    MatHint,
+    MatInput,
+    MatError
+  ],
+  styleUrls: ['./mdp-recuperation.component.scss']
 })
 export class MdpRecuperationComponent implements OnInit {
 
@@ -30,7 +43,7 @@ export class MdpRecuperationComponent implements OnInit {
 		private router: Router,
 		private fb: FormBuilder
 	) {
-		
+
 	}
 
 	ngOnInit(): void {

@@ -37,16 +37,6 @@ import {YoutubeComponent} from "@/_util/components/youtube/youtube.component";
 @Component({
   selector: "app-produit",
   standalone: true,
-  templateUrl: "./produit.component.html",
-  styleUrls: ["./produit.component.scss"],
-  animations: [
-    trigger("expandVertical", [
-      state("open", style({height: "*"})),
-      state("closed", style({height: "0"})),
-      transition("open => closed", animate("300ms ease-in-out")),
-      transition("closed => open", animate("300ms ease-in-out")),
-    ]),
-  ],
   imports: [
     NgClass,
     SlidingListeComponent,
@@ -68,6 +58,16 @@ import {YoutubeComponent} from "@/_util/components/youtube/youtube.component";
     MatTab,
     PopupObjDisplayComponent,
     YoutubeComponent
+  ],
+  templateUrl: "./produit.component.html",
+  styleUrls: ["./produit.component.scss"],
+  animations: [
+    trigger("expandVertical", [
+      state("open", style({height: "*"})),
+      state("closed", style({height: "0"})),
+      transition("open => closed", animate("300ms ease-in-out")),
+      transition("closed => open", animate("300ms ease-in-out")),
+    ]),
   ],
   providers: [ProduitDetailService]
 })

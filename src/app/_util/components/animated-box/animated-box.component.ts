@@ -7,11 +7,11 @@ import {KeyboardFocusDirective} from "@/_util/directives/keyboard-focus.directiv
 @Component({
   selector: 'app-animated-box',
   standalone: true,
-  templateUrl: './animated-box.component.html',
   imports: [
     RouterLink,
     KeyboardFocusDirective
   ],
+  templateUrl: './animated-box.component.html',
   styleUrls: ['./animated-box.component.scss']
 })
 export class AnimatedBoxComponent implements OnInit

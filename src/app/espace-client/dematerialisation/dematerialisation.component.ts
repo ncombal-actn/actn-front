@@ -1,11 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {FormGroup, FormBuilder, Validators, ReactiveFormsModule} from '@angular/forms';
 import { DematerialisationService } from '@core/_services/dematerialisation.service';
 import { take } from 'rxjs/operators';
+import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatInput} from "@angular/material/input";
 
 @Component({
   selector: 'app-dematerialisation',
+  standalone: true,
   templateUrl: './dematerialisation.component.html',
+  imports: [
+    ReactiveFormsModule,
+    MatError,
+    MatLabel,
+    MatFormField,
+    MatInput
+  ],
   styleUrls: ['./dematerialisation.component.scss']
 })
 export class DematerialisationComponent implements OnInit {

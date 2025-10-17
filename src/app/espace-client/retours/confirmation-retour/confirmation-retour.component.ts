@@ -6,7 +6,12 @@ import {AuthenticationService, WindowService} from '@core/_services';
 import {ChangeAdresseComponent} from "@/_util/components/change-adresse/change-adresse.component";
 import {CommonModule} from "@angular/common";
 import {MatCheckbox} from "@angular/material/checkbox";
-import {MatError} from "@angular/material/form-field";
+import {MatError, MatFormField} from "@angular/material/form-field";
+import {MatInput} from "@angular/material/input";
+import {TooltipComponent} from "@/_util/components/tooltip/tooltip.component";
+import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
+import {CdkTextareaAutosize} from "@angular/cdk/text-field";
+import {MatIcon} from "@angular/material/icon";
 
 @Component({
   selector: 'app-confirmation-retour',
@@ -17,7 +22,14 @@ import {MatError} from "@angular/material/form-field";
     ChangeAdresseComponent,
     MatCheckbox,
     RouterLink,
-    MatError
+    MatError,
+    MatFormField,
+    MatInput,
+    TooltipComponent,
+    MatRadioGroup,
+    MatRadioButton,
+    CdkTextareaAutosize,
+    MatIcon
   ],
   templateUrl: './confirmation-retour.component.html',
   styleUrls: ['./confirmation-retour.component.scss']

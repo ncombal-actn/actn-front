@@ -11,6 +11,7 @@ import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {FormsModule} from "@angular/forms";
 import {MatInput} from "@angular/material/input";
 import {MatIcon} from "@angular/material/icon";
+import {DecimalPipe, NgClass} from "@angular/common";
 
 
 @Component({
@@ -22,7 +23,9 @@ import {MatIcon} from "@angular/material/icon";
     FormsModule,
     MatInput,
     MatIcon,
-    MatLabel
+    MatLabel,
+    DecimalPipe,
+    NgClass
   ],
   styleUrls: ['./paniers-enregistres.component.scss']
 })

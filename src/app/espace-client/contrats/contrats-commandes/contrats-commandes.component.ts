@@ -1,9 +1,8 @@
 import {AfterViewInit, Component, EventEmitter, NgZone, OnDestroy, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormsModule} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
+import {FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {AdresseService, LicenceCommandesService, SortAndFilterService, WindowService} from '@core/_services';
 import {ProduitService} from '@core/_services/produit.service';
-import {ContratsComponent} from '../contrats.component';
 import {
   faBell,
   faBellSlash,
@@ -16,6 +15,15 @@ import {
 import {TabSortComponent} from "@/_util/components/tab-sort/tab-sort.component";
 import {CommonModule} from "@angular/common";
 import {TooltipComponent} from "@/_util/components/tooltip/tooltip.component";
+import {MatOptgroup, MatOption} from "@angular/material/core";
+import {MatFormField, MatLabel, MatSelect} from "@angular/material/select";
+import {MatInput} from "@angular/material/input";
+import {MatCheckbox} from "@angular/material/checkbox";
+import {MatPaginator} from "@angular/material/paginator";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {EnduserFormComponent} from "@/_util/components/enduser-form/enduser-form.component";
+import {CdkTextareaAutosize} from "@angular/cdk/text-field";
+import {ContratsBaseComponent} from "@/espace-client/contrats/contrats-base.component";
 
 @Component({
   selector: 'app-contrats-commandes',
@@ -24,12 +32,25 @@ import {TooltipComponent} from "@/_util/components/tooltip/tooltip.component";
     CommonModule,
     FormsModule,
     TooltipComponent,
-    TabSortComponent
+    TabSortComponent,
+    ReactiveFormsModule,
+    MatOption,
+    MatSelect,
+    MatLabel,
+    MatFormField,
+    MatInput,
+    MatOptgroup,
+    MatCheckbox,
+    MatPaginator,
+    FaIconComponent,
+    EnduserFormComponent,
+    RouterLink,
+    CdkTextareaAutosize
   ],
   templateUrl: './contrats-commandes.component.html',
   styleUrls: ['../contrats.component.scss', './contrats-commandes.component.scss']
 })
-export class ContratsCommandesComponent extends ContratsComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ContratsCommandesComponent extends ContratsBaseComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Output() public selectedTabIndexChange = new EventEmitter<number>();
 

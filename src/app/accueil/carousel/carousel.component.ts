@@ -4,15 +4,20 @@ import { environment } from '@env';
 import { StorageService, WindowService } from '@core/_services';
 import { Router } from '@angular/router';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { isPlatformBrowser } from '@angular/common';
+import {isPlatformBrowser, NgClass} from '@angular/common';
 import { CarouselData } from '@core/_services/carousel.service';
 import {faCircle} from "@fortawesome/free-solid-svg-icons";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 
 
 @Component({
   selector: 'app-carousel',
   standalone: true,
   templateUrl: './carousel.component.html',
+  imports: [
+    NgClass,
+    FaIconComponent
+  ],
   styleUrls: ['./carousel.component.scss']
 })
 export class CarouselComponent implements  OnDestroy, AfterViewInit

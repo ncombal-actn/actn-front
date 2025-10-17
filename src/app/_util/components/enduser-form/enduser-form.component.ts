@@ -1,15 +1,31 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Client, Produit, CartItem } from '@/_util/models';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import {FormGroup, FormBuilder, FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
 import { Subject, Observable } from 'rxjs';
 import { AdresseService, LicenceService } from '@core/_services';
-import { take, tap, map, takeUntil } from 'rxjs/operators';
+import { take, map, takeUntil } from 'rxjs/operators';
+import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatInput} from "@angular/material/input";
+import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from "@angular/material/autocomplete";
+import {AsyncPipe} from "@angular/common";
+import {MatSelect} from "@angular/material/select";
 
 const phoneRegex = /^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/;
 
 @Component({
   selector: 'app-enduser-form',
   standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatAutocomplete,
+    AsyncPipe,
+    MatOption,
+    MatAutocompleteTrigger,
+    MatSelect
+  ],
   templateUrl: './enduser-form.component.html',
   styleUrls: ['./enduser-form.component.scss']
 })

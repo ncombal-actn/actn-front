@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, NgZone, ViewChildren, QueryList, ElementRef, AfterViewInit} from '@angular/core';
+import {AfterViewInit, Directive, ElementRef, NgZone, OnDestroy, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {
   DevisService,
   Devis,
@@ -12,53 +12,14 @@ import {Subject, Observable, BehaviorSubject, fromEvent} from 'rxjs';
 import {Produit} from '@/_util/models';
 import {ActivatedRoute, Router} from '@angular/router';
 import {environment} from '@env';
-import {MatPaginator, PageEvent} from "@angular/material/paginator";
+import {PageEvent} from "@angular/material/paginator";
 import {ProduitService} from '@core/_services/produit.service';
 import {faCheck, faFilePdf, faMinus, faPlus, faRedoAlt} from "@fortawesome/free-solid-svg-icons";
-import {MatTab, MatTabGroup} from "@angular/material/tabs";
-import {DevisActnComponent} from "@/espace-client/devis/devis-actn/devis-actn.component";
-import {AsyncPipe, CurrencyPipe, KeyValuePipe, NgClass, NgStyle, SlicePipe} from "@angular/common";
-import {TabSortComponent} from "@/_util/components/tab-sort/tab-sort.component";
-import {MatOption, MatSelect} from "@angular/material/select";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {MatFormField, MatLabel} from "@angular/material/form-field";
-import {TooltipComponent} from "@/_util/components/tooltip/tooltip.component";
-import {MatIcon} from "@angular/material/icon";
-import {MatInput} from "@angular/material/input";
-import {FaIconComponent} from "@fortawesome/angular-fontawesome";
-import {DevisBaseComponent} from "@/espace-client/devis/devis-base.component";
 
-@Component({
-  selector: 'app-devis',
-  standalone: true,
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    AsyncPipe,
-    KeyValuePipe,
-    DevisActnComponent,
-    TabSortComponent,
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    MatTab,
-    MatTabGroup,
-    TooltipComponent,
-    NgStyle,
-    CurrencyPipe,
-    MatPaginator,
-    SlicePipe,
-    MatOption,
-    MatIcon,
-    MatInput,
-    NgClass,
-    FaIconComponent
-  ],
-  templateUrl: './devis.component.html',
-  styleUrls: ['./devis.component.scss'],
-})
+@Directive()
+export abstract class DevisBaseComponent implements OnInit, OnDestroy, AfterViewInit {
 
-export class DevisComponent extends DevisBaseComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChildren('devis') protected _listeDevis: QueryList<ElementRef>;
 
   devis$: Observable<Array<Devis>> = null;
   processedDevis$ = new BehaviorSubject<Array<Devis>>([]);
@@ -74,6 +35,29 @@ export class DevisComponent extends DevisBaseComponent implements OnInit, OnDest
   commentaireModification = '';
   demandeEnvoye = false;
   explicationPDFindispo = "Le fichier PDF associé à ce devis est momentanément indisponible."
+
+  protected readonly faFilePdf = faFilePdf;
+  protected readonly faPlus = faPlus;
+  protected readonly faMinus = faMinus;
+  protected readonly faCheck = faCheck;
+  protected readonly faRedoAlt = faRedoAlt;
+
+  /** Observable de nettoyage, déclanchée à la destruction du DevisComponent */
+  protected _destroy$ = new Subject<void>();
+  /** Liste filtrés des Devis */
+  protected _devis: Array<Devis> = null;
+
+  constructor(
+    public authService: AuthenticationService,
+    protected router: Router,
+    protected cartService: CartService,
+    protected devisService: DevisService,
+    public saf: SortAndFilterService,
+    protected produitService: ProduitService,
+    protected activatedRoute: ActivatedRoute,
+    protected ngZone: NgZone,
+    protected windowService: WindowService,
+  ) {}
 
   /**
    * Récupère les paramètres du paginator depuis DevisService
@@ -94,25 +78,6 @@ export class DevisComponent extends DevisBaseComponent implements OnInit, OnDest
     return this.devisService.details;
   }
 
-  /** Observable de nettoyage, déclanchée à la destruction du DevisComponent */
-  protected _destroy$ = new Subject<void>();
-  /** Liste filtrés des Devis */
-  protected _devis: Array<Devis> = null;
-
-  constructor(
-    public authService: AuthenticationService,
-    protected router: Router,
-    protected cartService: CartService,
-    protected devisService: DevisService,
-    public saf: SortAndFilterService,
-    protected produitService: ProduitService,
-    protected activatedRoute: ActivatedRoute,
-    protected ngZone: NgZone,
-    protected windowService: WindowService,
-  ) {
-    super(authService, router, cartService, devisService, saf, produitService, activatedRoute, ngZone, windowService);
-  }
-
   /**
    * Initialisation du DevisComponent
    * - Parametrage du paginator
@@ -131,7 +96,6 @@ export class DevisComponent extends DevisBaseComponent implements OnInit, OnDest
       .pipe(take(1), takeUntil(this._destroy$))
       .subscribe(
         devis => {
-
           this._devis = devis.filter(devis => devis.transactioncode === 'PRW');
           const s = new Set<string>();
           this._devis.forEach(d => {
@@ -169,17 +133,8 @@ export class DevisComponent extends DevisBaseComponent implements OnInit, OnDest
         takeUntil(this._destroy$),
         debounceTime(100)
       ).subscribe(() => {
-
-
       this.windowService.scrollTo(0, this.devisService.scroll);
     });
-    /* this.authService.alive$.subscribe(data=>{
-
-
-        if (data ==="dead") {
-            this.router.navigate(['/login']);
-        }
-    }) */
   }
 
   /**
@@ -256,7 +211,6 @@ export class DevisComponent extends DevisBaseComponent implements OnInit, OnDest
     this.processedDevis$.next(this.saf.onTri('devis', s, type, this.processedDevis$.value));
   }
 
-
   /**
    * Ajoute tous les produits d'un devis dans le panier.
    * @param empty true si le panier doit être vidé, false sinon
@@ -272,7 +226,6 @@ export class DevisComponent extends DevisBaseComponent implements OnInit, OnDest
       p.reference = produit.prod;
       p.designation = produit.designation;
       p.prix = +produit.prixbase;
-      // p.pr = produit.prixnet
       p.prixD3E = +produit.prixd3e;
       this.cartService.addProduit(p, +produit.quantitecommande);
     });
@@ -336,15 +289,12 @@ export class DevisComponent extends DevisBaseComponent implements OnInit, OnDest
     });
   }
 
-
   /**
    * Déclenche le filtrage des devis quand un filtre est modifié.
    * @param target La colonne sur laquelle filtrer
    * @param event L'objet lié à l'évènement déclencheur
    */
   onSearch(target: string, type: string, method: string, event: string, values?: string): void {
-
-
     if (values) {
       setTimeout(() => this.processedDevis$.next(this.saf.onFiltre('devis', target, type, method, this[values], this._devis)), 1);
     } else {
@@ -352,30 +302,14 @@ export class DevisComponent extends DevisBaseComponent implements OnInit, OnDest
     }
   }
 
-
   cleanFilter(type: string, array: string): void {
     /**Filtre marque */
     if (type === 'produits.marquelib') {
       this.marquesSelected = [];
       this.onSearch(type, 'array', 'includes', '', array)
-
     } else {
       /**Filtre status */
       setTimeout(() => this.processedDevis$.next(this.saf.onFiltre('devis', 'statut', 'string', 'includes', '', this._devis)), 1);
     }
   }
-
-
-  protected readonly faFilePdf = faFilePdf;
-  protected readonly faPlus = faPlus;
-  protected readonly faMinus = faMinus;
-  protected readonly faCheck = faCheck;
-  protected readonly faRedoAlt = faRedoAlt;
 }
-
-function Cacheable(arg0: {
-  cacheBusterObserver: Subject<void>;
-}): (target: DevisComponent, propertyKey: "devis$") => void {
-  throw new Error('Function not implemented.');
-}
-

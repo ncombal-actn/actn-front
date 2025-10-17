@@ -1,13 +1,18 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 // RXJS
-import { Observable, Subscription } from 'rxjs';
-import { takeLast, tap } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 // SERVICES
 import { ComparateurService } from '@/_core/_services/comparateur.service';
+import {NgClass} from "@angular/common";
+import {MatTooltip} from "@angular/material/tooltip";
 
 @Component({
   selector: 'app-comparateur-button',
   standalone: true,
+  imports: [
+    NgClass,
+    MatTooltip
+  ],
   templateUrl: './comparateur-button.component.html',
   styleUrls: ['./comparateur-button.component.scss']
 })

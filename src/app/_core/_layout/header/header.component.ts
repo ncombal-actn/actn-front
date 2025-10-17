@@ -31,7 +31,16 @@ import { CatalogueSearchBarComponent } from '@/_util/components/catalogue-search
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [KeyboardFocusDirective, CommonModule, FontAwesomeModule, MatTooltip, CatalogueSearchBarComponent, RouterLink, RouterLinkActive, ExposeHeightSetterDirective],
+  imports: [
+    KeyboardFocusDirective,
+    CommonModule,
+    FontAwesomeModule,
+    MatTooltip,
+    CatalogueSearchBarComponent,
+    RouterLink,
+    RouterLinkActive,
+    ExposeHeightSetterDirective
+  ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })

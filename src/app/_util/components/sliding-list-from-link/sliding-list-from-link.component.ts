@@ -1,18 +1,23 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ProduitService } from '@core/_services/produit.service';
 import { CatalogueService } from '@core/_services/catalogue.service';
-import { CatalogueResolverService } from '@/_core/_services/catalogue-resolver.service';
-import { Produit, Filtre, CatalogueSample, CataloguePosition } from '@/_util/models';
+import { Produit, CataloguePosition } from '@/_util/models';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from '@env';
 
-import { ActivatedRoute, Router, NavigationEnd, ActivatedRouteSnapshot, UrlTree } from '@angular/router';
-import { map, tap, takeUntil, publishReplay, refCount, switchMap, startWith, take, skip } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { map, take } from 'rxjs/operators';
+import {TitleWLineComponent} from "@/_util/components/title-w-line/title-w-line.component";
+import {SlidingListeComponent} from "@/_util/components/sliding-liste/sliding-liste.component";
 
 @Component({
   selector: 'app-sliding-list-from-link',
   standalone: true,
   templateUrl: './sliding-list-from-link.component.html',
+  imports: [
+    TitleWLineComponent,
+    SlidingListeComponent
+  ],
   styleUrls: ['./sliding-list-from-link.component.scss']
 })
 export class SlidingListFromLinkComponent implements OnInit {
@@ -47,8 +52,6 @@ export class SlidingListFromLinkComponent implements OnInit {
 	constructor(
 		private produitService: ProduitService,
 		private catalogueService: CatalogueService,
-		private route: ActivatedRoute,
-		private router: Router,
 		/////////////////////////////////////
 		// private catalogueResolverService: CatalogueResolverService
 		/////////////////////////////////////

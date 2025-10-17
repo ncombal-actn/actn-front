@@ -7,12 +7,18 @@ import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 import {faChevronUp, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {CurrencyPipe, KeyValuePipe, NgClass} from "@angular/common";
+import {ChipsListComponent} from "@/configurateurs/zyxel/chips-list/chips-list.component";
 
 @Component({
 	selector: 'conf-resume',
   standalone: true,
   imports: [
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgClass,
+    CurrencyPipe,
+    ChipsListComponent,
+    KeyValuePipe
   ],
 	templateUrl: './resume.component.html',
 	styleUrls: ['./resume.component.scss'],

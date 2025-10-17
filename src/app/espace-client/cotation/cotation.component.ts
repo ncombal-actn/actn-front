@@ -13,6 +13,12 @@ import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatCard, MatCardContent, MatCardHeader} from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
+import {MatButton, MatIconButton} from "@angular/material/button";
+import {MatInput} from "@angular/material/input";
+import {AsyncPipe, CurrencyPipe, DatePipe, DecimalPipe, KeyValuePipe, NgClass} from "@angular/common";
+import {ImgFallbackDirective} from "@/_util/directives/img-fallback.directive";
+import {AddToCartFormComponent} from "@/_util/components/add-to-cart-form/add-to-cart-form.component";
+import {TooltipComponent} from "@/_util/components/tooltip/tooltip.component";
 
 @Component({
   selector: "app-cotation",
@@ -25,7 +31,19 @@ import {MatIcon} from "@angular/material/icon";
     MatFormField,
     MatIcon,
     MatLabel,
-    MatSlideToggle
+    MatSlideToggle,
+    MatIconButton,
+    MatInput,
+    NgClass,
+    MatButton,
+    AsyncPipe,
+    KeyValuePipe,
+    DatePipe,
+    ImgFallbackDirective,
+    CurrencyPipe,
+    DecimalPipe,
+    AddToCartFormComponent,
+    TooltipComponent
   ],
   templateUrl: "./cotation.component.html",
   styleUrls: ["./cotation.component.scss"],

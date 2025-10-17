@@ -3,7 +3,7 @@ import {
   Directive,
   Renderer2,
   ViewContainerRef,
-  Input
+  Input, Host, Self, Optional
 } from '@angular/core';
 import { MatPaginator as MatPaginator } from '@angular/material/paginator';
 import { MatButton as MatButton } from '@angular/material/button';

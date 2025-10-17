@@ -6,11 +6,17 @@ import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { take } from 'rxjs/operators';
+import {NgClass} from "@angular/common";
+import {SlidingListFromLinkComponent} from "@/_util/components/sliding-list-from-link/sliding-list-from-link.component";
 
 @Component({
   selector: 'app-focus',
   standalone: true,
   templateUrl: './focus.component.html',
+  imports: [
+    NgClass,
+    SlidingListFromLinkComponent
+  ],
   styleUrls: ['./focus.component.scss']
 })
 export class FocusComponent implements OnInit {

@@ -4,11 +4,20 @@ import { SvgService } from '@core/_services';
 import { environment } from '@env';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
+import {RouterLink} from "@angular/router";
+import {AsyncPipe} from "@angular/common";
+import {HeaderStepperComponent} from "@/configurateurs/sonicwall/header-stepper/header-stepper.component";
 
 @Component({
-    selector: 'app-gammes',
-    templateUrl: './gammes.component.html',
-    styleUrls: ['./gammes.component.scss']
+  selector: 'app-gammes',
+  standalone: true,
+  templateUrl: './gammes.component.html',
+  imports: [
+    RouterLink,
+    AsyncPipe,
+    HeaderStepperComponent
+  ],
+  styleUrls: ['./gammes.component.scss']
 })
 export class GammesComponent implements OnInit, OnDestroy {
 

@@ -5,11 +5,20 @@ import { SvgService } from '@core/_services';
 import { environment } from '@env';
 import { Subject } from 'rxjs';
 import { takeUntil, filter, take } from 'rxjs/operators';
+import {AsyncPipe} from "@angular/common";
+import {HeaderStepperComponent} from "@/configurateurs/sonicwall/header-stepper/header-stepper.component";
+import {SlidingListeComponent} from "@/configurateurs/sonicwall/sliding-liste/sliding-liste.component";
 
 @Component({
-	selector: 'app-modeles',
-	templateUrl: './modeles.component.html',
-	styleUrls: ['./modeles.component.scss']
+  selector: 'app-modeles',
+  standalone: true,
+  templateUrl: './modeles.component.html',
+  imports: [
+    AsyncPipe,
+    HeaderStepperComponent,
+    SlidingListeComponent
+  ],
+  styleUrls: ['./modeles.component.scss']
 })
 export class ModelesComponent implements OnInit, OnDestroy {
 
